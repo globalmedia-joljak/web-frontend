@@ -16,10 +16,13 @@ function Navigation({props}) {
           <Link to="/">Home</Link>
         </div>
         <div className={styles.nav__link}>
-          <Link to="/posts">Post</Link>
+          <Link to="/notice">공지사항</Link>
         </div>
         <div className={styles.nav__link}>
-          <Link to="/about">About</Link>
+          <Link to="/teams">팀 빌딩</Link>
+        </div>
+        <div className={styles.nav__link}>
+          <Link to="/projects">졸업작품</Link>
         </div>
       </div>
       <div className={styles.nav__column}>
