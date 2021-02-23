@@ -1,0 +1,27 @@
+@import "../../assets/_minxin.scss";
+
+$logo-f: 80px;
+
+footer {
+  background-color: #ffffff;
+  .inr {
+    @include fStyle($logo-f);
+    .f-logo {
+      width: $logo-f;
+      height: $logo-f;
+      background-color: aqua;
+      @include backgroundImage;
+    }
+    span {
+      width: fit-content;
+      place-self: center;
+      color: #6d6d6dcc;
+      fong: {
+        size: 14px;
+      }
+      &.e-mail {
+        justify-self: end;
+      }
+    }
+  }
+}
