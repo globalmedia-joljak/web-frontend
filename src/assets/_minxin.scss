@@ -84,13 +84,18 @@
   display: grid;
   @if $row == "r2" {
     @if $type == "nav-t" {
-      grid-template-rows: 20% minmax(307px, auto);
+      grid-template-rows: 30% minmax(307px, auto);
     } @else if $type == "sub-t" {
       grid-template-rows: auto 1fr;
     } @else if $type == "sub-list-t" {
       grid-auto-rows: auto;
     }
   }
+}
+
+@mixin sideNavStyle {
+  padding-top: 16px;
+  border-top: 1px solid #ffffff66;
 }
 // main -------------------------------------------------------
 // home

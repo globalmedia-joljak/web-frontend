@@ -1,5 +1,4 @@
 const navRoutes = [
-  { id: "mypage", path: "/mypage", name: "마이페이지" },
   { id: "notice", path: "/notice", name: "공지사항" },
   { id: "teams", path: "/teams", name: "팀 빌딩" },
   { id: "project", path: "/projects", name: "졸업작품" },
