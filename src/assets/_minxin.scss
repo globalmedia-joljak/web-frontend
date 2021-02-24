@@ -1,0 +1,129 @@
+@import "./_variables.scss";
+
+// common ----------------------------------------------------
+@mixin widthHeight {
+  width: 100%;
+  height: 100%;
+}
+@mixin backgroundImage {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+@mixin logo($tag, $size) {
+  @if $tag == "logo-h" {
+    @if $size == "" {
+      width: $lh-w;
+      height: 40px;
+    } @else if $size == "tablet" {
+      width: $lh-t;
+      height: 30px;
+    } @else {
+      width: $lh-p;
+      height: 24px;
+    }
+  } @else if $tag == "logo-n" {
+    @if $size == "tablet" {
+      width: $ln-t;
+      height: 83px;
+    } @else {
+      width: $ln-p;
+      height: 45px;
+    }
+  } @else if $tag == "logo-f" {
+    @if $size == "tablet" {
+      width: $ls-t;
+      height: $ls-t;
+    } @else if $size == "phone" {
+      width: $ls-p;
+      height: $ls-p;
+    } @else {
+      width: $ls-w;
+      height: $ls-w;
+    }
+  }
+}
+
+@mixin centerPosition {
+  top: 50%;
+  transform: translateY(-50%);
+  @content;
+}
+
+@mixin setMoreIcon($width, $heigth) {
+  width: $width;
+  height: $heigth;
+  position: absolute;
+  @include centerPosition {
+    transform: translate(-50%);
+    left: 50%;
+  }
+}
+// header ----------------------------------------------------
+@mixin hStyle($col, $type) {
+  display: grid;
+  align-items: center;
+  @if $col == "c2" {
+    @if $type == "web" {
+      grid-template-columns: 1fr auto;
+    } @else if $type == "res" {
+      grid-template-columns: repeat(2, 1fr);
+    } @else if $type == "mp" {
+      grid-template-columns: repeat(2, auto);
+    } @else {
+      grid-template-columns: auto 1fr;
+    }
+  } @else if $col == "c3" {
+    grid-template-columns: repeat(3, max-content);
+    justify-items: center;
+  }
+}
+
+@mixin headerRow($row, $type) {
+  display: grid;
+  @if $row == "r2" {
+    @if $type == "nav-t" {
+      grid-template-rows: 20% minmax(307px, auto);
+    } @else if $type == "sub-t" {
+      grid-template-rows: auto 1fr;
+    } @else if $type == "sub-list-t" {
+      grid-auto-rows: auto;
+    }
+  }
+}
+// main -------------------------------------------------------
+// home
+@mixin mainRow($row) {
+  display: grid;
+  @if $row == "r-home" {
+    grid-template-rows: minmax(33.3%, 600px) auto 76px;
+  }
+}
+
+// footer -----------------------------------------------------
+@mixin fStyle($gap) {
+  display: grid;
+  gap: 133px;
+  grid-template-columns: 1fr $gap 1fr;
+}
+
+// response ---------------------------------------------------
+$maxTablet: 768px;
+$maxPhone: 360px;
+
+@mixin response($device) {
+  @if $device == "phone" {
+    @media screen and (max-width: $maxPhone) {
+      @content;
+    }
+  } @else if $device == "tablet" {
+    @media screen and (max-width: $maxTablet) {
+      @content;
+    }
+  } @else if $device == "web" {
+    @media screen and(max-width: $maxTablet + 100px) {
+      @content;
+    }
+  }
+}
