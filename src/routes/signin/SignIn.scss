@@ -1,0 +1,165 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #f2f2f2;
+	color: #333;
+
+	.login-container {
+		display: flex;
+		position: relative;
+		width: 1182px;
+		height: 800px;
+		background-color: #ffffff;
+		margin: 80px auto;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items: center;
+		border-radius: 32px;
+		box-shadow: 0px 3px 6px #00000029;
+
+		.login-right {
+			width: 50%;
+			height: 100%;
+			background-color: black;
+			border-radius: 0px 32px 32px 0px;
+
+			.Signinbackground {
+				position: absolute;
+				top: -6px;
+			}
+
+			.url-signOut {
+				position: absolute;
+				top: 725px;
+				left: 850px;
+				font: normal normal bold 24px/36px Noto Sans KR;
+				letter-spacing: 0px;
+				color: #ffffffcc;
+			}
+		}
+
+		.login-left {
+			display: flex;
+			position: relative;
+			flex-direction: column;
+
+			width: 50%;
+			height: 100%;
+			.GlobalMedia-logo {
+				position: absolute;
+				left: 185px;
+				top: 83px;
+
+				.GlobalMediaLogo {
+					width: 230px;
+					height: 230px;
+				}
+			}
+			.login-form-div {
+				position: absolute;
+				left: 112px;
+				top: 329px;
+
+				.login-form {
+					display: flex;
+					flex-direction: column;
+					position: absolute;
+					margin-bottom: 80px;
+
+					.check-info {
+						width: 100%;
+						height: 20px;
+						margin-bottom: 5px;
+					}
+
+					.login-input {
+						font-size: 1rem;
+						box-sizing: border-box;
+						width: 376px;
+						height: 72px;
+						padding: 0.5rem 2rem;
+						line-height: 2.8rem;
+						background-color: #6d6d6d33;
+						border: 1px solid #ddd;
+						margin-bottom: 5px;
+					}
+
+					.remember-id-container {
+						display: block;
+						width: 150px;
+						position: relative;
+						padding-left: 35px;
+						cursor: pointer;
+						color: #6d6d6d66;
+						font: normal normal medium Noto Sans KR;
+
+						user-select: none;
+
+						input {
+							position: absolute;
+							opacity: 0;
+							cursor: pointer;
+							height: 0;
+							width: 0;
+						}
+						.remember-id-checkmark {
+							position: absolute;
+							top: 0;
+							left: 0;
+							height: 25px;
+							width: 25px;
+
+							background-color: #eee;
+						}
+					}
+
+					/* On mouse-over, add a grey background color */
+					.remember-id-container:hover input ~ .remember-id-checkmark {
+						background-color: #ccc;
+					}
+
+					/* When the checkbox is checked, add a blue background */
+					.remember-id-container input:checked ~ .remember-id-checkmark {
+						background-color: #2196f3;
+					}
+
+					/* Create the checkmark/indicator (hidden when not checked) */
+					.remember-id-checkmark:after {
+						content: "";
+						position: absolute;
+						display: none;
+					}
+
+					/* Show the checkmark when checked */
+					.remember-id-container input:checked ~ .remember-id-checkmark:after {
+						display: block;
+					}
+
+					/* Style the checkmark/indicator */
+					.remember-id-container .remember-id-checkmark:after {
+						left: 9px;
+						top: 5px;
+						width: 5px;
+						height: 10px;
+						border: solid white;
+						border-width: 0 3px 3px 0;
+
+						transform: rotate(45deg);
+					}
+
+					.log-button {
+						background-color: #9a609c;
+						color: white;
+						font-size: 20px;
+						width: 376px;
+						height: 72px;
+						padding: 1rem 2rem;
+						border-radius: 35px;
+						border: 1px solid;
+						margin-top: 3rem;
+					}
+				}
+			}
+		}
+	}
+}
