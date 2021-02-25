@@ -7,7 +7,7 @@ import {
   Projects,
   Search,
   MyPage,
-  NotFound,
+  ErrorPage,
 } from "./routes";
 import "./assets/style.scss";
 
@@ -20,12 +20,12 @@ function App() {
         <Navigation />
         <Switch>
           <Route path="/" exact={true} component={Home} />
-          <Route path="/notice" component={Notice} />
-          <Route path="/teams" component={Tbuild} />
-          <Route path="/projects" component={Projects} />
-          <Route path="/search" component={Search} />
-          <Route path="/mypage" component={MyPage} />
-          <Route path="*" component={NotFound} />
+          <Route path="/notice" exact={true} component={Notice} />
+          <Route path="/teams" exact={true} component={Tbuild} />
+          <Route path="/projects" exact={true} component={Projects} />
+          <Route path="/search" exact={true} component={Search} />
+          <Route path="/mypage" exact={true} component={MyPage} />
+          <Route path="*" component={ErrorPage} />
         </Switch>
       </BrowserRouter>
     </div>
