@@ -5,14 +5,39 @@ import { navRoutes, subRoutes } from "./headerDataList.js";
 
 import "./headerStyle.scss";
 
+// routes간격
+const NavStyling = (navEl, size, tablet) => {
+  const [hStyle, setHstyle] = useState({});
+
+  useEffect(() => {
+    const { parentElement } = navEl.current;
+    if (size > tablet) {
+      const parentWidth = parentElement.clientWidth,
+        calculated = Math.floor(parentWidth * 0.12),
+        maxGap = 96;
+
+      calculated > maxGap
+        ? setHstyle({ gap: `${maxGap}px` })
+        : setHstyle({ gap: `${calculated}px` });
+    } else {
+      return setHstyle({ gap: 0 });
+    }
+  }, [navEl, setHstyle, size, tablet]);
+
+  return { hStyle };
+};
+
 //로딩후 넓이와 resize될때 넓이값에 따라 nav에 clickEvent를 준다.
-const SizeChecking = (curSize) => {
+const SizeChecking = (curSize, navEl) => {
   const [size, setSize] = useState(curSize);
 
   const handleResize = () => setSize(window.innerWidth);
 
   useEffect(() => {
+    let { style } = navEl.current.offsetParent.nextSibling;
+
     window.addEventListener("resize", handleResize);
+    style.display = navEl.current.classList.contains("on") ? "none" : "grid";
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -22,48 +47,46 @@ const SizeChecking = (curSize) => {
   return { size };
 };
 
-// clickHandler
 const NavClickEvent = (size, tablet, navEl) => {
   useEffect(() => {
     if (navEl.current === undefined) return;
 
     const handleClick = (e) => {
-      let { classList, tagName, parentElement } = e.target;
+      let { classList, parentElement, id } = e.target;
+      let { style } = navEl.current.offsetParent.nextSibling;
+
       const ON = "on";
 
-      // overflow된 video 태그 없애기(스크롤시)
-      navEl.current.offsetParent.nextSibling.style.display =
-        navEl.current.className !== ON ? "none" : "grid";
+      const tagFilter = (className) => {
+        return classList.contains(className) ?? false;
+      };
 
-      if (tagName === "NAV") {
-        return classList.contains(ON)
-          ? classList.remove(ON)
-          : classList.add(ON);
-      }
+      switch (true) {
+        case tagFilter("h-nav"):
+          !tagFilter(ON) ? classList.add(ON) : classList.remove(ON);
+          console.log(e.target.classList);
+          style.display = navEl.current.classList.contains(ON)
+            ? "none"
+            : "grid";
+          return;
 
-      if (
-        tagName === "A" ||
-        (tagName === "DIV" && classList.contains("t-nav"))
-      ) {
-        // 팀빌딩, 프로젝트일경우
-        if (tagName === "A") {
-          const { id } = parentElement;
+        // routes일 경우
+        case tagFilter("h-route"):
           const SHOW = "show";
 
           if (id === "teams" || id === "project") {
-            if (tagName === "A") {
-              const { classList } = e.target.parentElement;
-
-              return classList.contains(SHOW)
-                ? classList.remove(SHOW)
-                : classList.add(SHOW);
-            }
+            return parentElement.classList.contains(SHOW)
+              ? parentElement.classList.remove(SHOW)
+              : parentElement.classList.add(SHOW);
           }
-        }
 
-        // a클릭시 nav페이지 나가기
-        if (navEl.current.classList.contains(ON))
           navEl.current.classList.remove(ON);
+          break;
+
+        default:
+          navEl.current.classList.remove(ON);
+          style.display = "grid";
+          break;
       }
     };
 
@@ -75,7 +98,6 @@ const NavClickEvent = (size, tablet, navEl) => {
       navEl.current.removeEventListener("click", handleClick);
     }
 
-    // cleanUp
     return () => {
       navEl.current.removeEventListener("click", handleClick);
     };
@@ -88,10 +110,9 @@ const NavClickEvent = (size, tablet, navEl) => {
 const SubNavigation = (id) => {
   if (id === null) return;
 
-  let data = [];
-
   const { teamList, projectList } = subRoutes;
 
+  let data = [];
   switch (id) {
     case "teams":
       data = teamList;
@@ -105,23 +126,32 @@ const SubNavigation = (id) => {
       break;
   }
 
-  return data.map(({ path, name }, i) => {
-    return <li key={i}>{<Link to={path}>{name}</Link>}</li>;
+  return data.map(({ path, name, id }, i) => {
+    return (
+      <li key={i}>
+        {
+          <Link to={path} className="h-route" id={id}>
+            {name}
+          </Link>
+        }
+      </li>
+    );
   });
 };
 
 // routes_template
-const RouterLink = (size, tablet, CheckMoreBtn) => {
+const RouterLink = (size, tablet) => {
   let data = "";
 
   let linkData = navRoutes;
-  let webNav = linkData.filter((_, i) => i > 0 && i < linkData.length - 1);
+  let webNav = linkData.filter((_, i) => i < linkData.length - 1);
 
   size > tablet ? (data = webNav) : (data = linkData);
+
   return data.map(({ path, name, id }) => {
     return (
-      <li key={id} id={id}>
-        <Link to={path}>
+      <li key={id}>
+        <Link to={path} className="h-route" id={id}>
           {name}
           {(id === "teams" || id === "project") && size < tablet && (
             <div id="more-icon">
@@ -143,7 +173,8 @@ const Navigation = ({ location: { pathname } }) => {
 
   // 현재 사이즈 확인.
   const tablet = 768;
-  const { size } = SizeChecking(window.innerWidth);
+  const { size } = SizeChecking(window.innerWidth, navEl);
+  const { hStyle } = NavStyling(navEl, size, tablet);
 
   // roter lists
   NavClickEvent(size, tablet, navEl);
@@ -151,30 +182,32 @@ const Navigation = ({ location: { pathname } }) => {
 
   return (
     <header className={pathname === "/" ? "light" : "dark"}>
-      <div className="inr">
-        <div className={`h-nav`}>
+      <div className="h inr">
+        <div className="h-inr-wrap" style={{ ...hStyle }}>
           <h1 className="h-logo">
             <Link to="/" />
           </h1>
 
-          <nav ref={navEl}>
+          <nav className="h-nav" ref={navEl}>
             {size < tablet ? (
-              <div className="t-nav">
-                <div className="t-nav-inr">
+              <div className="ht-nav">
+                <div className="ht-nav-inr">
                   <h1 className="h-logo">
-                    <Link to="/" />
+                    <Link to="/" className="h-route" />
                   </h1>
                   <ul className="nav-inr-wrap">{router}</ul>
                 </div>
               </div>
             ) : (
-              <ul className="nav-inr-wrap">{router}</ul>
+              <ul className="nav-inr-wrap" style={{ ...hStyle }}>
+                {router}
+              </ul>
             )}
           </nav>
         </div>
 
         <div className="mypage">
-          <button className="mp-btn">
+          <button className="mypage-btn">
             <Link to="/mypage">user</Link>
             <span>님, 안녕하세요</span>
           </button>

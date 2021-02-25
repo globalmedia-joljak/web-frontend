@@ -3,19 +3,29 @@ $mp-btn: 32px;
 $hs-web: 100px;
 $hs-tablet: 60px;
 
-//logo-header
+/* [HEADER]------------------------------------------- */
+// font-size
+$hf: 20px;
+$hf-s: 16px;
+$hf-p: 14px;
+$hf-ps: 12px;
+
+// logo
 $lh-w: 68px;
 $lh-t: 51px;
 $lh-p: 40px;
 
-//logo-footer
-$ls-w: 78px;
-$ls-t: 60px;
-$ls-p: 30px;
-
-//logo-nav
+// logo-nav
 $ln-t: 140px;
 $ln-p: 76px;
 
 //nav-sub-list
 $list: 45px;
+
+/* [MAIN]---------------------------------------------- */
+
+/* [FOOTER]-------------------------------------------- */
+// logo
+$ls-w: 78px;
+$ls-t: 60px;
+$ls-p: 30px;
