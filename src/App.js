@@ -1,5 +1,4 @@
 import { Route, BrowserRouter, Switch } from "react-router-dom";
-
 import {
   Home,
   Notice,
@@ -8,6 +7,8 @@ import {
   Search,
   MyPage,
   ErrorPage,
+  SignIn,
+  signout1,
 } from "./routes";
 import "./assets/style.scss";
 
@@ -20,6 +21,8 @@ function App() {
         <Navigation />
         <Switch>
           <Route path="/" exact={true} component={Home} />
+          <Route path="/signin" exact={true} component={SignIn} />
+          <Route path="/signout" exact={true} component={signout1} />
           <Route path="/notice" exact={true} component={Notice} />
           <Route path="/teams" exact={true} component={Tbuild} />
           <Route path="/projects" exact={true} component={Projects} />

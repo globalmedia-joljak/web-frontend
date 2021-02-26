@@ -13,7 +13,8 @@ const NavStyling = (navEl, size, tablet) => {
     const { parentElement } = navEl.current;
     if (size > tablet) {
       const parentWidth = parentElement.clientWidth,
-        calculated = Math.floor(parentWidth * 0.12),
+        calculated = Math.floor(parentWidth * 0.1),
+
         maxGap = 96;
 
       calculated > maxGap
@@ -28,16 +29,20 @@ const NavStyling = (navEl, size, tablet) => {
 };
 
 //로딩후 넓이와 resize될때 넓이값에 따라 nav에 clickEvent를 준다.
-const SizeChecking = (curSize, navEl) => {
+const SizeChecking = (curSize, navEl, pathname) => {
+
   const [size, setSize] = useState(curSize);
 
   const handleResize = () => setSize(window.innerWidth);
 
   useEffect(() => {
+    if (pathname === "/signin" || pathname === "/signout") return;
+
     let { style } = navEl.current.offsetParent.nextSibling;
 
     window.addEventListener("resize", handleResize);
-    style.display = navEl.current.classList.contains("on") ? "none" : "grid";
+    style.display = navEl.current.classList.contains("on") ? "none" : "block";
+
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -64,10 +69,10 @@ const NavClickEvent = (size, tablet, navEl) => {
       switch (true) {
         case tagFilter("h-nav"):
           !tagFilter(ON) ? classList.add(ON) : classList.remove(ON);
-          console.log(e.target.classList);
+
           style.display = navEl.current.classList.contains(ON)
             ? "none"
-            : "grid";
+            : "block";
           return;
 
         // routes일 경우
@@ -85,7 +90,7 @@ const NavClickEvent = (size, tablet, navEl) => {
 
         default:
           navEl.current.classList.remove(ON);
-          style.display = "grid";
+          style.display = "block";
           break;
       }
     };
@@ -169,19 +174,28 @@ const RouterLink = (size, tablet) => {
 };
 
 const Navigation = ({ location: { pathname } }) => {
+  // if (pathname === "/signin" || pathname === "/signup") return;
   const navEl = useRef();
 
   // 현재 사이즈 확인.
   const tablet = 768;
-  const { size } = SizeChecking(window.innerWidth, navEl);
+  const { size } = SizeChecking(window.innerWidth, navEl, pathname);
+
   const { hStyle } = NavStyling(navEl, size, tablet);
 
   // roter lists
   NavClickEvent(size, tablet, navEl);
   const router = RouterLink(size, tablet);
 
+  const hideHeader = () => {
+    return pathname === "/signin" || pathname === "/signout" ? "none" : "block";
+  };
+
   return (
-    <header className={pathname === "/" ? "light" : "dark"}>
+    <header
+      className={pathname === "/" ? "light" : "dark"}
+      style={{ display: `${hideHeader()}` }}
+    >
       <div className="h inr">
         <div className="h-inr-wrap" style={{ ...hStyle }}>
           <h1 className="h-logo">

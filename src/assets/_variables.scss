@@ -1,10 +1,23 @@
-$s-btn: 24px;
-$mp-btn: 32px;
-$hs-web: 100px;
-$hs-tablet: 60px;
+$header-heigth-web: 100px;
+$header-height-tablet: 60px;
 
 /* [HEADER]------------------------------------------- */
 // font-size
+$header-font-web: 24px;
+$header-font-web-s: 20px;
+$hf-s: 16px;
+$side-nav-font-phone: 14px;
+$sub-nav-font-phone: 12px;
+
+// logo
+$header-logo-web: 68px;
+$header-logo-tablet: 51px;
+$header-logo-phone: 40px;
+
+// logo-nav
+$side-nav-logo-tablet: 140px;
+$side-nav-logo-phone: 76px;
+=======
 $hf: 20px;
 $hf-s: 16px;
 $hf-p: 14px;
@@ -23,6 +36,20 @@ $ln-p: 76px;
 $list: 45px;
 
 /* [MAIN]---------------------------------------------- */
+
+// mypage
+$set-btn-width: 174px;
+$set-btn-height: 48px;
+
+$pfoile-img-size: 228px;
+$set-header-icon: 32px;
+
+/* [FOOTER]-------------------------------------------- */
+// logo
+$footer-logo-web: 78px;
+$footer-logo-tablet: 60px;
+$footer-logo-phone: 30px;
+=======
 
 /* [FOOTER]-------------------------------------------- */
 // logo
