@@ -1,8 +1,6 @@
 @import "../../assets/_minxin.scss";
 @import "../../assets/variables.scss";
 
-$h-gap: 14%;
-
 // tablet
 $nav-btn: 24px;
 $more-i: 24px;
@@ -10,7 +8,8 @@ $more-i: 24px;
 header {
   background-color: transparent;
   position: absolute;
-  height: $hs-web;
+  width: 100%;
+  height: $header-heigth-web;
   border-bottom: 1px solid #ffffff4d;
   box-shadow: 0px 3px 6px #00000029;
   &.dark {
@@ -31,10 +30,11 @@ header {
   }
 
   .inr {
-    @include hStyle("c2", "web");
+    @include headerStyle("c2", "web");
+    height: 100%;
 
     .h-logo {
-      @include logo("logo-h", "");
+      @include logo("header-logo", "");
       outline: 2px solid orange;
       a {
         @include backgroundImage;
@@ -42,18 +42,18 @@ header {
     }
 
     .h-inr-wrap {
-      @include hStyle("c2", "");
+      @include headerStyle("c2", "");
       width: 100%;
 
       nav {
         .nav-inr-wrap {
-          @include hStyle("c3", "");
+          @include headerStyle("c3", "");
           > li {
             width: fit-content;
             > a {
               display: grid;
               place-items: center;
-              font-size: $hf;
+              font-size: $header-font-web;
             }
           }
         }
@@ -62,16 +62,16 @@ header {
 
     // mypage
     .mypage-btn {
-      @include hStyle("c2", "mp");
+      @include headerStyle("c2", "mypage");
       place-content: center;
       gap: 4px;
       a {
-        font-size: 24px;
+        font-size: $header-font-web;
         text-decoration: underline;
         background-image: none;
       }
       span {
-        font-size: $hf;
+        font-size: $header-font-web-s;
       }
     }
   }
@@ -80,17 +80,17 @@ header {
 @include response("tablet") {
   header {
     background-color: #7759d1 !important;
-    height: $hs-tablet;
+    height: $header-height-tablet;
     border-bottom: none;
     .inr {
-      @include hStyle("c2", "res");
+      @include headerStyle("c2", "res");
 
       .h-logo {
-        @include logo("logo-h", "tablet");
+        @include logo("header-logo", "tablet");
         order: 2;
       }
       .h-inr-wrap {
-        @include hStyle("c2", "res");
+        @include headerStyle("c2", "res");
         gap: 0;
         .h-logo {
           justify-self: end;
@@ -111,9 +111,9 @@ header {
               z-index: 1000;
               width: 60%;
               height: 100%;
-              @include headerRow("r2", "nav-t");
+              @include headerRow("r2", "nav-tablet");
               .h-logo {
-                @include logo("logo-n", "tablet");
+                @include logo("nav-logo", "tablet");
                 order: 0;
                 transform: none;
                 place-self: center;
@@ -153,7 +153,7 @@ header {
                   align-self: flex-start;
 
                   width: inherit;
-                  @include headerRow("r2", "sub-t");
+                  @include headerRow("r2", "sub-tablet");
 
                   &:nth-child(1) {
                     @include sideNavStyle;
@@ -209,7 +209,7 @@ header {
                     }
                   }
                   .nav-sub-wrap {
-                    @include headerRow("r2", "sub-list-t");
+                    @include headerRow("r2", "sub-list-tablet");
                     gap: 16px;
                     display: none;
                     padding-top: 0;
@@ -219,7 +219,7 @@ header {
                         padding: 4px 0 4px 13px;
                         color: transparent;
 
-                        font: $hf-ps;
+                        font: $sub-nav-font-phone;
                       }
                     }
                   }
@@ -257,14 +257,14 @@ header {
     .inr {
       .h-inr-wrap {
         .h-logo {
-          @include logo("logo-h", "phone");
+          @include logo("header-logo", "phone");
         }
         nav {
           .ht-nav {
             .ht-nav-inr {
               width: 67%;
               .h-logo {
-                @include logo("logo-n", "phone");
+                @include logo("nav-logo", "phone");
               }
             }
           }
@@ -272,7 +272,7 @@ header {
             .nav-inr-wrap {
               > li {
                 > a {
-                  font: $hf-p;
+                  font: $side-nav-font-phone;
                   #more-icon {
                     span {
                       @include setMoreIcon(10.15px, 1.45px);
@@ -283,7 +283,7 @@ header {
                 .nav-sub-wrap {
                   li {
                     a {
-                      font: $hf-ps;
+                      font: $sub-nav-font-phone;
                     }
                   }
                 }
