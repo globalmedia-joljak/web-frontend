@@ -14,6 +14,7 @@ const NavStyling = (navEl, size, tablet) => {
     if (size > tablet) {
       const parentWidth = parentElement.clientWidth,
         calculated = Math.floor(parentWidth * 0.1),
+
         maxGap = 96;
 
       calculated > maxGap
@@ -29,6 +30,7 @@ const NavStyling = (navEl, size, tablet) => {
 
 //로딩후 넓이와 resize될때 넓이값에 따라 nav에 clickEvent를 준다.
 const SizeChecking = (curSize, navEl, pathname) => {
+
   const [size, setSize] = useState(curSize);
 
   const handleResize = () => setSize(window.innerWidth);
@@ -40,6 +42,7 @@ const SizeChecking = (curSize, navEl, pathname) => {
 
     window.addEventListener("resize", handleResize);
     style.display = navEl.current.classList.contains("on") ? "none" : "block";
+
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -177,6 +180,7 @@ const Navigation = ({ location: { pathname } }) => {
   // 현재 사이즈 확인.
   const tablet = 768;
   const { size } = SizeChecking(window.innerWidth, navEl, pathname);
+
   const { hStyle } = NavStyling(navEl, size, tablet);
 
   // roter lists
