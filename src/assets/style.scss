@@ -1,5 +1,6 @@
 @import "./_minxin";
 @import "./_variables.scss";
+
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
 * {
   padding: 0;
@@ -7,6 +8,7 @@
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #000000cc;
 }
 
 html {
@@ -82,28 +84,7 @@ body {
     .inr {
       width: 80%;
       margin: 0 auto;
-      max-width: 1030px;
+      max-width: 1111px;
     }
-  }
-}
-main {
-  padding-top: $header-heigth-web;
-  outline: 3px solid lime;
-
-  .section-wrap {
-    justify-content: center;
-    background-color: #f2f2f2;
-    section {
-      @include sectionRow("default");
-    }
-  }
-}
-@include response("tablet") {
-  main {
-    padding-top: $header-height-tablet;
-  }
-
-  .home-wrap {
-    margin-top: -$header-height-tablet;
   }
 }

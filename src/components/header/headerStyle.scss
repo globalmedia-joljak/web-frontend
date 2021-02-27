@@ -1,5 +1,6 @@
 @import "../../assets/_minxin.scss";
 @import "../../assets/variables.scss";
+
 // tablet
 $nav-btn: 24px;
 $more-i: 24px;
@@ -11,12 +12,14 @@ header {
   height: $header-heigth-web;
   border-bottom: 1px solid #ffffff4d;
   box-shadow: 0px 3px 6px #00000029;
+
   &.dark {
     background-color: #ffffff;
     * {
       color: #000000;
     }
   }
+
   &.light {
     * {
       color: #ffffff;
@@ -32,7 +35,7 @@ header {
     @include headerStyle("c2", "web");
     height: 100%;
 
-    .h-logo {
+    .header-logo {
       @include logo("header-logo", "");
       outline: 2px solid orange;
       a {
@@ -40,7 +43,7 @@ header {
       }
     }
 
-    .h-inr-wrap {
+    .header-inr-wrap {
       @include headerStyle("c2", "");
       width: 100%;
 
@@ -84,14 +87,14 @@ header {
     .inr {
       @include headerStyle("c2", "res");
 
-      .h-logo {
+      .header-logo {
         @include logo("header-logo", "tablet");
         order: 2;
       }
-      .h-inr-wrap {
+      .header-inr-wrap {
         @include headerStyle("c2", "res");
         gap: 0;
-        .h-logo {
+        .header-logo {
           justify-self: end;
           transform: translateX(50%);
         }
@@ -100,10 +103,10 @@ header {
           cursor: pointer;
           width: $nav-btn;
           height: $nav-btn;
-          .ht-nav {
+          .header-nav-tablet {
             display: none;
 
-            .ht-nav-inr {
+            .header-nav-tablet-inr {
               box-shadow: 0px 16px 6px #00000029;
               background-color: #5f5873;
               position: absolute;
@@ -111,7 +114,7 @@ header {
               width: 60%;
               height: 100%;
               @include headerRow("r2", "nav-tablet");
-              .h-logo {
+              .header-logo {
                 @include logo("nav-logo", "tablet");
                 order: 0;
                 transform: none;
@@ -122,7 +125,7 @@ header {
 
           // nav메뉴가 보여질때 -tablet & phone
           &.on {
-            .ht-nav {
+            .header-nav-tablet {
               display: block;
               position: fixed;
               background-color: white;
@@ -140,6 +143,7 @@ header {
               .nav-inr-wrap {
                 display: grid;
                 padding: 0 16% 0 17%;
+                width: 100%;
                 grid-template-rows:
                   repeat(2, min-content) repeat(2, max-content)
                   min-content;
@@ -217,7 +221,7 @@ header {
                       a {
                         padding: 4px 0 4px 13px;
                         color: transparent;
-                        font: $sub-nav-font-phone;
+                        font-size: $side-nav-font-tablet;
                       }
                     }
                   }
@@ -253,35 +257,37 @@ header {
 @include response("phone") {
   header {
     .inr {
-      .h-inr-wrap {
-        .h-logo {
+      .header-inr-wrap {
+        .header-logo {
           @include logo("header-logo", "phone");
         }
         nav {
-          .ht-nav {
-            .ht-nav-inr {
+          .header-nav-tablet {
+            .header-nav-tablet-inr {
               width: 67%;
-              .h-logo {
+              .header-logo {
                 @include logo("nav-logo", "phone");
               }
             }
           }
           &.on {
-            .nav-inr-wrap {
-              > li {
-                > a {
-                  font: $side-nav-font-phone;
-                  #more-icon {
-                    span {
-                      @include setMoreIcon(10.15px, 1.45px);
+            .header-nav-tablet {
+              .nav-inr-wrap {
+                > li {
+                  > a {
+                    font-size: $side-nav-font-phone;
+                    #more-icon {
+                      span {
+                        @include setMoreIcon(10.15px, 1.45px);
+                      }
                     }
                   }
-                }
 
-                .nav-sub-wrap {
-                  li {
-                    a {
-                      font: $sub-nav-font-phone;
+                  .nav-sub-wrap {
+                    li {
+                      a {
+                        font-size: $sub-nav-font-phone;
+                      }
                     }
                   }
                 }

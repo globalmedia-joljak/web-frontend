@@ -1,14 +1,14 @@
 @import "../../assets/_minxin.scss";
 
-$logo-f: 80px;
+$footer-logo: 80px;
 
 footer {
   background-color: #ffffff;
   .inr {
-    @include fStyle($logo-f);
+    @include footerStyle($footer-logo);
     .f-logo {
-      width: $logo-f;
-      height: $logo-f;
+      width: $footer-logo;
+      height: $footer-logo;
       background-color: aqua;
       @include backgroundImage;
     }
