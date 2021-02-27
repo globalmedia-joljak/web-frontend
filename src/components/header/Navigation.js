@@ -13,8 +13,7 @@ const NavStyling = (navEl, size, tablet) => {
     const { parentElement } = navEl.current;
     if (size > tablet) {
       const parentWidth = parentElement.clientWidth,
-        calculated = Math.floor(parentWidth * 0.1),
-
+        calculated = Math.floor(parentWidth * 0.07),
         maxGap = 96;
 
       calculated > maxGap
@@ -30,7 +29,6 @@ const NavStyling = (navEl, size, tablet) => {
 
 //로딩후 넓이와 resize될때 넓이값에 따라 nav에 clickEvent를 준다.
 const SizeChecking = (curSize, navEl, pathname) => {
-
   const [size, setSize] = useState(curSize);
 
   const handleResize = () => setSize(window.innerWidth);
@@ -42,7 +40,6 @@ const SizeChecking = (curSize, navEl, pathname) => {
 
     window.addEventListener("resize", handleResize);
     style.display = navEl.current.classList.contains("on") ? "none" : "block";
-
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -76,7 +73,7 @@ const NavClickEvent = (size, tablet, navEl) => {
           return;
 
         // routes일 경우
-        case tagFilter("h-route"):
+        case tagFilter("header-route"):
           const SHOW = "show";
 
           if (id === "teams" || id === "project") {
@@ -135,7 +132,7 @@ const SubNavigation = (id) => {
     return (
       <li key={i}>
         {
-          <Link to={path} className="h-route" id={id}>
+          <Link to={path} className="header-route" id={id}>
             {name}
           </Link>
         }
@@ -156,7 +153,7 @@ const RouterLink = (size, tablet) => {
   return data.map(({ path, name, id }) => {
     return (
       <li key={id}>
-        <Link to={path} className="h-route" id={id}>
+        <Link to={path} className="header-route" id={id}>
           {name}
           {(id === "teams" || id === "project") && size < tablet && (
             <div id="more-icon">
@@ -196,18 +193,18 @@ const Navigation = ({ location: { pathname } }) => {
       className={pathname === "/" ? "light" : "dark"}
       style={{ display: `${hideHeader()}` }}
     >
-      <div className="h inr">
-        <div className="h-inr-wrap" style={{ ...hStyle }}>
-          <h1 className="h-logo">
+      <div className="header-inr inr">
+        <div className="header-inr-wrap" style={{ ...hStyle }}>
+          <h1 className="header-logo">
             <Link to="/" />
           </h1>
 
           <nav className="h-nav" ref={navEl}>
             {size < tablet ? (
-              <div className="ht-nav">
-                <div className="ht-nav-inr">
-                  <h1 className="h-logo">
-                    <Link to="/" className="h-route" />
+              <div className="header-nav-tablet">
+                <div className="header-nav-tablet-inr">
+                  <h1 className="header-logo">
+                    <Link to="/" className="header-route" />
                   </h1>
                   <ul className="nav-inr-wrap">{router}</ul>
                 </div>
