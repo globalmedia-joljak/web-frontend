@@ -23,13 +23,16 @@ body {
 				top: -6px;
 			}
 
-			.url-signOut {
+			.url-signUp {
 				position: absolute;
 				top: 725px;
-				left: 850px;
+				left: 845px;
 				font: normal normal bold 24px/36px Noto Sans KR;
 				letter-spacing: 0px;
-				color: #ffffffcc;
+
+				.signUp {
+					color: #ffffff;
+				}
 			}
 		}
 
