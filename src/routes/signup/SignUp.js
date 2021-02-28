@@ -34,6 +34,10 @@ class SignUp extends PureComponent {
 		});
 	}
 
+	gotoHome() {
+		this.props.history.push(`/`);
+	}
+
 	render() {
 		return (
 			<div className="signout-container">
