@@ -110,29 +110,24 @@
 					}
 				}
 
-				/* On mouse-over, add a grey background color */
 				.remember-id-container:hover input ~ .remember-id-checkmark {
 					background-color: #ccc;
 				}
 
-				/* When the checkbox is checked, add a blue background */
 				.remember-id-container input:checked ~ .remember-id-checkmark {
 					background-color: #2196f3;
 				}
 
-				/* Create the checkmark/indicator (hidden when not checked) */
 				.remember-id-checkmark:after {
 					content: "";
 					position: absolute;
 					display: none;
 				}
 
-				/* Show the checkmark when checked */
 				.remember-id-container input:checked ~ .remember-id-checkmark:after {
 					display: block;
 				}
 
-				/* Style the checkmark/indicator */
 				.remember-id-container .remember-id-checkmark:after {
 					left: 9px;
 					top: 5px;
