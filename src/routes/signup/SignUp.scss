@@ -1,0 +1,346 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #f2f2f2;
+	color: #333;
+
+	.signUp-input {
+		border: 1px solid #837d7d66;
+		text-align: left;
+
+		font: normal normal normal 28px/41px Noto Sans KR;
+
+		color: #6d6d6d66;
+		opacity: 1;
+		text-indent: 19px;
+
+		width: 400px;
+		height: 79px;
+		margin-left: 30px;
+		border-radius: 10px;
+	}
+
+	select {
+		margin-left: 30px;
+		height: 79px;
+		border-radius: 10px;
+		width: 213px;
+
+		padding-left: 19px;
+
+		text-align: left;
+		font: normal normal normal 28px/41px Noto Sans KR;
+		letter-spacing: 0px;
+		color: #00000080;
+		opacity: 1;
+	}
+
+	.signUp-container {
+		display: flex;
+		position: relative;
+		width: 1200px;
+		height: 800px;
+		background-color: #ffffff;
+		margin: 62px auto;
+		flex-direction: column;
+		justify-content: space-evenly;
+		align-items: center;
+		border-radius: 32px;
+		box-shadow: 0px 3px 6px #00000029;
+
+		.check-info {
+			margin-left: 40px;
+			margin-top: 3px;
+			margin-bottom: 3px;
+			width: 350px;
+			height: 20px;
+		}
+
+		.el-main {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+
+			.sub-info {
+				width: 100%;
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+
+				.info-title {
+					font-size: 25px;
+					margin-top: 20px;
+					font: normal normal bold 32px/47px Noto Sans KR;
+				}
+
+				.info-body {
+					display: flex;
+					flex-direction: column;
+					width: 900px;
+					margin-bottom: 10px;
+
+					.input-password {
+						display: flex;
+
+						flex-direction: row;
+					}
+				}
+			}
+
+			.sub-private-info {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+
+				.info-body {
+					display: flex;
+					flex-direction: column;
+					align-items: stretch;
+				}
+			}
+
+			.sub-auth-num {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.signUp-button {
+				position: absolute;
+				width: 240px;
+				height: 80px;
+				cursor: pointer;
+				top: 605px;
+				left: 835px;
+
+				background: #9a609c 0% 0% no-repeat padding-box;
+				border-radius: 8px;
+				border-style: none;
+				font: normal normal medium Noto Sans KR;
+				font-size: 23px;
+				letter-spacing: 0px;
+				color: #ffffff;
+				opacity: 1;
+			}
+		}
+	}
+
+	@media all and (max-width: 550px) {
+		.signUp-input {
+			border: 1px solid #837d7d66;
+			text-align: left;
+
+			font: normal normal normal 16px/24px Noto Sans KR;
+
+			color: black;
+			opacity: 1;
+			text-indent: 19px;
+
+			width: 272px;
+			height: 36px;
+			margin-left: 24px;
+			border-radius: 4px;
+		}
+
+		select {
+			margin-left: 16px;
+			height: 36px;
+			border-radius: 4px;
+			width: 72px;
+
+			padding-left: 4px;
+
+			text-align: left;
+			font: normal normal normal 12px/18px Noto Sans KR;
+			letter-spacing: 0px;
+			color: #00000080;
+			opacity: 1;
+		}
+
+		.signUp-container {
+			display: flex;
+			position: relative;
+			width: 320px;
+			height: 650px;
+			background-color: #ffffff;
+			margin: 62px auto;
+			flex-direction: column;
+			justify-content: space-evenly;
+			align-items: center;
+			border-radius: 32px;
+			box-shadow: 0px 3px 6px #00000029;
+
+			.check-info {
+				margin-left: 40px;
+				margin-top: 3px;
+				margin-bottom: 3px;
+				width: 250px;
+				height: 10px;
+				font-size: small;
+				color: red;
+			}
+
+			.el-main {
+				display: flex;
+				flex-direction: column;
+				align-items: start;
+				width: 100%;
+
+				.sub-info {
+					width: 100%;
+					margin-bottom: 30px;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+
+					.info-title {
+						font-size: 25px;
+						width: 100px;
+						margin-left: 24px;
+						margin-top: 0px;
+						margin-bottom: 12px;
+						font: normal normal bold 22px/33px Noto Sans KR;
+					}
+
+					.info-body {
+						display: flex;
+						flex-direction: column;
+						width: 590px;
+						margin-bottom: 10px;
+
+						.insert-name {
+							width: 184px;
+							height: 36px;
+						}
+
+						.input-password {
+							display: flex;
+
+							flex-direction: column;
+						}
+					}
+				}
+
+				.signUp-button {
+					position: absolute;
+					width: 208px;
+					height: 42px;
+					cursor: pointer;
+					top: 580px;
+					left: 58px;
+
+					background: #9a609c 0% 0% no-repeat padding-box;
+					border-radius: 8px;
+					border-style: none;
+
+					font-size: 17px;
+					letter-spacing: 0px;
+					color: #ffffff;
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	@media all and (max-width: 1073px) and (min-width: 550px) {
+		.signUp-input {
+			border: 1px solid #837d7d66;
+			text-align: left;
+
+			font: normal normal normal 16px/24px Noto Sans KR;
+
+			color: black;
+			opacity: 1;
+			text-indent: 19px;
+
+			width: 374px;
+			height: 42px;
+			margin-left: 30px;
+			border-radius: 4px;
+		}
+
+		select {
+			margin-left: 30px;
+			height: 42px;
+			border-radius: 10px;
+			width: 116px;
+
+			padding-left: 19px;
+
+			text-align: left;
+			font: normal normal normal 16px/24px Noto Sans KR;
+			letter-spacing: 0px;
+			color: #00000080;
+			opacity: 1;
+		}
+
+		.signUp-container {
+			display: flex;
+			position: relative;
+			width: 608px;
+			height: 790px;
+			background-color: #ffffff;
+			margin: 62px auto;
+			flex-direction: column;
+			justify-content: space-evenly;
+			align-items: center;
+			border-radius: 32px;
+			box-shadow: 0px 3px 6px #00000029;
+
+			.el-main {
+				display: flex;
+				margin-top: -90px;
+				flex-direction: column;
+				justify-content: space-between;
+				align-items: center;
+				width: 100%;
+
+				.sub-info {
+					width: 100%;
+					margin-bottom: 50px;
+					display: flex;
+					flex-direction: row;
+					justify-content: center;
+
+					.info-title {
+						font-size: 25px;
+						width: 100px;
+						margin-left: 150px;
+						margin-top: 0px;
+						font: normal normal bold 22px/33px Noto Sans KR;
+					}
+
+					.info-body {
+						display: flex;
+						flex-direction: column;
+						width: 590px;
+						margin-bottom: 10px;
+
+						.insert-name {
+							width: 234px;
+							height: 42px;
+						}
+
+						.input-password {
+							display: flex;
+
+							flex-direction: column;
+						}
+					}
+				}
+
+				.signUp-button {
+					position: absolute;
+					width: 286px;
+					height: 64px;
+					cursor: pointer;
+					top: 674px;
+					left: 175px;
+				}
+			}
+		}
+	}
+}
