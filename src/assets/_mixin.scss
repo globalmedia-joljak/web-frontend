@@ -60,6 +60,7 @@
     left: 50%;
   }
 }
+
 // header ----------------------------------------------------
 @mixin headerStyle($col, $type) {
   display: grid;
@@ -97,26 +98,18 @@
   padding-top: 16px;
   border-top: 1px solid #ffffff66;
 }
+
 // main -------------------------------------------------------
-@mixin mainRow($row, $name) {
+@mixin mainRow($row, $name, $size) {
   display: grid;
   @if $row == "r2" {
-    @if $name == "mainpage" {
+    @if $name == "mypage" {
       grid-template-rows: minmax(44%, 443px) auto;
     }
   } @else if $row == "r3" {
     @if $name == "home" {
-      grid-template-rows: minmax(33.3%, 600px) auto 76px;
+      grid-template-rows: minmax(33.3%, 600px) auto $size;
     }
-  }
-}
-
-@mixin sectionRow($row) {
-  display: grid;
-  @if $row == "default" {
-    grid-auto-rows: max-content;
-  } @else if $row == "r2" {
-    grid-template-rows: repeat(2, max-content);
   }
 }
 
@@ -128,10 +121,23 @@
 }
 
 // footer -----------------------------------------------------
-@mixin footerStyle($gap) {
+@mixin footerStyle($grid, $type) {
   display: grid;
-  gap: 133px;
-  grid-template-columns: 1fr $gap 1fr;
+  @if $grid == "col" {
+    @if $type == "web" {
+      gap: 133px;
+      grid-template-columns: 1fr $footer-logo-web 1fr;
+    } @else if $type == "tablet" {
+      gap: 7.4%;
+      grid-template-columns: auto $footer-logo-tablet auto;
+    }
+  } @else if $grid == "row" {
+    @if $type == "phone" {
+      gap: 0;
+      grid-template-columns: 1fr;
+      grid-template-rows: 38px 23px 1fr;
+    }
+  }
 }
 
 // response ---------------------------------------------------

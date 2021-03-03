@@ -30,8 +30,10 @@ const NavStyling = (navEl, size, tablet) => {
 //로딩후 넓이와 resize될때 넓이값에 따라 nav에 clickEvent를 준다.
 const SizeChecking = (curSize, navEl, pathname) => {
   const [size, setSize] = useState(curSize);
+  const [scroll, setScroll] = useState(0);
 
   const handleResize = () => setSize(window.innerWidth);
+  const handleScroll = () => setScroll(Math.floor(window.scrollY));
 
   useEffect(() => {
     if (pathname === "/signin" || pathname === "/signout") return;
@@ -39,14 +41,16 @@ const SizeChecking = (curSize, navEl, pathname) => {
     let { style } = navEl.current.offsetParent.nextSibling;
 
     window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
     style.display = navEl.current.classList.contains("on") ? "none" : "block";
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
     };
   });
 
-  return { size };
+  return { size, scroll };
 };
 
 const NavClickEvent = (size, tablet, navEl) => {
@@ -176,7 +180,7 @@ const Navigation = ({ location: { pathname } }) => {
 
   // 현재 사이즈 확인.
   const tablet = 768;
-  const { size } = SizeChecking(window.innerWidth, navEl, pathname);
+  const { size, scroll } = SizeChecking(window.innerWidth, navEl, pathname);
 
   const { hStyle } = NavStyling(navEl, size, tablet);
 
@@ -190,7 +194,7 @@ const Navigation = ({ location: { pathname } }) => {
 
   return (
     <header
-      className={pathname === "/" ? "light" : "dark"}
+      className={pathname !== "/" || scroll > 0 ? "dark" : "light"}
       style={{ display: `${hideHeader()}` }}
     >
       <div className="header-inr inr">
