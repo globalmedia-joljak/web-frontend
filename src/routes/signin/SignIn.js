@@ -27,12 +27,12 @@ class SignIn extends PureComponent {
 								className="login-input"
 								type="text"
 								name="query"
-								placeholder="아이디"
+								placeholder="학번"
 							/>
 							<div className="check-info"></div>
 							<input
 								className="login-input"
-								type="text"
+								type="password"
 								name="query"
 								placeholder="비밀번호"
 							/>
@@ -49,6 +49,11 @@ class SignIn extends PureComponent {
 							</button>
 						</form>
 					</div>
+					<p className="url-signUp">
+						<a href="/signup" className="signUp">
+							회원가입
+						</a>
+					</p>
 				</div>
 
 				<div className="login-right login">
@@ -57,8 +62,10 @@ class SignIn extends PureComponent {
 						alt="My dongho"
 						className="Signinbackground"
 					/>
-					<p className="url-signOut">
-						<a href="/signout">회원가입</a>
+					<p className="url-signUp">
+						<a href="/signup" className="signUp">
+							회원가입
+						</a>
 					</p>
 				</div>
 			</div>
