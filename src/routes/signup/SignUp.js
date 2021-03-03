@@ -24,7 +24,7 @@ class SignUp extends PureComponent {
 			typeof input["confirm_password"] !== "undefined"
 		) {
 			if (input["password"] != input["confirm_password"]) {
-				errors["password"] = "Passwords don't match.";
+				errors["password"] = "비밀번호가 일치하지 않습니다.";
 			}
 		}
 
@@ -34,7 +34,7 @@ class SignUp extends PureComponent {
 		});
 	}
 
-	gotoHome() {
+	goToHome() {
 		this.props.history.push(`/`);
 	}
 
@@ -160,7 +160,7 @@ class SignUp extends PureComponent {
 							</div>
 						</div>
 
-						<button onClick={() => this.gotoHome()} className="signUp-button">
+						<button onClick={() => this.goToHome()} className="signUp-button">
 							가입하기
 						</button>
 					</form>
