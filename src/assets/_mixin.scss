@@ -100,7 +100,7 @@
 }
 
 // main -------------------------------------------------------
-@mixin mainRow($row, $name, $size) {
+@mixin mainRow($row, $name, $size, $max) {
   display: grid;
   @if $row == "r2" {
     @if $name == "mypage" {
@@ -108,7 +108,7 @@
     }
   } @else if $row == "r3" {
     @if $name == "home" {
-      grid-template-rows: minmax(33.3%, 600px) auto $size;
+      grid-template-rows: minmax(33.3%, $max) auto $size;
     }
   }
 }

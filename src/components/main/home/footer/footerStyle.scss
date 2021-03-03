@@ -1,0 +1,65 @@
+@import "../../../../assets/_mixin.scss";
+
+footer {
+  background-color: #ffffff;
+  .inr {
+    @include footerStyle("col", "web");
+    .f-logo {
+      @include logo("footer-logo", "");
+      @include backgroundImage;
+      background-image: url("../../../../assets/images/GlobalMedia_Black@2x.png");
+    }
+    span {
+      width: fit-content;
+      place-self: center;
+      color: #6d6d6dcc;
+      font-size: 14px;
+      &.e-mail {
+        justify-self: end;
+      }
+    }
+  }
+}
+
+@include response("tablet") {
+  footer {
+    .inr {
+      margin: 0 !important;
+      width: 100% !important;
+      height: 100%;
+      @include footerStyle("col", "tablet");
+
+      .f-logo {
+        @include logo("footer-logo", "tablet");
+      }
+      span {
+        font-size: 10px;
+        color: #000000;
+      }
+    }
+  }
+}
+
+@include response("phone") {
+  footer {
+    .inr {
+      @include footerStyle("row", "phone");
+      .f-logo {
+        @include logo("footer-logo", "phone");
+        place-self: center;
+        order: 1;
+      }
+      .e-mail {
+        order: 2;
+        place-self: start center !important;
+      }
+      .copy-right {
+        order: 3;
+        border-top: 1px solid #b6b6b633;
+        @include widthHeight;
+        display: grid;
+        place-items: center;
+      }
+    }
+  }
+}
