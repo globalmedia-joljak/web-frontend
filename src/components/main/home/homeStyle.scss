@@ -2,7 +2,7 @@
 
 .home-wrap {
   margin-top: -$header-heigth-web;
-  @include mainRow("r3", "home");
+  @include mainRow("r3", "home", "");
   .heroImg {
     @include backgroundImage;
     background-color: rgba(171, 192, 131, 0.61);
