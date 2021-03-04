@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="inr">
         <span className="e-mail">G-Mail: moses011010@gmail.com</span>
         <div className="f-logo"></div>
-        <span className="copy">
+        <span className="copy-right">
           Copyright 2021. 최강남대문쌍절곤 All right reserved
         </span>
       </div>

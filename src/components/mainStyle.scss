@@ -2,20 +2,19 @@
 @import "../assets/_variables.scss";
 
 main {
-	padding-top: $header-heigth-web;
-	outline: 3px solid salmon;
-	.section-wrap {
-		justify-content: center;
-		background-color: #f2f2f2;
-	}
+  padding-top: $header-heigth-web;
+  .section-wrap {
+    justify-content: center;
+    background-color: #f2f2f2;
+  }
 }
 
 @include response("tablet") {
-	main {
-		padding-top: $header-height-tablet;
-	}
+  main {
+    padding-top: $header-height-tablet;
+  }
 
-	.home-wrap {
-		margin-top: -$header-height-tablet;
-	}
+  .home-wrap {
+    margin-top: -$header-height-tablet;
+  }
 }

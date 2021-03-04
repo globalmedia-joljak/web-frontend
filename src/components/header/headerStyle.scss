@@ -6,296 +6,317 @@ $nav-btn: 24px;
 $more-i: 24px;
 
 header {
-	background-color: transparent;
-	position: absolute;
-	width: 100%;
-	height: $header-heigth-web;
-	border-bottom: 1px solid #ffffff4d;
-	box-shadow: 0px 3px 6px #00000029;
+  background-color: transparent;
+  position: fixed;
+  width: 100%;
+  height: $header-heigth-web;
+  border-bottom: 1px solid #ffffff4d;
+  box-shadow: 0px 3px 6px #00000029;
+  z-index: 1100;
 
-	&.dark {
-		background-color: #ffffff;
-		* {
-			color: #000000;
-		}
-	}
+  &.dark {
+    background-color: #ffffff;
+    * {
+      color: #000000;
+    }
+    .inr {
+      .header-logo {
+        a {
+          background-image: url("../../assets/images/GlobalMedia_Color@2x.png");
+        }
+      }
+    }
+  }
 
-	&.light {
-		* {
-			color: #ffffff;
-		}
-		.mypage-btn {
-			span {
-				color: #ffffffcc;
-			}
-		}
-	}
+  &.light {
+    * {
+      color: #ffffff;
+    }
+    .inr {
+      .header-logo {
+        a {
+          background-image: url("../../assets/images/GlobalMedia_White@2x.png");
+        }
+      }
+    }
+    .mypage-btn {
+      span {
+        color: #ffffffcc;
+      }
+    }
+  }
 
-	.inr {
-		@include headerStyle("c2", "web");
-		height: 100%;
+  .inr {
+    @include headerStyle("c2", "web");
+    height: 100%;
 
-		.header-logo {
-			@include logo("header-logo", "");
-			outline: 2px solid orange;
-			a {
-				@include backgroundImage;
-			}
-		}
+    .header-logo {
+      @include logo("header-logo", "");
+      a {
+        @include backgroundImage;
+      }
+    }
 
-		.header-inr-wrap {
-			@include headerStyle("c2", "");
-			width: 100%;
+    .header-inr-wrap {
+      @include headerStyle("c2", "");
+      width: 100%;
 
-			nav {
-				.nav-inr-wrap {
-					@include headerStyle("c3", "");
-					> li {
-						width: fit-content;
-						> a {
-							display: grid;
-							place-items: center;
-							font-size: $header-font-web;
-						}
-					}
-				}
-			}
-		}
+      nav {
+        .nav-inr-wrap {
+          @include headerStyle("c3", "");
+          > li {
+            width: fit-content;
+            > a {
+              display: grid;
+              place-items: center;
+              font-size: $header-font-web;
+            }
+          }
+        }
+      }
+    }
 
-		// mypage
-		.mypage-btn {
-			@include headerStyle("c2", "mypage");
-			place-content: center;
-			gap: 4px;
-			a {
-				font-size: $header-font-web;
-				text-decoration: underline;
-				background-image: none;
-			}
-			span {
-				font-size: $header-font-web-s;
-			}
-		}
-	}
+    // mypage
+    .mypage-btn {
+      @include headerStyle("c2", "mypage");
+      place-content: center;
+      gap: 4px;
+      a {
+        font-size: $header-font-web;
+        text-decoration: underline;
+        background-image: none;
+      }
+      span {
+        font-size: $header-font-web-s;
+      }
+    }
+  }
 }
 
 @include response("tablet") {
-	header {
-		background-color: #7759d1 !important;
-		height: $header-height-tablet;
-		border-bottom: none;
-		.inr {
-			@include headerStyle("c2", "res");
+  header {
+    background-color: #7759d1 !important;
+    height: $header-height-tablet;
+    border-bottom: none;
+    .inr {
+      @include headerStyle("c2", "res");
 
-			.header-logo {
-				@include logo("header-logo", "tablet");
-				order: 2;
-			}
-			.header-inr-wrap {
-				@include headerStyle("c2", "res");
-				gap: 0;
-				.header-logo {
-					justify-self: end;
-					transform: translateX(50%);
-				}
-				nav {
-					background-color: lightsalmon;
-					cursor: pointer;
-					width: $nav-btn;
-					height: $nav-btn;
-					.header-nav-tablet {
-						display: none;
+      .header-logo {
+        @include logo("header-logo", "tablet");
+        order: 2;
+      }
+      .header-inr-wrap {
+        @include headerStyle("c2", "res");
+        gap: 0;
+        .header-logo {
+          a {
+            background-image: url("../../assets/images/GlobalMedia_White.png");
+          }
+          justify-self: end;
+          transform: translateX(50%);
+        }
 
-						.header-nav-tablet-inr {
-							box-shadow: 0px 16px 6px #00000029;
-							background-color: #5f5873;
-							position: absolute;
-							z-index: 1000;
-							width: 60%;
-							height: 100%;
-							@include headerRow("r2", "nav-tablet");
-							.header-logo {
-								@include logo("nav-logo", "tablet");
-								order: 0;
-								transform: none;
-								place-self: center;
-							}
-						}
-					}
+        nav {
+          @include backgroundImage;
+          background-image: url("../../assets/images/List@2x.png");
+          cursor: pointer;
+          width: $nav-btn;
+          height: $nav-btn;
+          .header-nav-tablet {
+            display: none;
 
-					// nav메뉴가 보여질때 -tablet & phone
-					&.on {
-						.header-nav-tablet {
-							display: block;
-							position: fixed;
-							background-color: white;
-							@include widthHeight;
-							left: 0;
-							top: 0;
+            .header-nav-tablet-inr {
+              box-shadow: 0px 16px 6px #00000029;
+              background-color: #5f5873;
+              position: absolute;
+              z-index: 1000;
+              width: 60%;
+              height: 100%;
+              @include headerRow("r2", "nav-tablet");
+              .header-logo {
+                @include logo("nav-logo", "tablet");
+                a {
+                  background-image: url("../../assets/images/GlobalMedia_White@2x.png");
+                }
+                order: 0;
+                transform: none;
+                place-self: center;
+              }
+            }
+          }
 
-							&::after {
-								position: absolute;
-								content: "";
-								@include widthHeight;
-								background-color: #00000066;
-							}
+          // nav메뉴가 보여질때 -tablet & phone
+          &.on {
+            .header-nav-tablet {
+              display: block;
+              position: fixed;
+              background-color: white;
+              @include widthHeight;
+              left: 0;
+              top: 0;
 
-							.nav-inr-wrap {
-								display: grid;
-								padding: 0 16% 0 17%;
-								width: 100%;
-								grid-template-rows:
-									repeat(2, min-content) repeat(2, max-content)
-									min-content;
-								grid-template-columns: 1fr;
-								gap: 16px;
-								* {
-									color: #ffffffcc;
-								}
-								> li {
-									align-self: flex-start;
+              &::after {
+                position: absolute;
+                content: "";
+                @include widthHeight;
+                background-color: #00000066;
+              }
 
-									width: inherit;
-									@include headerRow("r2", "sub-tablet");
+              .nav-inr-wrap {
+                display: grid;
+                padding: 0 16% 0 17%;
+                width: 100%;
+                grid-template-rows:
+                  repeat(2, min-content) repeat(2, max-content)
+                  min-content;
+                grid-template-columns: 1fr;
+                gap: 16px;
+                * {
+                  color: #ffffffcc;
+                }
+                > li {
+                  align-self: flex-start;
 
-									&:nth-child(1) {
-										@include sideNavStyle;
-									}
-									&:last-child {
-										@include sideNavStyle;
-										padding-top: 8.5px;
-									}
-									> a {
-										position: relative;
-										place-items: center start;
-										padding: 8px;
+                  width: inherit;
+                  @include headerRow("r2", "sub-tablet");
 
-										#more-icon {
-											right: 0;
-											@include centerPosition;
-											position: absolute;
-											width: $more-i;
-											height: $more-i;
-											z-index: 400;
-											span {
-												@include setMoreIcon(14px, 2px);
-												background-color: #ffffff;
-												&.rotate {
-													transform: translate(-50%) rotate(90deg);
-													transition: transform ease 0.4s;
-												}
-											}
-										}
-									}
-									// sub메뉴 클릭했을때
-									&.show {
-										> a {
-											#more-icon {
-												span {
-													&.rotate {
-														transform: translate(-50%) rotate(0);
-													}
-												}
-											}
-										}
-										.nav-sub-wrap {
-											display: grid;
-											padding: 24px 0 8px;
-											height: fit-content;
+                  &:nth-child(1) {
+                    @include sideNavStyle;
+                  }
+                  &:last-child {
+                    @include sideNavStyle;
+                    padding-top: 8.5px;
+                  }
+                  > a {
+                    position: relative;
+                    place-items: center start;
+                    padding: 8px;
 
-											li {
-												a {
-													color: #ffffffcc;
-													transition: color 0.1s;
-												}
-											}
-										}
-									}
-									.nav-sub-wrap {
-										@include headerRow("r2", "sub-list-tablet");
-										gap: 16px;
-										display: none;
-										padding-top: 0;
-										height: 0;
-										li {
-											a {
-												padding: 4px 0 4px 13px;
-												color: transparent;
-												font-size: $side-nav-font-tablet;
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			.mypage {
-				display: grid;
-				place-content: center end;
-				.mypage-btn {
-					gap: 0;
-					grid-template-columns: auto;
-					background-color: #5f5873;
-					a {
-						background-color: lime;
-						@include backgroundImage;
-						font-size: 0;
-						width: 24px;
-						height: 24px;
-					}
-					span {
-						display: none;
-					}
-				}
-			}
-		}
-	}
+                    #more-icon {
+                      right: 0;
+                      @include centerPosition;
+                      position: absolute;
+                      width: $more-i;
+                      height: $more-i;
+                      z-index: 400;
+                      span {
+                        @include setMoreIcon(14px, 2px);
+                        background-color: #ffffff;
+                        &.rotate {
+                          transform: translate(-50%) rotate(90deg);
+                          transition: transform ease 0.4s;
+                        }
+                      }
+                    }
+                  }
+                  // sub메뉴 클릭했을때
+                  &.show {
+                    > a {
+                      #more-icon {
+                        span {
+                          &.rotate {
+                            transform: translate(-50%) rotate(0);
+                          }
+                        }
+                      }
+                    }
+                    .nav-sub-wrap {
+                      display: grid;
+                      padding: 24px 0 8px;
+                      height: fit-content;
+
+                      li {
+                        a {
+                          color: #ffffffcc;
+                          transition: color 0.1s;
+                        }
+                      }
+                    }
+                  }
+                  .nav-sub-wrap {
+                    @include headerRow("r2", "sub-list-tablet");
+                    gap: 16px;
+                    display: none;
+                    padding-top: 0;
+                    height: 0;
+                    li {
+                      a {
+                        padding: 4px 0 4px 13px;
+                        color: transparent;
+                        font-size: $side-nav-font-tablet;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .mypage {
+        display: grid;
+        place-content: center end;
+        .mypage-btn {
+          gap: 0;
+          grid-template-columns: auto;
+          a {
+            @include backgroundImage;
+            background-image: url("../../assets/images/person@2x.png");
+            font-size: 0;
+            width: 24px;
+            height: 24px;
+          }
+          span {
+            display: none;
+          }
+        }
+      }
+    }
+  }
 }
 
 @include response("phone") {
-	header {
-		.inr {
-			.header-inr-wrap {
-				.header-logo {
-					@include logo("header-logo", "phone");
-				}
-				nav {
-					.header-nav-tablet {
-						.header-nav-tablet-inr {
-							width: 67%;
-							.header-logo {
-								@include logo("nav-logo", "phone");
-							}
-						}
-					}
-					&.on {
-						.header-nav-tablet {
-							.nav-inr-wrap {
-								> li {
-									> a {
-										font-size: $side-nav-font-phone;
-										#more-icon {
-											span {
-												@include setMoreIcon(10.15px, 1.45px);
-											}
-										}
-									}
+  header {
+    .inr {
+      .header-inr-wrap {
+        .header-logo {
+          @include logo("header-logo", "phone");
+        }
+        nav {
+          .header-nav-tablet {
+            .header-nav-tablet-inr {
+              width: 67%;
+              .header-logo {
+                @include logo("nav-logo", "phone");
+              }
+            }
+          }
+          &.on {
+            .header-nav-tablet {
+              .nav-inr-wrap {
+                > li {
+                  > a {
+                    font-size: $side-nav-font-phone;
+                    #more-icon {
+                      span {
+                        @include setMoreIcon(10.15px, 1.45px);
+                      }
+                    }
+                  }
 
-									.nav-sub-wrap {
-										li {
-											a {
-												font-size: $sub-nav-font-phone;
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+                  .nav-sub-wrap {
+                    li {
+                      a {
+                        font-size: $sub-nav-font-phone;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
