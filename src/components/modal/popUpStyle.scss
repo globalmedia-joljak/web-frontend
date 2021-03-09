@@ -1,0 +1,240 @@
+@import "../../assets/_mixin.scss";
+@import "../../assets/_variables.scss";
+$cancel-btn-web: 48px;
+$cancel-btn-tablet: 24px;
+
+$cancel-btn-pos-web: 24px;
+$cancel-btn-pos-tablet: 30px;
+
+$media-art: #d92b3a;
+$designer: #f2cb05;
+$developer: #367dd9;
+$product-manager: #03a61c;
+
+.modal-wrapper {
+  position: fixed;
+  @include widthHeight;
+  background-color: #ffffff;
+  z-index: 1200;
+  left: 0;
+  top: 0;
+  .modal-inr {
+    background-color: #00000066;
+    @include widthHeight;
+    display: grid;
+    place-items: center;
+    .modal-lists {
+      position: relative;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0px 0px 6px #00000029;
+      display: grid;
+      grid-template-rows: repeat(3, max-content) 1fr max-content;
+      gap: 42px;
+      width: 90%;
+      height: 90%;
+      max-width: 786px;
+      max-height: 683px;
+      h2 {
+        font-size: 28px;
+        color: #000000;
+      }
+      h3 {
+        font-size: 24px;
+        color: #000000;
+      }
+      .list {
+        display: grid;
+
+        &:nth-child(1) {
+          padding: 24px 95px 0 40px;
+          p {
+            color: #6d6d6dcc;
+            span {
+              color: inherit;
+            }
+            font-size: 20px;
+          }
+        }
+        &.r2 {
+          @include modalStyle("row", "r2");
+
+          padding-left: 40px;
+          ul {
+            @include modalStyle("col", "");
+            flex-wrap: wrap;
+            gap: 16px;
+            li {
+              font-size: 18px;
+              width: 123px;
+              height: 48px;
+
+              input[type="radio"] {
+                display: none;
+              }
+              input[type="radio"]:checked + label {
+                background-color: $media-art;
+                color: #ffffff;
+                border: none;
+              }
+              label {
+                display: grid;
+                place-items: center;
+                @include widthHeight;
+                cursor: pointer;
+                color: #6d6d6d;
+                border: 1px solid #bebebe;
+                border-radius: 4px;
+              }
+              &:nth-child(2) {
+                input[type="radio"]:checked + label {
+                  background-color: $designer;
+                }
+              }
+              &:nth-child(3) {
+                input[type="radio"]:checked + label {
+                  background-color: $developer;
+                }
+              }
+              &:nth-child(4) {
+                input[type="radio"]:checked + label {
+                  background-color: $product-manager;
+                }
+              }
+            }
+          }
+        }
+        &.alert {
+          justify-self: center;
+          font-size: 20px;
+        }
+        &.choice-btn {
+          place-items: center;
+          padding-bottom: 42px;
+          button {
+            width: 234px;
+            height: 56px;
+            background-color: #baa2ff;
+            color: #ffffff;
+            font-size: 20px;
+            border-radius: 4px;
+          }
+        }
+      }
+      #cancel-btn {
+        position: absolute;
+        width: $cancel-btn-web;
+        height: $cancel-btn-web;
+        border-radius: 50%;
+        right: $cancel-btn-pos-web;
+        top: $cancel-btn-pos-web;
+        button {
+          @include widthHeight;
+          @include backgroundImage;
+          background-image: url("../../assets/images/exit@2x.png");
+        }
+      }
+    }
+  }
+}
+
+@include response("tablet") {
+  .modal-wrapper {
+    .modal-inr {
+      background-color: #f2f2f2;
+      .modal-lists {
+        max-width: 608px;
+        max-height: 790px;
+        gap: 56px;
+        h2 {
+          font-size: 22px;
+        }
+        h3 {
+          font-size: 20px;
+        }
+        .list {
+          &:nth-child(1) {
+            padding: 24px 49px 0 24px;
+            p {
+              font-size: 14px;
+            }
+          }
+          &.r2 {
+            padding-left: 24px;
+            ul {
+              li {
+                font-size: 14px;
+                width: 116px;
+                height: 40px;
+              }
+            }
+          }
+          &.alert {
+            font-size: 16px;
+          }
+        }
+        #cancel-btn {
+          width: $cancel-btn-tablet;
+          height: $cancel-btn-tablet;
+          top: $cancel-btn-pos-tablet;
+          right: $cancel-btn-pos-tablet;
+        }
+      }
+    }
+  }
+}
+
+@include response("phone") {
+  .modal-wrapper {
+    .modal-inr {
+      .modal-lists {
+        gap: 32px;
+        max-width: 320px;
+        max-height: 650px;
+        padding: 0 21px;
+        h2 {
+          font-size: 20px;
+        }
+        h3 {
+          font-size: 16px;
+        }
+        .list {
+          &:nth-child(1) {
+            padding-top: 24px !important;
+            p {
+              display: grid;
+              gap: 3px;
+            }
+          }
+          &.r2 {
+            padding: 0;
+            gap: 8px;
+            ul {
+              gap: 4px;
+              li {
+                font-size: 12px;
+                width: 88px;
+                height: 32px;
+              }
+            }
+          }
+          &.alert {
+            font-size: 14px;
+          }
+          &.choice-btn {
+            padding-bottom: 24px;
+            button {
+              width: 208px;
+              height: 42px;
+              font-size: 16px;
+            }
+          }
+        }
+        #cancel-btn {
+          top: $cancel-btn-pos-web + 3;
+          right: $cancel-btn-pos-web;
+        }
+      }
+    }
+  }
+}

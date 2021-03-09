@@ -104,19 +104,31 @@
   display: grid;
   @if $row == "r2" {
     @if $name == "mypage" {
-      grid-template-rows: minmax(44%, 443px) auto;
+      grid-template-rows: minmax(20%, $max) auto;
     }
   } @else if $row == "r3" {
     @if $name == "home" {
-      grid-template-rows: minmax(33.3%, $max) auto $size;
+      grid-template-rows: minmax(33.3%, $max) 1fr $size;
     }
   }
 }
+@mixin translateStyle($size) {
+  transform: translate(-$size, $size);
+}
 
-@mixin sectionColumns($col) {
+@mixin sectionStyle($grid, $type, $max, $size) {
   display: grid;
-  @if $col == "c3" {
-    grid-template-columns: 20.7% minmax(auto, 378px) $set-btn-width;
+  @if $grid == "col" {
+    @if $type == "web" {
+      grid-template-columns: minmax(17%, min-content) 1fr;
+    } @else if $type == "web-input" {
+      grid-template-columns: minmax(auto, $max) $size;
+    }
+  } @else if $grid == "row" {
+    @if $type == "phone" {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(2, max-content);
+    }
   }
 }
 
@@ -140,13 +152,32 @@
   }
 }
 
+// modal ------------------------------------------------------
+@mixin modalStyle($type, $num) {
+  @if $type == "row" {
+    display: grid;
+    @if $num == "r2" {
+      grid-template-rows: repeat(2, auto);
+      gap: 16px;
+    }
+  } @else if $type == "col" {
+    display: grid;
+    @if $num == "c2" {
+      grid-auto-columns: auto;
+    } @else {
+      display: flex;
+    }
+  }
+}
+
 // response ---------------------------------------------------
 $maxTablet: 768px;
-$maxPhone: 360px;
+$maxPhone-L: 425px;
+// $maxPhone-M: 370px;
 
 @mixin response($device) {
   @if $device == "phone" {
-    @media screen and (max-width: $maxPhone) {
+    @media screen and (max-width: $maxPhone-L) {
       @content;
     }
   } @else if $device == "tablet" {

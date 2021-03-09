@@ -188,7 +188,7 @@ const Navigation = ({ location: { pathname } }) => {
   const router = RouterLink(size, tablet);
 
   const hideHeader = () => {
-    return pathname === "/signin" || pathname === "/signout" ? "none" : "block";
+    return pathname === "/signin" || pathname === "/signout" ? "none" : "grid";
   };
 
   return (
@@ -203,19 +203,20 @@ const Navigation = ({ location: { pathname } }) => {
           </h1>
 
           <nav className="h-nav" ref={navEl}>
-            {size < tablet ? (
+            {size > tablet ? (
+              <ul className="nav-inr-wrap" style={{ ...hStyle }}>
+                {router}
+              </ul>
+            ) : (
               <div className="header-nav-tablet">
                 <div className="header-nav-tablet-inr">
                   <h1 className="header-logo">
                     <Link to="/" className="header-route" />
                   </h1>
+
                   <ul className="nav-inr-wrap">{router}</ul>
                 </div>
               </div>
-            ) : (
-              <ul className="nav-inr-wrap" style={{ ...hStyle }}>
-                {router}
-              </ul>
             )}
           </nav>
         </div>
