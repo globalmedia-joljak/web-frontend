@@ -139,6 +139,7 @@ body {
 		padding: 0;
 		background-color: #f2f2f2;
 		color: #333;
+
 		.signUp-input {
 			border: 1px solid #837d7d66;
 			text-align: left;
@@ -300,7 +301,7 @@ body {
 			.el-main {
 				display: flex;
 				flex-direction: column;
-				align-items: start;
+				align-items: flex-start;
 				width: 100%;
 
 				.sub-info {
