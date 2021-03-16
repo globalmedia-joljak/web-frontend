@@ -175,60 +175,61 @@ const RouterLink = (size, tablet) => {
 };
 
 const Navigation = ({ location: { pathname } }) => {
-	const navEl = useRef();
+  const navEl = useRef();
 
-	// 현재 사이즈 확인.
-	const tablet = 768;
-	const { size, scroll } = SizeChecking(window.innerWidth, navEl, pathname);
+  // 현재 사이즈 확인.
+  const tablet = 768;
+  const { size, scroll } = SizeChecking(window.innerWidth, navEl, pathname);
 
-	const { hStyle } = NavStyling(navEl, size, tablet);
+  const { hStyle } = NavStyling(navEl, size, tablet);
 
-	// roter lists
-	NavClickEvent(size, tablet, navEl);
-	const router = RouterLink(size, tablet);
+  // roter lists
+  NavClickEvent(size, tablet, navEl);
+  const router = RouterLink(size, tablet);
 
-	const hideHeader = () => {
-		return pathname === "/signin" || pathname === "/signup" ? "none" : "block";
-	};
+  const hideHeader = () => {
+    return pathname === "/signin" || pathname === "/signout" ? "none" : "grid";
+  };
 
-	return (
-		<header
-			className={pathname !== "/" || scroll > 0 ? "dark" : "light"}
-			style={{ display: `${hideHeader()}` }}
-		>
-			<div className="header-inr inr">
-				<div className="header-inr-wrap" style={{ ...hStyle }}>
-					<h1 className="header-logo">
-						<Link to="/" />
-					</h1>
+  return (
+    <header
+      className={pathname !== "/" || scroll > 0 ? "dark" : "light"}
+      style={{ display: `${hideHeader()}` }}
+    >
+      <div className="header-inr inr">
+        <div className="header-inr-wrap" style={{ ...hStyle }}>
+          <h1 className="header-logo">
+            <Link to="/" />
+          </h1>
 
-					<nav className="h-nav" ref={navEl}>
-						{size < tablet ? (
-							<div className="header-nav-tablet">
-								<div className="header-nav-tablet-inr">
-									<h1 className="header-logo">
-										<Link to="/" className="header-route" />
-									</h1>
-									<ul className="nav-inr-wrap">{router}</ul>
-								</div>
-							</div>
-						) : (
-							<ul className="nav-inr-wrap" style={{ ...hStyle }}>
-								{router}
-							</ul>
-						)}
-					</nav>
-				</div>
+          <nav className="h-nav" ref={navEl}>
+            {size > tablet ? (
+              <ul className="nav-inr-wrap" style={{ ...hStyle }}>
+                {router}
+              </ul>
+            ) : (
+              <div className="header-nav-tablet">
+                <div className="header-nav-tablet-inr">
+                  <h1 className="header-logo">
+                    <Link to="/" className="header-route" />
+                  </h1>
 
-				<div className="mypage">
-					<button className="mypage-btn">
-						<Link to="/mypage">user</Link>
-						<span>님, 안녕하세요</span>
-					</button>
-				</div>
-			</div>
-		</header>
-	);
+                  <ul className="nav-inr-wrap">{router}</ul>
+                </div>
+              </div>
+            )}
+          </nav>
+        </div>
+
+        <div className="mypage">
+          <button className="mypage-btn">
+            <Link to="/mypage">user</Link>
+            <span>님, 안녕하세요</span>
+          </button>
+        </div>
+      </div>
+    </header>
+  );
 };
 
 export default withRouter(Navigation);
