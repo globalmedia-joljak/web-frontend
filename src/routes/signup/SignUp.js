@@ -17,10 +17,11 @@ const SignUp = (props) => {
   });
 
   const handleChange = (event) => {
-    const { student_code, name, phone_number, auth_number } = event.target;
+    const { value } = event.target;
+    console.log(event.target);
   };
 
-  const goToHome = () => {
+  const handleSignUpSubmitFunction = () => {
     props.history.push(`/`);
   };
 
@@ -129,7 +130,10 @@ const SignUp = (props) => {
                 <div className="check-info"></div>
               </div>
             </div>
-            <button onClick={(e) => goToHome()} className="signUp-button">
+            <button
+              onClick={handleSignUpSubmitFunction}
+              className="signUp-button"
+            >
               가입하기
             </button>
           </form>
