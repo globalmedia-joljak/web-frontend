@@ -1,6 +1,6 @@
 import React from 'react';
 
-const OccupationListForm = ({ type, handleChoicegit }) => {
+const OccupationListForm = ({ type, handleChoice }) => {
   const occupations = ['MEDIA_ART', 'DESIGNER', 'DEVELOPER', 'PLANNER'];
   if (type !== 'mainProjectRole') occupations.push('선택안함');
 
