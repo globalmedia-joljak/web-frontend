@@ -40,5 +40,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy":"http://dev.joljak.kr:8080/v2/api-docs"
 }

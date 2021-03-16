@@ -10,6 +10,7 @@ $media-art: #d92b3a;
 $designer: #f2cb05;
 $developer: #367dd9;
 $product-manager: #03a61c;
+$nothing-else: #baa2ff;
 
 .modal-wrapper {
   position: fixed;
@@ -99,6 +100,11 @@ $product-manager: #03a61c;
               &:nth-child(4) {
                 input[type="radio"]:checked + label {
                   background-color: $product-manager;
+                }
+              }
+              &:nth-child(5){
+                input[type="radio"]:checked + label {
+                  background-color: $nothing-else;
                 }
               }
             }

@@ -1,6 +1,6 @@
-import React from "react";
-import Footer from "./footer/Footer.js";
-import "./homeStyle.scss";
+import React from 'react';
+import Footer from './footer/Footer.js';
+import './homeStyle.scss';
 
 const HomePage = () => {
   return (
