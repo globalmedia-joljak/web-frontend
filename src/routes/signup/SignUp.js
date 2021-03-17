@@ -21,7 +21,7 @@ const SignUp = (props) => {
     console.log(event.target);
   };
 
-  const handleSignUpSubmitFunction = () => {
+  const handleSignUpSubmit = () => {
     props.history.push(`/`);
   };
 
@@ -46,7 +46,7 @@ const SignUp = (props) => {
                     name="student_code"
                     id="student_code"
                     placeholder="학번을 입력해주세요"
-                    onChange={(e) => handleChange}
+                    onChange={(e) => handleChange(e)}
                     className="signUp-input"
                   />
                   <div className="check-info"></div>
@@ -88,7 +88,7 @@ const SignUp = (props) => {
                     name="name"
                     id="name"
                     placeholder="이름을 입력해주세요"
-                    onChange={(e) => handleChange}
+                    onChange={(e) => handleChange(e)}
                     className="signUp-input insert-name"
                   />
                   <button className="select-job" onClick={handleClick}>
@@ -107,7 +107,7 @@ const SignUp = (props) => {
                     name="phone_number"
                     id="phone_number"
                     placeholder="핸드폰 번호를 입력하세요"
-                    onChange={(e) => handleChange}
+                    onChange={(e) => handleChange(e)}
                     className="signUp-input"
                   />
                 </div>
@@ -123,17 +123,14 @@ const SignUp = (props) => {
                     name="auth_number"
                     id="auth_number"
                     placeholder="인증번호를 입력하세요"
-                    onChange={(e) => handleChange}
+                    onChange={(e) => handleChange(e)}
                     className="signUp-input"
                   />
                 </div>
                 <div className="check-info"></div>
               </div>
             </div>
-            <button
-              onClick={handleSignUpSubmitFunction}
-              className="signUp-button"
-            >
+            <button onClick={handleSignUpSubmit} className="signUp-button">
               가입하기
             </button>
           </form>
