@@ -22,19 +22,27 @@ body {
 		border-radius: 10px;
 	}
 
-	select {
+	.select-job {
+		border: 1px solid #837d7d66;
 		margin-left: 30px;
 		height: 79px;
 		border-radius: 10px;
 		width: 213px;
 
-		padding-left: 19px;
+		padding-left: 0px;
 
-		text-align: left;
+		text-align: center;
 		font: normal normal normal 28px/41px Noto Sans KR;
 		letter-spacing: 0px;
+		background-color: white;
 		color: #00000080;
 		opacity: 1;
+
+		.selectJobIcon{
+			width:10%;
+			height:27%;
+			margin-left:10%;
+		}
 	}
 
 	.signUp-container {
@@ -156,7 +164,7 @@ body {
 			border-radius: 4px;
 		}
 
-		select {
+		.select-job {
 			margin-left: 30px;
 			height: 42px;
 			border-radius: 10px;
@@ -260,7 +268,7 @@ body {
 			border-radius: 4px;
 		}
 
-		select {
+		.select-job {
 			margin-left: 16px;
 			height: 36px;
 			border-radius: 4px;
