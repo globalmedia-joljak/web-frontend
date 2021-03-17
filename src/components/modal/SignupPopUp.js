@@ -8,9 +8,7 @@ import React, {
 import './popUpStyle.scss';
 import OccupationListForm from './OccupationListForm.js';
 
-const SignUpPopUp = () => {
-  const ulRefs = useRef();
-  const [modalView, setModalView] = useState(false);
+const SignUpPopUp = ({ show, setShow }) => {
   const [role, setRolse] = useState({
     mainProjectRole: '',
     subProjectRole: '',
@@ -34,17 +32,17 @@ const SignUpPopUp = () => {
 
     const checkLists = Array.from(form).map((inputEl) => {
       if (inputEl.nodeName !== 'INPUT') return;
-
       inputEl.disabled = false;
     });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: 직군 선택 한후 데이터 PETCH해줘야 한다.
+    setShow(false);
     console.log('전송됐다');
   };
-  const handleCancel = (e) => setModalView(true);
-  const modalStyle = modalView ? 'none' : 'grid';
+  const handleCancel = (e) => setShow(false);
+  const modalStyle = !show ? 'none' : 'grid';
 
   return (
     <div className="modal-wrapper" style={{ display: modalStyle }}>
@@ -69,7 +67,6 @@ const SignUpPopUp = () => {
             <OccupationListForm
               type="subProjectRole"
               handleChoice={handleChoice}
-              ulRefs={ulRefs}
             />
           </li>
           <li className="list alert">
