@@ -1,25 +1,26 @@
-@import "./_mixin";
-@import "./_variables.scss";
-
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
+@import './_mixin';
+@import './_variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: #000000cc;
   line-height: 1.2em;
 }
 
 html {
+  height: 100%;
   &::-webkit-scrollbar {
     display: none;
   }
 }
 body {
   line-height: 1;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
+  height: 100%;
   article,
   aside,
   details,
@@ -81,12 +82,122 @@ body {
 
 #root {
   background-color: #f2f2f2;
+  height: 100%;
   .joljak-wrapper {
     position: relative;
+    height: 100%;
     .inr {
       width: 90%;
       margin: 0 auto;
       max-width: 1111px;
+    }
+  }
+}
+
+// ErrorPage --------------------------------------------------------
+.error-page-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 717px;
+  .error-page-inr {
+    display: grid;
+    place-items: center;
+    grid-template-rows: minmax(min-content, 294.26px) repeat(3, auto);
+
+    .erorr-img {
+      max-width: 482px;
+      @include widthHeight;
+      @include backgroundImage;
+      background-color: rgba(197, 189, 212, 0.644);
+    }
+
+    h3 {
+      color: #000000cc;
+      font-size: 40px;
+      margin: 77.42px 0 47px;
+      span {
+        color: #7759d1;
+      }
+    }
+    .error-txt {
+      p {
+        font-size: 1.6rem;
+        color: #6d6d6dcc;
+        &:nth-child(1) {
+          margin-bottom: 12px;
+        }
+      }
+    }
+
+    button {
+      margin-top: 47px;
+      width: 234px;
+      height: 60px;
+      border: 1px solid #00000099;
+      color: #000000cc;
+      font-size: 20px;
+    }
+  }
+}
+
+@include response('tablet') {
+  .error-page-wrap {
+    min-width: 563px;
+    .error-page-inr {
+      .erorr-img {
+        max-width: 373px;
+      }
+      h3 {
+        margin: 59.92px 0 90px;
+        font-size: 28px;
+      }
+      .error-txt {
+        p {
+          font-size: 1.2rem;
+          &:nth-child(1) {
+            margin-bottom: 16px;
+          }
+        }
+      }
+
+      button {
+        margin-top: 40px;
+      }
+    }
+  }
+}
+
+@include response('phone') {
+  .error-page-wrap {
+    min-width: 287px;
+    .error-page-inr {
+      grid-template-rows: minmax(min-content, 127px) repeat(3, auto);
+      .erorr-img {
+        max-width: 208px;
+      }
+      h3 {
+        margin: 33.41px 0 40px;
+        font-size: 15px;
+      }
+      .error-txt {
+        text-align: center;
+        p {
+          font-size: 1rem;
+          &:nth-child(1) {
+            margin-bottom: 3px;
+          }
+          line-height: 1.6em;
+        }
+      }
+
+      button {
+        margin-top: 40px;
+        width: 185px;
+        height: 48px;
+        font-size: 16px;
+      }
     }
   }
 }
