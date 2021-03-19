@@ -28,7 +28,7 @@ const NavStyling = (navEl, size, tablet) => {
 };
 
 //로딩후 넓이와 resize될때 넓이값에 따라 nav에 clickEvent를 준다.
-const SizeChecking = (curSize, navEl, pathname) => {
+const SizeChecking = (curSize, navEl, pathname, isExact) => {
   const [size, setSize] = useState(curSize);
   const [scroll, setScroll] = useState(0);
 
@@ -36,7 +36,7 @@ const SizeChecking = (curSize, navEl, pathname) => {
   const handleScroll = () => setScroll(Math.floor(window.scrollY));
 
   useEffect(() => {
-    if (pathname === '/signin' || pathname === '/signup') return;
+    if (pathname === '/signin' || pathname === '/signup' || !isExact) return;
 
     let { style } = navEl.current.offsetParent.nextSibling;
 
@@ -174,12 +174,17 @@ const RouterLink = (size, tablet) => {
   });
 };
 
-const Navigation = ({ location: { pathname } }) => {
+const Navigation = ({ match: { isExact }, location: { pathname } }) => {
   const navEl = useRef();
 
   // 현재 사이즈 확인.
   const tablet = 768;
-  const { size, scroll } = SizeChecking(window.innerWidth, navEl, pathname);
+  const { size, scroll } = SizeChecking(
+    window.innerWidth,
+    navEl,
+    pathname,
+    isExact,
+  );
 
   const { hStyle } = NavStyling(navEl, size, tablet);
 
@@ -188,7 +193,9 @@ const Navigation = ({ location: { pathname } }) => {
   const router = RouterLink(size, tablet);
 
   const hideHeader = () => {
-    return pathname === '/signin' || pathname === '/signup' ? 'none' : 'grid';
+    return pathname === '/signin' || pathname === '/signup' || !isExact
+      ? 'none'
+      : 'grid';
   };
 
   return (
