@@ -1,6 +1,7 @@
 import React from 'react';
 
-const ErrorPage = ({ history }) => {
+const ErrorPage = ({ history, location }) => {
+  location.state = { show: false };
   const handleHome = (e) => history.push('/');
   return (
     <div className="error-page-wrap">
