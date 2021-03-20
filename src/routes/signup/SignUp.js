@@ -4,12 +4,12 @@ import SignUpPopUp from '../../components/modal/SignupPopUp';
 import selectJobIcon from './image/Modal@2x.png';
 import style from './SignUp.scss';
 
-const SignUp = (props) => {
+const SignUp = ({ history, location }) => {
   const [passwd, setPasswd] = useState('');
   const [confirmPasswd, setConfirmPasswd] = useState('');
   const [error, setError] = useState('');
   const [show, setShow] = useState(false);
-
+  location.state = { show: false };
   useEffect(() => {
     passwd === confirmPasswd
       ? setError('')
@@ -22,7 +22,7 @@ const SignUp = (props) => {
   };
 
   const handleSignUpSubmit = () => {
-    props.history.push(`/`);
+    history.push(`/`);
   };
 
   const handleClick = (e) => {

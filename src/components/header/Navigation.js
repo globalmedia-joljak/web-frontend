@@ -28,7 +28,7 @@ const NavStyling = (navEl, size, tablet) => {
 };
 
 //로딩후 넓이와 resize될때 넓이값에 따라 nav에 clickEvent를 준다.
-const SizeChecking = (curSize, navEl, pathname, isExact) => {
+const SizeChecking = (curSize, navEl, pathname, state) => {
   const [size, setSize] = useState(curSize);
   const [scroll, setScroll] = useState(0);
 
@@ -36,13 +36,8 @@ const SizeChecking = (curSize, navEl, pathname, isExact) => {
   const handleScroll = () => setScroll(Math.floor(window.scrollY));
 
   useEffect(() => {
-    if (pathname === '/signin' || pathname === '/signup' || !isExact) return;
-
-    let { style } = navEl.current.offsetParent.nextSibling;
-
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll);
-    style.display = navEl.current.classList.contains('on') ? 'none' : 'block';
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -174,7 +169,7 @@ const RouterLink = (size, tablet) => {
   });
 };
 
-const Navigation = ({ match: { isExact }, location: { pathname } }) => {
+const Navigation = ({ location: { pathname, state } }) => {
   const navEl = useRef();
 
   // 현재 사이즈 확인.
@@ -183,7 +178,7 @@ const Navigation = ({ match: { isExact }, location: { pathname } }) => {
     window.innerWidth,
     navEl,
     pathname,
-    isExact,
+    state,
   );
 
   const { hStyle } = NavStyling(navEl, size, tablet);
@@ -192,16 +187,10 @@ const Navigation = ({ match: { isExact }, location: { pathname } }) => {
   NavClickEvent(size, tablet, navEl);
   const router = RouterLink(size, tablet);
 
-  const hideHeader = () => {
-    return pathname === '/signin' || pathname === '/signup' || !isExact
-      ? 'none'
-      : 'grid';
-  };
-
   return (
     <header
       className={pathname !== '/' || scroll > 0 ? 'dark' : 'light'}
-      style={{ display: `${hideHeader()}` }}
+      style={{ display: state !== undefined ? 'none' : 'grid' }}
     >
       <div className="header-inr inr">
         <div className="header-inr-wrap" style={{ ...hStyle }}>
