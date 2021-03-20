@@ -169,9 +169,9 @@ const RouterLink = (size, tablet) => {
   });
 };
 
-const Navigation = ({ match: { isExact }, location: { pathname, state } }) => {
+const Navigation = ({ location: { pathname, state } }) => {
   const navEl = useRef();
-  // console.log(location);
+
   // 현재 사이즈 확인.
   const tablet = 768;
   const { size, scroll } = SizeChecking(
