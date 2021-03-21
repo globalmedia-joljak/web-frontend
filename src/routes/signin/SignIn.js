@@ -1,6 +1,6 @@
 import React from 'react';
 import Signinbackground from './image/SigninbackgroundHalf.png';
-import GlobalMediaLogo from './image/GlobalMedia_Logo.png';
+import globalmediaLogo from './image/GlobalMedia_Logo.png';
 import style from './SignIn.scss';
 
 const SignIn = ({ location }) => {
@@ -8,11 +8,11 @@ const SignIn = ({ location }) => {
   return (
     <div className="login-container">
       <div className="login-left login">
-        <div className="GlobalMedia-logo">
+        <div className="globalmedia-logo">
           <img
-            src={GlobalMediaLogo}
+            src={globalmediaLogo}
             alt="My dongho"
-            className="GlobalMediaLogo"
+            className="globalmedia-logo-image"
           />
         </div>
         <div className="login-form-div">
