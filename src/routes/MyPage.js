@@ -1,11 +1,12 @@
-import React from "react";
-// import MyPageForm from "../components/main/mypage/MyPageForm.js";
+import React from 'react';
+import MypageProvider from '../context/mypageContext.js';
+import MyPageForm from '../components/main/mypage/MyPageForm.js';
 
 const MyPage = () => {
   return (
-    <main>
-      {/* <MyPageForm /> */}
-    </main>
+    <MypageProvider>
+      <MyPageForm />
+    </MypageProvider>
   );
 };
 

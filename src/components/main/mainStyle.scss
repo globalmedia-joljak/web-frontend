@@ -1,5 +1,5 @@
-@import "../assets/_mixin.scss";
-@import "../assets/_variables.scss";
+@import '../../assets/_mixin.scss';
+@import '../../assets/_variables.scss';
 
 main {
   padding-top: $header-heigth-web;
@@ -32,7 +32,7 @@ main {
       padding: 24px 0;
       max-width: 582px;
       max-height: 171px;
-      width: 50%;
+      width: 80%;
       height: 30%;
       border-radius: 8px;
 
@@ -49,7 +49,7 @@ main {
   }
 }
 
-@include response("tablet") {
+@include response('tablet') {
   main {
     padding-top: $header-height-tablet;
   }
