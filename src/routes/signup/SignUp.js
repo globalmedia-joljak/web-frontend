@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import SignUpPopUp from '../../components/modal/SignupPopUp';
+import { useAppDispatch, useAppState } from '../../context/appContext';
 import selectJobIcon from './image/Modal@2x.png';
 import style from './SignUp.scss';
 
@@ -8,7 +9,10 @@ const SignUp = ({ history, location }) => {
   const [passwd, setPasswd] = useState('');
   const [confirmPasswd, setConfirmPasswd] = useState('');
   const [error, setError] = useState('');
-  const [show, setShow] = useState(false);
+
+  const { modalShow } = useAppState();
+  const { setModalShow } = useAppDispatch();
+
   location.state = { show: false };
   useEffect(() => {
     passwd === confirmPasswd
@@ -18,7 +22,6 @@ const SignUp = ({ history, location }) => {
 
   const handleChange = (event) => {
     const { value } = event.target;
-    console.log(event.target);
   };
 
   const handleSignUpSubmit = () => {
@@ -27,13 +30,13 @@ const SignUp = ({ history, location }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    setShow(!show);
+    setModalShow(!modalShow);
   };
 
   return (
     <div className="signUp-container">
-      {show ? (
-        <SignUpPopUp show={show} setShow={setShow} />
+      {modalShow ? (
+        <SignUpPopUp />
       ) : (
         <div className="el-main">
           <form>
