@@ -5,19 +5,19 @@ function reducer(state, action) {
     case 'LOADING':
       return {
         loading: true,
-        data: null,
-        error: null,
+        data: '',
+        error: '',
       };
     case 'SUCCESS':
       return {
         loading: false,
         data: action.data,
-        error: null,
+        error: '',
       };
     case 'ERROR':
       return {
         loading: false,
-        data: null,
+        data: '',
         error: action.error,
       };
     default:
@@ -28,8 +28,8 @@ function reducer(state, action) {
 function useAsync(callback, deps = []) {
   const [state, dispatch] = useReducer(reducer, {
     loading: false,
-    data: null,
-    error: false,
+    data: '',
+    error: '',
   });
 
   const fetchData = async () => {
