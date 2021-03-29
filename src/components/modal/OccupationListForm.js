@@ -1,6 +1,6 @@
 import React from 'react';
 
-const OccupationListForm = ({ type, handleChoice }) => {
+const OccupationListForm = ({ projectRole, type, handleChoice }) => {
   const occupations = ['MEDIA_ART', 'DESIGNER', 'DEVELOPER', 'PLANNER'];
   if (type !== 'mainProjectRole') occupations.push('선택안함');
 
@@ -34,6 +34,7 @@ const OccupationListForm = ({ type, handleChoice }) => {
             name={type}
             value={data}
             onClick={handleChoice}
+            defaultChecked = {(projectRole === data) ? true : false}
           />
           <label htmlFor={className + i}>{translationKR(data)}</label>
         </li>

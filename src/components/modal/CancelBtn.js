@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import cancelImg from '../../assets/images/exit@2x.png';
-import { useAppDispatch } from '../../context/appContext';
 
 const CancelButton = styled.button`
   width: 100%;
@@ -12,9 +11,7 @@ const CancelButton = styled.button`
   background-image: url(${cancelImg});
 `;
 
-const CancelBtn = () => {
-  const { setModalShow } = useAppDispatch();
-  const handleCancel = (e) => setModalShow(false);
+const CancelBtn = ({handleCancel}) => {
   return <CancelButton type="button" onClick={handleCancel}></CancelButton>;
 };
 
