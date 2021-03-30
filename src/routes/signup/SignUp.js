@@ -108,7 +108,6 @@ const SignUp = ({ history, location }) => {
   };
 
   const handleSignUpSubmit = (e) => {
-    console.log(e);
     if (
       !verifyEmptyValue(userInfo.classOf, '학번을 입력해주세요.') 
         || !verifyEmptyValue(userInfo.name, '이름을 입력해주세요.') 
@@ -138,8 +137,6 @@ const SignUp = ({ history, location }) => {
       mainProjectRole: mainProjectRole,
       subProjectRole: subProjectRole === '선택안함' ? null : subProjectRole
     }
-
-    console.log(signUpRequest);
     
     const successSignup = () => {
       toast.success('✅ 회원가입에 성공하셨습니다.');
