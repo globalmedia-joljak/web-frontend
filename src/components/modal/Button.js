@@ -10,12 +10,12 @@ const ButtonBolck = styled.button`
   font-size: ${({ size }) => (size === 'phone' ? '16px' : '20px')};
   border-radius: 4px;
 `;
-const Button = ({ text }) => {
+const Button = ({ text, handleOk }) => {
   const { curSize } = useAppState();
   const tablet = '768px';
   const phone = '425px';
   const size = curSize < tablet ? 'tablet' : curSize < phone ? 'phone' : 'web';
-  return <ButtonBolck size={size}>{text}</ButtonBolck>;
+  return <ButtonBolck type='button' size={size} onClick={handleOk}>{text}</ButtonBolck>;
 };
 
 export default Button;

@@ -36,8 +36,7 @@ const ModalUl = styled.ul`
     size === 'web' ? '683px' : size === 'tablet' ? '790px' : '650px'};
 `;
 
-const ModalTemp = ({ children, handleSubmit }) => {
-  const { modalShow } = useAppState();
+const ModalTemp = ({ children, handleSubmit, modalShow }) => {
   const { curSize } = useAppState();
   const tablet = '768px';
   const phone = '425px';
