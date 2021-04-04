@@ -24,7 +24,6 @@ const App = () => {
   const { setUserInfo } = useAppDispatch();
 
   useEffect(() => {
-    //  TODO : 쿠키 정보 가져와야 함
     const refreshToken = stoargeInfo.refreshToken; 
     client.defaults.headers.common['refreshToken'] = `${refreshToken}`;
 
