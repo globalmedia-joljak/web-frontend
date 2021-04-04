@@ -29,8 +29,14 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const value = { curSize, modalShow };
-  const dispatch = { setJobColor, setModalShow };
+  const [userInfo, setUserInfo] = useState({
+    isLogin: false,
+    classOf: '',
+    name: ''
+  });
+
+  const value = { curSize, modalShow, userInfo };
+  const dispatch = { setJobColor, setModalShow, setUserInfo};
 
   return (
     <appStateContext.Provider value={value}>
