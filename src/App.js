@@ -1,4 +1,3 @@
-import React, { Component, useEffect } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import {
   Home,
@@ -12,63 +11,13 @@ import {
   SignUp,
 } from './routes';
 import './assets/style.scss';
-import { getAccessTokenByRefreshToken, getAccessTokenByAccessToken, stoargeInfo } from './service/api/auth';
-import { client } from './service/api/client';
-import { useAppState, useAppDispatch } from './context/appContext';
-
 
 import Navigation from './components/header/Navigation';
+import AppProvider from './context/appContext.js';
 
-const App = () => {
-  const { userInfo } = useAppState();
-  const { setUserInfo } = useAppDispatch();
-
-  useEffect(() => {
-    //  TODO : 쿠키 정보 가져와야 함
-    const refreshToken = stoargeInfo.refreshToken; 
-    client.defaults.headers.common['refreshToken'] = `${refreshToken}`;
-
-    if (refreshToken) {
-      getAccessTokenByRefreshToken() 
-      .then((response) => {
-        const token = response.data.token;
-        client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        localStorage.setItem('accessToken', token)
-
-        setUserInfo({
-          ...userInfo,
-          classOf: stoargeInfo.userClassOf,
-          name: stoargeInfo.userName,
-          isLogin: true
-        });
-      })
-      .catch((e) => {
-        localStorage.clear();
-      })
-      return;
-    }
-
-    const accessToken = stoargeInfo.accessToken;
-    client.defaults.headers.common['accessToken'] = `${accessToken}`;
-    getAccessTokenByAccessToken()
-    .then((response) => {
-      const token = response.data.token;
-      client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      localStorage.setItem('accessToken', token);
-
-      setUserInfo({
-        ...userInfo,
-        classOf: stoargeInfo.userClassOf,
-        name: stoargeInfo.userName,
-        isLogin: true
-      });
-    })
-    .catch((e) => {
-      localStorage.clear();
-    })
-  }, [])
-
+function App() {
   return (
+    <AppProvider>
       <div className="joljak-wrapper">
         <BrowserRouter>
           <Navigation />
@@ -85,6 +34,7 @@ const App = () => {
           </Switch>
         </BrowserRouter>
       </div>
+    </AppProvider>
   );
 }
 
