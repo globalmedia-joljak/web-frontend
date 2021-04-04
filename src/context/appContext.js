@@ -7,6 +7,12 @@ const AppProvider = ({ children }) => {
   const [curSize, setCurSize] = useState(window.innerWidth);
   const [modalShow, setModalShow] = useState(false);
 
+  const [userInfo, setUserInfo] = useState({
+    isLogin: false,
+    classOf: '',
+    name: ''
+  });
+
   useEffect(() => {
     window.addEventListener('resize', () => setCurSize(window.innerWidth));
 
@@ -29,14 +35,8 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const [userInfo, setUserInfo] = useState({
-    isLogin: false,
-    classOf: '',
-    name: ''
-  });
-
   const value = { curSize, modalShow, userInfo };
-  const dispatch = { setJobColor, setModalShow, setUserInfo};
+  const dispatch = { setJobColor, setModalShow, setUserInfo };
 
   return (
     <appStateContext.Provider value={value}>
