@@ -46,7 +46,6 @@ const SignIn = ({ history, location }) => {
       localStorage.setItem('userClassOf', data.user.classOf)
       localStorage.setItem('accessToken', data.accessToken.token)
       if (autoSignin) {
-        // TODO : 쿠키 저장
         localStorage.setItem('refreshToken', data.refreshToken)
       }
       
