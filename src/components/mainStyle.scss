@@ -1,8 +1,9 @@
-@import "../assets/_mixin.scss";
-@import "../assets/_variables.scss";
+@import '../assets/_mixin.scss';
+@import '../assets/_variables.scss';
 
 main {
   padding-top: $header-heigth-web;
+  height: 100%;
 }
 
 // succeedPopUp PAGE
@@ -49,12 +50,145 @@ main {
   }
 }
 
-@include response("tablet") {
+// Team build Page
+.team-build-wrap {
+  .team-section-wrap {
+    position: relative;
+    display: grid;
+    height: 100%;
+    overflow: hidden;
+  }
+  .team-side-menu {
+    width: 260px;
+    position: absolute;
+    background-color: #ffffff;
+    box-shadow: 0px 3px 6px #00000029;
+    height: inherit;
+    z-index: 1000;
+    ul {
+      margin-top: 126px;
+      display: grid;
+      gap: 20px;
+      li {
+        height: 64px;
+        position: relative;
+
+        a {
+          place-items: center;
+          display: grid;
+          color: #6d6d6dcc;
+          font-size: 24px;
+          height: 100%;
+        }
+
+        span {
+          display: none;
+          position: absolute;
+          height: 100%;
+          width: 2px;
+          background-color: #baa2ff;
+          top: 0;
+          right: 0;
+        }
+        &:hover {
+          a {
+            color: #baa2ff;
+          }
+          span {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+  .team-contents {
+    overflow-y: scroll;
+    padding-left: 260px;
+    .content {
+      // height: 100%;
+      .hero-img {
+        width: 100%;
+        height: 463px;
+        background-color: #ffffff;
+        box-shadow: 0px 1px 2px #00000029;
+        @include backgroundImage;
+      }
+    }
+  }
+  .author-list-none {
+    display: grid;
+    padding: 60px 0 202px;
+    height: 100%;
+    place-items: center;
+
+    .no-list-img {
+      width: 276px;
+      height: 276px;
+      margin-bottom: 32px;
+      @include backgroundImage;
+      background-image: url('../assets/images/Nodata@2x.png');
+    }
+
+    strong {
+      font-size: 24px;
+      color: #6d6d6dcc;
+    }
+  }
+}
+
+@include response('tablet') {
   main {
     padding-top: $header-height-tablet;
   }
 
   .home-wrap {
     margin-top: -$header-height-tablet;
+  }
+
+  .team-build-wrap {
+    .team-section-wrap {
+      grid-template-columns: 1fr;
+    }
+    .team-side-menu {
+      display: none;
+    }
+    .team-contents {
+      padding-left: 0;
+      .content {
+        .hero-img {
+          height: 320px;
+        }
+      }
+    }
+
+    .author-list-none {
+      padding: 56px 0 96px;
+    }
+  }
+}
+
+@include response('phone') {
+  .team-build-wrap {
+    .team-contents {
+      .content {
+        .hero-img {
+          height: 210px;
+        }
+      }
+    }
+    .author-list-none {
+      padding: 58px 0 154px;
+      .no-list-img {
+        width: 144px;
+        height: 144px;
+        background-color: lightcyan;
+        margin-bottom: 22px;
+      }
+
+      strong {
+        font-size: 14px;
+        color: #6d6d6dcc;
+      }
+    }
   }
 }

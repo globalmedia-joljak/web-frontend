@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import cancelImg from '../../assets/images/exit@2x.png';
 
@@ -11,8 +11,14 @@ const CancelButton = styled.button`
   background-image: url(${cancelImg});
 `;
 
-const CancelBtn = ({handleCancel}) => {
-  return <CancelButton type="button" onClick={handleCancel}></CancelButton>;
+const CancelBtn = ({ handleCancel }) => {
+  const handleCancelBtn = useCallback(() => handleCancel(false));
+  return (
+    <CancelButton
+      type="button"
+      onClick={() => handleCancelBtn()}
+    ></CancelButton>
+  );
 };
 
 export default CancelBtn;

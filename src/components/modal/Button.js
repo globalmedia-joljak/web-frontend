@@ -1,21 +1,46 @@
 import React from 'react';
-import styled from 'styled-components';
-import { useAppDispatch, useAppState } from '../../context/appContext';
+import styled, { css } from 'styled-components';
+import { useAppState } from '../../context/appContext';
+
+const tablet = 768;
+const phone = 425;
 
 const ButtonBolck = styled.button`
-  width: ${({ size }) => (size === 'phone' ? '208px' : '234px')};
-  height: ${({ size }) => (size === 'phone' ? '42px' : '56px')};
   background-color: #baa2ff;
   color: #ffffff;
-  font-size: ${({ size }) => (size === 'phone' ? '16px' : '20px')};
   border-radius: 4px;
+
+  ${({ size }) => {
+    if (size === 'web') {
+      return css`
+        width: 234px;
+        height: 56px;
+        font-size: 20px;
+      `;
+    } else if (size === 'tablet') {
+      return css`
+        width: 296px;
+        height: 56px;
+        font-size: 20px;
+      `;
+    } else {
+      return css`
+        width: 208px;
+        height: 48px;
+        font-size: 17px;
+      `;
+    }
+  }}
 `;
 const Button = ({ text, handleOk }) => {
   const { curSize } = useAppState();
-  const tablet = '768px';
-  const phone = '425px';
-  const size = curSize < tablet ? 'tablet' : curSize < phone ? 'phone' : 'web';
-  return <ButtonBolck type='button' size={size} onClick={handleOk}>{text}</ButtonBolck>;
+
+  const size = curSize > tablet ? 'web' : curSize > phone ? 'tablet' : 'phone';
+  return (
+    <ButtonBolck type="button" size={size} onClick={handleOk}>
+      {text}
+    </ButtonBolck>
+  );
 };
 
 export default Button;
