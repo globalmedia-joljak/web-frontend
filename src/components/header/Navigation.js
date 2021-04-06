@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { navRoutes, subRoutes } from './headerDataList.js';
 
 import './headerStyle.scss';
+import { useAppState } from '../../context/appContext.js';
 
 // routes간격
 const NavStyling = (navEl, size, tablet) => {
@@ -171,6 +172,7 @@ const RouterLink = (size, tablet) => {
 
 const Navigation = ({ location: { pathname, state } }) => {
   const navEl = useRef();
+  const { userInfo } = useAppState();
 
   // 현재 사이즈 확인.
   const tablet = 768;
@@ -180,7 +182,6 @@ const Navigation = ({ location: { pathname, state } }) => {
     pathname,
     state,
   );
-
   const { hStyle } = NavStyling(navEl, size, tablet);
 
   // roter lists
@@ -219,8 +220,20 @@ const Navigation = ({ location: { pathname, state } }) => {
 
         <div className="mypage">
           <button className="mypage-btn">
-            <Link to="/mypage">user</Link>
-            <span>님, 안녕하세요</span>
+            {
+              userInfo.isLogin ? 
+                <>
+                <Link to="/mypage">{userInfo.name}</Link>
+                <span>님, 안녕하세요</span>
+                </>
+              :
+                <>
+                <Link to="/signin"> 로그인 </Link>
+                |
+                <Link to="/signup"> 회원가입 </Link>
+                </>
+            }
+            
           </button>
         </div>
       </div>

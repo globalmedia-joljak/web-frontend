@@ -7,11 +7,10 @@ const AppProvider = ({ children }) => {
   const [curSize, setCurSize] = useState(window.innerWidth);
   const [modalShow, setModalShow] = useState(false);
 
-  // userInfo
   const [userInfo, setUserInfo] = useState({
-    classOf: 'admin',
-    token: '',
-    curPw: 'admin123', //로그인 로직이 만들어지기전 테스트용
+    isLogin: false,
+    classOf: '',
+    name: ''
   });
 
   useEffect(() => {
