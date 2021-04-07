@@ -1,4 +1,4 @@
-@import "./_variables.scss";
+@import './_variables.scss';
 
 // common ----------------------------------------------------
 @mixin widthHeight {
@@ -12,30 +12,30 @@
 }
 
 @mixin logo($tag, $size) {
-  @if $tag == "header-logo" {
-    @if $size == "" {
+  @if $tag == 'header-logo' {
+    @if $size == '' {
       width: $header-logo-web;
       height: 40px;
-    } @else if $size == "tablet" {
+    } @else if $size == 'tablet' {
       width: $header-logo-tablet;
       height: 30px;
     } @else {
       width: $header-logo-phone;
       height: 24px;
     }
-  } @else if $tag == "nav-logo" {
-    @if $size == "tablet" {
+  } @else if $tag == 'nav-logo' {
+    @if $size == 'tablet' {
       width: $side-nav-logo-tablet;
       height: 83px;
     } @else {
       width: $side-nav-logo-phone;
       height: 45px;
     }
-  } @else if $tag == "footer-logo" {
-    @if $size == "tablet" {
+  } @else if $tag == 'footer-logo' {
+    @if $size == 'tablet' {
       width: $footer-logo-tablet;
       height: $footer-logo-tablet;
-    } @else if $size == "phone" {
+    } @else if $size == 'phone' {
       width: $footer-logo-phone;
       height: $footer-logo-phone;
     } @else {
@@ -65,17 +65,17 @@
 @mixin headerStyle($col, $type) {
   display: grid;
   align-items: center;
-  @if $col == "c2" {
-    @if $type == "web" {
+  @if $col == 'c2' {
+    @if $type == 'web' {
       grid-template-columns: 1fr auto;
-    } @else if $type == "res" {
+    } @else if $type == 'res' {
       grid-template-columns: repeat(2, 1fr);
-    } @else if $type == "mypage" {
+    } @else if $type == 'mypage' {
       grid-template-columns: repeat(2, auto);
     } @else {
       grid-template-columns: auto 1fr;
     }
-  } @else if $col == "c3" {
+  } @else if $col == 'c3' {
     grid-template-columns: repeat(3, max-content);
     justify-items: center;
   }
@@ -83,12 +83,12 @@
 
 @mixin headerRow($row, $type) {
   display: grid;
-  @if $row == "r2" {
-    @if $type == "nav-tablet" {
+  @if $row == 'r2' {
+    @if $type == 'nav-tablet' {
       grid-template-rows: 30% minmax(307px, auto);
-    } @else if $type == "sub-tablet" {
+    } @else if $type == 'sub-tablet' {
       grid-template-rows: auto 1fr;
-    } @else if $type == "sub-list-tablet" {
+    } @else if $type == 'sub-list-tablet' {
       grid-auto-rows: auto;
     }
   }
@@ -102,12 +102,12 @@
 // main -------------------------------------------------------
 @mixin mainRow($row, $name, $size, $max) {
   display: grid;
-  @if $row == "r2" {
-    @if $name == "mypage" {
+  @if $row == 'r2' {
+    @if $name == 'mypage' {
       grid-template-rows: minmax(20%, $max) auto;
     }
-  } @else if $row == "r3" {
-    @if $name == "home" {
+  } @else if $row == 'r3' {
+    @if $name == 'home' {
       grid-template-rows: minmax(33.3%, $max) 1fr $size;
     }
   }
@@ -118,33 +118,68 @@
 
 @mixin sectionStyle($grid, $type, $max, $size) {
   display: grid;
-  @if $grid == "col" {
-    @if $type == "web" {
+  @if $grid == 'col' {
+    @if $type == 'web' {
       grid-template-columns: minmax(17%, min-content) 1fr;
-    } @else if $type == "web-input" {
+    } @else if $type == 'web-input' {
       grid-template-columns: minmax(auto, $max) $size;
     }
-  } @else if $grid == "row" {
-    @if $type == "phone" {
+  } @else if $grid == 'row' {
+    @if $type == 'phone' {
       grid-template-columns: 1fr;
       grid-template-rows: repeat(2, max-content);
     }
   }
 }
 
+// teams > author
+@mixin teamsSubTxt($size) {
+  color: #6d6d6dcc;
+  @if $size == 'web' {
+    font-size: 24px;
+    margin-left: 24px;
+  } @else if $size == 'tablet' {
+    font-size: 16px;
+    margin-left: 8px;
+  } @else if $size == 'phone' {
+    font-size: 12px;
+  }
+}
+@mixin teamsRow2($size) {
+  grid-template-rows: max-content 1fr;
+  @if $size == 'web' {
+    gap: 70px;
+  } @else if $size == 'tablet' {
+    gap: 48px;
+  } @else if $size == 'phone' {
+    gap: 29px;
+  }
+}
+
+@mixin teamsH3($size) {
+  color: #000000;
+  justify-self: center;
+  @if $size == 'web' {
+    font-size: 32px;
+  } @else if $size == 'tablet' {
+    font-size: 24px;
+  } @else if $size == 'phone' {
+    font-size: 17px;
+  }
+}
 // footer -----------------------------------------------------
 @mixin footerStyle($grid, $type) {
   display: grid;
-  @if $grid == "col" {
-    @if $type == "web" {
+  @if $grid == 'col' {
+    @if $type == 'web' {
       gap: 133px;
       grid-template-columns: 1fr $footer-logo-web 1fr;
-    } @else if $type == "tablet" {
+    } @else if $type == 'tablet' {
       gap: 7.4%;
       grid-template-columns: auto $footer-logo-tablet auto;
     }
-  } @else if $grid == "row" {
-    @if $type == "phone" {
+  } @else if $grid == 'row' {
+    @if $type == 'phone' {
       gap: 0;
       grid-template-columns: 1fr;
       grid-template-rows: 38px 23px 1fr;
@@ -152,40 +187,26 @@
   }
 }
 
-// modal ------------------------------------------------------
-@mixin modalStyle($type, $num) {
-  @if $type == "row" {
-    display: grid;
-    @if $num == "r2" {
-      grid-template-rows: repeat(2, auto);
-      gap: 16px;
-    }
-  } @else if $type == "col" {
-    display: grid;
-    @if $num == "c2" {
-      grid-auto-columns: auto;
-    } @else {
-      display: flex;
-    }
-  }
-}
-
 // response ---------------------------------------------------
 $maxTablet: 768px;
 $maxPhone-L: 425px;
-// $maxPhone-M: 370px;
+$maxPhone-M: 320px;
 
 @mixin response($device) {
-  @if $device == "phone" {
+  @if $device == 'phone' {
     @media screen and (max-width: $maxPhone-L) {
       @content;
     }
-  } @else if $device == "tablet" {
+  } @else if $device == 'tablet' {
     @media screen and (max-width: $maxTablet) {
       @content;
     }
-  } @else if $device == "web" {
+  } @else if $device == 'web' {
     @media screen and(max-width: $maxTablet + 100px) {
+      @content;
+    }
+  } @else if $device == 'phone-m' {
+    @media screen and(max-width: $maxPhone-M) {
       @content;
     }
   }

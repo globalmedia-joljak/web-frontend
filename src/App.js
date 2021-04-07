@@ -12,9 +12,12 @@ import {
   SignUp,
 } from './routes';
 import './assets/style.scss';
+import './components/mainStyle.scss';
+
 import { getAccessTokenByRefreshToken, getAccessTokenByAccessToken, stoargeInfo } from './service/api/auth';
 import { client } from './service/api/client';
 import { useAppState, useAppDispatch } from './context/appContext';
+
 
 
 import Navigation from './components/header/Navigation';
@@ -76,7 +79,7 @@ const App = () => {
             <Route path="/signin" exact={true} component={SignIn} />
             <Route path="/signup" exact={true} component={SignUp} />
             <Route path="/notice" exact={true} component={Notice} />
-            <Route path="/teams" exact={true} component={Tbuild} />
+            <Route path="/teams" component={Tbuild} />
             <Route path="/projects" exact={true} component={Projects} />
             <Route path="/search" exact={true} component={Search} />
             <Route path="/mypage" exact={true} component={MyPage} />

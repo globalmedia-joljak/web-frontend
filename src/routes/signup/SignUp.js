@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import selectJobIcon from './image/Modal@2x.png';
-import style from './SignUp.scss';
-import '../../components/modal/popUpStyle.scss';
+import './SignUp.scss';
 import OccupationListForm from '../../components/modal/OccupationListForm.js';
 import ModalTemp from '../../components/modal/ModalTemp.js';
-import CancelBtn from '../../components/modal/CancelBtn.js';
-import Button from '../../components/modal/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { signup } from '../../service/api/auth';
+import { useAppState } from '../../context/appContext';
+
+const tablet = 768;
 
 const SignUp = ({ history, location }) => {
   location.state = { show: false };
+
+  const { curSize } = useAppState();
 
   const [userInfo, setUserInfo] = useState({
     classOf: '',
     name: '',
     phoneNumber: '',
-    inviteCode: ''
+    inviteCode: '',
   });
   const [passwd, setPasswd] = useState('');
   const [confirmPasswd, setConfirmPasswd] = useState('');
-  
+
   const [passwordError, setPasswordError] = useState('');
   const [modalShow, setModalShow] = useState(false);
   const [roles, setRoles] = useState({
@@ -51,14 +52,14 @@ const SignUp = ({ history, location }) => {
       e.target.checked = false;
       setRoles({
         ...roles,
-        [name]: ''
+        [name]: '',
       });
       return;
     }
 
     setRoles({
       ...roles,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -73,18 +74,18 @@ const SignUp = ({ history, location }) => {
   };
 
   const verifyPassword = () => {
-    if (passwd === confirmPasswd && passwd === '' ) {
+    if (passwd === confirmPasswd && passwd === '') {
       setPasswordError('');
       return false;
     }
-    if(!/^[a-zA-Z0-9]{8,20}$/.test(passwd)) {
+    if (!/^[a-zA-Z0-9]{8,20}$/.test(passwd)) {
       setPasswordError('비밀번호는 영문 숫자 조합 8~20자리입니다.');
       return false;
     }
 
     const checkNum = passwd.search(/[0-9]/g);
-    const checkEng = passwd.search(/[a-z]/ig);
-    if(checkNum < 0 || checkEng < 0) {
+    const checkEng = passwd.search(/[a-z]/gi);
+    if (checkNum < 0 || checkEng < 0) {
       setPasswordError('비밀번호는 영문 숫자 조합 8~20자리입니다.');
       return false;
     }
@@ -96,7 +97,7 @@ const SignUp = ({ history, location }) => {
 
     setPasswordError('');
     return true;
-  }
+  };
 
   const verifyEmptyValue = (value, text) => {
     if (value === '' || value === null) {
@@ -109,17 +110,16 @@ const SignUp = ({ history, location }) => {
 
   const handleSignUpSubmit = (e) => {
     if (
-      !verifyEmptyValue(userInfo.classOf, '학번을 입력해주세요.') 
-        || !verifyEmptyValue(userInfo.name, '이름을 입력해주세요.') 
-        || !verifyEmptyValue(userInfo.phoneNumber, '연락처를 입력해주세요.') 
-        || !verifyEmptyValue(userInfo.inviteCode, '인증번호를 입력해주세요.')
-        || !verifyEmptyValue(mainProjectRole, '대표직군을 설정해주세요.')
-        || !verifyEmptyValue(subProjectRole, '부가직군을 설정해주세요.')
-      ) {
-    
-        return;
+      !verifyEmptyValue(userInfo.classOf, '학번을 입력해주세요.') ||
+      !verifyEmptyValue(userInfo.name, '이름을 입력해주세요.') ||
+      !verifyEmptyValue(userInfo.phoneNumber, '연락처를 입력해주세요.') ||
+      !verifyEmptyValue(userInfo.inviteCode, '인증번호를 입력해주세요.') ||
+      !verifyEmptyValue(mainProjectRole, '대표직군을 설정해주세요.') ||
+      !verifyEmptyValue(subProjectRole, '부가직군을 설정해주세요.')
+    ) {
+      return;
     }
-    if (!(/^\d{3}\d{3,4}\d{4}$/).test(userInfo.phoneNumber)) {
+    if (!/^\d{3}\d{3,4}\d{4}$/.test(userInfo.phoneNumber)) {
       toast.error('⛔ 휴대폰 번호를 확인해주세요.');
       return false;
     }
@@ -135,18 +135,20 @@ const SignUp = ({ history, location }) => {
       phoneNumber: userInfo.phoneNumber,
       password: passwd,
       mainProjectRole: mainProjectRole,
-      subProjectRole: subProjectRole === '선택안함' ? null : subProjectRole
-    }
-    
+      subProjectRole: subProjectRole === '선택안함' ? null : subProjectRole,
+    };
+
     const successSignup = () => {
       toast.success('✅ 회원가입에 성공하셨습니다.');
       e.target.disabled = true;
-      setTimeout(() => history.push('/signin'), 2000)
-    }
-    
+      setTimeout(() => history.push('/signin'), 2000);
+    };
+
     const errorSignup = () => {
-      toast.error('⛔ 회원가입에 실패하였습니다. 입력하신 정보가 맞는지 확인해주세요.');
-    }
+      toast.error(
+        '⛔ 회원가입에 실패하였습니다. 입력하신 정보가 맞는지 확인해주세요.',
+      );
+    };
 
     signup(signUpRequest, successSignup, errorSignup);
   };
@@ -156,15 +158,11 @@ const SignUp = ({ history, location }) => {
     setModalShow(true);
   };
 
-  const cancelClick = (e) => {
-    setModalShow(false);
-  }
-
   useEffect(verifyPassword);
 
   return (
     <>
-    <ToastContainer
+      <ToastContainer
         position="top-center"
         autoClose={3000}
         hideProgressBar={false}
@@ -175,12 +173,15 @@ const SignUp = ({ history, location }) => {
         draggable
         pauseOnHover
       />
-    <div className="signUp-container">
-      {modalShow ? (
-            <ModalTemp 
-              modalShow={modalShow}
-            >
-            <li className={`list r2`}>
+      <div className="signUp-container">
+        {modalShow ? (
+          <ModalTemp
+            modalShow={modalShow}
+            handleOk={handleSubmit}
+            handleCancel={setModalShow}
+            form={'signup'}
+          >
+            <li className="list r2">
               <h2>직군설정</h2>
               <p>
                 자신의 직군을 설정하세요.
@@ -197,149 +198,158 @@ const SignUp = ({ history, location }) => {
             </li>
             <li className="list r2">
               <h3>부가직군</h3>
-              <OccupationListForm 
+              <OccupationListForm
                 projectRole={subProjectRole}
-                type="subProjectRole" 
-                handleChoice={handleChoice} />
+                type="subProjectRole"
+                handleChoice={handleChoice}
+                txt="선택안함"
+              />
             </li>
-            <li className="list alert">
-              <p>회원가입 후 작가등록 페이지에서 변경할 수 있습니다.</p>
-            </li>
-            <li className="list choice-btn">
-              <Button text="선택완료" handleOk={handleSubmit}/>
-            </li>
-            <li id="cancel-btn">
-              <CancelBtn handleCancel={cancelClick}/>
-            </li>
+            {curSize > tablet && (
+              <li className="list alert">
+                <p>회원가입 후 작가등록 페이지에서 변경할 수 있습니다.</p>
+              </li>
+            )}
           </ModalTemp>
-      ) : (
-        <div className="el-main">
-          <form>
-            <div className="sub-info">
-              <div className="info-title">계정정보</div>
-              <div className="info-body">
-                <div className="input-id group-start">
-                  <input
-                    type="text"
-                    name="student_code"
-                    id="student_code"
-                    placeholder="학번을 입력해주세요"
-                    defaultValue={userInfo.classOf}
-                    onChange={(e) => setUserInfo({
-                      ...userInfo,
-                      classOf: e.target.value
-                    })}
-                    className="signUp-input"
-                    maxLength='20'
-                  />
-                  <div className="check-info"></div>
-                </div>
-                <div className="input-password">
-                  <div className="form1-input-password">
+        ) : (
+          <div className="el-main">
+            <form>
+              <div className="sub-info">
+                <div className="info-title">계정정보</div>
+                <div className="info-body">
+                  <div className="input-id group-start">
                     <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      value={passwd}
-                      placeholder="비밀번호를 입력하세요"
-                      onChange={(e) => setPasswd(e.target.value)}
-                      className="signUp-input passwrod1"
-                      maxLength='20'
-                    />
-                    <div className="check-info">{passwordError}</div>
-                  </div>
-                  <div className="form2-input-password ">
-                    <input
-                      type="password"
-                      name="confirm_password"
-                      id="confirm_password"
-                      value={confirmPasswd}
-                      placeholder="비밀번호를 다시 확인하세요"
-                      onChange={(e) => setConfirmPasswd(e.target.value)}
+                      type="text"
+                      name="student_code"
+                      id="student_code"
+                      placeholder="학번을 입력해주세요"
+                      defaultValue={userInfo.classOf}
+                      onChange={(e) =>
+                        setUserInfo({
+                          ...userInfo,
+                          classOf: e.target.value,
+                        })
+                      }
                       className="signUp-input"
-                      maxLength='20'
+                      maxLength="20"
                     />
                     <div className="check-info"></div>
                   </div>
+                  <div className="input-password">
+                    <div className="form1-input-password">
+                      <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        value={passwd}
+                        placeholder="비밀번호를 입력하세요"
+                        onChange={(e) => setPasswd(e.target.value)}
+                        className="signUp-input passwrod1"
+                        maxLength="20"
+                      />
+                      <div className="check-info">{passwordError}</div>
+                    </div>
+                    <div className="form2-input-password ">
+                      <input
+                        type="password"
+                        name="confirm_password"
+                        id="confirm_password"
+                        value={confirmPasswd}
+                        placeholder="비밀번호를 다시 확인하세요"
+                        onChange={(e) => setConfirmPasswd(e.target.value)}
+                        className="signUp-input"
+                        maxLength="20"
+                      />
+                      <div className="check-info"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="sub-info">
-              <div className="info-title">개인정보</div>
-              <div className="info-body">
-                <div className="input-name group-start">
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    placeholder="이름을 입력해주세요"
-                    defaultValue={userInfo.name}
-                    onChange={(e) => setUserInfo({
-                      ...userInfo,
-                      name: e.target.value
-                    })}
-                    className="signUp-input insert-name"
-                    maxLength='20'
-                  />
-                  <button className="select-job" onClick={handleClick}>
-                    직군 선택
-                    <img
-                      src={selectJobIcon}
-                      alt="No icon"
-                      className="selectJobIcon"
+              <div className="sub-info">
+                <div className="info-title">개인정보</div>
+                <div className="info-body">
+                  <div className="input-name group-start">
+                    <input
+                      type="text"
+                      name="name"
+                      id="name"
+                      placeholder="이름을 입력해주세요"
+                      defaultValue={userInfo.name}
+                      onChange={(e) =>
+                        setUserInfo({
+                          ...userInfo,
+                          name: e.target.value,
+                        })
+                      }
+                      className="signUp-input insert-name"
+                      maxLength="20"
                     />
-                  </button>
+                    <button className="select-job" onClick={handleClick}>
+                      직군 선택
+                      <img
+                        src={selectJobIcon}
+                        alt="No icon"
+                        className="selectJobIcon"
+                      />
+                    </button>
+                  </div>
+                  <div className="check-info"></div>
+                  <div className="input-phone">
+                    <input
+                      type="text"
+                      name="phone_number"
+                      id="phone_number"
+                      placeholder="핸드폰 번호(- 제외)"
+                      defaultValue={userInfo.phoneNumber}
+                      onChange={(e) =>
+                        setUserInfo({
+                          ...userInfo,
+                          phoneNumber: e.target.value,
+                        })
+                      }
+                      className="signUp-input"
+                      maxLength="12"
+                    />
+                  </div>
+                  <div className="check-info"></div>
                 </div>
-                <div className="check-info"></div>
-                <div className="input-phone">
-                  <input
-                    type="text"
-                    name="phone_number"
-                    id="phone_number"
-                    placeholder="핸드폰 번호(- 제외)"
-                    defaultValue={userInfo.phoneNumber}
-                    onChange={(e) => setUserInfo({
-                      ...userInfo,
-                      phoneNumber: e.target.value
-                    })}
-                    className="signUp-input"
-                    maxLength='12'
-                  />
-                </div>
-                <div className="check-info"></div>
               </div>
-            </div>
-            <div className="sub-info">
-              <div className="info-title">인증번호</div>
-              <div className="info-body">
-                <div className="input-auth-num group-start">
-                  <input
-                    type="text"
-                    name="auth_number"
-                    id="auth_number"
-                    placeholder="인증번호를 입력하세요"
-                    defaultValue={userInfo.inviteCode}
-                    onChange={(e) => setUserInfo({
-                      ...userInfo,
-                      inviteCode: e.target.value
-                    })}
-                    className="signUp-input"
-                    maxLength='10'
-                  />
+              <div className="sub-info">
+                <div className="info-title">인증번호</div>
+                <div className="info-body">
+                  <div className="input-auth-num group-start">
+                    <input
+                      type="text"
+                      name="auth_number"
+                      id="auth_number"
+                      placeholder="인증번호를 입력하세요"
+                      defaultValue={userInfo.inviteCode}
+                      onChange={(e) =>
+                        setUserInfo({
+                          ...userInfo,
+                          inviteCode: e.target.value,
+                        })
+                      }
+                      className="signUp-input"
+                      maxLength="10"
+                    />
+                  </div>
+                  <div className="check-info"></div>
                 </div>
-                <div className="check-info"></div>
               </div>
-            </div>
-            <button type='button' onClick={handleSignUpSubmit} className="signUp-button">
-              가입하기
-            </button>
-          </form>
-        </div>
-      )}
-    </div>
+              <button
+                type="button"
+                onClick={handleSignUpSubmit}
+                className="signUp-button"
+              >
+                가입하기
+              </button>
+            </form>
+          </div>
+        )}
+      </div>
     </>
   );
-  
 };
 
 export default SignUp;
