@@ -5,19 +5,25 @@ export const appDispatchContext = createContext(null);
 
 const AppProvider = ({ children }) => {
   const [curSize, setCurSize] = useState(window.innerWidth);
+  const [scroll, setScroll] = useState(0);
   const [modalShow, setModalShow] = useState(false);
 
   const [userInfo, setUserInfo] = useState({
     isLogin: false,
     classOf: '',
-    name: ''
+    name: '',
   });
 
   useEffect(() => {
     window.addEventListener('resize', () => setCurSize(window.innerWidth));
-
+    window.addEventListener('scroll', () =>
+      setScroll(Math.floor(window.scrollY)),
+    );
     return () => {
       window.removeEventListener('resize', () => setCurSize(window.innerWidth));
+      window.addEventListener('scroll', () =>
+        setScroll(Math.floor(window.scrollY)),
+      );
     };
   }, [curSize]);
 
@@ -56,7 +62,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const value = { curSize, modalShow, userInfo };
+  const value = { curSize, modalShow, userInfo, scroll };
   const dispatch = { setJobColor, setModalShow, setUserInfo, translationKR };
 
   return (

@@ -68,6 +68,7 @@
   @if $col == 'c2' {
     @if $type == 'web' {
       grid-template-columns: 1fr auto;
+      justify-content: space-between;
     } @else if $type == 'res' {
       grid-template-columns: repeat(2, 1fr);
     } @else if $type == 'mypage' {

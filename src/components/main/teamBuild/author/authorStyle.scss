@@ -170,9 +170,7 @@
     margin-bottom: 233px;
     height: 631px;
     left: 5%;
-    > div {
-      // background-color: magenta;
-    }
+
     .author-img-box {
       background-color: rgba(24, 24, 24, 0.37);
       width: 480px;
@@ -186,7 +184,6 @@
         left: -6%;
         @include centerPosition;
       }
-      // position: absolute;
     }
     .author-contents {
       display: grid;
@@ -555,14 +552,14 @@
       // gap: 3%;
       height: auto;
       margin-bottom: 42px;
-      .author-img-box {
-        // width: 234px;
-        // .author-bg {
-        //   width: 140px;
-        //   height: calc(100% + 53px);
-        //   left: -6%;
-        // }
-      }
+      // .author-img-box {
+      //   // width: 234px;
+      //   // .author-bg {
+      //   //   width: 140px;
+      //   //   height: calc(100% + 53px);
+      //   //   left: -6%;
+      //   // }
+      // }
       .author-contents {
         h3 {
           @include teamsH3('phone');

@@ -6,6 +6,7 @@ import ListOfIdeaForm from '../components/main/teamBuild/idea/ListOfIdeaForm.js'
 import '../components/mainStyle.scss';
 import AuthorForm from '../components/main/teamBuild/author/index.js';
 import TeamsProvider from '../context/teamContext';
+import SubNavigation from '../components/header/SubNavigation';
 
 const Tbuild = ({ match, location }) => {
   return (
@@ -15,18 +16,7 @@ const Tbuild = ({ match, location }) => {
           {/* tablet사이즈 일경우 사라진다. */}
           <section className="team-side-menu">
             <ul>
-              <li>
-                <Link to={`${match.url}/author`}>작가 목록</Link>
-                <span></span>
-              </li>
-              <li>
-                <Link to={`${match.url}/list`}>팀 목록</Link>
-                <span></span>
-              </li>
-              <li>
-                <Link to={`${match.url}/idea`}>아이디어 게시판</Link>
-                <span></span>
-              </li>
+              <SubNavigation type="teams" />
             </ul>
           </section>
           <section className="team-contents">
