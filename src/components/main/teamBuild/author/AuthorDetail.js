@@ -1,18 +1,53 @@
-import React from 'react';
-import { useAppDispatch } from '../../../../context/appContext';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppState } from '../../../../context/appContext';
 import {
   useTeamsDispatch,
   useTeamsState,
 } from '../../../../context/teamContext';
+import useAsync from '../../../../hooks/useAsync';
+import { getUserProfileDetail } from '../../../../service/api/profile';
 
+// 클릭한 작가의 classOf 를 넣어준다. ->detail정보를 가져오기위해서.
+// 로그인을 했고, 본인의 classOf와 클릭한 classOf가 같으면 수정 삭제 버튼을 활성화 시켜준다.
 const AuthorDetail = ({ match }) => {
   const { translationKR, setJobColor } = useAppDispatch();
+  const {
+    userInfo: { isLogin, classOf },
+  } = useAppState();
   const { profileListData } = useTeamsState();
   const { filterClassOf } = useTeamsDispatch();
+
+  const [profileDetail, refetch] = useAsync(() =>
+    getUserProfileDetail(match.params.id),
+  );
+
+  const { loading, data, error } = profileDetail;
+  console.log(profileDetail);
+
+  if (loading) return <div>로딩중...</div>;
+  if (!data) return null;
+  if (error) return <div></div>;
 
   const author = profileListData.content.find((data) => {
     return data.user.classOf === match.params.id;
   });
+
+  const authorEditBtn = () => {
+    return classOf === match.params.id ? (
+      <ul className="edit-author-info">
+        <li className="author-edit">
+          <i className="icon" />
+          <button>수정</button>
+        </li>
+        <li className="author-del">
+          <i className="icon" />
+          <button>삭제</button>
+        </li>
+      </ul>
+    ) : (
+      false
+    );
+  };
 
   const { user } = author;
   return (
@@ -41,16 +76,7 @@ const AuthorDetail = ({ match }) => {
                 {filterClassOf(user.classOf)}학번
               </span>
             </h2>
-            <ul className="edit-author-info">
-              <li className="author-edit">
-                <i className="icon" />
-                <button>수정</button>
-              </li>
-              <li className="author-del">
-                <i className="icon" />
-                <button>삭제</button>
-              </li>
-            </ul>
+            {isLogin && authorEditBtn()}
           </div>
           <p className="author-introduction">자기소개</p>
         </div>

@@ -5,8 +5,6 @@ import {
   useMemo,
   useState,
 } from 'react';
-import useAsync from '../hooks/useAsync';
-import { getUserProfile } from '../service/api/profile';
 
 export const teamStateContext = createContext(null);
 export const teamDispatchContext = createContext(null);
@@ -25,7 +23,7 @@ const profileListData = {
       },
       portfolioLinks: ['string'],
       user: {
-        classOf: '20142001',
+        classOf: 'admin',
         id: 0,
         instagramId: 'abc',
         kakaoId: 'def',
@@ -218,15 +216,14 @@ const profileListData = {
   ],
 };
 const TeamsProvider = ({ children }) => {
-  const [profileList, refetch] = useAsync(() => getUserProfile());
-
+  const [showCreate, setShowCreate] = useState(false);
   const filterClassOf = useCallback((classOf) => classOf.substr(2, 2));
 
-  const value = useMemo(() => ({ profileList, profileListData }), [
-    profileList,
-    profileListData,
+  const value = useMemo(() => ({ showCreate }), [showCreate]);
+  const dispatch = useMemo(() => ({ filterClassOf, setShowCreate }), [
+    filterClassOf,
+    setShowCreate,
   ]);
-  const dispatch = useMemo(() => ({ filterClassOf }), [filterClassOf]);
 
   return (
     <teamStateContext.Provider value={value}>
