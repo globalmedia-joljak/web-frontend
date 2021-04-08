@@ -1,9 +1,13 @@
-@import "../../assets/_mixin.scss";
-@import "../../assets/variables.scss";
+@import '../../assets/_mixin.scss';
+@import '../../assets/variables.scss';
 
 // tablet
 $nav-btn: 24px;
 $more-i: 24px;
+@mixin logOutBox {
+  font-size: 20px;
+  @content;
+}
 
 header {
   background-color: transparent;
@@ -14,56 +18,25 @@ header {
   box-shadow: 0px 3px 6px #00000029;
   z-index: 1100;
 
-  &.dark {
-    background-color: #ffffff;
-    * {
-      color: #000000;
-    }
-    .inr {
-      .header-logo {
-        a {
-          background-image: url("../../assets/images/GlobalMedia_Color@2x.png");
-        }
-      }
-    }
-  }
-
-  &.light {
-    * {
-      color: #ffffff;
-    }
-    .inr {
-      .header-logo {
-        a {
-          background-image: url("../../assets/images/GlobalMedia_White@2x.png");
-        }
-      }
-    }
-    .mypage-btn {
-      span {
-        color: #ffffffcc;
-      }
-    }
-  }
-
   .inr {
-    @include headerStyle("c2", "web");
+    @include headerStyle('c2', 'web');
+
     height: 100%;
 
     .header-logo {
-      @include logo("header-logo", "");
+      @include logo('header-logo', '');
       a {
         @include backgroundImage;
       }
     }
 
     .header-inr-wrap {
-      @include headerStyle("c2", "");
+      @include headerStyle('c2', '');
       width: 100%;
 
       nav {
         .nav-inr-wrap {
-          @include headerStyle("c3", "");
+          @include headerStyle('c3', '');
           > li {
             width: fit-content;
             > a {
@@ -76,41 +49,109 @@ header {
       }
     }
 
-    // mypage
-    .mypage-btn {
-      @include headerStyle("c2", "mypage");
-      place-content: center;
-      gap: 4px;
-      a {
-        font-size: $header-font-web;
-        text-decoration: underline;
+    // login status
+    .login-status-btn {
+      display: grid;
+      grid-template-columns: repeat(3, max-content);
+      align-items: center;
+      .mypage-btn {
         background-image: none;
+        text-decoration: underline;
+        font-size: $header-font-web;
+        margin-right: 4px;
       }
+
       span {
+        padding-right: 24px;
         font-size: $header-font-web-s;
+      }
+      .logout-btn {
+        @include backgroundImage;
+        width: 30px;
+        height: 30px;
+        &:hover {
+          background-image: url('../../assets/images/Logout_hover@2x.png') !important;
+        }
+      }
+
+      .signin-btn {
+        @include logOutBox;
+        padding-right: 16px;
+      }
+      .signup-btn {
+        @include logOutBox;
+        padding-left: 16px;
+      }
+    }
+  }
+
+  &.dark {
+    background-color: #ffffff;
+    * {
+      color: #000000;
+    }
+    .inr {
+      .header-logo {
+        a {
+          background-image: url('../../assets/images/GlobalMedia_Color@2x.png');
+        }
+      }
+      .login-status-btn {
+        .logout-btn {
+          background-image: url('../../assets/images/Logout@2x.png');
+        }
+        .signin-btn {
+          border-right: 1px solid #1b1b1be7;
+        }
+      }
+    }
+  }
+
+  &.light {
+    * {
+      color: #ffffff;
+    }
+    .inr {
+      .header-logo {
+        a {
+          background-image: url('../../assets/images/GlobalMedia_White@2x.png');
+        }
+      }
+      .login-status-btn {
+        .logout-btn {
+          background-image: url('../../assets/images/Logout_white@2x.png');
+        }
+        .signin-btn {
+          border-right: 1px solid #ffffff99;
+        }
+      }
+    }
+    .login-status-btn {
+      span {
+        color: #ffffffcc;
       }
     }
   }
 }
 
-@include response("tablet") {
+@include response('tablet') {
   header {
     background-color: #7759d1 !important;
     height: $header-height-tablet;
     border-bottom: none;
     .inr {
-      @include headerStyle("c2", "res");
+      @include headerStyle('c2', 'res');
 
       .header-logo {
-        @include logo("header-logo", "tablet");
+        @include logo('header-logo', 'tablet');
         order: 2;
       }
       .header-inr-wrap {
-        @include headerStyle("c2", "res");
+        @include headerStyle('c2', 'res');
         gap: 0;
         .header-logo {
           a {
-            background-image: url("../../assets/images/GlobalMedia_White.png");
+            background-image: url('../../assets/images/GlobalMedia_White.png');
           }
           justify-self: end;
           transform: translateX(50%);
@@ -118,7 +159,7 @@ header {
 
         nav {
           @include backgroundImage;
-          background-image: url("../../assets/images/List@2x.png");
+          background-image: url('../../assets/images/List@2x.png');
           cursor: pointer;
           width: $nav-btn;
           height: $nav-btn;
@@ -132,11 +173,11 @@ header {
               z-index: 1000;
               width: 60%;
               height: 100%;
-              @include headerRow("r2", "nav-tablet");
+              @include headerRow('r2', 'nav-tablet');
               .header-logo {
-                @include logo("nav-logo", "tablet");
+                @include logo('nav-logo', 'tablet');
                 a {
-                  background-image: url("../../assets/images/GlobalMedia_White@2x.png");
+                  background-image: url('../../assets/images/GlobalMedia_White@2x.png');
                 }
                 order: 0;
                 transform: none;
@@ -157,7 +198,7 @@ header {
 
               &::after {
                 position: absolute;
-                content: "";
+                content: '';
                 @include widthHeight;
                 background-color: #00000066;
               }
@@ -178,7 +219,7 @@ header {
                   align-self: flex-start;
 
                   width: inherit;
-                  @include headerRow("r2", "sub-tablet");
+                  @include headerRow('r2', 'sub-tablet');
 
                   &:nth-child(1) {
                     @include sideNavStyle;
@@ -234,7 +275,7 @@ header {
                     }
                   }
                   .nav-sub-wrap {
-                    @include headerRow("r2", "sub-list-tablet");
+                    @include headerRow('r2', 'sub-list-tablet');
                     gap: 16px;
                     display: none;
                     padding-top: 0;
@@ -253,21 +294,25 @@ header {
           }
         }
       }
-      .mypage {
+      .login-status-wrap {
         display: grid;
         place-content: center end;
-        .mypage-btn {
-          gap: 0;
-          grid-template-columns: auto;
+        .login-status-btn {
           a {
             @include backgroundImage;
-            background-image: url("../../assets/images/person@2x.png");
+            background-image: url('../../assets/images/person@2x.png');
             font-size: 0;
             width: 24px;
             height: 24px;
           }
-          span {
+          span,
+          .logout-btn,
+          .signup-btn {
             display: none;
+          }
+
+          .signin-btn {
+            border-right: none;
           }
         }
       }
@@ -275,19 +320,19 @@ header {
   }
 }
 
-@include response("phone") {
+@include response('phone') {
   header {
     .inr {
       .header-inr-wrap {
         .header-logo {
-          @include logo("header-logo", "phone");
+          @include logo('header-logo', 'phone');
         }
         nav {
           .header-nav-tablet {
             .header-nav-tablet-inr {
               width: 67%;
               .header-logo {
-                @include logo("nav-logo", "phone");
+                @include logo('nav-logo', 'phone');
               }
             }
           }
