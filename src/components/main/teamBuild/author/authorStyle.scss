@@ -17,42 +17,12 @@
     display: grid;
     grid-template-columns: repeat(2, auto);
     gap: 40px;
-    button {
-      width: $web-authorBtn-width;
-      height: $web-authorBtn-height;
-      border-radius: 4px;
-      color: #ffffff;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      font-size: 20px;
-      align-items: center;
-      justify-items: end;
-      padding: 0 16px;
-      .icon {
-        width: $web-authorBtn-icon-size;
-        height: $web-authorBtn-icon-size;
-        @include backgroundImage;
-      }
-      &.filter {
-        background-color: #baa2ff;
-        .icon {
-          background-image: url('../../../../assets/images/filter@2x.png');
-        }
-      }
-      &.create {
-        background-color: #074fd8;
-        .icon {
-          background-image: url('../../../../assets/images/create-24px@2x.png');
-        }
-      }
-    }
   }
 
   h3 {
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
-    height: $web-authorBtn-height;
     gap: 16px;
     font-size: 28px;
     margin-bottom: 32px;
@@ -155,7 +125,7 @@
 .author-detail-wrap {
   margin: 114px 6% 92px;
   max-width: 1052px;
-  // min-width: 961px;
+  min-width: 916px;
 
   > div {
     display: grid;
@@ -170,7 +140,6 @@
     margin-bottom: 233px;
     height: 631px;
     left: 5%;
-
     .author-img-box {
       background-color: rgba(24, 24, 24, 0.37);
       width: 480px;
@@ -191,7 +160,7 @@
       .author-contents-info {
         display: grid;
         grid-template-areas:
-          'role main-role'
+          'role role'
           'name edit';
         row-gap: 30px;
         justify-content: space-between;
@@ -341,19 +310,8 @@
     .author-functions {
       gap: 24px;
       right: 3%;
-      button {
-        width: $tablet-authorBtn-width;
-        height: $tablet-authorBtn-height;
-        font-size: 15px;
-        padding: 0 12px;
-        .icon {
-          width: $tablet-authorBtn-icon-size;
-          height: $tablet-authorBtn-icon-size;
-        }
-      }
     }
     h3 {
-      height: $tablet-authorBtn-height;
       font-size: 16px;
       gap: 8px;
       margin-bottom: 26px;
@@ -397,7 +355,7 @@
   }
 
   .author-detail-wrap {
-    // min-width: 555px;
+    min-width: 522px;
     margin: 65px 10% 165px;
 
     .author-info {
@@ -414,9 +372,6 @@
         }
       }
       .author-contents {
-        h3 {
-          @include teamsH3('tablet');
-        }
         .author-contents-info {
           padding-bottom: 19px;
           row-gap: 16px;
@@ -486,19 +441,8 @@
     margin-top: 23px;
     .author-functions {
       gap: 8px;
-      button {
-        width: $phone-authorBtn-width;
-        height: $phone-authorBtn-height;
-        font-size: 11px;
-        padding: 0 11px;
-        .icon {
-          width: $phone-authorBtn-icon-size;
-          height: $phone-authorBtn-icon-size;
-        }
-      }
     }
     h3 {
-      height: $phone-authorBtn-height;
       margin-bottom: 24px;
     }
     .author-list {
@@ -544,51 +488,60 @@
   }
 
   .author-detail-wrap {
-    // min-width: 555px;
+    min-width: 320px;
     margin: 44px 3% 160px;
+
     .author-info {
       grid-template-columns: 1fr;
       grid-template-rows: max-content 1fr;
-      // gap: 3%;
+      justify-items: center;
+      gap: 0;
       height: auto;
       margin-bottom: 42px;
-      // .author-img-box {
-      //   // width: 234px;
-      //   // .author-bg {
-      //   //   width: 140px;
-      //   //   height: calc(100% + 53px);
-      //   //   left: -6%;
-      //   // }
-      // }
-      .author-contents {
-        h3 {
-          @include teamsH3('phone');
+      .author-img-box {
+        height: 174px;
+        width: 130px;
+        margin-bottom: 16px;
+        .author-bg {
+          width: inherit;
+          height: inherit;
+          top: 0;
+          transform: translateX(-50%);
+          left: 54%;
+          margin-top: -13px;
         }
+      }
+      .author-contents {
+        justify-items: center;
         .author-contents-info {
+          grid-template-areas: 'role' 'name' 'edit';
           padding-bottom: 19px;
           row-gap: 16px;
+          justify-items: center;
+          row-gap: 10px;
           .author-role {
-            font-size: 22px;
+            @include teamsH3('phone');
             .author-sub-role {
               @include teamsSubTxt('phone');
             }
           }
           .author-name {
-            font-size: 24px;
+            font-size: 17px;
             .classof-author {
               @include teamsSubTxt('phone');
             }
           }
           .edit-author-info {
-            gap: 11px;
+            gap: 10px;
             li {
-              gap: 7px;
+              align-items: center;
+              gap: 4px;
               .icon {
-                width: 18px;
-                height: 18px;
+                width: 12;
+                height: 12;
               }
               button {
-                font-size: 16px;
+                font-size: 12px;
               }
             }
           }
@@ -604,7 +557,6 @@
       .portfolio-lists {
         gap: 48px;
         .portfolio {
-          // column-gap: 16px;
           .icon-link {
             width: 29px;
             height: 29px;
@@ -643,7 +595,6 @@
 @include response('phone-m') {
   .author-wrap {
     h3 {
-      height: $phone-authorBtn-height;
       font-size: 12px;
     }
     .author-list {

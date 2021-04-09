@@ -72,6 +72,7 @@ const ModalTemp = ({
   // handleSubmit,
   handleOk,
   handleCancel,
+  btnTxt,
 }) => {
   const { curSize } = useAppState();
 
@@ -89,7 +90,7 @@ const ModalTemp = ({
             </li>
           )}
           <li id="choice-btn">
-            <Button text="선택완료" handleOk={handleOk} />
+            <Button text={btnTxt} handleOk={handleOk} />
           </li>
         </ModalUl>
       </ModalForm>

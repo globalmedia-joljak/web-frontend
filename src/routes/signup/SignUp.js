@@ -180,6 +180,7 @@ const SignUp = ({ history, location }) => {
             handleOk={handleSubmit}
             handleCancel={setModalShow}
             form={'signup'}
+            btnTxt="선택완료"
           >
             <li className="list r2">
               <h2>직군설정</h2>

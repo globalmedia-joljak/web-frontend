@@ -86,27 +86,27 @@ const NavClickEvent = (size, tablet, navEl) => {
 
 let navRoutes = [
   { id: 'notice', path: '/notice', name: '공지사항' },
-  { id: 'teams', path: '/teams', name: '팀 빌딩' },
-  { id: 'project', path: '/projects', name: '졸업작품' },
+  { id: 'teams', path: '/author', name: '팀 빌딩', type: 'sub-nav' },
+  { id: 'project', path: '/projects', name: '졸업작품', type: 'sub-nav' },
 ];
 
 // routes_template
 const RouterLink = (size, tablet, signOutHandler, isLogin) => {
   return (
     <>
-      {navRoutes.map(({ path, name, id }) => {
+      {navRoutes.map(({ path, name, id, type }) => {
         return (
           <li key={id}>
             <Link to={path} className="header-route" id={id}>
               {name}
-              {(id === 'teams' || id === 'project') && size < tablet && (
+              {(type = 'sub-nav') && size < tablet && (
                 <div id="more-icon">
                   <span></span>
                   <span className="rotate"></span>
                 </div>
               )}
             </Link>
-            {(id === 'teams' || id === 'project') && size < tablet && (
+            {(type = 'sub-nav') && size < tablet && (
               <ul className="nav-sub-wrap">
                 <SubNavigation type={id} />
               </ul>
