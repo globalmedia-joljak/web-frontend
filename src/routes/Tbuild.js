@@ -1,11 +1,12 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import ListOfTeamForm from '../components/main/teamBuild/team/ListOfTeamForm.js';
+import ListOfTeamForm from '../components/main/teamBuild/team/teamList/TeamList.js';
 import ListOfIdeaForm from '../components/main/teamBuild/idea/ListOfIdeaForm.js';
 import '../components/mainStyle.scss';
 import AuthorForm from '../components/main/teamBuild/author/index.js';
 import TeamsProvider from '../context/teamContext';
 import SubNavigation from '../components/header/SubNavigation';
+import Teams from '../components/main/teamBuild/team/index.js';
 
 const Tbuild = () => {
   return (
@@ -20,7 +21,7 @@ const Tbuild = () => {
           <section className="team-contents">
             <div className="content">
               <Route path="/author" component={AuthorForm} />
-              <Route path="/teams" component={ListOfTeamForm} />
+              <Route path="/teams" component={Teams} />
               <Route path="/idea" component={ListOfIdeaForm} />
             </div>
           </section>

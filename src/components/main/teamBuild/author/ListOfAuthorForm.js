@@ -26,7 +26,7 @@ const ListOfAuthorForm = ({ match, history }) => {
   const [filterShow, setFilterShow] = useState(false);
   const [filterRole, setFilterRole] = useState('');
 
-  const [profilePageNum, setProfilePageNum] = useState(1);
+  const [profilePageNum, setProfilePageNum] = useState(0);
 
   const [profileList, refetch] = useAsync(() =>
     getAuthorProfileList(profilePageNum),
