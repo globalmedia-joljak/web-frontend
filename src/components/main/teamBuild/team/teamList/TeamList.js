@@ -32,7 +32,6 @@ const TeamList = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{ color: '#ffffff', fontWeight: 'bold' }}
       />
       <div className="hero-img">
 
