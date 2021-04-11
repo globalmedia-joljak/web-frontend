@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import AuthorButton from '../../author/AuthorButton';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 import './TeamList.scss';
 
@@ -36,7 +35,7 @@ const TeamList = () => {
         style={{ color: '#ffffff', fontWeight: 'bold' }}
       />
       <div className="hero-img">
-        
+
       </div>
       <div className="teams-wrap">
         <div className="teams-top">
