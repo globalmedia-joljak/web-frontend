@@ -35,7 +35,9 @@ const TeamList = () => {
         pauseOnHover
         style={{ color: '#ffffff', fontWeight: 'bold' }}
       />
-      <div className="hero-img"></div>
+      <div className="hero-img">
+        
+      </div>
       <div className="teams-wrap">
         <div className="teams-top">
           <div className="teams-top-left">
