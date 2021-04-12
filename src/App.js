@@ -47,14 +47,25 @@ const App = () => {
           });
         })
         .catch((e) => {
+          console.log(e.response);
+          delete client.defaults.headers.common["Authorization"];
+          delete client.defaults.headers.common["refreshToken"];
+          delete client.defaults.headers.common["accessToken"];
           localStorage.clear();
+          setUserInfo({
+            ...userInfo,
+            classOf: '',
+            name: '',
+            isLogin: false,
+          });
         });
       return;
     }
 
     const accessToken = stoargeInfo.accessToken;
-    client.defaults.headers.common['accessToken'] = `${accessToken}`;
-    getAccessTokenByAccessToken()
+    if (accessToken) {
+      client.defaults.headers.common['accessToken'] = `${accessToken}`;
+      getAccessTokenByAccessToken()
       .then((response) => {
         const token = response.data.token;
         client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -68,8 +79,21 @@ const App = () => {
         });
       })
       .catch((e) => {
+        console.log(e.response);
+        delete client.defaults.headers.common["Authorization"];
+        delete client.defaults.headers.common["refreshToken"];
+        delete client.defaults.headers.common["accessToken"];
         localStorage.clear();
+        setUserInfo({
+          ...userInfo,
+          classOf: '',
+          name: '',
+          isLogin: false,
+        });
       });
+    }
+    
+    
   }, []);
 
   return (
