@@ -9,6 +9,7 @@
   width: 100%;
   max-width: 1293px;
   min-width: 930px;
+  box-sizing: border-box;
 
   .teams-top {
     display: flex;
@@ -17,6 +18,7 @@
     align-items: center;
     flex-wrap: wrap;
     padding-bottom: 38px;
+    box-sizing: border-box;
     .teams-top-left {
       display: flex;
       h3 {
@@ -26,7 +28,6 @@
         }
         
       }
-      // justify-content: flex-start;
     }
     .teams-top-right {
       display: flex;
@@ -37,7 +38,45 @@
   }
 
   .teams-body {
-    background-color: yellow;
     
+  }
+}
+
+@include response('tablet') {
+  .teams-wrap {
+    margin-top: 24px;
+    min-width: 0;
+    padding: 0 3%;
+  
+    .teams-top {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      padding-bottom: 38px;
+      box-sizing: border-box;
+      .teams-top-left {
+        display: flex;
+        h3 {
+          font-size: 16px;
+          &:nth-child(2) {
+            margin-left: 8px;
+          }
+          
+        }
+        // justify-content: flex-start;
+      }
+      .teams-top-right {
+        display: flex;
+        .create {
+          margin-left: 40px;
+        }
+      }
+    }
+  
+    .teams-body {
+      
+    }
   }
 }

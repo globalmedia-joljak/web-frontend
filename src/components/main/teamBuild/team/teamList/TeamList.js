@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import AuthorButton from '../../author/AuthorButton';
-import InfiniteScroll from 'react-infinite-scroll-component';
-
 import './TeamList.scss';
+import { getTeams } from '../../../../../service/api/teams';
+import ThereIsNoList from '../../ThereIsNoList';
+import Team from './Team';
 
 const TeamList = () => {
   const [teams, setTeams] = useState([]);
@@ -13,9 +14,34 @@ const TeamList = () => {
     totalElements: 0,
   });
 
+  useEffect(() => {
+    getTeams(0)
+      .then((response) => {
+        const { getTeamResponsePage } = response;
+        setTeams(getTeamResponsePage.content);
+        setPageInfo({
+          ...pageInfo,
+          page: getTeamResponsePage.pageable.pageNumber + 1,
+          last: getTeamResponsePage.last,
+          totalElements: getTeamResponsePage.totalElements,
+        })
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+  }, []);
+
   const handleNextPage = async () => {
     // todo : 다음페이지(무한 스크롤)
   };
+
+  const handleCreateTeam = () => {
+    // todo : 등록하기 클릭
+  }
+
+  const handleShowFilterModal = () => {
+    // todo : 상세검색
+  }
 
 
   const test = () => {
@@ -33,9 +59,9 @@ const TeamList = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{ color: '#ffffff', fontWeight: 'bold' }}
       />
-      <div className="hero-img"></div>
+      <div className="hero-img">
+      </div>
       <div className="teams-wrap">
         <div className="teams-top">
           <div className="teams-top-left">
@@ -46,22 +72,47 @@ const TeamList = () => {
             <AuthorButton
               btnType="filter"
               btnTxt="상세검색"
-              handleButton={test}
+              handleButton={handleShowFilterModal}
             />
             <AuthorButton
               btnType="create"
               btnTxt="등록하기"
-              handleButton={test}
+              handleButton={handleCreateTeam}
             />
           </div>
         </div>
         <div className="teams-body">
-          <div className="teams-body-title">
-            title 
-          </div>
-          <div className="teams-body-list">
-            list
-          </div>
+          {pageInfo.totalElements == 0 ? (
+            <ThereIsNoList/>
+          ) : (
+            <>
+            <div className="teams-body-title">
+              {/* todo : title 구현 */}
+            </div>
+            <div className="teams-body-list">
+              {
+                teams.map(
+                  team => (
+                    <Team 
+                      key={team.id}
+                      id={team.id}
+                      category={team.category}
+                      designerMember={team.designerMember}
+                      developerMember={team.developerMember}
+                      mediaArtMember={team.mediaArtMember}
+                      plannerMember={team.plannerMember}
+                      author={team.author}
+                      createdDate={team.createdDate}
+                      images={team.imageInfoList}
+                      teamName={team.teamName}
+                    />
+                  )
+                )
+              }
+            </div>
+            </>
+          )}
+          
           
         </div>
       </div>
