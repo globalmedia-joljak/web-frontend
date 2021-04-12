@@ -43,7 +43,6 @@ const TeamList = () => {
     // todo : 상세검색
   }
 
-
   const test = () => {
     console.log('test');
   }
@@ -61,6 +60,7 @@ const TeamList = () => {
         pauseOnHover
       />
       <div className="hero-img">
+
       </div>
       <div className="teams-wrap">
         <div className="teams-top">
@@ -112,8 +112,6 @@ const TeamList = () => {
             </div>
             </>
           )}
-          
-          
         </div>
       </div>
     </>

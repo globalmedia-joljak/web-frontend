@@ -88,8 +88,8 @@ function Team({id, teamName, category, designerMember, developerMember, mediaArt
             ) : (<></>)   
           }
         </div>
-        
 
+        
       </div>
     </Link>
     
