@@ -30,7 +30,6 @@ const TeamList = () => {
         console.log(e);
       })
   }, []);
-
   const handleNextPage = async () => {
     // todo : 다음페이지(무한 스크롤)
   };

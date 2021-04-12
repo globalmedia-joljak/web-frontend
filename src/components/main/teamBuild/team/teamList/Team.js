@@ -8,7 +8,7 @@ import { useAppState } from "../../../../../context/appContext";
 function Team({id, teamName, category, designerMember, developerMember, mediaArtMember, plannerMember, author, createdDate}) {
   const { curSize } = useAppState();
   const size = curSize < 768 ? 'tablet' : curSize < 425 ? 'phone' : 'web';
-
+  
   return (
     <Link to={{
       pathname: `teams/${id}`,
@@ -88,8 +88,6 @@ function Team({id, teamName, category, designerMember, developerMember, mediaArt
             ) : (<></>)   
           }
         </div>
-
-        
       </div>
     </Link>
     
