@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { client } from './client';
 
 //유저 정보;
-const GetUser = async (classOf) => {
+const getUser = async (classOf) => {
   const { data } = await client.get(`users/${classOf}`);
   return data;
 };
@@ -20,4 +20,4 @@ const updateUserInfo = async (classOf, url, value) => {
   }
 };
 
-export { GetUser, updateUserInfo };
+export { getUser, updateUserInfo };

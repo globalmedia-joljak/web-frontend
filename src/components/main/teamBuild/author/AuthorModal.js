@@ -46,7 +46,7 @@ const SettingRole = ({
 
 const SettingPortfolio = ({
   handlePfSubmit,
-  handlePfChoice,
+  handlePfChange,
   portfolioShow,
   setPortfolioShow,
 }) => {
@@ -64,11 +64,19 @@ const SettingPortfolio = ({
       </li>
       <li className="list r2">
         <h2>제목</h2>
-        <input placeholder="제목을 입력하세요" />
+        <input
+          name="title"
+          placeholder="제목을 입력하세요"
+          onChange={handlePfChange}
+        />
       </li>
       <li className="list r2">
         <h2>링크</h2>
-        <input placeholder="하이퍼링크를 입력하세요" />
+        <input
+          name="link"
+          placeholder="하이퍼링크를 입력하세요"
+          onChange={handlePfChange}
+        />
       </li>
     </ModalTemp>
   );

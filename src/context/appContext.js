@@ -14,6 +14,11 @@ const AppProvider = ({ children }) => {
     name: '',
   });
 
+  const [userRole, setUserRole] = useState({
+    mainProjectRole: '',
+    subProjectRole: '',
+  });
+
   useEffect(() => {
     window.addEventListener('resize', () => setCurSize(window.innerWidth));
     window.addEventListener('scroll', () =>
@@ -62,8 +67,14 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const value = { curSize, modalShow, userInfo, scroll };
-  const dispatch = { setJobColor, setModalShow, setUserInfo, translationKR };
+  const value = { curSize, modalShow, userInfo, scroll, userRole };
+  const dispatch = {
+    setJobColor,
+    setModalShow,
+    setUserInfo,
+    translationKR,
+    setUserRole,
+  };
 
   return (
     <appStateContext.Provider value={value}>

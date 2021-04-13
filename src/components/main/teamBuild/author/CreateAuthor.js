@@ -1,64 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppState } from '../../../../context/appContext';
+import { createAuthorProfile } from '../../../../service/api/profile';
 import AuthorButton from './AuthorButton';
 import { SettingPortfolio, SettingRole } from './AuthorModal';
 import './editAuthorStyle.scss';
 import EditDeleteButton from './EditDeleteButton';
 
-// const SettingRole = ({ modalShow, setModalShow }) => {
-//   const handleChoice = () => {};
-//   const handleSubmit = () => {};
-//   return (
-//     <ModalTemp
-//       modalShow={modalShow}
-//       handleOk={handleSubmit}
-//       handleCancel={setModalShow}
-//       form={'signup'}
-//     >
-//       <li className="list r2">
-//         <h2>직군설정</h2>
-//         <p>
-//           자신의 직군을 설정하세요.
-//           <span>(대표 1개, 부가직군1개까지 설정 가능)</span>
-//         </p>
-//       </li>
-//       <li className="list r2">
-//         <h3>대표직군</h3>
-//         <OccupationListForm
-//           // projectRole={mainProjectRole}
-//           type="mainProjectRole"
-//           handleChoice={handleChoice}
-//         />
-//       </li>
-//       <li className="list r2">
-//         <h3>부가직군</h3>
-//         <OccupationListForm
-//           // projectRole={subProjectRole}
-//           type="subProjectRole"
-//           handleChoice={handleChoice}
-//           txt="선택안함"
-//         />
-//       </li>
-//     </ModalTemp>
-//   );
-// };
-
 const CreateAuthor = ({ type }) => {
+  const setImgEl = useRef();
   const {
+    userRole,
     userInfo: { classOf },
   } = useAppState();
   const { setJobColor, translationKR } = useAppDispatch();
 
-  const [profileRequest, setProfileRequest] = useState({
-    introduce: '',
-    mainRole: '',
-    subRole: '',
-    portfolioLinks: [],
-  });
+  const [image, setImage] = useState('');
+  const [introduce, setIntroduce] = useState('');
+  const [mainRole, setMainRole] = useState('');
+  const [subRole, setSubRole] = useState('');
+  const [portfolioLinks, setPortfolioLinks] = [];
+
+  // TODO : 이미지를 가져온 경우 클래스명을 줘 사진가져오기 icon을 변경해줘야 한다.
 
   //set role
   const [modalShow, setModalShow] = useState(false);
-
   const handleRoleChoice = () => {};
   const handleRoleSubmit = () => {};
 
@@ -66,8 +31,15 @@ const CreateAuthor = ({ type }) => {
   const [textLen, setTextLen] = useState(0);
   const [txtOver, setTxtOver] = useState('');
 
-  const handleIntroduce = () => {};
+  const handleIntroduce = (e) => {
+    // console.log(e);
+    if (textLen < 1000) {
+      console.log('전달 완료');
+      return createAuthorProfile(classOf, { introduce: introduce });
+    }
+  };
   const handleTextArea = (e) => {
+    setIntroduce(e.target.value);
     setTextLen(e.target.value.length);
   };
 
@@ -77,13 +49,19 @@ const CreateAuthor = ({ type }) => {
   const handleEdit = () => {};
   const handleDelete = () => {};
   const handlePfSubmit = () => {};
-  const handlePfChoice = () => {};
+  const handlePfChange = () => {};
 
   useEffect(() => {
     textLen >= 1000 ? setTxtOver('over') : setTxtOver('');
 
-    return;
+    if (setImgEl.current) {
+      Array.from(setImgEl.current.children).map(
+        (el) => (el.style.height = `${el.clientWidth}px`),
+      );
+    }
   });
+
+  //TODO : 직군 설정 란 (MYPAGE에서 가져와 적용시켜줘야한다.)
 
   return (
     <>
@@ -99,7 +77,7 @@ const CreateAuthor = ({ type }) => {
           {portfolioShow ? (
             SettingPortfolio({
               handlePfSubmit,
-              handlePfChoice,
+              handlePfChange,
               portfolioShow,
               setPortfolioShow,
             })
@@ -114,9 +92,27 @@ const CreateAuthor = ({ type }) => {
                 <p className="edit-author-description">
                   자신을 나타낼 수 있는 사진들을 등록해보세요.
                 </p>
-                <div className="section-contents set-img">
-                  <div className="custom-img" />
-                  <div className="default-img" />
+                <div className="section-contents set-img" ref={setImgEl}>
+                  <div className="custom-img">
+                    <div className="img"></div>
+                    <div className="set-img-icon">
+                      <i className="icon" />
+                      <span>사진 가져오기</span>
+                    </div>
+                    <label className="file-button" htmlFor="input-file" />
+                    <input
+                      type="file"
+                      id="input-file"
+                      accept="image/png, image/jpeg"
+                    />
+                  </div>
+                  <div className="default-img">
+                    <div className="img"></div>
+                    <div className="set-img-icon">
+                      <i className="icon" />
+                      <span>기본 이미지로 설정</span>
+                    </div>
+                  </div>
                 </div>
               </section>
               {/* 직군 설정 */}

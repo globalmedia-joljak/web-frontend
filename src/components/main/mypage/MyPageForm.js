@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './myPageStyle.scss';
 
 import SucceedPopUp from './SucceedPopUp.js';
@@ -11,7 +11,7 @@ import {
 import { updateUserInfo } from '../../../service/api/users.js';
 import MypageListForm from './MypageListForm';
 import { toast, ToastContainer } from 'react-toastify';
-import { useAppState } from '../../../context/appContext';
+import { useAppDispatch, useAppState } from '../../../context/appContext';
 
 const settingLists = {
   setPassword: [
@@ -206,6 +206,7 @@ const MyPageForm = () => {
   } = state;
 
   const { userInfo } = useAppState();
+  const { setUserRole } = useAppDispatch();
 
   const dispatch = useMypageDispatch();
 

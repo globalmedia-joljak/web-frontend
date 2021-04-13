@@ -5,7 +5,7 @@ import {
   useTeamsState,
 } from '../../../../context/teamContext';
 import useAsync from '../../../../hooks/useAsync';
-import { getUserProfileDetail } from '../../../../service/api/profile';
+import { createAuthorProfile } from '../../../../service/api/profile';
 
 // 클릭한 작가의 classOf 를 넣어준다. ->detail정보를 가져오기위해서.
 // 로그인을 했고, 본인의 classOf와 클릭한 classOf가 같으면 수정 삭제 버튼을 활성화 시켜준다.
@@ -18,7 +18,7 @@ const AuthorDetail = ({ match }) => {
   const { filterClassOf } = useTeamsDispatch();
 
   const [profileDetail, refetch] = useAsync(() =>
-    getUserProfileDetail(match.params.id),
+    createAuthorProfile(match.params.id),
   );
 
   const { loading, data, error } = profileDetail;
