@@ -4,16 +4,15 @@
 .author-wrap {
   position: relative;
   margin-top: 53px;
-  padding-left: 4.3%;
-  padding-bottom: 154px;
+  padding: 0 4.3% 154px;
   width: 100%;
   max-width: 1293px;
-  min-width: 930px;
+  min-width: 616px;
 
   .author-functions {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 4.3%;
     display: grid;
     grid-template-columns: repeat(2, auto);
     gap: 40px;
@@ -35,7 +34,6 @@
     width: 100%;
     li {
       box-sizing: none;
-
       background-color: #ffffff;
       min-width: 276px;
       height: 537px;
@@ -303,7 +301,7 @@
 
 @include response('tablet') {
   .author-wrap {
-    margin-top: 26px;
+    margin: 26px 0 83px;
     min-width: 0;
     padding: 0 3%;
 
@@ -438,7 +436,7 @@
 
 @include response('phone') {
   .author-wrap {
-    margin-top: 23px;
+    margin: 23px 0 130px;
     .author-functions {
       gap: 8px;
     }

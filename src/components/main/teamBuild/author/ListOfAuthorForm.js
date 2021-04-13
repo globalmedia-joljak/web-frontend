@@ -1,4 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, {
+  createElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppState } from '../../../../context/appContext';
 import {
@@ -23,16 +29,16 @@ const ListOfAuthorForm = ({ match, history }) => {
   const { filterClassOf, setShowCreate } = useTeamsDispatch();
   const { showCreate } = useTeamsState();
 
+  const createAuthorEl = useRef();
+
   const [filterShow, setFilterShow] = useState(false);
   const [filterRole, setFilterRole] = useState('');
 
-  const [profilePageNum, setProfilePageNum] = useState(1);
+  const [profilePageNum, setProfilePageNum] = useState(0);
 
-  const [profileList, refetch] = useAsync(() =>
-    getAuthorProfileList(profilePageNum),
-  );
+  const [profileList] = useAsync(() => getAuthorProfileList(profilePageNum));
+
   // TODO : 스크롤시 데이터를 추가로 불러와 주어야 한다(setProfilePageNum)
-
   const { loading, data, error } = profileList;
 
   const handleFilter = useCallback((e) => setFilterShow(!filterShow));
@@ -45,7 +51,7 @@ const ListOfAuthorForm = ({ match, history }) => {
   if (loading) return <div>로딩중...</div>;
   if (!data) return null;
   if (error) return <div></div>;
-  console.log(data);
+
   let authorListData = [];
 
   if (filterRole === '' || filterRole === '전체') {
@@ -66,6 +72,7 @@ const ListOfAuthorForm = ({ match, history }) => {
         authorListData.find((author) => author.user.classOf === classOf);
 
       if (filterAuthor.length === 1) {
+        // TODO : 선택값에 따른 값 (YES | NO 에 따른 결과 개발해야함)
         toast.info(
           '❕ 이미 작가등록 하셨습니다. 작가 목록 페이지로 가시겠습니까?',
         );
@@ -96,6 +103,7 @@ const ListOfAuthorForm = ({ match, history }) => {
           handleCancel={setFilterShow}
           handleOk={handleSubmit}
           form={'author'}
+          btnTxt="선택완료"
         >
           <li className="list r2">
             <h3>상세검색</h3>
@@ -110,7 +118,7 @@ const ListOfAuthorForm = ({ match, history }) => {
       ) : (
         <>
           <div className="hero-img"></div>
-          <div className="author-wrap">
+          <div className="author-wrap" ref={createAuthorEl}>
             {showCreate ? (
               <CreateAuthor type="create" />
             ) : (

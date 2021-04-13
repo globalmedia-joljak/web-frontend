@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState } from 'react';
-import { GetUser } from '../service/api/users.js';
+import { getUser } from '../service/api/users.js';
 import useAsync from '../hooks/useAsync.js';
 import useInput from '../hooks/useInput.js';
 import { useAppState } from './appContext.js';
@@ -13,7 +13,7 @@ const MypageProvider = ({ children }) => {
 
   //mypage api
   const [userState, refetch] = useAsync(
-    async () => await GetUser(userInfo.classOf),
+    async () => await getUser(userInfo.classOf),
     [userInfo.classOf],
   );
 

@@ -7,18 +7,20 @@ const getAuthorProfileList = async (pageNum) => {
   return data.simpleProfilePage;
 };
 
-const getUserProfileDetail = async (classOf) => {
+const getAuthorProfileDetail = async (classOf) => {
   const { data } = await client.get(`/profiles/${classOf}`);
   return data;
 };
 
-const createAuthorProfile = async (classOf, registerProfileRequest) => {
+const createAuthorProfile = async (classOf, createAuthorData) => {
+  console.log({ ...createAuthorData });
   try {
-    await client.post(`/profiles/${classOf}`, registerProfileRequest, {
-      headers: { 'Content-Type': `application/json` },
+    await client.post(`/profiles/${classOf}`, {
+      headers: { 'Content-Type': `multipart/form-data` },
+      params: { ...createAuthorData },
     });
   } catch (e) {
-    console.log(e);
+    console.log(e.response);
   }
 };
 
@@ -44,7 +46,7 @@ const updateAuthorProfile = async (classOf, updateProfileRequest) => {
 
 export {
   getAuthorProfileList,
-  getUserProfileDetail,
+  getAuthorProfileDetail,
   createAuthorProfile,
   deleteAuthorProfile,
   updateAuthorProfile,
