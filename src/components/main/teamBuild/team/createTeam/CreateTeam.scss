@@ -1,0 +1,142 @@
+@import '../../../../../assets/_mixin.scss';
+@import '../../../../../assets/_variables.scss';
+
+
+.team__wrap {
+  padding: 40px 100px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  h2 {
+    font-size: 28px;
+  }
+
+  .team__top {
+    display: flex;
+    flex-direction: column;
+    .team__category {
+      align-items: center;
+      padding-top: 40px;
+      display: flex;
+      h3 {
+        font-size: 24px;
+        font-weight: 400;
+        margin-right: 24px;
+      }
+      input {
+        width: 51%;
+        height: 42px;
+        border: 1px solid #6D6D6D66;
+        padding: 12px 8px;
+      }
+    }
+
+    .team__title {
+      align-items: center;
+      padding-top: 24px;
+      display: flex;
+      h3 {
+        font-size: 24px;
+        font-weight: 400;
+        margin-right: 45px;
+      }
+      input {
+        width: 74%;
+        height: 42px;
+        border: 1px solid #6D6D6D66;
+        padding: 12px 8px;
+
+      }
+    }
+  }
+
+  .team__body {
+    padding-top: 24px;
+    width: 100%;
+    .team__body__editor {
+      .tui-editor-defaultUI {
+        border: 1px solid #6D6D6D66;
+        border-bottom: none;
+        .te-mode-switch-section {
+          display: none;
+          border: none;
+          background-color: white;
+          .te-mode-switch {
+            display: none;
+          }
+        }
+      }
+      
+    }
+  }
+
+  .team__bottom {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 72px;
+    padding-top: 0px;
+    background-color: white;
+    border: 1px solid #6D6D6D66;
+    border-top: 0px;
+    .team__members {
+      padding: 16px 0px;
+      border-top: 1px solid #6D6D6D66;
+      
+      .team__member {
+        padding-top: 24px;
+        display: flex;
+
+        input {
+          width: 100%;
+          border: none;
+          font-size: 22px;
+        }
+      }
+    }
+    .team__file {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin-top: 133px;
+      padding: 21px 48px;
+      background: #F2F2F2 0% 0% no-repeat padding-box;
+      height: 72px;
+      .team__file__label {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+        .team__file__label__left {
+          display: flex;
+          align-items: center;
+          .file__image {
+            @include backgroundImage;
+            background-image: url('../../../../../assets/images/paperclip.png');
+            width: 15px;
+            height: 15px;
+            margin-right: 10px;
+          }
+          p {
+            cursor: pointer;
+            font-size: 20px;
+            color: #6D6D6DCC;
+          }
+        }
+
+        button {
+          @include backgroundImage;
+          background-image: url('../../../../../assets/images/delete.png');
+          width: 22px;
+          height: 22px;
+        }
+      }
+
+      input {
+        display: none;
+      }
+      
+    }
+  }
+}
