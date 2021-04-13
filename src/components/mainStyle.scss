@@ -55,40 +55,31 @@ main {
   .team-section-wrap {
     position: relative;
     display: grid;
+    grid-template-rows: max-content auto;
     height: 100%;
     overflow: hidden;
   }
   .team-side-menu {
-    width: 260px;
-    position: absolute;
+    width: 100%;
     background-color: #ffffff;
-    box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 1px 4px #00000029;
     height: inherit;
     z-index: 1000;
+
     ul {
-      margin-top: 126px;
-      display: grid;
-      gap: 20px;
+      height: 64px;
+      display: flex;
+      gap: 91px;
+      justify-content: center;
       li {
-        height: 64px;
         position: relative;
 
         a {
           place-items: center;
           display: grid;
-          color: #6d6d6dcc;
-          font-size: 24px;
+          color: #000000cc;
+          font-size: 16px;
           height: 100%;
-        }
-
-        span {
-          display: none;
-          position: absolute;
-          height: 100%;
-          width: 2px;
-          background-color: #baa2ff;
-          top: 0;
-          right: 0;
         }
         &:hover {
           a {
@@ -103,9 +94,7 @@ main {
   }
   .team-contents {
     overflow-y: scroll;
-    padding-left: 260px;
     .content {
-      // height: 100%;
       .hero-img {
         width: 100%;
         height: 463px;

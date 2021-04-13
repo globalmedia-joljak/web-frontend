@@ -10,7 +10,7 @@ const subRoutes = {
     { path: '/teams', name: '팀 목록' },
     { path: '/idea', name: '아이디어 게시판' },
   ],
-  // 데이터에서 년도를 가져올 예정(api연동-----)
+  // TODO:데이터에서 년도를 가져올 예정(api연동-----)
   projectList: [{ path: '/projects/2021', name: '2021' }],
 };
 
@@ -28,7 +28,6 @@ const SubNavigation = ({ type }) => {
             <Link to={path} className="header-route" id={id}>
               {name}
             </Link>
-            {curSize > tablet && <span></span>}
           </li>
         );
       })}
