@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import './CreateTeam.scss';
 import { Editor } from '@toast-ui/react-editor';
@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import MemberRoleSquare from '../teamList/MemberRole';
 
 const CreateTeam = () => {
-  const [editorRef] = useState(React.createRef());
+  const editorRef = useRef()
 
   return (
     <>
