@@ -1,5 +1,5 @@
-@import '../../../../assets/_mixin.scss';
-@import '../../../../assets/_variables.scss';
+@import '../../../../../assets/_mixin.scss';
+@import '../../../../../assets/_variables.scss';
 
 $web-role-width: 123px;
 $tablet-role-width: 103px;
@@ -37,12 +37,12 @@ $phone-add-portfolio-size: 24px;
       width: 32px;
       height: 32px;
       @include backgroundImage;
-      background-image: url('../../../../assets/images/arrow_purple@2x.png');
+      background-image: url('../../../../../assets/images/arrow_purple@2x.png');
     }
 
     .set-role-icon {
       @include backgroundImage;
-      background-image: url('../../../../assets/images/Modal@2x.png');
+      background-image: url('../../../../../assets/images/Modal@2x.png');
       width: 24px;
       height: 24px;
     }
@@ -101,7 +101,7 @@ $phone-add-portfolio-size: 24px;
           }
         }
         .icon {
-          background-image: url('../../../../assets/images/import@2x.png');
+          background-image: url('../../../../../assets/images/import@2x.png');
         }
 
         &.exist-img {
@@ -111,13 +111,13 @@ $phone-add-portfolio-size: 24px;
             }
           }
           .icon {
-            background-image: url('../../../../assets/images/import_white@2x.png');
+            background-image: url('../../../../../assets/images/import_white@2x.png');
           }
         }
 
         &:hover {
           .icon {
-            background-image: url('../../../../assets/images/import_hover@2x.png');
+            background-image: url('../../../../../assets/images/import_hover@2x.png');
           }
           .set-img-icon {
             span {
@@ -140,7 +140,7 @@ $phone-add-portfolio-size: 24px;
 
       &.default-img {
         .img {
-          background-image: url('../../../../assets/images/Designer_image@2x.png');
+          background-image: url('../../../../../assets/images/Designer_image@2x.png');
           transition: transform ease 0.3s;
         }
 
@@ -148,7 +148,7 @@ $phone-add-portfolio-size: 24px;
           background-color: #00000080;
         }
         .icon {
-          background-image: url('../../../../assets/images/image_default@2x.png');
+          background-image: url('../../../../../assets/images/image_default@2x.png');
         }
       }
 
@@ -232,19 +232,20 @@ $phone-add-portfolio-size: 24px;
       gap: 40px;
       margin-bottom: 40px;
       .portfolio {
-        grid-auto-columns: max-content;
+        grid-template-columns: max-content auto;
         display: inherit;
         grid-template-areas:
           'linkicon ptitle'
           'linkicon link';
         column-gap: 16px;
+        row-gap: 15px;
 
         .porfolio-icon {
           width: 48px;
           height: 48px;
           grid-area: linkicon;
           @include backgroundImage;
-          background-image: url('../../../../assets/images/Portfolio_clip@2x.png');
+          background-image: url('../../../../../assets/images/Portfolio_clip@2x.png');
         }
       }
     }
@@ -275,12 +276,12 @@ $phone-add-portfolio-size: 24px;
         width: $web-add-portfolio-size;
         height: $web-add-portfolio-size;
         @include backgroundImage;
-        background-image: url('../../../../assets/images/add_circle_gray@2x.png');
+        background-image: url('../../../../../assets/images/add_circle_gray@2x.png');
       }
       &:hover {
         color: #000000cc;
         .porfolio-add-icon {
-          background-image: url('../../../../assets/images/add_circle@2x.png');
+          background-image: url('../../../../../assets/images/add_circle@2x.png');
         }
       }
       color: #6d6d6d99;

@@ -1,25 +1,19 @@
-import React, {
-  createElement,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppState } from '../../../../context/appContext';
+import { useAppDispatch, useAppState } from '../../../../../context/appContext';
 import {
   useTeamsDispatch,
   useTeamsState,
-} from '../../../../context/teamContext';
-import useAsync from '../../../../hooks/useAsync';
-import ModalTemp from '../../../modal/ModalTemp';
-import OccupationListForm from '../../../modal/OccupationListForm';
-import ThereIsNoList from '../ThereIsNoList';
+} from '../../../../../context/teamContext';
+import useAsync from '../../../../../hooks/useAsync';
+import ModalTemp from '../../../../modal/ModalTemp';
+import OccupationListForm from '../../../../modal/OccupationListForm';
+import ThereIsNoList from '../../ThereIsNoList';
 import './authorStyle.scss';
-import { getAuthorProfileList } from '../../../../service/api/profile.js';
-import CreateAuthor from './CreateAuthor';
+import { getAuthorProfileList } from '../../../../../service/api/profile.js';
+import CreateAuthor from '../createAuthor/CreateAuthor';
 import { toast, ToastContainer } from 'react-toastify';
-import AuthorButton from './AuthorButton';
+import ButtonWIthIcon from '../../../common/ButtonWIthIcon.js';
 
 const ListOfAuthorForm = ({ match, history }) => {
   const {
@@ -174,13 +168,13 @@ const ListOfAuthorForm = ({ match, history }) => {
                   </ul>
                 )}
                 <div className="author-functions">
-                  <AuthorButton
-                    btnType="filter"
+                  <ButtonWIthIcon
+                    btntype="filter"
                     btnTxt="상세검색"
                     handleButton={handleFilter}
                   />
-                  <AuthorButton
-                    btnType="create"
+                  <ButtonWIthIcon
+                    btntype="create"
                     btnTxt="등록하기"
                     handleButton={addAuthorHandler}
                   />

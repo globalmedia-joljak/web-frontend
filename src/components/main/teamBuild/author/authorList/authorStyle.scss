@@ -1,9 +1,9 @@
-@import '../../../../assets/_mixin.scss';
-@import '../../../../assets/_variables.scss';
+@import '../../../../../assets/_mixin.scss';
+@import '../../../../../assets/_variables.scss';
 
 .author-wrap {
   position: relative;
-  margin-top: 53px;
+  margin: 53px auto 0;
   padding: 0 4.3% 154px;
   width: 100%;
   max-width: 1293px;
@@ -199,12 +199,12 @@
             }
             &.author-edit {
               .icon {
-                background-image: url('../../../../assets/images/edit@2x.png');
+                background-image: url('../../../../../assets/images/edit@2x.png');
               }
             }
             &.author-del {
               .icon {
-                background-image: url('../../../../assets/images/delete@2x.png');
+                background-image: url('../../../../../assets/images/delete@2x.png');
               }
             }
           }
@@ -226,7 +226,7 @@
     margin-bottom: 121px;
     .portfolio-lists {
       display: grid;
-      gap: 64px;
+      row-gap: 64px;
       .portfolio {
         display: inherit;
 
@@ -242,7 +242,7 @@
           height: 72px;
           @include backgroundImage;
           grid-area: p-icon;
-          background-image: url('../../../../assets/images/Portfolio_clip@2x.png');
+          background-image: url('../../../../../assets/images/Portfolio_clip@2x.png');
         }
         .title {
           grid-area: p-title;
@@ -281,17 +281,17 @@
         }
         &.phone {
           .contact-img {
-            background-image: url('../../../../assets/images/Tel@2x.png');
+            background-image: url('../../../../../assets/images/Tel@2x.png');
           }
         }
         &.kakao {
           .contact-img {
-            background-image: url('../../../../assets/images/kakaotalk@2x.png');
+            background-image: url('../../../../../assets/images/kakaotalk@2x.png');
           }
         }
         &.instagram {
           .contact-img {
-            background-image: url('../../../../assets/images/instagram@2x.png');
+            background-image: url('../../../../../assets/images/instagram@2x.png');
           }
         }
       }

@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppState } from '../../../../context/appContext';
+import React from 'react';
+import { useAppDispatch, useAppState } from '../../../../../context/appContext';
 import {
   useTeamsDispatch,
   useTeamsState,
-} from '../../../../context/teamContext';
-import useAsync from '../../../../hooks/useAsync';
-import { createAuthorProfile } from '../../../../service/api/profile';
+} from '../../../../../context/teamContext';
+import useAsync from '../../../../../hooks/useAsync';
+import { createAuthorProfile } from '../../../../../service/api/profile';
 
 // 클릭한 작가의 classOf 를 넣어준다. ->detail정보를 가져오기위해서.
 // 로그인을 했고, 본인의 classOf와 클릭한 classOf가 같으면 수정 삭제 버튼을 활성화 시켜준다.

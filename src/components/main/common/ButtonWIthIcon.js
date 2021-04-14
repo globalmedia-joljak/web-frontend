@@ -1,8 +1,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { useAppState } from '../../../../context/appContext';
-import filterIcon from '../../../../assets/images/filter@2x.png';
-import editIcon from '../../../../assets/images/create-24px@2x.png';
+import { useAppState } from '../../../context/appContext';
+import filterIcon from '../../../assets/images/filter@2x.png';
+import editIcon from '../../../assets/images/create-24px@2x.png';
+import saveIcon from '../../../assets/images/save@2x.png';
 
 const webAuthorBtnWidth = 145;
 const tabletAuthorBtnWidth = 108;
@@ -24,7 +25,11 @@ const Icon = styled.i`
   background-repeat: no-repeat;
   background-size: contain;
   background-image: url(${({ btntype }) =>
-    btntype === 'filter' ? filterIcon : editIcon});
+    btntype === 'filter'
+      ? filterIcon
+      : btntype === 'edit' || btntype === 'create'
+      ? editIcon
+      : saveIcon});
 
   ${({ size }) => {
     if (size === 'web') {
@@ -54,7 +59,7 @@ const Button = styled.button`
   justify-items: end;
   grid-template-columns: auto 1fr;
   background-color: ${({ btntype }) =>
-    btntype === 'filter' ? '#baa2ff' : '#074fd8'};
+    btntype === 'edit' || btntype === 'create' ? '#074fd8' : '#baa2ff'};
 
   ${({ size }) => {
     if (size === 'web') {
@@ -83,18 +88,18 @@ const Button = styled.button`
 `;
 
 // 버튼 타입, 버튼내용글, 버튼함수
-const AuthorButton = ({ btnType, btnTxt, handleButton }) => {
+const AuthorButton = ({ btntype, btnTxt, handleButton }) => {
   const { curSize } = useAppState();
   const size = curSize > tablet ? 'web' : curSize > phone ? 'tablet' : 'phone';
 
   return (
     <Button
-      className={`author-btn ${btnType}`}
+      className={`author-btn ${btntype}`}
       size={size}
       onClick={handleButton}
-      btntype={btnType}
+      btntype={btntype}
     >
-      <Icon size={size} btntype={btnType} />
+      <Icon size={size} btntype={btntype} />
       {btnTxt}
     </Button>
   );

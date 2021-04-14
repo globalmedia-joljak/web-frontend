@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { useAppState } from '../../../../context/appContext';
-import editButton from '../../../../assets/images/edit@2x.png';
-import deleteButton from '../../../../assets/images/delete@2x.png';
+import { useAppState } from '../../../context/appContext';
+import editButton from '../../../assets/images/edit@2x.png';
+import deleteButton from '../../../assets/images/delete@2x.png';
 
 const tablet = 768;
 const phone = 425;

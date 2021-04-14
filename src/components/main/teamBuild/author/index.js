@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router';
-import AuthorDetail from './AuthorDetail';
-import ListOfAuthorForm from './ListOfAuthorForm';
+import AuthorDetail from './authorList/AuthorDetail.js';
+import ListOfAuthorForm from './authorList/ListOfAuthorForm.js';
 
 const AuthorForm = ({ match }) => {
   return (
