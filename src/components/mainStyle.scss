@@ -136,13 +136,12 @@ main {
 
   .team-build-wrap {
     .team-section-wrap {
-      grid-template-columns: 1fr;
+      grid-template-rows: auto;
     }
     .team-side-menu {
       display: none;
     }
     .team-contents {
-      padding-left: 0;
       .content {
         .hero-img {
           height: 320px;
