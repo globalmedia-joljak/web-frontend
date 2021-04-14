@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import ListOfTeamForm from '../components/main/teamBuild/team/teamList/TeamList.js';
 import ListOfIdeaForm from '../components/main/teamBuild/idea/ListOfIdeaForm.js';
 import '../components/mainStyle.scss';
 import AuthorForm from '../components/main/teamBuild/author/index.js';
