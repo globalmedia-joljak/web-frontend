@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
-import AuthorButton from '../../author/AuthorButton';
+import ButtonWIthIcon from '../../../common/ButtonWIthIcon.js';
 import './TeamList.scss';
 import { getTeams } from '../../../../../service/api/teams';
 import ThereIsNoList from '../../ThereIsNoList';
@@ -24,11 +24,11 @@ const TeamList = () => {
           page: getTeamResponsePage.pageable.pageNumber + 1,
           last: getTeamResponsePage.last,
           totalElements: getTeamResponsePage.totalElements,
-        })
+        });
       })
       .catch((e) => {
         console.log(e);
-      })
+      });
   }, []);
   const handleNextPage = async () => {
     // todo : 다음페이지(무한 스크롤)
@@ -36,15 +36,15 @@ const TeamList = () => {
 
   const handleCreateTeam = () => {
     // todo : 등록하기 클릭
-  }
+  };
 
   const handleShowFilterModal = () => {
     // todo : 상세검색
-  }
+  };
 
   const test = () => {
     console.log('test');
-  }
+  };
   return (
     <>
       <ToastContainer
@@ -58,9 +58,7 @@ const TeamList = () => {
         draggable
         pauseOnHover
       />
-      <div className="hero-img">
-
-      </div>
+      <div className="hero-img"></div>
       <div className="teams-wrap">
         <div className="teams-top">
           <div className="teams-top-left">
@@ -68,13 +66,13 @@ const TeamList = () => {
             <h3>{pageInfo.totalElements}</h3>
           </div>
           <div className="teams-top-right">
-            <AuthorButton
-              btnType="filter"
+            <ButtonWIthIcon
+              btntype="filter"
               btnTxt="상세검색"
               handleButton={handleShowFilterModal}
             />
-            <AuthorButton
-              btnType="create"
+            <ButtonWIthIcon
+              btntype="create"
               btnTxt="등록하기"
               handleButton={handleCreateTeam}
             />
@@ -82,33 +80,27 @@ const TeamList = () => {
         </div>
         <div className="teams-body">
           {pageInfo.totalElements == 0 ? (
-            <ThereIsNoList/>
+            <ThereIsNoList />
           ) : (
             <>
-            <div className="teams-body-title">
-              {/* todo : title 구현 */}
-            </div>
-            <div className="teams-body-list">
-              {
-                teams.map(
-                  team => (
-                    <Team 
-                      key={team.id}
-                      id={team.id}
-                      category={team.category}
-                      designerMember={team.designerMember}
-                      developerMember={team.developerMember}
-                      mediaArtMember={team.mediaArtMember}
-                      plannerMember={team.plannerMember}
-                      author={team.author}
-                      createdDate={team.createdDate}
-                      images={team.imageInfoList}
-                      teamName={team.teamName}
-                    />
-                  )
-                )
-              }
-            </div>
+              <div className="teams-body-title">{/* todo : title 구현 */}</div>
+              <div className="teams-body-list">
+                {teams.map((team) => (
+                  <Team
+                    key={team.id}
+                    id={team.id}
+                    category={team.category}
+                    designerMember={team.designerMember}
+                    developerMember={team.developerMember}
+                    mediaArtMember={team.mediaArtMember}
+                    plannerMember={team.plannerMember}
+                    author={team.author}
+                    createdDate={team.createdDate}
+                    images={team.imageInfoList}
+                    teamName={team.teamName}
+                  />
+                ))}
+              </div>
             </>
           )}
         </div>
