@@ -4,16 +4,14 @@ import ModalTemp from '../../../../modal/ModalTemp';
 const PortfolioModal = ({
   pfSubmit,
   pfChange,
-  showModal,
+  pfModalShow,
   pfSetModalShow,
   data,
-  pfLinks,
-  setPfLinks,
 }) => {
   const { title, id, link } = data;
   return (
     <ModalTemp
-      modalShow={showModal}
+      modalShow={pfModalShow}
       handleOk={pfSubmit}
       handleCancel={pfSetModalShow}
       form={'portfolio'}
