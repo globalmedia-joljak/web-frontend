@@ -5,17 +5,17 @@ import filterIcon from '../../../assets/images/filter@2x.png';
 import editIcon from '../../../assets/images/create-24px@2x.png';
 import saveIcon from '../../../assets/images/save@2x.png';
 
-const webAuthorBtnWidth = 145;
-const tabletAuthorBtnWidth = 108;
-const phoneAuthorBtnWidth = 83;
+const webBtnWidth = 145;
+const tabletBtnWidth = 108;
+const phoneBtnWidth = 83;
 
-const webAuthorBtnHeigth = 48;
-const tabletAuthorBtnHeigth = 36;
-const phoneAuthorBtnHeigth = 28;
+const webBtnHeigth = 48;
+const tabletBtnHeight = 36;
+const phoneBtnHeight = 28;
 
-const webAuthorIcon = 24;
-const tabletAuthorIcon = 18;
-const phoneAuthorIcon = 14;
+const webBtnIcon = 24;
+const tabletBtnIcon = 18;
+const phoneBtnIcon = 14;
 
 const tablet = 768;
 const phone = 425;
@@ -34,18 +34,18 @@ const Icon = styled.i`
   ${({ size }) => {
     if (size === 'web') {
       return css`
-        width: ${webAuthorIcon}px;
-        height: ${webAuthorIcon}px;
+        width: ${webBtnIcon}px;
+        height: ${webBtnIcon}px;
       `;
     } else if (size === 'tablet') {
       return css`
-        width: ${tabletAuthorIcon}px;
-        height: ${tabletAuthorIcon}px;
+        width: ${tabletBtnIcon}px;
+        height: ${tabletBtnIcon}px;
       `;
     } else {
       return css`
-        width: ${phoneAuthorIcon}px;
-        height: ${phoneAuthorIcon}px;
+        width: ${phoneBtnIcon}px;
+        height: ${phoneBtnIcon}px;
       `;
     }
   }};
@@ -60,31 +60,32 @@ const Button = styled.button`
   grid-template-columns: auto 1fr;
   background-color: ${({ btntype }) =>
     btntype === 'edit' || btntype === 'create' ? '#074fd8' : '#baa2ff'};
+  justify-self: ${({ btntype }) => btntype === 'save' && 'center'};
 
-  ${({ size }) => {
+  ${({ size, btntype }) => {
     if (size === 'web') {
       return css`
-        width: ${webAuthorBtnWidth}px;
-        height: ${webAuthorBtnHeigth}px;
+        width: ${btntype === 'save' ? '234px' : `${webBtnWidth}px`};
+        height: ${btntype === 'save' ? '56px' : `${webBtnHeigth}px`};
+        padding: 0 ${btntype === 'save' ? '36px' : '16px'};
         font-size: 20px;
-        padding: 0 16px;
       `;
     } else if (size === 'tablet') {
       return css`
-        width: ${tabletAuthorBtnWidth}px;
-        height: ${tabletAuthorBtnHeigth}px;
-        font-size: 15px;
-        padding: 0 12px;
+        width: ${btntype === 'save' ? '172px' : `${tabletBtnWidth}px`};
+        height: ${btntype === 'save' ? '41px' : `${tabletBtnHeight}px`};
+        padding: 0 ${btntype === 'save' ? '30px' : '12px'};
+        font-size: 14px;
       `;
     } else {
       return css`
-        width: ${phoneAuthorBtnWidth}px;
-        height: ${phoneAuthorBtnHeigth}px;
+        width: ${btntype === 'save' ? '128px' : `${phoneBtnWidth}px`};
+        height: ${btntype === 'save' ? '30px' : `${phoneBtnHeight}px`};
+        padding: 0 ${btntype === 'save' ? '19px' : '12px'};
         font-size: 11px;
-        padding: 0 11px;
       `;
     }
-  }}
+  }};
 `;
 
 // 버튼 타입, 버튼내용글, 버튼함수
@@ -93,12 +94,7 @@ const AuthorButton = ({ btntype, btnTxt, handleButton }) => {
   const size = curSize > tablet ? 'web' : curSize > phone ? 'tablet' : 'phone';
 
   return (
-    <Button
-      className={`author-btn ${btntype}`}
-      size={size}
-      onClick={handleButton}
-      btntype={btntype}
-    >
+    <Button size={size} onClick={handleButton} btntype={btntype}>
       <Icon size={size} btntype={btntype} />
       {btnTxt}
     </Button>

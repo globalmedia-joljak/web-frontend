@@ -7,6 +7,8 @@ const RoleModal = ({
   roleSubmit,
   roleModalShow,
   roleSetModalShow,
+  mainRole,
+  subRole,
 }) => {
   return (
     <ModalTemp
@@ -26,7 +28,7 @@ const RoleModal = ({
       <li className="list r2">
         <h3>대표직군</h3>
         <OccupationListForm
-          // projectRole={mainProjectRole}
+          projectRole={mainRole}
           type="mainProjectRole"
           handleChoice={roleChoice}
         />
@@ -34,7 +36,7 @@ const RoleModal = ({
       <li className="list r2">
         <h3>부가직군</h3>
         <OccupationListForm
-          // projectRole={subProjectRole}
+          projectRole={subRole}
           type="subProjectRole"
           handleChoice={roleChoice}
           txt="선택안함"
