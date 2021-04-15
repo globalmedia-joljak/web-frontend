@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppState } from '../../../context/appContext.js';
-import { useMypageState } from '../../../context/mypageContext.js';
 
 const phoneSize = 425;
 
@@ -12,11 +11,11 @@ const MypageListForm = ({
   handleContacts,
   handlePassword,
 }) => {
-  const { curSize } = useAppState();
-  const { newPassword, checkPassword } = passwordVal;
   const {
+    curSize,
     userState: { data },
-  } = useMypageState();
+  } = useAppState();
+  const { newPassword, checkPassword } = passwordVal;
 
   const [disable, setDisable] = useState(true);
 
@@ -80,6 +79,7 @@ const MypageListForm = ({
   useEffect(() => {
     if (newPassword === checkPassword && newPassword !== '') setDisable(false);
   });
+  if (!data) return null;
 
   return (
     <>

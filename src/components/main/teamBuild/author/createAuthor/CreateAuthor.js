@@ -15,27 +15,68 @@ import RoleModal from './RoleModal';
 const CreateAuthor = ({ type }) => {
   const setImgEl = useRef();
   const {
-    userRole,
+    userState,
     userInfo: { classOf },
   } = useAppState();
   const { setJobColor, translationKR } = useAppDispatch();
 
   const [createAuthorQuery, setCreateAuthorQuery] = useState({
-    introduce: '',
-    image: '',
-    introduce: '',
-    mainRole: '',
-    subRole: '',
+    introduce: null,
+    image: null,
+    mainRole: null,
+    subRole: null,
   });
 
   // set Image
-  // TODO : 이미지를 가져온 경우 클래스명을 줘 사진가져오기 icon을 변경해줘야 한다.
+  // TODO : 이미지를 가져온 경우 클래스명을 줘 사진가져오기 icon을 변경해줘야 한다.'custom-img'
+  const handleFileChange = () => {};
 
   //set role
   const [modalShow, setModalShow] = useState(false);
-  const handleRoleChoice = () => {};
-  const handleRoleSubmit = () => {};
-  //TODO : 직군 설정 란 (MYPAGE에서 가져와 적용시켜줘야한다.)
+  const { mainRole, subRole } = createAuthorQuery;
+
+  const handleRoleChoice = (e) => {
+    const { value, name } = e.target;
+    let isDuplicate = false;
+
+    if (name === 'mainProjectRole' && value === subRole) isDuplicate = true;
+
+    if (name === 'subProjectRole' && value === mainRole) isDuplicate = true;
+
+    if (isDuplicate) {
+      toast.error('⛔ 대표직군과 부가직군은 중복하여 설정이 불가능합니다.');
+      e.target.checked = false;
+      setCreateAuthorQuery({
+        ...createAuthorQuery,
+        [name === 'mainProjectRole' ? 'mainRole' : 'subRole']: '',
+      });
+      return;
+    }
+
+    setCreateAuthorQuery({
+      ...createAuthorQuery,
+      [name === 'mainProjectRole' ? 'mainRole' : 'subRole']: value,
+    });
+  };
+  const handleRoleSubmit = () => {
+    if (mainRole === '' || subRole === '') {
+      toast.error('⛔ 선택하지않은 직군이 있습니다.');
+      return;
+    }
+    setModalShow(false);
+  };
+
+  useEffect(() => {
+    if (classOf !== '' && userState.data !== null) {
+      const { mainProjectRole, subProjectRole } = userState.data.user;
+      setCreateAuthorQuery({
+        ...createAuthorQuery,
+        mainRole: mainProjectRole,
+        subRole: subProjectRole,
+      });
+    }
+    return;
+  }, [userState]);
 
   // set introduce
   const [textLen, setTextLen] = useState(0);
@@ -149,11 +190,35 @@ const CreateAuthor = ({ type }) => {
   };
 
   const handleSubmitAuthor = () => {
-    // TODO: type === "create" ? post : patch로 해준다.(edit)
-    // return createAuthorProfile(classOf, { introduce: introduce }); // 추가
-    // updateAuthorProfile() // 수정
-    // deleteAuthorProfile() // 삭제
+    if (createAuthorQuery.mainRole === null) {
+      toast.error('대표직군은 반드시 등록해야 합니다!');
+      return false;
+    }
+
+    let checkNull = createAuthorQuery;
+
+    for (let name in checkNull) {
+      if (checkNull[name] === null) {
+        delete checkNull[name];
+      }
+    }
+
+    if (type === 'create') {
+      // return createAuthorProfile(classOf, checkNull);
+    } else {
+      // return updateAuthorProfile(classOf, createAuthorQuery);
+    }
   };
+
+  const roleStyle = (role) => {
+    if (role === '선택안함') return;
+    return {
+      color: 'white',
+      backgroundColor: setJobColor(role),
+      border: 'none',
+    };
+  };
+  // console.log(mainRole);
   return (
     <>
       {modalShow && (
@@ -162,6 +227,8 @@ const CreateAuthor = ({ type }) => {
           roleSubmit={handleRoleSubmit}
           roleModalShow={modalShow}
           roleSetModalShow={setModalShow}
+          mainRole={mainRole}
+          subRole={subRole}
         />
       )}
       <>
@@ -186,7 +253,7 @@ const CreateAuthor = ({ type }) => {
               </p>
               <div className="section-contents set-img" ref={setImgEl}>
                 <div className="custom-img">
-                  <div className="img"></div>
+                  <div className="img" />
                   <div className="set-img-icon">
                     <i className="icon" />
                     <span>사진 가져오기</span>
@@ -195,11 +262,12 @@ const CreateAuthor = ({ type }) => {
                   <input
                     type="file"
                     id="input-file"
-                    accept="image/png, image/jpeg"
+                    accept="image/*"
+                    onChange={handleFileChange}
                   />
                 </div>
                 <div className="default-img">
-                  <div className="img"></div>
+                  <div className="img" />
                   <div className="set-img-icon">
                     <i className="icon" />
                     <span>기본 이미지로 설정</span>
@@ -223,11 +291,17 @@ const CreateAuthor = ({ type }) => {
               <div className="section-contents set-role">
                 <ul>
                   <li>
-                    <strong>선택하세요</strong>
+                    <strong style={{ ...roleStyle(mainRole) }}>
+                      {translationKR(mainRole)}
+                    </strong>
                     <span>대표직군</span>
                   </li>
                   <li>
-                    <strong>선택하세요</strong>
+                    <strong style={{ ...roleStyle(subRole) }}>
+                      {subRole !== '선택안함'
+                        ? translationKR(mainRole)
+                        : '선택하세요'}
+                    </strong>
                     <span>부가직군</span>
                   </li>
                 </ul>

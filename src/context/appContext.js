@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import useAsync from '../hooks/useAsync';
+import { getUser } from '../service/api/users';
 
 export const appStateContext = createContext(null);
 export const appDispatchContext = createContext(null);
@@ -14,10 +16,10 @@ const AppProvider = ({ children }) => {
     name: '',
   });
 
-  const [userRole, setUserRole] = useState({
-    mainProjectRole: '',
-    subProjectRole: '',
-  });
+  const [userState] = useAsync(async () => {
+    if (userInfo.classOf === '') return null;
+    return await getUser(userInfo.classOf);
+  }, [userInfo.classOf]);
 
   useEffect(() => {
     window.addEventListener('resize', () => setCurSize(window.innerWidth));
@@ -67,13 +69,12 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const value = { curSize, modalShow, userInfo, scroll, userRole };
+  const value = { curSize, modalShow, userInfo, scroll, userState };
   const dispatch = {
     setJobColor,
     setModalShow,
     setUserInfo,
     translationKR,
-    setUserRole,
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import './myPageStyle.scss';
 
 import SucceedPopUp from './SucceedPopUp.js';
@@ -201,8 +201,11 @@ const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
 const MyPageForm = () => {
   const state = useMypageState();
   const {
-    succed,
     userState: { loading, data, error },
+  } = useAppState();
+  const {
+    succed,
+    // userState: { loading, data, error },
   } = state;
 
   const { userInfo } = useAppState();
