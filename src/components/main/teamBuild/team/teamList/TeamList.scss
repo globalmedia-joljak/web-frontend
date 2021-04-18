@@ -3,12 +3,11 @@
 
 .teams-wrap {
   position: relative;
-  margin-top: 53px;
-  padding-left: 4.3%;
-  padding-bottom: 154px;
+  margin: 53px auto 0;
+  padding: 0 4.3% 154px;
   width: 100%;
   max-width: 1293px;
-  min-width: 930px;
+  min-width: 616px;
   box-sizing: border-box;
 
   .teams-top {
@@ -31,8 +30,10 @@
     }
     .teams-top-right {
       display: flex;
-      .create {
-        margin-left: 40px;
+      button {
+        &:last-child {
+          margin-left: 40px;
+        }
       }
     }
   }

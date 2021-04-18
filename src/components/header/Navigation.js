@@ -147,8 +147,16 @@ const Navigation = ({ location: { pathname } }) => {
 
   const signOutHandler = (e) => {
     window.localStorage.clear();
-    client.defaults.headers.common['Authorization'] = undefined;
-    setTimeout(() => setUserInfo(false), 500);
+    delete client.defaults.headers.common["Authorization"];
+    delete client.defaults.headers.common["refreshToken"];
+    delete client.defaults.headers.common["accessToken"];
+    setTimeout(() => setUserInfo({
+      ...userInfo,
+      classOf: '',
+      name: '',
+      isLogin: false,
+    }), 500);
+    
   };
 
   // roter lists

@@ -1,5 +1,6 @@
 import { client } from './client';
 import { stoargeInfo } from './auth';
+import { toast } from 'react-toastify';
 
 const getTeams = async (pageNum, error) => {
   try {
@@ -13,6 +14,25 @@ const getTeams = async (pageNum, error) => {
   }
 };
 
+const createTeam = async (createTeamRequest) => {
+  const formdata = new FormData();
+
+  for (let attr in createTeamRequest) {
+    formdata.append(attr, createTeamRequest[attr]);
+  }
+
+  try {
+    const { data } = await client.post(`/teams`, formdata, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+    return data;
+  } catch (e) {
+    toast.error('일시적인 오류가 발생했습니다. 오류가 지속되면 관리자에게 문의해주세요.');
+  }
+}
+
 export {
-  getTeams
+  getTeams,
+  createTeam
 };
