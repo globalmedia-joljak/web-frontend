@@ -131,7 +131,7 @@ const RouterLink = (size, tablet, signOutHandler, isLogin) => {
   );
 };
 
-const Navigation = ({ location: { pathname } }) => {
+const Navigation = ({ location: { pathname }, history }) => {
   const navEl = useRef();
   const { userInfo, curSize, scroll } = useAppState();
   const { setUserInfo } = useAppDispatch();
@@ -148,7 +148,10 @@ const Navigation = ({ location: { pathname } }) => {
   const signOutHandler = (e) => {
     window.localStorage.clear();
     client.defaults.headers.common['Authorization'] = undefined;
-    setTimeout(() => setUserInfo(false), 500);
+    setTimeout(() => {
+      setUserInfo(false);
+      history.push('/');
+    }, 500);
   };
 
   // roter lists

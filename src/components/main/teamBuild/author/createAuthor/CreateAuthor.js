@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useAppDispatch, useAppState } from '../../../../../context/appContext';
 import {
   createAuthorProfile,
-  deleteAuthorProfile,
   updateAuthorProfile,
 } from '../../../../../service/api/profile';
 import AuthorButton from '../../../common/ButtonWIthIcon';
@@ -11,25 +10,51 @@ import './editAuthorStyle.scss';
 import EditDeleteButton from '../../../common/EditDeleteButton';
 import PortfolioModal from './PortfolioModal';
 import RoleModal from './RoleModal';
+import { useTeamsDispatch } from '../../../../../context/teamContext';
 
-const CreateAuthor = ({ type }) => {
+const CreateAuthor = ({ type, history, detailData }) => {
   const setImgEl = useRef();
   const {
     userState,
     userInfo: { classOf },
   } = useAppState();
   const { setJobColor, translationKR } = useAppDispatch();
+  const { setDefaultImg } = useTeamsDispatch();
 
   const [createAuthorQuery, setCreateAuthorQuery] = useState({
     introduce: null,
-    image: null,
     mainRole: null,
     subRole: null,
   });
 
   // set Image
-  // TODO : 이미지를 가져온 경우 클래스명을 줘 사진가져오기 icon을 변경해줘야 한다.'custom-img'
-  const handleFileChange = () => {};
+  const [file, setFile] = useState(null);
+  const [isDefault, setIsDefault] = useState(true);
+  const [customCN, setCustomCN] = useState('');
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+    setIsDefault(false);
+  };
+
+  useEffect(() => {
+    previewImg();
+    !isDefault ? setCustomCN('exist-img') : setCustomCN('');
+  }, [file, isDefault]);
+
+  const previewImg = () => {
+    if (!file) return false;
+    const roleBg = document.querySelector('.img');
+    if (isDefault) {
+      return (roleBg.style.backgroundImage = 'none');
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      return (roleBg.style.backgroundImage = `url(${reader.result})`);
+    };
+    reader.readAsDataURL(file);
+    setCustomCN('exist-img');
+  };
 
   //set role
   const [modalShow, setModalShow] = useState(false);
@@ -58,6 +83,7 @@ const CreateAuthor = ({ type }) => {
       [name === 'mainProjectRole' ? 'mainRole' : 'subRole']: value,
     });
   };
+
   const handleRoleSubmit = () => {
     if (mainRole === '' || subRole === '') {
       toast.error('⛔ 선택하지않은 직군이 있습니다.');
@@ -75,18 +101,25 @@ const CreateAuthor = ({ type }) => {
         subRole: subProjectRole,
       });
     }
-    return;
-  }, [userState]);
+
+    if (detailData !== undefined) {
+      setCreateAuthorQuery({
+        ...createAuthorQuery,
+        introduce: detailData.content,
+        mainRole: detailData.user.mainProjectRole,
+        subRole: detailData.user.subProjectRole,
+      });
+    }
+  }, [type, userState]);
 
   // set introduce
   const [textLen, setTextLen] = useState(0);
   const [txtOver, setTxtOver] = useState('');
+  const [textSave, setTextSave] = useState(true);
+  const [txt, setTxt] = useState('');
 
   const handleIntroduce = (e) => {
-    // console.log(e);
-    if (textLen < 1000) {
-      console.log('전달 완료');
-    }
+    if (textLen <= 1000) setTextSave(true);
   };
 
   const handleTextArea = (e) => {
@@ -95,6 +128,8 @@ const CreateAuthor = ({ type }) => {
       introduce: e.target.value,
     });
     setTextLen(e.target.value.length);
+    setTxt('저장되었습니다.');
+    setTextSave(false);
   };
 
   useEffect(() => {
@@ -130,19 +165,26 @@ const CreateAuthor = ({ type }) => {
           title: '',
           link: '',
         });
+
         setPortfolioShow(true);
         setPortfolioEdit(false);
+
         return;
+
       case 'edit':
         setPortfolioShow(true);
         setPortfolioEdit(true);
+
         setChoiceId(id);
+
         setPortfolio({
           ...portfolio,
           title: data.title,
           link: data.link,
         });
+
         return;
+
       default:
         break;
     }
@@ -191,23 +233,34 @@ const CreateAuthor = ({ type }) => {
 
   const handleSubmitAuthor = () => {
     if (createAuthorQuery.mainRole === null) {
-      toast.error('대표직군은 반드시 등록해야 합니다!');
+      toast.error('⛔대표직군은 반드시 설정해 주세요.');
       return false;
     }
 
-    let checkNull = createAuthorQuery;
+    if (!textSave) {
+      toast.warn('자기소개글 설정을 확인해 주세요');
+      return false;
+    }
+    console.log(isDefault);
+    console.log();
+    const formdata = new FormData();
 
-    for (let name in checkNull) {
-      if (checkNull[name] === null) {
-        delete checkNull[name];
+    for (let name in createAuthorQuery) {
+      formdata.append(name, createAuthorQuery[name]);
+
+      if (createAuthorQuery[name] === null) {
+        formdata.delete(name);
       }
     }
+    console.log(detailData);
+    // userState.data.mediaInfo.modifyName;
+    isDefault
+      ? formdata.append('deleteFileName', detailData.mediaInfo.modifyName)
+      : formdata.append('image', file);
 
-    if (type === 'create') {
-      // return createAuthorProfile(classOf, checkNull);
-    } else {
-      // return updateAuthorProfile(classOf, createAuthorQuery);
-    }
+    return type === 'create'
+      ? createAuthorProfile(classOf, formdata)
+      : updateAuthorProfile(classOf, formdata);
   };
 
   const roleStyle = (role) => {
@@ -218,9 +271,21 @@ const CreateAuthor = ({ type }) => {
       border: 'none',
     };
   };
-  // console.log(mainRole);
+
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        style={{ color: '#ffffff', fontWeight: 'bold' }}
+      />
       {modalShow && (
         <RoleModal
           roleChoice={handleRoleChoice}
@@ -252,7 +317,7 @@ const CreateAuthor = ({ type }) => {
                 자신을 나타낼 수 있는 사진들을 등록해보세요.
               </p>
               <div className="section-contents set-img" ref={setImgEl}>
-                <div className="custom-img">
+                <div className={`custom-img ${customCN}`}>
                   <div className="img" />
                   <div className="set-img-icon">
                     <i className="icon" />
@@ -266,8 +331,15 @@ const CreateAuthor = ({ type }) => {
                     onChange={handleFileChange}
                   />
                 </div>
-                <div className="default-img">
-                  <div className="img" />
+                <div className="default-img" onClick={() => setIsDefault(true)}>
+                  <div
+                    className="img"
+                    style={{
+                      backgroundImage: `url(${setDefaultImg(
+                        createAuthorQuery.mainRole,
+                      )})`,
+                    }}
+                  />
                   <div className="set-img-icon">
                     <i className="icon" />
                     <span>기본 이미지로 설정</span>
@@ -299,7 +371,7 @@ const CreateAuthor = ({ type }) => {
                   <li>
                     <strong style={{ ...roleStyle(subRole) }}>
                       {subRole !== '선택안함'
-                        ? translationKR(mainRole)
+                        ? translationKR(subRole)
                         : '선택하세요'}
                     </strong>
                     <span>부가직군</span>
@@ -321,15 +393,19 @@ const CreateAuthor = ({ type }) => {
                   name="introduce"
                   maxLength={1000}
                   onChange={handleTextArea}
+                  defaultValue={createAuthorQuery.introduce}
                 ></textarea>
                 <span
                   className={`txt-length ${txtOver}`}
                 >{`${textLen}/1000`}</span>
-                <AuthorButton
-                  btntype="edit"
-                  btnTxt="수정완료"
-                  handleButton={handleIntroduce}
-                />
+                <div className="introduce-btn ">
+                  {textSave && <span>{txt}</span>}
+                  <AuthorButton
+                    btntype="edit"
+                    btnTxt="수정완료"
+                    handleButton={handleIntroduce}
+                  />
+                </div>
               </div>
             </section>
             {/* 포트폴리오 설정 */}

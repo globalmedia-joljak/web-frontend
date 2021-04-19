@@ -11,7 +11,7 @@ import {
 import { updateUserInfo } from '../../../service/api/users.js';
 import MypageListForm from './MypageListForm';
 import { toast, ToastContainer } from 'react-toastify';
-import { useAppDispatch, useAppState } from '../../../context/appContext';
+import { useAppState } from '../../../context/appContext';
 
 const settingLists = {
   setPassword: [
@@ -203,13 +203,9 @@ const MyPageForm = () => {
   const {
     userState: { loading, data, error },
   } = useAppState();
-  const {
-    succed,
-    // userState: { loading, data, error },
-  } = state;
+  const { succed } = state;
 
   const { userInfo } = useAppState();
-  const { setUserRole } = useAppDispatch();
 
   const dispatch = useMypageDispatch();
 

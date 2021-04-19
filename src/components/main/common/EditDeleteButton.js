@@ -80,13 +80,12 @@ const SetIcon = styled.i`
   ${({ form }) => (form === 'portfolio' ? PortfolioIcon : AutorDetailIcon)};
 `;
 
-//authordetail : 데이터 추가됐을때 다시 해야한다 . 현재 등록된 작가목록이 없어서 확인 불가.
 const EditDeleteButton = ({ handleEdit, handleDelete, form }) => {
   const { curSize } = useAppState();
   const size = curSize > tablet ? 'web' : curSize > phone ? 'tablet' : 'phone';
 
   return (
-    <SettingButtonBlock size={size}>
+    <SettingButtonBlock size={size} className={`edit-del-btn ${form}`}>
       <SetButton size={size} onClick={handleEdit} form={form}>
         <SetIcon btntype="eidt" size={size} form={form} />
         수정
