@@ -131,7 +131,7 @@ const RouterLink = (size, tablet, signOutHandler, isLogin) => {
   );
 };
 
-const Navigation = ({ location: { pathname } }) => {
+const Navigation = ({ location: { pathname }, history }) => {
   const navEl = useRef();
   const { userInfo, curSize, scroll } = useAppState();
   const { setUserInfo } = useAppDispatch();
@@ -156,7 +156,6 @@ const Navigation = ({ location: { pathname } }) => {
       name: '',
       isLogin: false,
     }), 500);
-    
   };
 
   // roter lists

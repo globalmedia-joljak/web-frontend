@@ -20,7 +20,7 @@ const ListOfAuthorForm = ({ match, history }) => {
     userInfo: { isLogin, classOf },
   } = useAppState();
   const { translationKR, setJobColor } = useAppDispatch();
-  const { filterClassOf, setShowCreate } = useTeamsDispatch();
+  const { filterClassOf, setShowCreate, setDefaultImg } = useTeamsDispatch();
   const { showCreate } = useTeamsState();
 
   const createAuthorEl = useRef();
@@ -62,15 +62,17 @@ const ListOfAuthorForm = ({ match, history }) => {
       toast.error('⛔ 로그인했을 경우 작가등록이 가능합니다!');
       return false;
     } else {
-      const filterAuthor = () =>
-        authorListData.find((author) => author.user.classOf === classOf);
+      const filterAuthor = data.content.find(
+        (author) => author.user.classOf === classOf,
+      );
 
-      if (filterAuthor.length === 1) {
-        // TODO : 선택값에 따른 값 (YES | NO 에 따른 결과 개발해야함)
-        toast.info(
-          '❕ 이미 작가등록 하셨습니다. 작가 목록 페이지로 가시겠습니까?',
-        );
-        history.push(`/author/${classOf}`);
+      if (filterAuthor) {
+        const message =
+          '이미 작가등록을 하셨습니다. 작가 목록 페이지로 가시겠습니까?';
+
+        if (window.confirm(message)) history.push(`/author/${classOf}`);
+
+        return;
       }
 
       setShowCreate(true);
@@ -81,7 +83,7 @@ const ListOfAuthorForm = ({ match, history }) => {
     <>
       <ToastContainer
         position="top-center"
-        autoClose={2000}
+        autoClose={3000}
         hideProgressBar={true}
         newestOnTop={false}
         closeOnClick
@@ -91,6 +93,7 @@ const ListOfAuthorForm = ({ match, history }) => {
         pauseOnHover
         style={{ color: '#ffffff', fontWeight: 'bold' }}
       />
+
       {filterShow ? (
         <ModalTemp
           modalShow={filterShow}
@@ -114,12 +117,13 @@ const ListOfAuthorForm = ({ match, history }) => {
           <div className="hero-img"></div>
           <div className="author-wrap" ref={createAuthorEl}>
             {showCreate ? (
-              <CreateAuthor type="create" />
+              <CreateAuthor type="create" history={history} />
             ) : (
               <>
                 <h3>
                   전체 작가 인원<span>{authorListData.length}</span>
                 </h3>
+
                 {authorListData.length < 1 ? (
                   <ThereIsNoList />
                 ) : (
@@ -133,6 +137,7 @@ const ListOfAuthorForm = ({ match, history }) => {
                           mainProjectRole,
                           subProjectRole,
                         },
+                        mediaInfo,
                       }) => (
                         <li key={id}>
                           <Link to={`${match.path}/${classOf}`}>
@@ -158,8 +163,17 @@ const ListOfAuthorForm = ({ match, history }) => {
                             >
                               {translationKR(subProjectRole)}
                             </span>
-                            <i className="author-img">
-                              <i className="hover-bg"></i>
+                            <i
+                              className="author-img"
+                              style={{
+                                backgroundImage: `url(${
+                                  mediaInfo
+                                    ? mediaInfo.url
+                                    : setDefaultImg(mainProjectRole)
+                                })`,
+                              }}
+                            >
+                              <i className="hover-bg" />
                             </i>
                           </Link>
                         </li>
