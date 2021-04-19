@@ -97,11 +97,8 @@ const DetailTeanm = ({match, history}) => {
                 ) : (
                   <></>
                 )}
-
               </div>
-
             </div>
-
           </div>
           <div className="team__detail__body">
             <Viewer initialValue={team.content}></Viewer>
@@ -179,8 +176,6 @@ const DetailTeanm = ({match, history}) => {
                   <></>
                 )
               }
-              
-              
             </div>
           </div>
         </div>
