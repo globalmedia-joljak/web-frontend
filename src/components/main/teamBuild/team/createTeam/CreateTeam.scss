@@ -15,14 +15,14 @@
   .team__top {
     display: flex;
     flex-direction: column;
-    .team__category {
+    .board__category {
       align-items: center;
       padding-top: 40px;
       display: flex;
       h3 {
         font-size: 24px;
         font-weight: 400;
-        margin-right: 24px;
+        margin-right: 36px;
       }
       input {
         width: 51%;
@@ -31,7 +31,21 @@
         padding: 12px 8px;
       }
     }
-
+    .team__category {
+      align-items: center;
+      padding-top: 24px;
+      display: flex;
+      h3 {
+        font-size: 24px;
+        font-weight: 400;
+        margin-right: 16px;
+      }
+      select {
+        height: 42px;
+        border: 1px solid #6D6D6D66;
+        padding: 12px 8px;
+      }
+    }
     .team__title {
       align-items: center;
       padding-top: 24px;
@@ -39,14 +53,13 @@
       h3 {
         font-size: 24px;
         font-weight: 400;
-        margin-right: 45px;
+        margin-right: 57px;
       }
       input {
-        width: 74%;
+        width: 80%;
         height: 42px;
         border: 1px solid #6D6D6D66;
         padding: 12px 8px;
-
       }
     }
   }
@@ -137,6 +150,117 @@
         display: none;
       }
       
+    }
+  }
+
+  .create__button {
+    display: flex;
+    justify-content: flex-end;
+    button {
+      background-color: #074FD8;
+      border-radius: 4px;
+      margin-top: 32px;
+      width: 174px;
+      height: 48px;
+      font-size: 20px;
+      color: white;
+    }
+    
+  }
+}
+
+@include response('tablet') {
+  .team__wrap {
+    margin: 26px 0 83px;
+    min-width: 0;
+    padding: 0 3%;
+    .team__top {
+      .board__category {
+        h3 {
+          font-size: 16px;
+        }
+
+      }
+      .team__category {
+        h3 {
+          font-size: 16px;
+          margin-right: 24px;
+        }
+      }
+      .team__title {
+        h3 {
+          font-size: 16px;
+          margin-right: 50px;
+        }
+      }
+    }
+    .team__bottom {
+      padding: 15px 19px;
+      .team__members {
+        .team__member {
+          display: flex;
+          flex-direction: column;
+          input {
+            margin-top: 12px;
+            font-size: 13px;
+          }
+        }
+      }
+      .team__file {
+        .team__file__label {
+          .team__file__label__left {
+            .file__image {
+            }
+            p {
+              font-size: 12px;
+            }
+          }
+        }
+        
+      }
+    }
+    .create__button {
+      button {
+        width: 96px;
+        height: 40px;
+        font-size: 16px;
+      }
+  
+    }
+  }
+}
+
+@include response('phone') {
+  .team__wrap {
+    .team__top {
+      .board__category {
+        h3 {
+          width: 25%;
+          margin-right: 0;
+        }
+        input {
+          width: 75%;
+        }
+
+      }
+      .team__category {
+        h3 {
+          width: 25%;
+          margin-right: 0;
+        }
+        select {
+          width: 75%;
+        }
+      }
+      .team__title {
+        h3 {
+          width: 25%;
+          margin-right: 0;
+        }
+        input {
+          width: 75%;
+        }
+      }
     }
   }
 }

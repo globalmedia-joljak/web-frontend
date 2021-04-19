@@ -8,7 +8,20 @@ import { useAppState } from "../../../../../context/appContext";
 function Team({id, teamName, category, designerMember, developerMember, mediaArtMember, plannerMember, author, createdDate}) {
   const { curSize } = useAppState();
   const size = curSize < 768 ? 'tablet' : curSize < 425 ? 'phone' : 'web';
-  
+  const translateCategory = (value) => {
+    switch (value) {
+      case 'MEDIA_ART' :
+        return '미디어아트';
+      case 'WEB_APP' :
+        return '웹/앱';
+      case 'ANIMATION' :
+        return '영상/애니메이션';
+      case 'GAME' :
+        return '게임';
+      default :
+        return '기타';
+    }
+  }
   return (
     <Link to={{
       pathname: `teams/${id}`,
@@ -27,7 +40,7 @@ function Team({id, teamName, category, designerMember, developerMember, mediaArt
           size !== 'web' ? (
             <div className="team__body__bottom">
               <div className="team__category">
-                {category}
+                {translateCategory(category)}
               </div>
               <div className="team__author">
                 {author}
