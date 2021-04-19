@@ -99,6 +99,7 @@ $phone-add-portfolio-size: 24px;
         position: absolute;
         @include widthHeight;
         @include backgroundImage;
+        background-size: cover;
         transition: transform ease 0.3s;
       }
 

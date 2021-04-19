@@ -6,10 +6,10 @@ import {
   useState,
 } from 'react';
 
-import mediAart from '../assets/images/mediaart.jfif';
-import designer from '../assets/images/designer.jfif';
-import developer from '../assets/images/developer.jfif';
-import planner from '../assets/images/planner.jfif';
+import mediaArt from '../assets/images/Members_MediaArt@2x.png';
+import designer from '../assets/images/Members_design@2x.png';
+import developer from '../assets/images/Members_dev@2x.png';
+import planner from '../assets/images/Members_Planner@2x.png';
 
 export const teamStateContext = createContext(null);
 export const teamDispatchContext = createContext(null);
@@ -21,7 +21,7 @@ const TeamsProvider = ({ children }) => {
   const setDefaultImg = (role) => {
     switch (role) {
       case 'MEDIA_ART':
-        return mediAart;
+        return mediaArt;
       case 'DESIGNER':
         return designer;
       case 'DEVELOPER':
