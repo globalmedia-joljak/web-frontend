@@ -5,8 +5,13 @@ import './TeamList.scss';
 import { getTeams } from '../../../../../service/api/teams';
 import ThereIsNoList from '../../ThereIsNoList';
 import Team from './Team';
+import { Link } from 'react-router-dom';
+import { useAppState } from '../../../../../context/appContext.js';
 
-const TeamList = () => {
+const TeamList = ({ match, history }) => {
+  const {
+    userInfo: { isLogin, classOf },
+  } = useAppState();
   const [teams, setTeams] = useState([]);
   const [pageInfo, setPageInfo] = useState({
     page: 0,
@@ -34,10 +39,6 @@ const TeamList = () => {
     // todo : 다음페이지(무한 스크롤)
   };
 
-  const handleCreateTeam = () => {
-    // todo : 등록하기 클릭
-  };
-
   const handleShowFilterModal = () => {
     // todo : 상세검색
   };
@@ -45,6 +46,15 @@ const TeamList = () => {
   const test = () => {
     console.log('test');
   };
+
+  const handleCreateTeam = (e) => {
+    if (!isLogin) {
+      history.push(`/signin`);
+      return;
+    }
+    
+    history.push(`${match.path}/create`);
+  }
   return (
     <>
       <ToastContainer
@@ -66,6 +76,7 @@ const TeamList = () => {
             <h3>{pageInfo.totalElements}</h3>
           </div>
           <div className="teams-top-right">
+            
             <ButtonWIthIcon
               btntype="filter"
               btnTxt="상세검색"
@@ -75,7 +86,7 @@ const TeamList = () => {
               btntype="create"
               btnTxt="등록하기"
               handleButton={handleCreateTeam}
-            />
+            />            
           </div>
         </div>
         <div className="teams-body">
@@ -89,7 +100,7 @@ const TeamList = () => {
                   <Team
                     key={team.id}
                     id={team.id}
-                    category={team.category}
+                    category={team.projectCategory}
                     designerMember={team.designerMember}
                     developerMember={team.developerMember}
                     mediaArtMember={team.mediaArtMember}
