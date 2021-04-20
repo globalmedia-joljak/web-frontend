@@ -6,7 +6,7 @@ const uploadImage = async (classOf, image) => {
 
 
   try {
-    const { data } = await client.post(`/upload/admin/image`, formdata, {
+    const { data } = await client.post(`/upload/${classOf}/image`, formdata, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
