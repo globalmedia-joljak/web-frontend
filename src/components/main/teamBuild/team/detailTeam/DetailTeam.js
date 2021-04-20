@@ -30,8 +30,6 @@ const DetailTeanm = ({match, history}) => {
   useEffect(() => {
     getTeam(id, history)
       .then((response) => {
-        console.log(response);
-
         setTeam(response);
         setIsLoading(false);
       })

@@ -152,3 +152,153 @@
   }
   
 }
+
+@include response('tablet') {
+  .team__detail__wrap {
+    margin: 56px 50px;
+    padding: 16px 24px;
+
+    .team__detail__top { 
+      .team__detail__category {
+        width: 149px;
+        height: 43px;
+        
+        h3 {
+          font-size: 16px;
+        }
+      }
+      .team__detail__teamname {
+        h2 {
+          font-size: 20px;
+        }
+      }
+      .team__detail__info {
+        margin-top: 35px;
+        .team__detail__info__left {
+          h4 {
+            font-size: 17px;
+          }
+          .date__image {
+            width: 13.6px;
+            height: 15.54px;
+          }
+          p {
+            font-size: 17px;
+          }
+        }
+        .team__detail__info__right {
+          .update__button {
+            .update__image {
+              width: 9.66px;
+              height: 9.66px;
+              margin-right: 5px;
+            }
+            p {
+              font-size: 17px;
+            }
+          }
+          .delete__button {
+            .delete__image {
+              width: 14.66px;
+              height: 14.66px;
+            }
+            p {
+              font-size: 17px;
+            }
+          }
+        }
+        
+      }
+    }
+    .team__detail__body {
+      padding-top: 24px;
+    }
+    .team__detail__bottom {
+      margin-top: 32px;
+      .team__members {
+        h3 {
+          font-size: 20px;
+        }
+        .team__member {
+          margin-top: 16px;
+        }
+      }
+    }
+  }
+}
+
+@include response('phone') {
+  .team__detail__wrap {
+    margin: 23px 20px;
+    padding: 12px 15px;
+
+    .team__detail__top { 
+      .team__detail__category {
+        width: 103px;
+        height: 29px;
+        
+        h3 {
+          font-size: 12px;
+        }
+      }
+      .team__detail__teamname {
+        h2 {
+          font-size: 16px;
+        }
+      }
+      .team__detail__info {
+        margin-top: 24px;
+        margin-bottom: 16px;
+        .team__detail__info__left {
+          h4 {
+            font-size: 12px;
+          }
+          .date__image {
+            width: 11.85px;
+            height: 13.54px;
+          }
+          p {
+            font-size: 12px;
+          }
+        }
+        .team__detail__info__right {
+          .update__button {
+            .update__image {
+              width: 6.79px;
+              height: 6.79px;
+              margin-right: 5px;
+            }
+            p {
+              font-size: 12px;
+            }
+          }
+          .delete__button {
+            .delete__image {
+              width: 9.43px;
+              height: 9.43px;
+            }
+            p {
+              font-size: 12px;
+            }
+          }
+        }
+        
+      }
+    }
+    .team__detail__bottom {
+      .team__members {
+        h3 {
+          font-size: 28px;
+        }
+        .team__member {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start; 
+          h4 {
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+  }
+}
