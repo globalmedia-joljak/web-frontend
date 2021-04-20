@@ -280,7 +280,6 @@ const CreateAuthor = ({ type, history, detailData }) => {
     switch (type) {
       case 'create':
         createAuthorProfile(classOf, formdata);
-        toast.success('✅ 작가목록에 등록 되었습니다.');
 
         setTimeout(() => {
           history.push(`/author/${classOf}`);
@@ -292,7 +291,6 @@ const CreateAuthor = ({ type, history, detailData }) => {
           formdata.append('deleteFileName', detailData.mediaInfo.modifyName);
         }
         updateAuthorProfile(classOf, formdata);
-        toast.success('✅ 작가목록이 수정 되었습니다.');
 
         //TODO:author페이지 리스트가 보여지게 해야함.
         return;
