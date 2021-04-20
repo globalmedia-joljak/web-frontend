@@ -259,12 +259,12 @@ const CreateAuthor = ({ type, history, detailData }) => {
     }
 
     // portfolio
-    portfolioLinks.map((data, i) => {
-      formdata.append(`portfolioLinks[${i}].link`, portfolioLinks[i].link);
-      formdata.append(`portfolioLinks[${i}].title`, portfolioLinks[i].title);
-    });
-
-    console.log(portfolioLinks);
+    if (portfolioLinks) {
+      portfolioLinks.map((data, i) => {
+        formdata.append(`portfolioLinks[${i}].link`, portfolioLinks[i].link);
+        formdata.append(`portfolioLinks[${i}].title`, portfolioLinks[i].title);
+      });
+    }
 
     // mainrole,subrole,introduce
     for (let name in createAuthorQuery) {
