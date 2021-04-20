@@ -60,15 +60,15 @@ const AuthorButton = css`
 
 const SettingButtonBlock = styled.div`
   display: flex;
-  gap: ${({ size }) =>
+  column-gap: ${({ size }) =>
     size === 'web' ? '24px' : size === 'tablet' ? '11px' : '10px'};
 `;
 
 const SetButton = styled.button`
-  display: inherit;
+  display: flex;
   align-items: center;
   color: #6d6d6dcc;
-  ${({ form }) => (form === 'portfolio' ? PortfolioButton : AuthorButton)};
+  ${({ form }) => (form === 'setPortfolio' ? PortfolioButton : AuthorButton)};
 `;
 
 const SetIcon = styled.i`

@@ -30,7 +30,9 @@ const ListOfAuthorForm = ({ match, history }) => {
 
   const [profilePageNum, setProfilePageNum] = useState(0);
 
-  const [profileList] = useAsync(() => getAuthorProfileList(profilePageNum));
+  const [profileList] = useAsync(() => getAuthorProfileList(profilePageNum), [
+    profilePageNum,
+  ]);
 
   // TODO : 스크롤시 데이터를 추가로 불러와 주어야 한다(setProfilePageNum)
   const { loading, data, error } = profileList;
@@ -57,26 +59,29 @@ const ListOfAuthorForm = ({ match, history }) => {
   }
 
   const addAuthorHandler = (e) => {
+    console.log(classOf, isLogin);
     if (!isLogin) {
       setShowCreate(false);
-      toast.error('⛔ 로그인했을 경우 작가등록이 가능합니다!');
-      return false;
-    } else {
-      const filterAuthor = data.content.find(
-        (author) => author.user.classOf === classOf,
+      toast.error(
+        '⛔ 로그인했을 경우 작가등록이 가능합니다. 로그인 페이지로 이동합니다.',
       );
-
-      if (filterAuthor) {
-        const message =
-          '이미 작가등록을 하셨습니다. 작가 목록 페이지로 가시겠습니까?';
-
-        if (window.confirm(message)) history.push(`/author/${classOf}`);
-
-        return;
-      }
-
-      setShowCreate(true);
+      setTimeout(() => history.push('/signin'), 2300);
+      return false;
     }
+
+    const filterAuthor = data.content.find(
+      (author) => author.user.classOf === classOf,
+    );
+
+    if (filterAuthor) {
+      if (!classOf) return false;
+      const message =
+        '이미 작가등록을 하셨습니다. 작가 목록 페이지로 가시겠습니까?';
+
+      if (window.confirm(message)) history.push(`/author/${classOf}`);
+    }
+
+    setShowCreate(true);
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { useAppDispatch, useAppState } from '../../../../../context/appContext';
 import {
@@ -19,7 +19,7 @@ const CreateAuthor = ({ type, history, detailData }) => {
     userInfo: { classOf },
   } = useAppState();
   const { setJobColor, translationKR } = useAppDispatch();
-  const { setDefaultImg } = useTeamsDispatch();
+  const { setDefaultImg, setShowCreate } = useTeamsDispatch();
 
   const [createAuthorQuery, setCreateAuthorQuery] = useState({
     introduce: null,
@@ -44,13 +44,13 @@ const CreateAuthor = ({ type, history, detailData }) => {
 
   const previewImg = () => {
     if (!file) return false;
-    const roleBg = document.querySelector('.img');
+    const roleBackground = document.querySelector('.img');
     if (isDefault) {
-      return (roleBg.style.backgroundImage = 'none');
+      return (roleBackground.style.backgroundImage = 'none');
     }
     const reader = new FileReader();
     reader.onload = () => {
-      return (roleBg.style.backgroundImage = `url(${reader.result})`);
+      return (roleBackground.style.backgroundImage = `url(${reader.result})`);
     };
     reader.readAsDataURL(file);
     setCustomCN('exist-img');
@@ -80,7 +80,8 @@ const CreateAuthor = ({ type, history, detailData }) => {
 
     setCreateAuthorQuery({
       ...createAuthorQuery,
-      [name === 'mainProjectRole' ? 'mainRole' : 'subRole']: value,
+      [name === 'mainProjectRole' ? 'mainRole' : 'subRole']:
+        value === '선택안함' ? null : value,
     });
   };
 
@@ -146,70 +147,61 @@ const CreateAuthor = ({ type, history, detailData }) => {
   const [portfolioShow, setPortfolioShow] = useState(false);
   const [portfolioEdit, setPortfolioEdit] = useState(false);
   const [portfolioLinks, setPortfolioLinks] = useState([]);
-  const [id, setId] = useState(portfolioLinks.length);
-  const [choiceId, setChoiceId] = useState('');
   const [portfolio, setPortfolio] = useState({
     title: '',
     link: '',
+    id: 0,
   });
 
   const showPortfolioModal = (type, data) => {
     switch (type) {
       case 'create':
         if (portfolioLinks.length >= 5) {
-          toast.error('포트폴리오는 최대 5개까지 생성 가능합니다');
+          toast.warn('⚠ 포트폴리오는 최대 5개까지 등록 가능합니다.');
           return false;
         }
-
         setPortfolio({
           title: '',
           link: '',
+          id: portfolio.id + 1,
         });
 
         setPortfolioShow(true);
         setPortfolioEdit(false);
 
         return;
-
       case 'edit':
+        console.log('수정');
+
         setPortfolioShow(true);
         setPortfolioEdit(true);
-
-        setChoiceId(id);
-
         setPortfolio({
-          ...portfolio,
-          title: data.title,
-          link: data.link,
+          ...data,
         });
 
+        console.log(portfolio);
         return;
 
       default:
-        break;
     }
   };
 
   const portfolioToggle = () => {
+    if (!portfolioEdit) {
+      setPortfolioLinks(portfolioLinks.concat(portfolio));
+    }
+
     if (portfolioEdit) {
       setPortfolioLinks(
-        portfolioLinks.map((item) => {
-          if (item.id === choiceId) {
+        portfolioLinks.map((link) => {
+          if (link.id === portfolio.id) {
             return {
-              choiceId,
+              ...portfolio,
               title: portfolio.title,
               link: portfolio.link,
             };
           }
-          return item;
-        }),
-      );
-    } else {
-      setId(id + 1);
-      setPortfolioLinks(
-        portfolioLinks.concat({
-          id,
-          ...portfolio,
+          return link;
         }),
       );
     }
@@ -217,6 +209,24 @@ const CreateAuthor = ({ type, history, detailData }) => {
     setPortfolioShow(false);
   };
 
+  useEffect(() => {
+    if (detailData) {
+      const detailPortfolioLinks = detailData.portfolioLinks;
+
+      setPortfolioLinks(
+        detailPortfolioLinks.map((link, i) => {
+          return {
+            ...link,
+            id: i,
+          };
+        }),
+      );
+      setPortfolio({
+        ...portfolio,
+        id: detailPortfolioLinks.length - 1,
+      });
+    }
+  }, [detailData]);
   const handleChange = (e) => {
     setPortfolio({
       ...portfolio,
@@ -230,7 +240,7 @@ const CreateAuthor = ({ type, history, detailData }) => {
     );
     toast.success(`${title}이 삭제 되었습니다.`);
   };
-
+  console.log(portfolioLinks);
   const handleSubmitAuthor = () => {
     if (createAuthorQuery.mainRole === null) {
       toast.error('⛔대표직군은 반드시 설정해 주세요.');
@@ -241,26 +251,54 @@ const CreateAuthor = ({ type, history, detailData }) => {
       toast.warn('자기소개글 설정을 확인해 주세요');
       return false;
     }
-    console.log(isDefault);
-    console.log();
+
     const formdata = new FormData();
 
+    if (file) {
+      formdata.append('image', file);
+    }
+
+    // portfolio
+    portfolioLinks.map((data, i) => {
+      formdata.append(`portfolioLinks[${i}].link`, portfolioLinks[i].link);
+      formdata.append(`portfolioLinks[${i}].title`, portfolioLinks[i].title);
+    });
+
+    console.log(portfolioLinks);
+
+    // mainrole,subrole,introduce
     for (let name in createAuthorQuery) {
       formdata.append(name, createAuthorQuery[name]);
-
       if (createAuthorQuery[name] === null) {
         formdata.delete(name);
       }
     }
-    console.log(detailData);
-    // userState.data.mediaInfo.modifyName;
-    isDefault
-      ? formdata.append('deleteFileName', detailData.mediaInfo.modifyName)
-      : formdata.append('image', file);
 
-    return type === 'create'
-      ? createAuthorProfile(classOf, formdata)
-      : updateAuthorProfile(classOf, formdata);
+    for (let a of formdata.entries()) {
+      console.log(a);
+    }
+    switch (type) {
+      case 'create':
+        createAuthorProfile(classOf, formdata);
+        toast.success('✅ 작가목록에 등록 되었습니다.');
+
+        setTimeout(() => {
+          history.push(`/author/${classOf}`);
+        }, 2300);
+        return;
+
+      case 'edit':
+        if (detailData.mediaInfo && isDefault) {
+          formdata.append('deleteFileName', detailData.mediaInfo.modifyName);
+        }
+        updateAuthorProfile(classOf, formdata);
+        toast.success('✅ 작가목록이 수정 되었습니다.');
+
+        //TODO:author페이지 리스트가 보여지게 해야함.
+        return;
+
+      default:
+    }
   };
 
   const roleStyle = (role) => {
@@ -430,7 +468,7 @@ const CreateAuthor = ({ type, history, detailData }) => {
                             </strong>
                             <div className="edit-delete-box">
                               <EditDeleteButton
-                                form="portfolio"
+                                form="setPortfolio"
                                 handleEdit={() =>
                                   showPortfolioModal('edit', data)
                                 }
