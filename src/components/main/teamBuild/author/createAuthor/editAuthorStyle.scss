@@ -152,9 +152,6 @@ $phone-add-portfolio-size: 24px;
         .set-img-icon {
           background-color: #00000080;
         }
-        .img {
-          background-image: url('../../../../../assets/images/Designer_image@2x.png');
-        }
 
         .icon {
           background-image: url('../../../../../assets/images/image_default@2x.png');
@@ -247,7 +244,7 @@ $phone-add-portfolio-size: 24px;
       margin-bottom: 40px;
       .portfolio {
         grid-template-columns: max-content auto;
-        display: inherit;
+        display: grid;
         grid-template-areas:
           'linkicon ptitle'
           'linkicon link';
@@ -265,7 +262,7 @@ $phone-add-portfolio-size: 24px;
     }
     .portfolio-title-box {
       display: flex;
-      gap: 24px;
+      justify-content: space-between;
       grid-area: ptitle;
       align-items: center;
       .porfolio-title {
@@ -345,7 +342,7 @@ $phone-add-portfolio-size: 24px;
 
     &.set-portfolio {
       ul {
-        gap: 50px;
+        row-gap: 50px;
         margin-bottom: 32px;
         .portfolio {
           .porfolio-icon {

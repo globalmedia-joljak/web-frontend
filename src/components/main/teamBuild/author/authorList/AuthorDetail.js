@@ -30,7 +30,11 @@ const AuthorDetail = ({ match, history }) => {
   if (!data) return null;
   if (error) return <div>상세페이지 에러</div>;
 
-  const handleEdit = () => setShowEdit(true);
+  const handleEdit = () => {
+    if (!classOf) return false;
+    console.log(classOf);
+    setShowEdit(true);
+  };
 
   const handleDelete = () => {
     const delMessage = window.confirm(
@@ -106,8 +110,8 @@ const AuthorDetail = ({ match, history }) => {
               <p className="no-list">등록된 포트폴리오가 없습니다.</p>
             ) : (
               <ul className="portfolio-lists">
-                {portfolioLinks.map((title, link, id) => (
-                  <li className="portfolio" key={id}>
+                {portfolioLinks.map(({ title, link }, i) => (
+                  <li className="portfolio" key={i}>
                     <i className="icon-link"></i>
                     <strong className="title">{title}</strong>
                     <a href={link}>{link}</a>

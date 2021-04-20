@@ -124,9 +124,8 @@
 .author-detail-wrap {
   margin: 114px auto 92px;
   max-width: 1052px;
-  width: 100%;
-  padding: 0 6%;
   box-sizing: content-box;
+  padding: 0 6%;
 
   > div {
     display: grid;
@@ -143,8 +142,9 @@
     left: 5%;
     .author-img-box {
       width: 480px;
-      background-size: cover;
+
       @include backgroundImage;
+      background-size: cover;
       .author-bg {
         z-index: -1;
         position: absolute;

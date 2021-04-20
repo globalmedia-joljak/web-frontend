@@ -16,9 +16,9 @@ const AppProvider = ({ children }) => {
     name: '',
   });
 
-  const [userState] = useAsync(async () => {
-    if (userInfo.classOf === '') return null;
-    return await getUser(userInfo.classOf);
+  const [userState] = useAsync(() => {
+    if (!userInfo.classOf) return false;
+    return getUser(userInfo.classOf);
   }, [userInfo.classOf]);
 
   useEffect(() => {
