@@ -34,8 +34,8 @@ const AppProvider = ({ children }) => {
     };
   }, [curSize]);
 
-  const setJobColor = (job) => {
-    switch (job) {
+  const setJobColor = (role) => {
+    switch (role) {
       case 'MEDIA_ART':
         return '#d92b3a';
       case 'DESIGNER':
