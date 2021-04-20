@@ -240,7 +240,7 @@ const CreateAuthor = ({ type, history, detailData }) => {
     );
     toast.success(`${title}이 삭제 되었습니다.`);
   };
-  console.log(portfolioLinks);
+
   const handleSubmitAuthor = () => {
     if (createAuthorQuery.mainRole === null) {
       toast.error('⛔대표직군은 반드시 설정해 주세요.');
