@@ -6,11 +6,33 @@ import { ToastContainer, toast } from 'react-toastify';
 import MemberRoleSquare from '../teamList/MemberRole';
 import { useAppState } from '../../../../../context/appContext';
 import { createTeam } from '../../../../../service/api/teams';
+import { uploadImage } from '../../../../../service/api/upload';
+
+const toolbarItems = [
+  'heading',
+  'bold',
+  'italic',
+  'strike',
+  'divider',
+  'hr',
+  'quote',
+  'divider',
+  'ul',
+  'ol',
+  'task',
+  'indent',
+  'outdent',
+  'divider',
+  'table',
+  'image',
+  'link',
+  'divider',
+  'code',
+  'codeblock'
+];
 
 const CreateTeam = ({history}) => {
-  const {
-    userInfo: { isLogin, classOf },
-  } = useAppState();
+  const { userInfo } = useAppState();
 
   const editorRef = useRef();
   const [teamName, setTeamName] = useState(null);
@@ -33,19 +55,30 @@ const CreateTeam = ({history}) => {
     const request = {
       teamName: teamName,
       content: editorRef.current.getInstance().getHtml(),
-      designerMember: designers,
-      developerMember: developers,
-      mediaArtMember: mediaArts,
-      plannerMember: planners,
       projectCategory: category,
     }
     if (file) {
       request['file'] = file;
     }
+    if (designers) {
+      request['designerMember'] = designers;
+    }
+    if (developers) {
+      request['developerMember'] = developers;
+    }
+    if (mediaArts) {
+      request['mediaArtMember'] = mediaArts;
+    }
+    if (planners) {
+      request['plannerMember'] = planners;
+    }
 
     createTeam(request)
       .then((response) => {
         history.push(`/teams/${response.id}`);
+      })
+      .catch((e) => {
+        console.log(e);
       })
   }
 
@@ -112,6 +145,7 @@ const CreateTeam = ({history}) => {
       <div className="team__body">
         <div className="team__body__editor">
           <Editor
+            toolbarItems={toolbarItems}
             previewStyle="vertical"
             width="1194px"
             height="600px"
@@ -119,6 +153,15 @@ const CreateTeam = ({history}) => {
             placeholder="글을 작성해주세요"
             ref={editorRef}
             usageStatistics={false}
+            hooks={{
+              addImageBlobHook: (blob, callback) => {
+                uploadImage(userInfo.classOf, blob)
+                  .then((response) => {
+                    callback(response.url, "alt text");
+                  })
+                return false;
+              }
+          }}
           />
         </div>
         

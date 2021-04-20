@@ -1,0 +1,154 @@
+@import '../../../../../assets/_mixin.scss';
+@import '../../../../../assets/_variables.scss';
+
+.team__detail__wrap {
+  margin: 72px 150px;
+  padding: 26px 32px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 0px 6px #00000029;
+  
+  .team__detail__top {
+    border-bottom: 1px solid #6D6D6D33;
+    .team__detail__category {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFFFFF 0% 0% no-repeat padding-box;
+      border: 1px solid #367DD9;
+      border-radius: 28px;
+      width: 197px;
+      height: 56px;
+      
+      h3 {
+        color: #367DD9;
+      }
+    }
+    .team__detail__teamname {
+      h2 {
+        margin-top: 16px;
+        font-size: 32px;
+        text-align: left;
+      }
+    }
+    .team__detail__info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      margin-bottom: 30px;
+      
+      .team__detail__info__left {
+        display: flex;
+        align-items: center;
+        h4 {
+          font-size: 28px;
+          font-weight: 400;
+        }
+        .date__image {
+          @include backgroundImage;
+          background-image: url('../../../../../assets/images/calendar.png');
+          width: 21px;
+          height: 24px;
+          margin-left: 12px;
+          margin-right: 16px;
+        }
+        p {
+          font-size: 24px;
+          color: #6D6D6DCC;
+        }
+      }
+      .team__detail__info__right {
+        display: flex;
+        align-items: center;
+        
+        .update__button {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          .update__image {
+            @include backgroundImage;
+            background-image: url('../../../../../assets/images/edit.png');
+            width: 18px;
+            height: 18px;
+          }
+          p {
+            font-size: 17px;
+          }
+        }
+        .delete__button {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          .delete__image {
+            margin-left: 11px;
+            @include backgroundImage;
+            background-image: url('../../../../../assets/images/delete.png');
+            width: 24px;
+            height: 24px;
+          }
+          p {
+            font-size: 17px;
+          }
+        }
+      }
+      
+    }
+  }
+  .team__detail__body {
+    padding-top: 40px;
+  }
+  .team__detail__bottom {
+    margin-top: 64px;
+    .team__members {
+      h3 {
+        font-size: 28px;
+      }
+      .team__member {
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+      }
+    }
+    .team__file {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 72px;
+      background: #F2F2F2 0% 0% no-repeat padding-box;
+      border-radius: 4px;
+      width: 100%;
+      height: 72px;
+      padding: 15px 19px;
+      cursor: pointer;
+      .team__file__left {
+        display: flex;
+        align-items: center;
+        .file__image {
+          @include backgroundImage;
+          background-image: url('../../../../../assets/images/paperclip.png');
+          width: 15px;
+          height: 15px;
+          margin-right: 10px;
+        }
+        p {
+          font-size: 12px;
+        }
+      }
+      .team__file__right {
+        display: flex;
+        align-items: center;
+        .download__image {
+          @include backgroundImage;
+          background-image: url('../../../../../assets/images/download.png');
+          width: 15px;
+          height: 15px;
+          margin-right: 10px;
+        }
+      }
+      
+    }
+  }
+  
+}

@@ -65,31 +65,39 @@ function Team({id, teamName, category, designerMember, developerMember, mediaArt
         }
         <div className="team__members">
           {
-            designerMember ? (
+            designerMember === null || designerMember ==='' ? (
+              <></>
+            ) : (
               <MemberRoleSquare
                 role="DESIGNER"
                 text="DESIGNER"
               />
-            ) : (<></>)            
+            )            
           }
           {
-            developerMember ? (
+            developerMember === null || developerMember ==='' ? (
+              <></>
+            ) : (
               <MemberRoleSquare
                 role="DEVELOPER"
                 text="DEVELOPER"
               />
-            ) : (<></>)   
+            )   
           }
           {
-            mediaArtMember ? (
+            mediaArtMember === null || mediaArtMember ==='' ? (
+              <></>
+            ) : (
               <MemberRoleSquare
                 role="MEDIA_ART"
                 text="MEDIA_ART"
               />
-            ) : (<></>)   
+            )   
           }
           {
-            plannerMember ? (
+            plannerMember === null || plannerMember ==='' ? (
+              <></>
+            ) : (
               designerMember && developerMember && mediaArtMember ? (
                 <></>
               ) : (
@@ -98,7 +106,7 @@ function Team({id, teamName, category, designerMember, developerMember, mediaArt
                   text="PLANNER"
                 />
               )
-            ) : (<></>)   
+            )   
           }
         </div>
       </div>

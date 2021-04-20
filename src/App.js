@@ -106,9 +106,11 @@ const App = () => {
           <Route path="/signup" exact={true} component={SignUp} />
           <Route path="/mypage" exact={true} component={MyPage} />
           <Route path="/notice" exact={true} component={Notice} />
+          <Route path="/error" exact={true} component={ErrorPage} />
           <Route path="/:listname" component={Tbuild} />
           <Route path="/projects" exact={true} component={Projects} />
           <Route path="/search" exact={true} component={Search} />
+          
           <Route path="*" component={ErrorPage} />
         </Switch>
       </BrowserRouter>
