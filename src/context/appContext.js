@@ -8,6 +8,11 @@ export const appDispatchContext = createContext(null);
 const AppProvider = ({ children }) => {
   const [curSize, setCurSize] = useState(window.innerWidth);
   const [scroll, setScroll] = useState(0);
+  const [infinite, setInfinite] = useState({
+    scrollTop: 0,
+    scrollHeight: 0,
+    clientHeight: 0,
+  });
   const [modalShow, setModalShow] = useState(false);
 
   const [userInfo, setUserInfo] = useState({
@@ -21,16 +26,31 @@ const AppProvider = ({ children }) => {
     return getUser(userInfo.classOf);
   }, [userInfo.classOf]);
 
+  const handleScroll = () => {
+    const { documentElement, body } = document;
+    let scrollHeight = Math.max(
+      documentElement.scrollHeight,
+      body.scrollHeight,
+    );
+    let scrollTop = Math.max(documentElement.scrollTop, body.scrollTop);
+    let clientHeight = documentElement.clientHeight;
+
+    setInfinite({
+      ...infinite,
+      scrollTop,
+      scrollHeight,
+      clientHeight,
+    });
+
+    setScroll(Math.floor(window.scrollY));
+  };
+
   useEffect(() => {
     window.addEventListener('resize', () => setCurSize(window.innerWidth));
-    window.addEventListener('scroll', () =>
-      setScroll(Math.floor(window.scrollY)),
-    );
+    window.addEventListener('scroll', handleScroll, true);
     return () => {
       window.removeEventListener('resize', () => setCurSize(window.innerWidth));
-      window.addEventListener('scroll', () =>
-        setScroll(Math.floor(window.scrollY)),
-      );
+      window.addEventListener('scroll', handleScroll, true);
     };
   }, [curSize]);
 
@@ -69,7 +89,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const value = { curSize, modalShow, userInfo, scroll, userState };
+  const value = { curSize, modalShow, userInfo, scroll, userState, infinite };
   const dispatch = {
     setJobColor,
     setModalShow,

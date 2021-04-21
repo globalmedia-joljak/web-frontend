@@ -5,7 +5,7 @@ const ListOfIdeaForm = () => {
     <>
       <>
         <div className="hero-img"></div>
-        <div className="ideas-wrap">아이디어입니다</div>
+        <div className="ideas-wrap content-size">아이디어입니다</div>
       </>
     </>
   );

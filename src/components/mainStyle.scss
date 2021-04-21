@@ -57,7 +57,6 @@ main {
     display: grid;
     grid-template-rows: max-content auto;
     height: 100%;
-    overflow: hidden;
   }
   .team-side-menu {
     width: 100%;
@@ -93,7 +92,6 @@ main {
     }
   }
   .team-contents {
-    overflow-y: scroll;
     .content {
       .hero-img {
         width: 100%;
@@ -106,7 +104,7 @@ main {
   }
   .author-list-none {
     display: grid;
-    padding: 60px 0 202px;
+    padding: 60px 0;
     height: 100%;
     place-items: center;
 

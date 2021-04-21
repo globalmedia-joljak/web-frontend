@@ -1,13 +1,16 @@
 @import '../../../../../assets/_mixin.scss';
 @import '../../../../../assets/_variables.scss';
 
-.author-wrap {
-  position: relative;
+.content-size {
   margin: 53px auto 0;
   padding: 0 4.3% 154px;
   width: 100%;
-  max-width: 1293px;
+  // max-width: 1297px;
+  max-width: 1352px;
   min-width: 616px;
+}
+.author-wrap {
+  position: relative;
 
   .author-functions {
     position: absolute;
@@ -24,7 +27,8 @@
     align-items: center;
     gap: 16px;
     font-size: 28px;
-    margin-bottom: 32px;
+    margin-bottom: 80px;
+    // margin-bottom: 32px;
   }
 
   .author-list {
@@ -33,9 +37,8 @@
     gap: 64px 30px;
     width: 100%;
     li {
-      box-sizing: none;
       background-color: #ffffff;
-      min-width: 276px;
+      min-width: 277px;
       height: 537px;
       border-radius: 16px;
       width: calc(25% - 22.5px);
@@ -227,9 +230,11 @@
         .title {
           grid-area: p-title;
           font-size: 20px;
-          margin-bottom: 4px;
         }
         a {
+          text-decoration: underline;
+          align-self: end;
+          height: fit-content;
           font-size: 20px;
           color: #6d6d6d99;
         }
@@ -280,11 +285,12 @@
 }
 
 @include response('tablet') {
-  .author-wrap {
+  .content-size {
     margin: 26px 0 83px;
     min-width: 0;
     padding: 0 3%;
-
+  }
+  .author-wrap {
     .author-functions {
       gap: 24px;
       right: 3%;
@@ -404,8 +410,10 @@
 }
 
 @include response('phone') {
-  .author-wrap {
+  .content-size {
     margin: 23px 0 130px;
+  }
+  .author-wrap {
     .author-functions {
       gap: 8px;
     }

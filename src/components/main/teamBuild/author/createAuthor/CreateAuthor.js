@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { useAppDispatch, useAppState } from '../../../../../context/appContext';
 import {
@@ -10,22 +10,28 @@ import './editAuthorStyle.scss';
 import EditDeleteButton from '../../../common/EditDeleteButton';
 import PortfolioModal from './PortfolioModal';
 import RoleModal from './RoleModal';
-import { useTeamsDispatch } from '../../../../../context/teamContext';
+import {
+  useTeamsDispatch,
+  useTeamsState,
+} from '../../../../../context/teamContext';
 
-const CreateAuthor = ({ type, history, detailData }) => {
+const CreateAuthor = ({ history, match }) => {
   const setImgEl = useRef();
   const {
     userState,
     userInfo: { classOf },
   } = useAppState();
   const { setJobColor, translationKR } = useAppDispatch();
-  const { setDefaultImg, setShowCreate } = useTeamsDispatch();
+  const { detailData } = useTeamsState();
+  const { setDefaultImg } = useTeamsDispatch();
 
   const [createAuthorQuery, setCreateAuthorQuery] = useState({
     introduce: null,
     mainRole: null,
     subRole: null,
   });
+
+  const type = match.params.state;
 
   // set Image
   const [file, setFile] = useState(null);
@@ -94,7 +100,7 @@ const CreateAuthor = ({ type, history, detailData }) => {
   };
 
   useEffect(() => {
-    if (classOf !== '' && userState.data !== null) {
+    if (classOf !== '' && userState.data) {
       const { mainProjectRole, subProjectRole } = userState.data.user;
       setCreateAuthorQuery({
         ...createAuthorQuery,
@@ -103,15 +109,16 @@ const CreateAuthor = ({ type, history, detailData }) => {
       });
     }
 
-    if (detailData !== undefined) {
+    if (type === 'edit' && detailData.portfolioLinks) {
       setCreateAuthorQuery({
         ...createAuthorQuery,
         introduce: detailData.content,
         mainRole: detailData.user.mainProjectRole,
         subRole: detailData.user.subProjectRole,
       });
+      return;
     }
-  }, [type, userState]);
+  }, [type, detailData]);
 
   // set introduce
   const [textLen, setTextLen] = useState(0);
@@ -210,21 +217,30 @@ const CreateAuthor = ({ type, history, detailData }) => {
   };
 
   useEffect(() => {
-    if (detailData) {
-      const detailPortfolioLinks = detailData.portfolioLinks;
+    if (!detailData) return false;
 
-      setPortfolioLinks(
-        detailPortfolioLinks.map((link, i) => {
-          return {
-            ...link,
-            id: i,
-          };
-        }),
-      );
-      setPortfolio({
-        ...portfolio,
-        id: detailPortfolioLinks.length - 1,
-      });
+    const { portfolioLinks } = detailData;
+
+    if (!detailData) {
+    }
+    if (type === 'edit') {
+      if (!detailData) {
+        return history.push(`/author/${classOf}`);
+      }
+      if (detailData.portfolioLinks) {
+        setPortfolioLinks(
+          portfolioLinks.map((link, i) => {
+            return {
+              ...link,
+              id: i,
+            };
+          }),
+        );
+        setPortfolio({
+          ...portfolio,
+          id: portfolioLinks.length - 1,
+        });
+      }
     }
   }, [detailData]);
   const handleChange = (e) => {
@@ -280,10 +296,9 @@ const CreateAuthor = ({ type, history, detailData }) => {
     switch (type) {
       case 'create':
         createAuthorProfile(classOf, formdata);
-        toast.success('✅ 작가목록에 등록 되었습니다.');
         setTimeout(() => {
           history.push(`/author/${classOf}`);
-        }, 2300);
+        }, 1500);
         return;
 
       case 'edit':
@@ -293,8 +308,9 @@ const CreateAuthor = ({ type, history, detailData }) => {
 
         updateAuthorProfile(classOf, formdata);
         toast.success('✅ 작가목록이 수정 되었습니다.');
-
-        //TODO:author페이지 리스트가 보여지게 해야함.
+        setTimeout(() => {
+          history.push(`/author/${classOf}`);
+        }, 1500);
         return;
 
       default:
@@ -314,7 +330,7 @@ const CreateAuthor = ({ type, history, detailData }) => {
     <>
       <ToastContainer
         position="top-center"
-        autoClose={2000}
+        autoClose={1000}
         hideProgressBar={true}
         newestOnTop={false}
         closeOnClick
@@ -344,7 +360,7 @@ const CreateAuthor = ({ type, history, detailData }) => {
             data={portfolio}
           />
         ) : (
-          <div className="edit-author-wrap">
+          <div className="edit-author-wrap content-size">
             {/* 사진설정 */}
             <section className="edit-section">
               <h3 className="edit-author-title">
