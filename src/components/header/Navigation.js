@@ -106,7 +106,7 @@ const RouterLink = (size, tablet, signOutHandler, isLogin) => {
                 </div>
               )}
             </Link>
-            {(type = 'sub-nav') && size < tablet && (
+            {type === 'sub-nav' && size < tablet && (
               <ul className="nav-sub-wrap">
                 <SubNavigation type={id} />
               </ul>

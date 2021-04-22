@@ -8,8 +8,7 @@ import SubNavigation from '../components/header/SubNavigation';
 import Teams from '../components/main/teamBuild/team/index.js';
 import ListOfAuthorForm from '../components/main/teamBuild/author/authorList/ListOfAuthorForm.js';
 
-const Tbuild = ({ match, history, location }) => {
-  console.log(location);
+const Tbuild = ({ match, location }) => {
   return (
     <TeamsProvider>
       <main className="team-build-wrap">

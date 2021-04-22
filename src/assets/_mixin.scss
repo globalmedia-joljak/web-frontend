@@ -190,6 +190,7 @@
 
 // response ---------------------------------------------------
 $maxTablet: 768px;
+$maxPhone-XL: 447px;
 $maxPhone-L: 425px;
 $maxPhone-M: 320px;
 
@@ -208,6 +209,10 @@ $maxPhone-M: 320px;
     }
   } @else if $device == 'phone-m' {
     @media screen and(max-width: $maxPhone-M) {
+      @content;
+    }
+  } @else if $device == 'phone-xl' {
+    @media screen and(max-width: $maxPhone-XL) {
       @content;
     }
   }
