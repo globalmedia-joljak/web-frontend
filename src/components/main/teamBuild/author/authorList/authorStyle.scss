@@ -1,36 +1,7 @@
 @import '../../../../../assets/_mixin.scss';
 @import '../../../../../assets/_variables.scss';
 
-.content-size {
-  margin: 53px auto 0;
-  padding: 0 4.3% 154px;
-  width: 100%;
-  // max-width: 1297px;
-  max-width: 1352px;
-  min-width: 616px;
-}
 .author-wrap {
-  position: relative;
-
-  .author-functions {
-    position: absolute;
-    top: 0;
-    right: 4.3%;
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    gap: 40px;
-  }
-
-  h3 {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 16px;
-    font-size: 28px;
-    margin-bottom: 80px;
-    // margin-bottom: 32px;
-  }
-
   .author-list {
     display: flex;
     flex-wrap: wrap;
@@ -285,21 +256,7 @@
 }
 
 @include response('tablet') {
-  .content-size {
-    margin: 26px 0 83px;
-    min-width: 0;
-    padding: 0 3%;
-  }
   .author-wrap {
-    .author-functions {
-      gap: 24px;
-      right: 3%;
-    }
-    h3 {
-      font-size: 16px;
-      gap: 8px;
-      margin-bottom: 26px;
-    }
     .author-list {
       gap: 33px 22px;
       li {
@@ -410,16 +367,7 @@
 }
 
 @include response('phone') {
-  .content-size {
-    margin: 23px 0 130px;
-  }
   .author-wrap {
-    .author-functions {
-      gap: 8px;
-    }
-    h3 {
-      margin-bottom: 24px;
-    }
     .author-list {
       column-gap: 16px;
       li {

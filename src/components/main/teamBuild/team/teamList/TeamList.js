@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import ButtonWIthIcon from '../../../common/ButtonWIthIcon.js';
 import './TeamList.scss';
 import { getTeams } from '../../../../../service/api/teams';
-import ThereIsNoList from '../../ThereIsNoList';
+import ThereIsNoList from '../../../common/ThereIsNoList';
 import Team from './Team';
 import { Link } from 'react-router-dom';
 import { useAppState } from '../../../../../context/appContext.js';
@@ -52,9 +52,9 @@ const TeamList = ({ match, history }) => {
       history.push(`/signin`);
       return;
     }
-    
+
     history.push(`${match.path}/create`);
-  }
+  };
   return (
     <>
       <ToastContainer
@@ -76,7 +76,6 @@ const TeamList = ({ match, history }) => {
             <h3>{pageInfo.totalElements}</h3>
           </div>
           <div className="teams-top-right">
-            
             <ButtonWIthIcon
               btntype="filter"
               btnTxt="상세검색"
@@ -86,12 +85,12 @@ const TeamList = ({ match, history }) => {
               btntype="create"
               btnTxt="등록하기"
               handleButton={handleCreateTeam}
-            />            
+            />
           </div>
         </div>
         <div className="teams-body">
           {pageInfo.totalElements == 0 ? (
-            <ThereIsNoList />
+            <ThereIsNoList type="team-building" />
           ) : (
             <>
               <div className="teams-body-title">{/* todo : title 구현 */}</div>

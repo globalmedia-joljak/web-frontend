@@ -6,7 +6,6 @@ import { useAppState } from '../../context/appContext';
 const tablet = 768;
 
 const SubNavigation = ({ type, url }) => {
-  console.log(url);
   const teamList = [
     { path: `${url}/author`, name: '작가 목록' },
     { path: `${url}/teams`, name: '팀 목록' },

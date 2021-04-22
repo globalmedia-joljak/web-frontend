@@ -5,7 +5,7 @@ import { useTeamsDispatch } from '../../../../../context/teamContext';
 import useAsync from '../../../../../hooks/useAsync';
 import ModalTemp from '../../../../modal/ModalTemp';
 import OccupationListForm from '../../../../modal/OccupationListForm';
-import ThereIsNoList from '../../ThereIsNoList';
+import ThereIsNoList from '../../../common/ThereIsNoList';
 import './authorStyle.scss';
 import { getAuthorProfileList } from '../../../../../service/api/profile.js';
 
@@ -138,13 +138,31 @@ const ListOfAuthorForm = ({ match, history }) => {
         <>
           <div className="hero-img"></div>
           <div className="author-wrap content-size" ref={createAuthorEl}>
-            <h3>
-              전체 작가 인원
-              <span>{total ? data.totalElements : filterList.length}</span>
-            </h3>
+            <div className="content-header">
+              <h3>
+                전체 작가 인원
+                <span>{total ? data.totalElements : filterList.length}</span>
+              </h3>
+              <div className="search-list">
+                <span className="search-icon" />
+                <input type="text" placeholder="이름, 학번 검색" />
+              </div>
+              <div className="main-functions">
+                <ButtonWIthIcon
+                  btntype="filter"
+                  btnTxt="상세검색"
+                  handleButton={handleFilter}
+                />
+                <ButtonWIthIcon
+                  btntype="create"
+                  btnTxt="등록하기"
+                  handleButton={addAuthorHandler}
+                />
+              </div>
+            </div>
 
             {filterList.length < 1 ? (
-              <ThereIsNoList />
+              <ThereIsNoList type="team-building" />
             ) : (
               <ul className="author-list">
                 {filterList.map(
@@ -195,18 +213,6 @@ const ListOfAuthorForm = ({ match, history }) => {
                 )}
               </ul>
             )}
-            <div className="author-functions">
-              <ButtonWIthIcon
-                btntype="filter"
-                btnTxt="상세검색"
-                handleButton={handleFilter}
-              />
-              <ButtonWIthIcon
-                btntype="create"
-                btnTxt="등록하기"
-                handleButton={addAuthorHandler}
-              />
-            </div>
           </div>
         </>
       )}

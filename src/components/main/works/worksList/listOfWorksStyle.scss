@@ -1,0 +1,117 @@
+@import '../../../../assets/_mixin.scss';
+
+.works-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  li {
+    display: grid;
+    cursor: pointer;
+    width: calc(33.33333% - 20px);
+    overflow: hidden;
+    grid-template-rows: max-content auto;
+    &:hover {
+      .work-img {
+        transform: scale(1.2);
+        .work-hover-bg {
+          visibility: hidden;
+        }
+      }
+    }
+    .work-img-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      .work-img {
+        display: block;
+        @include backgroundImage;
+        @include widthHeight;
+        transition: transform ease 0.3s;
+        .work-hover-bg {
+          position: absolute;
+          display: block;
+          @include widthHeight;
+          background-color: #00000066;
+        }
+        &:hover {
+          .work-hover-bg {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .work-contets-wrap {
+      padding: 12px 8px 7px;
+    }
+
+    .work-name {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      font-size: 24px;
+      color: #000000;
+      font-weight: bold;
+      .project-category {
+        font-size: 12px;
+        border-radius: 12px;
+        border: 1px solid;
+        padding: 3px 11px;
+      }
+    }
+
+    .team-name {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      column-gap: 8px;
+      color: #00000099;
+      .members {
+        padding-left: 8px;
+        border-left: 1px solid #6d6d6d99;
+        display: inherit;
+        column-gap: 4px;
+        i {
+          color: #00000099;
+        }
+      }
+    }
+
+    .work-content {
+      font-size: 14px;
+      color: #000000;
+      max-height: 60px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-break: break-all;
+      line-height: inherit;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+  }
+}
+
+@include response('tablet') {
+  .works-list {
+    li {
+      width: calc(50% - 16px);
+      min-width: 197px;
+      .work-contets-wrap {
+        padding: 12px 0 0;
+      }
+      .work-name {
+        font-size: 20px;
+      }
+    }
+  }
+}
+@include response('phone-xl') {
+  .works-list {
+    row-gap: 32px;
+    li {
+      width: 100%;
+    }
+  }
+}
