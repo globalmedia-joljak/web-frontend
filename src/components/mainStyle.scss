@@ -4,6 +4,56 @@
 main {
   padding-top: $header-heigth-web;
   height: 100%;
+  .section-wrap {
+    position: relative;
+    display: grid;
+    grid-template-rows: max-content auto;
+    height: 100%;
+  }
+  .side-menu {
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0px 1px 4px #00000029;
+    height: inherit;
+    z-index: 1000;
+
+    ul {
+      height: 64px;
+      display: flex;
+      gap: 91px;
+      justify-content: center;
+      li {
+        position: relative;
+
+        a {
+          place-items: center;
+          display: grid;
+          color: #000000cc;
+          font-size: 16px;
+          height: 100%;
+        }
+        &:hover {
+          a {
+            color: #baa2ff;
+          }
+          span {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+  .contents {
+    .content {
+      .hero-img {
+        width: 100%;
+        height: 463px;
+        background-color: #ffffff;
+        box-shadow: 0px 1px 2px #00000029;
+        @include backgroundImage;
+      }
+    }
+  }
 }
 
 // succeedPopUp PAGE
@@ -52,56 +102,6 @@ main {
 
 // Team build Page
 .team-build-wrap {
-  .team-section-wrap {
-    position: relative;
-    display: grid;
-    grid-template-rows: max-content auto;
-    height: 100%;
-  }
-  .team-side-menu {
-    width: 100%;
-    background-color: #ffffff;
-    box-shadow: 0px 1px 4px #00000029;
-    height: inherit;
-    z-index: 1000;
-
-    ul {
-      height: 64px;
-      display: flex;
-      gap: 91px;
-      justify-content: center;
-      li {
-        position: relative;
-
-        a {
-          place-items: center;
-          display: grid;
-          color: #000000cc;
-          font-size: 16px;
-          height: 100%;
-        }
-        &:hover {
-          a {
-            color: #baa2ff;
-          }
-          span {
-            display: block;
-          }
-        }
-      }
-    }
-  }
-  .team-contents {
-    .content {
-      .hero-img {
-        width: 100%;
-        height: 463px;
-        background-color: #ffffff;
-        box-shadow: 0px 1px 2px #00000029;
-        @include backgroundImage;
-      }
-    }
-  }
   .author-list-none {
     display: grid;
     padding: 60px 0;
