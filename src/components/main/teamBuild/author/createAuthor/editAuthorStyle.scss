@@ -13,9 +13,6 @@ $web-add-portfolio-size: 32px;
 $phone-add-portfolio-size: 24px;
 
 .edit-author-wrap {
-  width: 100%;
-  max-width: none;
-  min-width: none;
   display: grid;
   row-gap: 72px;
 
@@ -303,6 +300,9 @@ $phone-add-portfolio-size: 24px;
 
 @include response('tablet') {
   .edit-author-wrap {
+    margin: 26px 0 83px;
+    min-width: 0;
+    padding: 0 3%;
     row-gap: 56px;
   }
 
