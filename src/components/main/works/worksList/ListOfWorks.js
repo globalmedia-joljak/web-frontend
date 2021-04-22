@@ -8,8 +8,10 @@ import { getWorksLists } from '../../../../service/api/work.js';
 import { data } from '../data.js';
 import noImage from '../../../../assets/images/노이미지@2x.png';
 import './listOfWorksStyle.scss';
+import { useRef } from 'react';
 
 const ListOfWorks = ({ match }) => {
+  const searchEl = useRef();
   const [pageNum, setPageNum] = useState(0);
   // const [worksListData] = useAsync(() => getWorksLists(pageNum), [pageNum]);
 
@@ -21,12 +23,23 @@ const ListOfWorks = ({ match }) => {
   useEffect(() => {
     const lis = document.querySelectorAll('.works-list > li');
     const workImages = document.querySelectorAll('.work-img-wrap');
-
+    console.log();
     Array.from(workImages).map(
       (img) =>
         (img.style.height = `${Math.floor(img.offsetWidth / 3) * 1.8}px`),
     );
+
+    if (searchEl.current) {
+      //parentNode.classList.add('dark')
+      //parentNode.classList.remove('dark')
+
+      console.dir();
+    }
   });
+
+  const handleFocus = (e) => e.target.parentNode.classList.add('dark');
+  const handleBlur = (e) => e.target.parentNode.classList.remove('dark');
+
   // if (!worksListData.data) return null;
   const { page, workResponseList } = data;
 
@@ -54,7 +67,13 @@ const ListOfWorks = ({ match }) => {
             </h3>
             <div className="search-list">
               <span className="search-icon" />
-              <input type="text" placeholder="이름, 학번 검색" />
+              <input
+                type="text"
+                placeholder="전체 년도 작품검색"
+                ref={searchEl}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+              />
             </div>
             <div className="main-functions">
               <ButtonWIthIcon

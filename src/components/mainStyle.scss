@@ -85,14 +85,36 @@ main {
       column-gap: 12px;
       align-items: center;
       padding: 8px 3px;
+      transition: all ease 0.2s;
       .search-icon {
-        width: 17px;
-        height: 17px;
-        background-color: lime;
+        width: 20px;
+        height: 20px;
+        @include backgroundImage;
+        background-size: cover;
+        background-image: url('../assets/images/search_gray@2x.png');
       }
       input {
         border: none;
         background-color: transparent;
+        &::placeholder {
+          font-weight: bold;
+          color: #6d6d6d66;
+        }
+      }
+
+      &.dark {
+        border-bottom: 1px solid #000000;
+
+        .search-icon {
+          background-image: url('../assets/images/Search@2x.png');
+        }
+        input {
+          &::placeholder {
+            color: #000000;
+            font-weight: bold;
+          }
+          color: #000000;
+        }
       }
     }
     .main-functions {
