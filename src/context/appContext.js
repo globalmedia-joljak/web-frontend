@@ -95,7 +95,7 @@ const AppProvider = ({ children }) => {
         return '미디어아트';
       case 'WEB_APP':
         return '웹/앱 서비스';
-      case 'SOMETINGS':
+      case 'ANIMATION_FILM':
         return '영상/애니메이션';
       case 'GAME':
         return '게임';
@@ -109,7 +109,7 @@ const AppProvider = ({ children }) => {
         return '#D92B3A';
       case 'WEB_APP':
         return '#367DD9';
-      case 'SOMETINGS':
+      case 'ANIMATION_FILM':
         return '#BD36D9';
       case 'GAME':
         return '#F27405';
