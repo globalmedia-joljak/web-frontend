@@ -28,9 +28,10 @@ const OccupationListBlock = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  width: 100%;
 `;
 const OccupationList = styled.li`
-  font-size: 18px;
+  font-size: 16px;
   width: 123px;
   height: 48px;
 `;
@@ -70,7 +71,7 @@ const OccupationListForm = ({
     <OccupationListBlock size={size} className="modal-list">
       {worktype !== ''
         ? worksData.map((category, i) => (
-            <OccupationList key={i}>
+            <OccupationList key={i} size={size}>
               <RadioBox
                 type="checkbox"
                 name={worktype}
@@ -85,7 +86,7 @@ const OccupationListForm = ({
             </OccupationList>
           ))
         : occupations.map((data, i) => (
-            <OccupationList key={i}>
+            <OccupationList key={i} size={size}>
               <RadioBox
                 type="radio"
                 id={className + i}
