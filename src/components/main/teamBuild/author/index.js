@@ -7,8 +7,13 @@ import CreateAuthor from './createAuthor/CreateAuthor.js';
 const AuthorForm = ({ match }) => {
   return (
     <>
-      <Route exact path={`${match.path}`} component={ListOfAuthorForm} />
-      <Route path={`${match.path}/:id`} component={AuthorDetail} />
+      <Route
+        exact
+        path={`${match.path}`}
+        exact={true}
+        component={ListOfAuthorForm}
+      />
+      <Route path={`${match.path}/:id`} component={AuthorDetail} exact={true} />
       <Route path={`${match.path}/:id/:state`} component={CreateAuthor} />
     </>
   );

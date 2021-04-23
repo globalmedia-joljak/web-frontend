@@ -54,7 +54,7 @@ const ListOfAuthorForm = ({ match, history }) => {
     if (scrollTop + clientHeight >= scrollHeight) {
       console.log('여기서 데이터를 더 가져와야 한다.');
     }
-  }, [profileList, profilePageNum, totalPage, infinite]);
+  }, [profileList, profilePageNum, totalPage]);
 
   useEffect(() => {
     if (!filterRole || filterRole === '전체') {

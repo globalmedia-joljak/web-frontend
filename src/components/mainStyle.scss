@@ -124,7 +124,12 @@ main {
     }
   }
 }
-
+.page-box {
+  margin: 114px auto 92px;
+  max-width: 1052px;
+  box-sizing: content-box;
+  padding: 0 6%;
+}
 // succeedPopUp PAGE
 .success {
   position: fixed;
@@ -219,6 +224,11 @@ main {
       }
     }
   }
+  .page-box {
+    min-width: none;
+    margin-bottom: 165px;
+    padding: 0 10%;
+  }
 
   .home-wrap {
     margin-top: -$header-height-tablet;
@@ -244,6 +254,12 @@ main {
         column-gap: 3%;
       }
     }
+  }
+
+  .page-box {
+    min-width: 320px;
+    margin-bottom: 160px;
+    padding: 0 3%;
   }
 
   .list-none {

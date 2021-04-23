@@ -11,7 +11,6 @@ import './listOfWorksStyle.scss';
 import { useRef } from 'react';
 
 const ListOfWorks = ({ match }) => {
-  const searchEl = useRef();
   const [pageNum, setPageNum] = useState(0);
   // const [worksListData] = useAsync(() => getWorksLists(pageNum), [pageNum]);
 
@@ -20,21 +19,13 @@ const ListOfWorks = ({ match }) => {
   const handleAddWorks = () => {};
 
   const [totalPage, setTotalPage] = useState(false);
+
   useEffect(() => {
-    const lis = document.querySelectorAll('.works-list > li');
     const workImages = document.querySelectorAll('.work-img-wrap');
-    console.log();
     Array.from(workImages).map(
       (img) =>
         (img.style.height = `${Math.floor(img.offsetWidth / 3) * 1.8}px`),
     );
-
-    if (searchEl.current) {
-      //parentNode.classList.add('dark')
-      //parentNode.classList.remove('dark')
-
-      console.dir();
-    }
   });
 
   const handleFocus = (e) => e.target.parentNode.classList.add('dark');
@@ -70,7 +61,6 @@ const ListOfWorks = ({ match }) => {
               <input
                 type="text"
                 placeholder="전체 년도 작품검색"
-                ref={searchEl}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
               />

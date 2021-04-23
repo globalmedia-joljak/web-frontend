@@ -218,6 +218,7 @@ const CreateAuthor = ({ history, match }) => {
 
   useEffect(() => {
     if (!detailData) return false;
+    console.log(detailData);
 
     const { portfolioLinks } = detailData;
 
@@ -290,9 +291,6 @@ const CreateAuthor = ({ history, match }) => {
       }
     }
 
-    for (let a of formdata.entries()) {
-      console.log(a);
-    }
     switch (type) {
       case 'create':
         createAuthorProfile(classOf, formdata);
@@ -309,7 +307,7 @@ const CreateAuthor = ({ history, match }) => {
         updateAuthorProfile(classOf, formdata);
         toast.success('✅ 작가목록이 수정 되었습니다.');
         setTimeout(() => {
-          history.push(`/author/${classOf}`);
+          history.push(`team-building/author/${classOf}`);
         }, 1500);
         return;
 
@@ -360,7 +358,7 @@ const CreateAuthor = ({ history, match }) => {
             data={portfolio}
           />
         ) : (
-          <div className="edit-author-wrap content-size">
+          <div className="edit-author-wrap page-box">
             {/* 사진설정 */}
             <section className="edit-section">
               <h3 className="edit-author-title">

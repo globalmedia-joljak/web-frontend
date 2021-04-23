@@ -15,6 +15,7 @@ $phone-add-portfolio-size: 24px;
 .edit-author-wrap {
   display: grid;
   row-gap: 72px;
+  margin-top: 40px;
 
   .icon-btn {
     &.save {
@@ -33,11 +34,11 @@ $phone-add-portfolio-size: 24px;
     grid-template-columns: repeat(3, max-content);
     font-size: 20px;
     margin-bottom: 8px;
-    column-gap: 4px;
-    row-gap: 0;
+    gap: 0 4px;
     height: fit-content;
     color: #000000;
     font-weight: bold;
+    align-items: center;
 
     .title-icon {
       width: 32px;
@@ -300,9 +301,7 @@ $phone-add-portfolio-size: 24px;
 
 @include response('tablet') {
   .edit-author-wrap {
-    margin: 26px 0 83px;
-    min-width: 0;
-    padding: 0 3%;
+    margin-top: 32px;
     row-gap: 56px;
   }
 
@@ -371,6 +370,7 @@ $phone-add-portfolio-size: 24px;
 
 @include response('phone') {
   .edit-author-wrap {
+    margin-top: 24px;
     row-gap: 48px;
   }
   .edit-section {
