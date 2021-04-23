@@ -10,8 +10,11 @@ import noImage from '../../../../assets/images/노이미지@2x.png';
 import './listOfWorksStyle.scss';
 import { useRef } from 'react';
 import WorkListModal from './WorkListModal';
+import { useAppDispatch } from '../../../../context/appContext';
 
 const ListOfWorks = ({ match }) => {
+  const { worksKR, worksColor } = useAppDispatch();
+
   const [filterShow, setFilterShow] = useState(false);
   const [choiceValue, seChoiceValue] = useState({
     worksList: [],
@@ -69,6 +72,13 @@ const ListOfWorks = ({ match }) => {
 
   // if (!worksListData.data) return null;
   const { page, workResponseList } = data;
+  const projectCategoryStyle = (category) => {
+    const style = {
+      color: worksColor(category),
+      borderColor: worksColor(category),
+    };
+    return style;
+  };
 
   return (
     <>
@@ -149,8 +159,11 @@ const ListOfWorks = ({ match }) => {
                     <div className="work-contets-wrap">
                       <strong className="work-name">
                         {workName}
-                        <span className="project-category">
-                          {projectCategory}
+                        <span
+                          className="project-category"
+                          style={projectCategoryStyle(projectCategory)}
+                        >
+                          {worksKR(projectCategory)}
                         </span>
                       </strong>
                       <b className="team-name">
