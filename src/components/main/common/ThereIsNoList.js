@@ -42,7 +42,7 @@ const NoWorkIconSize = css`
 const NoPostImg = styled.i`
   background-position: center;
   background-size: contain;
-  background-repeat: no-repeate;
+  background-repeat: no-repeat;
   background-image: url(${({ type }) =>
     type === 'team-building' ? noBuild : noWorks});
   margin-bottom: ${({ size }) => (size === 'phone' ? '23px' : '32px')};

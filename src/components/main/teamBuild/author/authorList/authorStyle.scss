@@ -95,11 +95,15 @@
   }
 }
 
-.author-detail-wrap {
-  margin: 114px auto 92px;
+.page-box {
+  margin: 0 auto 92px;
   max-width: 1052px;
   box-sizing: content-box;
   padding: 0 6%;
+}
+
+.author-detail-wrap {
+  margin-top: 114px;
 
   > div {
     display: grid;
@@ -295,11 +299,9 @@
       }
     }
   }
-
   .author-detail-wrap {
-    min-width: none;
-    margin: 65px auto 165px;
-    padding: 0 10%;
+    margin-top: 65px;
+
     .author-info {
       gap: 3%;
       height: 308px;
@@ -413,9 +415,7 @@
   }
 
   .author-detail-wrap {
-    min-width: 320px;
-    margin: 44px auto 160px;
-    padding: 0 3%;
+    margin-top: 44px;
 
     .author-info {
       grid-template-columns: 1fr;

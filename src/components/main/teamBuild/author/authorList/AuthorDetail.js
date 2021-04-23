@@ -23,11 +23,11 @@ const AuthorDetail = ({ match, history }) => {
   );
 
   const { loading, data, error } = profileDetail;
+
   useEffect(() => {
-    if (data) {
-      setDetailData(profileDetail.data);
-    }
-  }, [profileDetail]);
+    if (data) setDetailData(profileDetail.data);
+  }, [profileDetail.data]);
+
   if (loading) return <div>로딩중...</div>;
   if (!data) return null;
   if (error) return <div>상세페이지 에러</div>;
@@ -59,7 +59,7 @@ const AuthorDetail = ({ match, history }) => {
   const { user, portfolioLinks, content, mediaInfo } = profileDetail.data;
 
   return (
-    <div className="author-detail-wrap  content-size">
+    <div className="author-detail-wrap page-box">
       <div className="author-info">
         <div
           className="author-img-box"
