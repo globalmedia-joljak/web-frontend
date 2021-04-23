@@ -89,12 +89,43 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const worksKR = (category) => {
+    switch (category) {
+      case 'MEDIA_ART':
+        return '미디어아트';
+      case 'WEB_APP':
+        return '웹/앱 서비스';
+      case 'SOMETINGS':
+        return '영상/애니메이션';
+      case 'GAME':
+        return '게임';
+      default:
+        return category;
+    }
+  };
+  const worksColor = (category) => {
+    switch (category) {
+      case 'MEDIA_ART':
+        return '#D92B3A';
+      case 'WEB_APP':
+        return '#367DD9';
+      case 'SOMETINGS':
+        return '#BD36D9';
+      case 'GAME':
+        return '#F27405';
+      default:
+        return '#BAA2FF';
+    }
+  };
+
   const value = { curSize, modalShow, userInfo, scroll, userState, infinite };
   const dispatch = {
     setJobColor,
     setModalShow,
     setUserInfo,
     translationKR,
+    worksKR,
+    worksColor,
   };
 
   return (

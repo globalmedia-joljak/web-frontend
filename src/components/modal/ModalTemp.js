@@ -69,7 +69,6 @@ const ModalTemp = ({
   children,
   form,
   modalShow,
-  // handleSubmit,
   handleOk,
   handleCancel,
   btnTxt,

@@ -29,17 +29,18 @@ $cancel-btn-pos-tablet: 30px;
           font-size: 20px;
         }
       }
-      &.r2 {
-        display: grid;
-        grid-template-rows: repeat(2, auto);
-        gap: 16px;
-      }
+
       &.alert {
         justify-items: center;
         font-size: 20px;
         color: #000000cc;
       }
     }
+  }
+  .r2 {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    gap: 16px;
   }
   &.author {
     .list {

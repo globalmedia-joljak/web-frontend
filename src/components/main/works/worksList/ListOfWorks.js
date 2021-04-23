@@ -9,14 +9,50 @@ import { data } from '../data.js';
 import noImage from '../../../../assets/images/노이미지@2x.png';
 import './listOfWorksStyle.scss';
 import { useRef } from 'react';
+import WorkListModal from './WorkListModal';
 
 const ListOfWorks = ({ match }) => {
+  const [filterShow, setFilterShow] = useState(false);
+  const [choiceValue, seChoiceValue] = useState({
+    worksList: [],
+    exhibitedYear: [],
+  });
+  const handleFilter = () => setFilterShow(true);
+  const handleChoiceCategory = (e) => {
+    const { name, value, checked } = e.target;
+
+    const inputTags = document.querySelectorAll('.work-list input');
+    const ALL_CHOICE = '전체선택';
+
+    Array.from(inputTags).map((el, _, arr) => {
+      if (name !== el.name) return;
+
+      if (value === ALL_CHOICE) el.checked = checked ?? false;
+    });
+
+    const query = `input[name=${name}]:checked`;
+    const checkedBoxes = document.querySelectorAll(query);
+    const selected = Array.from(checkedBoxes).map((el) => {
+      if (el.value === ALL_CHOICE) el.value = null;
+      return el.value;
+    });
+
+    seChoiceValue({
+      ...choiceValue,
+      [name]: selected,
+    });
+  };
+  const handleModalSubmit = () => {
+    setFilterShow(false);
+    console.log(choiceValue);
+  };
+
+  const handleAddWorks = () => {};
+
   const [pageNum, setPageNum] = useState(0);
   // const [worksListData] = useAsync(() => getWorksLists(pageNum), [pageNum]);
 
   // 실제 사용할 데이터 data.workResponseList
-  const handleFilter = () => {};
-  const handleAddWorks = () => {};
 
   const [totalPage, setTotalPage] = useState(false);
 
@@ -49,6 +85,14 @@ const ListOfWorks = ({ match }) => {
         style={{ color: '#ffffff', fontWeight: 'bold' }}
       />
       <>
+        {filterShow && (
+          <WorkListModal
+            modalShow={filterShow}
+            handleSubmit={handleModalSubmit}
+            handleCancel={setFilterShow}
+            handleChoice={handleChoiceCategory}
+          />
+        )}
         <div className="hero-img"></div>
         <div className="works-wrap content-size">
           <div className="content-header">
