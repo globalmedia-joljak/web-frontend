@@ -49,6 +49,7 @@ const ModalUl = styled.ul`
         max-width: none;
         width: 100%;
         min-height: 635px;
+        height: 70%;
       `;
     } else {
       return css`
@@ -57,6 +58,7 @@ const ModalUl = styled.ul`
         width: 100%;
         max-width: none;
         min-height: 533px;
+        height: 80%;
       `;
     }
   }}
@@ -69,7 +71,6 @@ const ModalTemp = ({
   children,
   form,
   modalShow,
-  // handleSubmit,
   handleOk,
   handleCancel,
   btnTxt,
