@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import ListOfIdeaForm from '../components/main/teamBuild/idea/ListOfIdeaForm.js';
+import Ideas from '../components/main/teamBuild/idea/index.js';
 import '../components/mainStyle.scss';
 import AuthorForm from '../components/main/teamBuild/author/index.js';
 import TeamsProvider from '../context/teamContext';
@@ -21,7 +22,7 @@ const Tbuild = () => {
             <div className="content">
               <Route path="/author" component={AuthorForm} />
               <Route path="/teams" component={Teams} />
-              <Route path="/idea" component={ListOfIdeaForm} />
+              <Route path="/idea" component={Ideas} />
             </div>
           </section>
         </div>

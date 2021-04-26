@@ -1,0 +1,82 @@
+@import '../../../../../assets/_mixin.scss';
+@import '../../../../../assets/_variables.scss';
+
+.ideas-wrap {
+  position: relative;
+  margin: 53px auto 0;
+  padding: 0 4.3% 154px;
+  width: 100%;
+  max-width: 1293px;
+  min-width: 616px;
+  box-sizing: border-box;
+
+  .ideas-top {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 38px;
+    box-sizing: border-box;
+
+    .ideas-top-left {
+      display: flex;
+      h3 {
+        font-size: 28px;
+        &:nth-child(2) {
+          margin-left: 16px;
+        }
+      }
+    }
+
+    .ideas-top-right {
+      display: flex;
+      button {
+        &:last-child {
+          margin-left: 40px;
+        }
+      }
+    }
+  }
+
+  .ideas-body {
+  }
+}
+
+@include response('tablet') {
+  .ideas-wrap {
+    margin-top: 24px;
+    min-width: 0;
+    padding: 0 3%;
+
+    .ideas-top {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      padding-bottom: 38px;
+      box-sizing: border-box;
+
+      .ideas-top-left {
+        display: flex;
+        h3 {
+          font-size: 16px;
+          &:nth-child(2) {
+            margin-left: 8px;
+          }
+        }
+      }
+
+      .ideas-top-right {
+        display: flex;
+        .create {
+          margin-left: 40px;
+        }
+      }
+    }
+
+    .ideas-body {
+    }
+  }
+}

@@ -1,0 +1,41 @@
+@import '../../../../../assets/_mixin.scss';
+@import '../../../../../assets/_variables.scss';
+
+.idea {
+  background-color: #ffffff;
+  margin-bottom: 32px;
+  padding: 28px 29px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  text-align: left;
+  box-sizing: border-box;
+  width: 100%;
+  box-shadow: 0px 0px 4px #00000029;
+
+  .idea__id {
+    order: 1;
+    width: 5%;
+  }
+  .idea__title {
+    order: 2;
+    width: 25%;
+  }
+  .idea__category {
+    order: 3;
+    width: 13%;
+  }
+  .idea__author {
+    order: 4;
+    width: 12%;
+  }
+  .idea__required {
+    order: 5;
+    width: 12%;
+  }
+  .idea__date {
+    order: 6;
+    width: 10%;
+    text-align: right;
+  }
+}
