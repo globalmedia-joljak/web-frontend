@@ -10,21 +10,18 @@ const getAuthorProfileList = async (pageNum) => {
 
 const getAuthorProfileDetail = async (classOf) => {
   const { data } = await client.get(`/profiles/${classOf}`);
-  return data;
+  return data.simpleProfile;
 };
 
 const createAuthorProfile = async (classOf, createAuthorData) => {
-  console.log({ ...createAuthorData });
   try {
-    await client.post(`/profiles/${classOf}`, {
+    await client.post(`/profiles/${classOf}`, createAuthorData, {
       headers: { 'Content-Type': 'multipart/form-data' },
-      params: { ...createAuthorData },
     });
 
-    toast.success('✅ 작가목록에 등록 되었습니다.');
+    return;
   } catch (e) {
     toast.error('대표직군이 선택 되어있는지 확인해 주세요.');
-    console.log(e.response);
   }
 };
 
@@ -39,13 +36,11 @@ const deleteAuthorProfile = async (classOf) => {
 
 const updateAuthorProfile = async (classOf, updateProfileRequest) => {
   try {
-    await client.patch(`/profiles/${classOf}`, updateProfileRequest, {
+    return await client.patch(`/profiles/${classOf}`, updateProfileRequest, {
       headers: { 'Content-Type': 'multipart/form-data' },
-      params: { ...updateProfileRequest },
     });
-    return;
   } catch (e) {
-    console.log(e);
+    console.log(e.response);
   }
 };
 

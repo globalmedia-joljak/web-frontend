@@ -2,12 +2,7 @@ import React from 'react';
 import ModalTemp from '../../../../modal/ModalTemp';
 import OccupationListForm from '../../../../modal/OccupationListForm';
 
-const SettingRoleModal = ({
-  handleRoleChoice,
-  handleRoleSubmit,
-  modalShow,
-  setModalShow,
-}) => {
+const SettingRoleModal = ({ handleRoleChoice, modalShow, setModalShow }) => {
   return (
     <ModalTemp
       modalShow={modalShow}
@@ -24,7 +19,6 @@ const SettingRoleModal = ({
       <li className="list r2">
         <h3>대표직군</h3>
         <OccupationListForm
-          // projectRole={mainProjectRole}
           type="mainProjectRole"
           handleChoice={handleRoleChoice}
         />
@@ -32,7 +26,6 @@ const SettingRoleModal = ({
       <li className="list r2">
         <h3>부가직군</h3>
         <OccupationListForm
-          // projectRole={subProjectRole}
           type="subProjectRole"
           handleChoice={handleRoleChoice}
           txt="선택안함"

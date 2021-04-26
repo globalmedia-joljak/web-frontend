@@ -81,7 +81,7 @@ const Button = styled.button`
       return css`
         width: ${btntype === 'save' ? '128px' : `${phoneBtnWidth}px`};
         height: ${btntype === 'save' ? '30px' : `${phoneBtnHeight}px`};
-        padding: 0 ${btntype === 'save' ? '19px' : '12px'};
+        padding: 0 ${btntype === 'save' ? '19px' : '8px'};
         font-size: 11px;
       `;
     }

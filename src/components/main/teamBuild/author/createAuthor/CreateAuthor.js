@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useAppDispatch, useAppState } from '../../../../../context/appContext';
 import {
   createAuthorProfile,
-  deleteAuthorProfile,
   updateAuthorProfile,
 } from '../../../../../service/api/profile';
 import AuthorButton from '../../../common/ButtonWIthIcon';
@@ -11,25 +10,57 @@ import './editAuthorStyle.scss';
 import EditDeleteButton from '../../../common/EditDeleteButton';
 import PortfolioModal from './PortfolioModal';
 import RoleModal from './RoleModal';
+import {
+  useTeamsDispatch,
+  useTeamsState,
+} from '../../../../../context/teamContext';
 
-const CreateAuthor = ({ type }) => {
+const CreateAuthor = ({ history, match }) => {
   const setImgEl = useRef();
   const {
     userState,
     userInfo: { classOf },
   } = useAppState();
   const { setJobColor, translationKR } = useAppDispatch();
+  const { detailData } = useTeamsState();
+  const { setDefaultImg } = useTeamsDispatch();
 
   const [createAuthorQuery, setCreateAuthorQuery] = useState({
     introduce: null,
-    image: null,
     mainRole: null,
     subRole: null,
   });
 
+  const type = match.params.state;
+
   // set Image
-  // TODO : 이미지를 가져온 경우 클래스명을 줘 사진가져오기 icon을 변경해줘야 한다.'custom-img'
-  const handleFileChange = () => {};
+  const [file, setFile] = useState(null);
+  const [isDefault, setIsDefault] = useState(true);
+  const [customCN, setCustomCN] = useState('');
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+    setIsDefault(false);
+  };
+
+  useEffect(() => {
+    previewImg();
+    !isDefault ? setCustomCN('exist-img') : setCustomCN('');
+  }, [file, isDefault]);
+
+  const previewImg = () => {
+    if (!file) return false;
+    const roleBackground = document.querySelector('.img');
+    if (isDefault) {
+      return (roleBackground.style.backgroundImage = 'none');
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      return (roleBackground.style.backgroundImage = `url(${reader.result})`);
+    };
+    reader.readAsDataURL(file);
+    setCustomCN('exist-img');
+  };
 
   //set role
   const [modalShow, setModalShow] = useState(false);
@@ -55,9 +86,11 @@ const CreateAuthor = ({ type }) => {
 
     setCreateAuthorQuery({
       ...createAuthorQuery,
-      [name === 'mainProjectRole' ? 'mainRole' : 'subRole']: value,
+      [name === 'mainProjectRole' ? 'mainRole' : 'subRole']:
+        value === '선택안함' ? null : value,
     });
   };
+
   const handleRoleSubmit = () => {
     if (mainRole === '' || subRole === '') {
       toast.error('⛔ 선택하지않은 직군이 있습니다.');
@@ -67,7 +100,7 @@ const CreateAuthor = ({ type }) => {
   };
 
   useEffect(() => {
-    if (classOf !== '' && userState.data !== null) {
+    if (classOf !== '' && userState.data) {
       const { mainProjectRole, subProjectRole } = userState.data.user;
       setCreateAuthorQuery({
         ...createAuthorQuery,
@@ -75,18 +108,26 @@ const CreateAuthor = ({ type }) => {
         subRole: subProjectRole,
       });
     }
-    return;
-  }, [userState]);
+
+    if (type === 'edit' && detailData.portfolioLinks) {
+      setCreateAuthorQuery({
+        ...createAuthorQuery,
+        introduce: detailData.content,
+        mainRole: detailData.user.mainProjectRole,
+        subRole: detailData.user.subProjectRole,
+      });
+      return;
+    }
+  }, [type, detailData]);
 
   // set introduce
   const [textLen, setTextLen] = useState(0);
   const [txtOver, setTxtOver] = useState('');
+  const [textSave, setTextSave] = useState(true);
+  const [txt, setTxt] = useState('');
 
   const handleIntroduce = (e) => {
-    // console.log(e);
-    if (textLen < 1000) {
-      console.log('전달 완료');
-    }
+    if (textLen <= 1000) setTextSave(true);
   };
 
   const handleTextArea = (e) => {
@@ -95,6 +136,8 @@ const CreateAuthor = ({ type }) => {
       introduce: e.target.value,
     });
     setTextLen(e.target.value.length);
+    setTxt('저장되었습니다.');
+    setTextSave(false);
   };
 
   useEffect(() => {
@@ -111,63 +154,61 @@ const CreateAuthor = ({ type }) => {
   const [portfolioShow, setPortfolioShow] = useState(false);
   const [portfolioEdit, setPortfolioEdit] = useState(false);
   const [portfolioLinks, setPortfolioLinks] = useState([]);
-  const [id, setId] = useState(portfolioLinks.length);
-  const [choiceId, setChoiceId] = useState('');
   const [portfolio, setPortfolio] = useState({
     title: '',
     link: '',
+    id: 0,
   });
 
   const showPortfolioModal = (type, data) => {
     switch (type) {
       case 'create':
         if (portfolioLinks.length >= 5) {
-          toast.error('포트폴리오는 최대 5개까지 생성 가능합니다');
+          toast.warn('⚠ 포트폴리오는 최대 5개까지 등록 가능합니다.');
           return false;
         }
-
         setPortfolio({
           title: '',
           link: '',
+          id: portfolio.id + 1,
         });
+
         setPortfolioShow(true);
         setPortfolioEdit(false);
+
         return;
       case 'edit':
+        console.log('수정');
+
         setPortfolioShow(true);
         setPortfolioEdit(true);
-        setChoiceId(id);
         setPortfolio({
-          ...portfolio,
-          title: data.title,
-          link: data.link,
+          ...data,
         });
+
+        console.log(portfolio);
         return;
+
       default:
-        break;
     }
   };
 
   const portfolioToggle = () => {
+    if (!portfolioEdit) {
+      setPortfolioLinks(portfolioLinks.concat(portfolio));
+    }
+
     if (portfolioEdit) {
       setPortfolioLinks(
-        portfolioLinks.map((item) => {
-          if (item.id === choiceId) {
+        portfolioLinks.map((link) => {
+          if (link.id === portfolio.id) {
             return {
-              choiceId,
+              ...portfolio,
               title: portfolio.title,
               link: portfolio.link,
             };
           }
-          return item;
-        }),
-      );
-    } else {
-      setId(id + 1);
-      setPortfolioLinks(
-        portfolioLinks.concat({
-          id,
-          ...portfolio,
+          return link;
         }),
       );
     }
@@ -175,6 +216,34 @@ const CreateAuthor = ({ type }) => {
     setPortfolioShow(false);
   };
 
+  useEffect(() => {
+    if (!detailData) return false;
+    console.log(detailData);
+
+    const { portfolioLinks } = detailData;
+
+    if (!detailData) {
+    }
+    if (type === 'edit') {
+      if (!detailData) {
+        return history.push(`/author/${classOf}`);
+      }
+      if (detailData.portfolioLinks) {
+        setPortfolioLinks(
+          portfolioLinks.map((link, i) => {
+            return {
+              ...link,
+              id: i,
+            };
+          }),
+        );
+        setPortfolio({
+          ...portfolio,
+          id: portfolioLinks.length - 1,
+        });
+      }
+    }
+  }, [detailData]);
   const handleChange = (e) => {
     setPortfolio({
       ...portfolio,
@@ -191,22 +260,58 @@ const CreateAuthor = ({ type }) => {
 
   const handleSubmitAuthor = () => {
     if (createAuthorQuery.mainRole === null) {
-      toast.error('대표직군은 반드시 등록해야 합니다!');
+      toast.error('⛔대표직군은 반드시 설정해 주세요.');
       return false;
     }
 
-    let checkNull = createAuthorQuery;
+    if (!textSave) {
+      toast.warn('자기소개글 설정을 확인해 주세요');
+      return false;
+    }
 
-    for (let name in checkNull) {
-      if (checkNull[name] === null) {
-        delete checkNull[name];
+    const formdata = new FormData();
+
+    if (file) {
+      formdata.append('image', file);
+    }
+
+    // portfolio
+    if (portfolioLinks) {
+      portfolioLinks.map((data, i) => {
+        formdata.append(`portfolioLinks[${i}].link`, portfolioLinks[i].link);
+        formdata.append(`portfolioLinks[${i}].title`, portfolioLinks[i].title);
+      });
+    }
+
+    // mainrole,subrole,introduce
+    for (let name in createAuthorQuery) {
+      formdata.append(name, createAuthorQuery[name]);
+      if (createAuthorQuery[name] === null) {
+        formdata.delete(name);
       }
     }
 
-    if (type === 'create') {
-      // return createAuthorProfile(classOf, checkNull);
-    } else {
-      // return updateAuthorProfile(classOf, createAuthorQuery);
+    switch (type) {
+      case 'create':
+        createAuthorProfile(classOf, formdata);
+        setTimeout(() => {
+          history.push(`/author/${classOf}`);
+        }, 1500);
+        return;
+
+      case 'edit':
+        if (detailData.mediaInfo && isDefault) {
+          formdata.append('deleteFileName', detailData.mediaInfo.modifyName);
+        }
+
+        updateAuthorProfile(classOf, formdata);
+        toast.success('✅ 작가목록이 수정 되었습니다.');
+        setTimeout(() => {
+          history.push(`team-building/author/${classOf}`);
+        }, 1500);
+        return;
+
+      default:
     }
   };
 
@@ -218,9 +323,21 @@ const CreateAuthor = ({ type }) => {
       border: 'none',
     };
   };
-  // console.log(mainRole);
+
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        style={{ color: '#ffffff', fontWeight: 'bold' }}
+      />
       {modalShow && (
         <RoleModal
           roleChoice={handleRoleChoice}
@@ -241,7 +358,7 @@ const CreateAuthor = ({ type }) => {
             data={portfolio}
           />
         ) : (
-          <div className="edit-author-wrap">
+          <div className="edit-author-wrap page-box">
             {/* 사진설정 */}
             <section className="edit-section">
               <h3 className="edit-author-title">
@@ -252,7 +369,7 @@ const CreateAuthor = ({ type }) => {
                 자신을 나타낼 수 있는 사진들을 등록해보세요.
               </p>
               <div className="section-contents set-img" ref={setImgEl}>
-                <div className="custom-img">
+                <div className={`custom-img ${customCN}`}>
                   <div className="img" />
                   <div className="set-img-icon">
                     <i className="icon" />
@@ -266,8 +383,15 @@ const CreateAuthor = ({ type }) => {
                     onChange={handleFileChange}
                   />
                 </div>
-                <div className="default-img">
-                  <div className="img" />
+                <div className="default-img" onClick={() => setIsDefault(true)}>
+                  <div
+                    className="img"
+                    style={{
+                      backgroundImage: `url(${setDefaultImg(
+                        createAuthorQuery.mainRole,
+                      )})`,
+                    }}
+                  />
                   <div className="set-img-icon">
                     <i className="icon" />
                     <span>기본 이미지로 설정</span>
@@ -299,7 +423,7 @@ const CreateAuthor = ({ type }) => {
                   <li>
                     <strong style={{ ...roleStyle(subRole) }}>
                       {subRole !== '선택안함'
-                        ? translationKR(mainRole)
+                        ? translationKR(subRole)
                         : '선택하세요'}
                     </strong>
                     <span>부가직군</span>
@@ -321,15 +445,19 @@ const CreateAuthor = ({ type }) => {
                   name="introduce"
                   maxLength={1000}
                   onChange={handleTextArea}
+                  defaultValue={createAuthorQuery.introduce}
                 ></textarea>
                 <span
                   className={`txt-length ${txtOver}`}
                 >{`${textLen}/1000`}</span>
-                <AuthorButton
-                  btntype="edit"
-                  btnTxt="수정완료"
-                  handleButton={handleIntroduce}
-                />
+                <div className="introduce-btn ">
+                  {textSave && <span>{txt}</span>}
+                  <AuthorButton
+                    btntype="edit"
+                    btnTxt="수정완료"
+                    handleButton={handleIntroduce}
+                  />
+                </div>
               </div>
             </section>
             {/* 포트폴리오 설정 */}
@@ -354,7 +482,7 @@ const CreateAuthor = ({ type }) => {
                             </strong>
                             <div className="edit-delete-box">
                               <EditDeleteButton
-                                form="portfolio"
+                                form="setPortfolio"
                                 handleEdit={() =>
                                   showPortfolioModal('edit', data)
                                 }

@@ -13,11 +13,9 @@ $web-add-portfolio-size: 32px;
 $phone-add-portfolio-size: 24px;
 
 .edit-author-wrap {
-  width: 100%;
-  max-width: none;
-  min-width: none;
   display: grid;
   row-gap: 72px;
+  margin-top: 40px;
 
   .icon-btn {
     &.save {
@@ -36,11 +34,11 @@ $phone-add-portfolio-size: 24px;
     grid-template-columns: repeat(3, max-content);
     font-size: 20px;
     margin-bottom: 8px;
-    column-gap: 4px;
-    row-gap: 0;
+    gap: 0 4px;
     height: fit-content;
     color: #000000;
     font-weight: bold;
+    align-items: center;
 
     .title-icon {
       width: 32px;
@@ -99,12 +97,13 @@ $phone-add-portfolio-size: 24px;
         position: absolute;
         @include widthHeight;
         @include backgroundImage;
+        background-size: cover;
+        transition: transform ease 0.3s;
       }
 
       &.custom-img {
         border: 1px dashed #6d6d6dcc;
         .set-img-icon {
-          background-color: #f2f2f2;
           span {
             color: #6d6d6dcc;
           }
@@ -148,14 +147,10 @@ $phone-add-portfolio-size: 24px;
       }
 
       &.default-img {
-        .img {
-          background-image: url('../../../../../assets/images/Designer_image@2x.png');
-          transition: transform ease 0.3s;
-        }
-
         .set-img-icon {
           background-color: #00000080;
         }
+
         .icon {
           background-image: url('../../../../../assets/images/image_default@2x.png');
         }
@@ -233,6 +228,11 @@ $phone-add-portfolio-size: 24px;
       animation-name: shake;
       color: red;
     }
+    .introduce-btn {
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+    }
   }
 
   &.set-portfolio {
@@ -242,7 +242,7 @@ $phone-add-portfolio-size: 24px;
       margin-bottom: 40px;
       .portfolio {
         grid-template-columns: max-content auto;
-        display: inherit;
+        display: grid;
         grid-template-areas:
           'linkicon ptitle'
           'linkicon link';
@@ -260,7 +260,7 @@ $phone-add-portfolio-size: 24px;
     }
     .portfolio-title-box {
       display: flex;
-      gap: 24px;
+      justify-content: space-between;
       grid-area: ptitle;
       align-items: center;
       .porfolio-title {
@@ -301,6 +301,7 @@ $phone-add-portfolio-size: 24px;
 
 @include response('tablet') {
   .edit-author-wrap {
+    margin-top: 32px;
     row-gap: 56px;
   }
 
@@ -340,7 +341,7 @@ $phone-add-portfolio-size: 24px;
 
     &.set-portfolio {
       ul {
-        gap: 50px;
+        row-gap: 50px;
         margin-bottom: 32px;
         .portfolio {
           .porfolio-icon {
@@ -369,6 +370,7 @@ $phone-add-portfolio-size: 24px;
 
 @include response('phone') {
   .edit-author-wrap {
+    margin-top: 24px;
     row-gap: 48px;
   }
   .edit-section {

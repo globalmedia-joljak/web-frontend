@@ -8,6 +8,11 @@ export const appDispatchContext = createContext(null);
 const AppProvider = ({ children }) => {
   const [curSize, setCurSize] = useState(window.innerWidth);
   const [scroll, setScroll] = useState(0);
+  const [infinite, setInfinite] = useState({
+    scrollTop: 0,
+    scrollHeight: 0,
+    clientHeight: 0,
+  });
   const [modalShow, setModalShow] = useState(false);
 
   const [userInfo, setUserInfo] = useState({
@@ -16,26 +21,41 @@ const AppProvider = ({ children }) => {
     name: '',
   });
 
-  const [userState] = useAsync(async () => {
-    if (userInfo.classOf === '') return null;
-    return await getUser(userInfo.classOf);
+  const [userState] = useAsync(() => {
+    if (!userInfo.classOf) return false;
+    return getUser(userInfo.classOf);
   }, [userInfo.classOf]);
+
+  const handleScroll = () => {
+    const { documentElement, body } = document;
+    let scrollHeight = Math.max(
+      documentElement.scrollHeight,
+      body.scrollHeight,
+    );
+    let scrollTop = Math.max(documentElement.scrollTop, body.scrollTop);
+    let clientHeight = documentElement.clientHeight;
+
+    setInfinite({
+      ...infinite,
+      scrollTop,
+      scrollHeight,
+      clientHeight,
+    });
+
+    setScroll(Math.floor(window.scrollY));
+  };
 
   useEffect(() => {
     window.addEventListener('resize', () => setCurSize(window.innerWidth));
-    window.addEventListener('scroll', () =>
-      setScroll(Math.floor(window.scrollY)),
-    );
+    window.addEventListener('scroll', handleScroll, true);
     return () => {
       window.removeEventListener('resize', () => setCurSize(window.innerWidth));
-      window.addEventListener('scroll', () =>
-        setScroll(Math.floor(window.scrollY)),
-      );
+      window.addEventListener('scroll', handleScroll, true);
     };
   }, [curSize]);
 
-  const setJobColor = (job) => {
-    switch (job) {
+  const setJobColor = (role) => {
+    switch (role) {
       case 'MEDIA_ART':
         return '#d92b3a';
       case 'DESIGNER':
@@ -69,12 +89,43 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const value = { curSize, modalShow, userInfo, scroll, userState };
+  const worksKR = (category) => {
+    switch (category) {
+      case 'MEDIA_ART':
+        return '미디어아트';
+      case 'WEB_APP':
+        return '웹/앱 서비스';
+      case 'ANIMATION_FILM':
+        return '영상/애니메이션';
+      case 'GAME':
+        return '게임';
+      default:
+        return category;
+    }
+  };
+  const worksColor = (category) => {
+    switch (category) {
+      case 'MEDIA_ART':
+        return '#D92B3A';
+      case 'WEB_APP':
+        return '#367DD9';
+      case 'ANIMATION_FILM':
+        return '#BD36D9';
+      case 'GAME':
+        return '#F27405';
+      default:
+        return '#BAA2FF';
+    }
+  };
+
+  const value = { curSize, modalShow, userInfo, scroll, userState, infinite };
   const dispatch = {
     setJobColor,
     setModalShow,
     setUserInfo,
     translationKR,
+    worksKR,
+    worksColor,
   };
 
   return (

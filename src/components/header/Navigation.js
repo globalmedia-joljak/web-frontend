@@ -86,8 +86,8 @@ const NavClickEvent = (size, tablet, navEl) => {
 
 let navRoutes = [
   { id: 'notice', path: '/notice', name: '공지사항' },
-  { id: 'teams', path: '/author', name: '팀 빌딩', type: 'sub-nav' },
-  { id: 'project', path: '/projects', name: '졸업작품', type: 'sub-nav' },
+  { id: 'teams', path: '/team-building', name: '팀 빌딩', type: 'sub-nav' },
+  { id: 'project', path: '/works', name: '졸업작품', type: 'sub-nav' },
 ];
 
 // routes_template
@@ -106,7 +106,7 @@ const RouterLink = (size, tablet, signOutHandler, isLogin) => {
                 </div>
               )}
             </Link>
-            {(type = 'sub-nav') && size < tablet && (
+            {type === 'sub-nav' && size < tablet && (
               <ul className="nav-sub-wrap">
                 <SubNavigation type={id} />
               </ul>
@@ -131,7 +131,7 @@ const RouterLink = (size, tablet, signOutHandler, isLogin) => {
   );
 };
 
-const Navigation = ({ location: { pathname } }) => {
+const Navigation = ({ location: { pathname }, history }) => {
   const navEl = useRef();
   const { userInfo, curSize, scroll } = useAppState();
   const { setUserInfo } = useAppDispatch();
@@ -147,16 +147,19 @@ const Navigation = ({ location: { pathname } }) => {
 
   const signOutHandler = (e) => {
     window.localStorage.clear();
-    delete client.defaults.headers.common["Authorization"];
-    delete client.defaults.headers.common["refreshToken"];
-    delete client.defaults.headers.common["accessToken"];
-    setTimeout(() => setUserInfo({
-      ...userInfo,
-      classOf: '',
-      name: '',
-      isLogin: false,
-    }), 500);
-    
+    delete client.defaults.headers.common['Authorization'];
+    delete client.defaults.headers.common['refreshToken'];
+    delete client.defaults.headers.common['accessToken'];
+    setTimeout(
+      () =>
+        setUserInfo({
+          ...userInfo,
+          classOf: '',
+          name: '',
+          isLogin: false,
+        }),
+      500,
+    );
   };
 
   // roter lists

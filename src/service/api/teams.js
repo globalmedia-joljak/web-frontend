@@ -2,6 +2,19 @@ import { client } from './client';
 import { stoargeInfo } from './auth';
 import { toast } from 'react-toastify';
 
+const getTeam = async (id, history) => {
+  try {
+    const { data } = await client.get(`/teams/${id}`);
+
+    return data;
+  } catch (e) {
+    if (e.response.status === 404) {
+      history.push(`/error`);
+    }
+    console.log(e.response);
+  }
+};
+
 const getTeams = async (pageNum, error) => {
   try {
     const { data } = await client.get(`/teams`, {
@@ -33,6 +46,7 @@ const createTeam = async (createTeamRequest) => {
 }
 
 export {
+  getTeam,
   getTeams,
   createTeam
 };

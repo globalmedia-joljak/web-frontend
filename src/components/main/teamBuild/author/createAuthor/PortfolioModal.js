@@ -8,7 +8,8 @@ const PortfolioModal = ({
   pfSetModalShow,
   data,
 }) => {
-  const { title, id, link } = data;
+  const { title, link } = data;
+
   return (
     <ModalTemp
       modalShow={pfModalShow}
