@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useAppState } from '../../../../../context/appContext';
 import MemberRoleSquare from '../../team/teamList/MemberRole';
 import { createIdea } from '../../../../../service/api/ideas';
+import OccupationListForm from '../../../../modal/OccupationListForm';
 
 const CreateIdea = ({ history }) => {
   const {
@@ -14,7 +15,7 @@ const CreateIdea = ({ history }) => {
 
   const editorRef = useRef();
   const [title, setTitle] = useState(null);
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState('');
   const [category, setCategory] = useState(null);
   const [file, setFile] = useState(null);
   const [requiredPositions, setRequiredPosition] = useState(null);
@@ -61,6 +62,10 @@ const CreateIdea = ({ history }) => {
     document.getElementById('file__name').innerHTML = '파일을 선택해주세요.';
   };
 
+  const handleStatusChange = (e) => {
+    e.target.checked ? setStatus('COMPLETE') : setStatus('ONGOING');
+  };
+
   return (
     <>
       <ToastContainer
@@ -90,8 +95,12 @@ const CreateIdea = ({ history }) => {
           <div className="idea__status">
             <h3>결성 유무</h3>
             <div className="idea__status__check">
-              <label className="switch" for="checkbox">
-                <input type="checkbox" id="checkbox" />
+              <label className="switch" htmlFor="checkbox">
+                <input
+                  type="checkbox"
+                  id="checkbox"
+                  onChange={handleStatusChange}
+                />
                 <div className="slider round"></div>
               </label>
             </div>
@@ -110,7 +119,6 @@ const CreateIdea = ({ history }) => {
               <option value="GAME">게임</option>
             </select>
           </div>
-          <div className="idea__status">{/* 결성유무 체크 */}</div>
           <div className="idea__title">
             <h3>제목</h3>
             <input
@@ -136,7 +144,7 @@ const CreateIdea = ({ history }) => {
         <div className="idea__bottom">
           <div className="idea__required">
             <h3>필요한 포지션</h3>
-            {/* 모달창 */}
+            {/* 모달 */}
           </div>
           <div className="idea__contact">
             <h3>개인 연락처</h3>

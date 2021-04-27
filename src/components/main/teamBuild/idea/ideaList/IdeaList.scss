@@ -21,10 +21,26 @@
 
     .ideas-top-left {
       display: flex;
-      h3 {
+      align-items: center;
+      .ideas-count {
+        display: flex;
+        h3 {
+          font-size: 28px;
+          &:nth-child(2) {
+            margin-left: 16px;
+          }
+        }
+      }
+      .sidebar {
+        margin-left: 16px;
         font-size: 28px;
-        &:nth-child(2) {
-          margin-left: 16px;
+      }
+      .ideas-hide-complete {
+        margin-left: 16px;
+        h3 {
+          color: #5a5a5a;
+          font-size: 28px;
+          cursor: pointer;
         }
       }
     }
@@ -60,10 +76,25 @@
 
       .ideas-top-left {
         display: flex;
-        h3 {
+        .ideas-count {
+          display: flex;
+          h3 {
+            font-size: 16px;
+            &:nth-child(2) {
+              margin-left: 8px;
+            }
+          }
+        }
+        .sidebar {
+          margin-left: 16px;
           font-size: 16px;
-          &:nth-child(2) {
-            margin-left: 8px;
+        }
+        .ideas-hide-complete {
+          h3 {
+            color: #5a5a5a;
+            margin-left: 0px;
+            font-size: 16px;
+            cursor: pointer;
           }
         }
       }
@@ -71,7 +102,7 @@
       .ideas-top-right {
         display: flex;
         .create {
-          margin-left: 40px;
+          margin-left: 30px;
         }
       }
     }
