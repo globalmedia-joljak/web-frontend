@@ -5,11 +5,10 @@
   flex-wrap: wrap;
   gap: 30px;
   li {
-    display: grid;
     cursor: pointer;
     width: calc(33.33333% - 20px);
     overflow: hidden;
-    grid-template-rows: max-content auto;
+
     &:hover {
       .work-img {
         transform: scale(1.2);
@@ -17,6 +16,10 @@
           visibility: hidden;
         }
       }
+    }
+    a {
+      display: grid;
+      grid-template-rows: max-content auto;
     }
     .work-img-wrap {
       position: relative;

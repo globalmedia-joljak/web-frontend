@@ -11,6 +11,7 @@ import './listOfWorksStyle.scss';
 import { useRef } from 'react';
 import WorkListModal from './WorkListModal';
 import { useAppDispatch } from '../../../../context/appContext';
+import { Link } from 'react-router-dom';
 
 const ListOfWorks = ({ match }) => {
   const { worksKR, worksColor } = useAppDispatch();
@@ -148,34 +149,36 @@ const ListOfWorks = ({ match }) => {
                   workName,
                 }) => (
                   <li key={id}>
-                    <span className="work-img-wrap">
-                      <i
-                        className="work-img"
-                        style={{ backgroundImage: `url(${url ?? noImage})` }}
-                      >
-                        <i className="work-hover-bg" />
-                      </i>
-                    </span>
-                    <div className="work-contets-wrap">
-                      <strong className="work-name">
-                        {workName}
-                        <span
-                          className="project-category"
-                          style={projectCategoryStyle(projectCategory)}
+                    <Link to={`${match.url}/${id}`}>
+                      <span className="work-img-wrap">
+                        <i
+                          className="work-img"
+                          style={{ backgroundImage: `url(${url ?? noImage})` }}
                         >
-                          {worksKR(projectCategory)}
-                        </span>
-                      </strong>
-                      <b className="team-name">
-                        {teamName}
-                        <span className="members">
-                          {teamMember.map((name, i) => (
-                            <i key={i}>{name}</i>
-                          ))}
-                        </span>
-                      </b>
-                      <p className="work-content">{content}</p>
-                    </div>
+                          <i className="work-hover-bg" />
+                        </i>
+                      </span>
+                      <div className="work-contets-wrap">
+                        <strong className="work-name">
+                          {workName}
+                          <span
+                            className="project-category"
+                            style={projectCategoryStyle(projectCategory)}
+                          >
+                            {worksKR(projectCategory)}
+                          </span>
+                        </strong>
+                        <b className="team-name">
+                          {teamName}
+                          <span className="members">
+                            {teamMember.map((name, i) => (
+                              <i key={i}>{name}</i>
+                            ))}
+                          </span>
+                        </b>
+                        <p className="work-content">{content}</p>
+                      </div>
+                    </Link>
                   </li>
                 ),
               )}
