@@ -1,0 +1,311 @@
+@import '../../../../../assets/_mixin.scss';
+@import '../../../../../assets/_variables.scss';
+
+.idea__wrap {
+  padding: 40px 100px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  h2 {
+    font-size: 28px;
+  }
+
+  .idea__top {
+    display: flex;
+    flex-direction: column;
+    .board__category {
+      align-items: center;
+      padding-top: 40px;
+      display: flex;
+      h3 {
+        font-size: 24px;
+        font-weight: 400;
+        margin-right: 36px;
+      }
+      input {
+        width: 51%;
+        height: 42px;
+        border: 1px solid #6d6d6d66;
+        padding: 12px 8px;
+      }
+    }
+    .idea__status {
+      display: flex;
+      align-items: center;
+      padding-top: 24px;
+      h3 {
+        font-size: 24px;
+        font-weight: 400;
+      }
+      .idea__status__check {
+        margin-left: 20px;
+        .switch {
+          display: inline-block;
+          height: 28px;
+          position: relative;
+          width: 54px;
+          input {
+            display: none;
+          }
+          .slider {
+            background-color: #00000033;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: 0.4s;
+            .round {
+              border-radius: 34px;
+            }
+          }
+          .slider:before {
+            background-color: #e6e6e6;
+            bottom: 4px;
+            content: '';
+            height: 20px;
+            left: 4px;
+            position: absolute;
+            transition: 0.4s;
+            width: 20px;
+          }
+          input:checked + .slider {
+            background-color: #baa2ff;
+          }
+
+          input:checked + .slider:before {
+            transform: translateX(26px);
+          }
+
+          .slider.round {
+            border-radius: 34px;
+          }
+
+          .slider.round:before {
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+    .idea__category {
+      align-items: center;
+      padding-top: 24px;
+      display: flex;
+      h3 {
+        font-size: 24px;
+        font-weight: 400;
+        margin-right: 16px;
+      }
+      select {
+        height: 42px;
+        border: 1px solid #6d6d6d66;
+        padding: 12px 8px;
+      }
+    }
+    .idea__title {
+      align-items: center;
+      padding-top: 15px;
+      display: flex;
+      h3 {
+        font-size: 24px;
+        font-weight: 400;
+        margin-right: 57px;
+      }
+      input {
+        width: 80%;
+        height: 42px;
+        border: 1px solid #6d6d6d66;
+        padding: 12px 8px;
+      }
+    }
+  }
+
+  .idea__body {
+    padding-top: 24px;
+    width: 100%;
+    .idea__body__editor {
+      .tui-editor-defaultUI {
+        border: 1px solid #6d6d6d66;
+        border-bottom: none;
+        .te-mode-switch-section {
+          display: none;
+          border: none;
+          background-color: white;
+          .te-mode-switch {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .idea__bottom {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 72px;
+    padding-top: 0px;
+    background-color: white;
+    border: 1px solid #6d6d6d66;
+    border-top: 1px;
+    .idea__required {
+      padding: 20px 0px;
+      border-top: 1px solid #6d6d6d66;
+    }
+    .idea__contact {
+      padding-top: 20px;
+      border-top: 1px solid #6d6d6d66;
+      input {
+        width: 100%;
+        border: none;
+        font-size: 16px;
+        margin-top: 16px;
+      }
+    }
+    .idea__file {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin-top: 133px;
+      padding: 21px 48px;
+      background: #f2f2f2 0% 0% no-repeat padding-box;
+      height: 72px;
+      .idea__file__label {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .idea__file__label__left {
+          display: flex;
+          align-items: center;
+
+          .file__image {
+            @include backgroundImage;
+            background-image: url('../../../../../assets/images/paperclip.png');
+            width: 15px;
+            height: 15px;
+            margin-right: 10px;
+          }
+          p {
+            cursor: pointer;
+            font-size: 20px;
+            color: #6d6d6dcc;
+          }
+        }
+
+        button {
+          @include backgroundImage;
+          background-image: url('../../../../../assets/images/delete.png');
+          width: 22px;
+          height: 22px;
+        }
+      }
+
+      input {
+        display: none;
+      }
+    }
+  }
+
+  .create__button {
+    display: flex;
+    justify-content: flex-end;
+    button {
+      background-color: #074fd8;
+      border-radius: 4px;
+      margin-top: 32px;
+      width: 174px;
+      height: 48px;
+      font-size: 20px;
+      color: white;
+    }
+  }
+}
+
+@include response('tablet') {
+  .idea__wrap {
+    margin: 26px 0 83px;
+    min-width: 0;
+    padding: 0 3%;
+    .idea__top {
+      .board__category {
+        h3 {
+          font-size: 16px;
+        }
+      }
+      .idea__status {
+        h3 {
+          font-size: 16px;
+        }
+      }
+      .idea__category {
+        h3 {
+          font-size: 16px;
+          margin-right: 24px;
+        }
+      }
+      .idea__title {
+        h3 {
+          font-size: 16px;
+          margin-right: 50px;
+        }
+      }
+    }
+    .idea__bottom {
+      padding: 15px 19px;
+      .idea__file {
+        .idea__file__label {
+          .idea__file__label__left {
+            .file__image {
+            }
+            p {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+    .create__button {
+      button {
+        width: 96px;
+        height: 40px;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+@include response('phone') {
+  .idea__wrap {
+    .idea__top {
+      .board__category {
+        h3 {
+          width: 25%;
+          margin-right: 0;
+        }
+        input {
+          width: 75%;
+        }
+      }
+      .idea__category {
+        h3 {
+          width: 25%;
+          margin-right: 0;
+        }
+        select {
+          width: 75%;
+        }
+      }
+      .idea__title {
+        h3 {
+          width: 25%;
+          margin-right: 0;
+        }
+        input {
+          width: 75%;
+        }
+      }
+    }
+  }
+}

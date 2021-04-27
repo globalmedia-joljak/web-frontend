@@ -7,11 +7,15 @@ import DetailTeanm from './detailTeam/DetailTeam';
 const Teams = ({ match }) => {
   return (
     <>
-    <Switch>
-      <Route exact path={`${match.path}`} component={TeamList} />
-      <Route exact={true} path={`${match.path}/create`} component={CreateTeam} />
-      <Route exact path={`${match.path}/:id`} component={DetailTeanm} />
-    </Switch>
+      <Switch>
+        <Route exact path={`${match.path}`} component={TeamList} />
+        <Route
+          exact={true}
+          path={`${match.path}/create`}
+          component={CreateTeam}
+        />
+        <Route exact path={`${match.path}/:id`} component={DetailTeanm} />
+      </Switch>
     </>
   );
 };
