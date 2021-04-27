@@ -172,7 +172,7 @@ const ListOfAuthorForm = ({ match, history }) => {
                     mediaInfo,
                   }) => (
                     <li key={id}>
-                      <Link to={`${match.path}/${classOf}`}>
+                      <Link to={`${match.url}/${classOf}`}>
                         <b className="main-role">
                           {translationKR(mainProjectRole)}
                           <span

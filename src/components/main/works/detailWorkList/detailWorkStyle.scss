@@ -1,0 +1,327 @@
+@import '../../../../assets/_mixin.scss';
+
+.work-detail-wrap {
+  padding-top: 72px !important;
+}
+.work-detail-inr {
+  display: grid;
+  padding: 26px 32px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 6px #00000029;
+  > div {
+    display: inherit;
+  }
+}
+
+.work-detail-header {
+  .team-category {
+    padding: 10px 36px;
+    border: 1px solid;
+    border-radius: 28px;
+    width: fit-content;
+    height: 56px;
+    font-size: 24px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+  }
+  .work-name {
+    color: #000000;
+    font-weight: bold;
+    font-size: 32px;
+    margin-bottom: 40px;
+  }
+
+  .team-info {
+    display: flex;
+    color: #000000cc;
+    font-size: 28px;
+    column-gap: 24px;
+    margin-bottom: 20px;
+
+    .team-member {
+      display: inherit;
+      column-gap: 16px;
+      padding-left: 24px;
+      border-left: 1px solid #000000cc;
+    }
+  }
+  .team-etc {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #6d6d6d33;
+    padding-bottom: 26px;
+    margin-bottom: 45px;
+    .create-date {
+      font-size: 24px;
+      color: #6d6d6dcc;
+      display: flex;
+      align-items: center;
+      column-gap: 16px;
+
+      .date-icon {
+        @include backgroundImage;
+        background-image: url('../../../../assets/images/calendar@2x.png');
+        width: 21px;
+        height: 24px;
+      }
+    }
+  }
+}
+.work-detail-content {
+  .best-work {
+    display: flex;
+    padding: 19px 39px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 4px #00000029;
+    column-gap: 12px;
+    font-size: 24px;
+    align-items: center;
+
+    .best-icon {
+      width: 32px;
+      height: 32px;
+      @include backgroundImage;
+      background-image: url('../../../../assets/images/goldmedal@2x.png');
+    }
+  }
+  justify-items: center;
+  section {
+    width: 89%;
+    border-top: 1px solid #000000cc;
+    position: relative;
+    padding: 44px 0 180px;
+    max-width: 990px;
+    strong {
+      background-color: #ffffff;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      top: 0;
+      padding: 0 62px;
+      font-size: 28px;
+    }
+    .sec-content {
+      background-color: rgba(177, 180, 177, 0.267);
+    }
+  }
+  .about-team-vedio {
+    margin-top: 96px;
+  }
+  .work-introduce {
+    font-size: 22px;
+  }
+}
+
+.work-detail-footer {
+  .download-file {
+    display: grid;
+    cursor: pointer;
+    border-radius: 4px;
+    height: 72px;
+    background-color: #f2f2f2;
+    grid-template-columns: repeat(2, max-content) 1fr;
+    align-items: center;
+    padding: 0 48px;
+    .file-name {
+      color: #6d6d6dcc;
+      font-size: 20px;
+    }
+
+    i {
+      @include backgroundImage;
+    }
+    .clip-icon {
+      background-image: url('../../../../assets/images/paperclip@2x.png');
+      width: 15px;
+      height: 16px;
+      margin-right: 16px;
+    }
+    .download-icon {
+      background-image: url('../../../../assets/images/download@2x.png');
+      justify-self: flex-end;
+      width: 16px;
+      height: 16px;
+    }
+
+    &:hover {
+      background-color: #baa2ff;
+      .file-name {
+        color: #ffffff;
+      }
+      .clip-icon {
+        background-image: url('../../../../assets/images/paperclip_white@2x.png');
+      }
+      .download-icon {
+        background-image: url('../../../../assets/images/download_white@2x.png');
+      }
+    }
+  }
+}
+
+@include response('tablet') {
+  .work-detail-wrap {
+    padding-top: 72px !important;
+  }
+  .work-detail-inr {
+    padding: 24px 16px 40px;
+  }
+
+  .work-detail-header {
+    .team-category {
+      padding: 10px 33px;
+      height: 43px;
+      font-size: 16px;
+    }
+    .work-name {
+      font-size: 20px;
+      margin-bottom: 32px;
+    }
+    .team-info {
+      font-size: 17px;
+      column-gap: 12px;
+      margin-bottom: 18px;
+      .team-member {
+        padding-left: 12px;
+      }
+    }
+    .team-etc {
+      padding-bottom: 55px;
+      margin-bottom: 24px;
+      .create-date {
+        font-size: 17px;
+        column-gap: 8px;
+
+        .date-icon {
+          width: 14px;
+          height: 16px;
+        }
+      }
+    }
+  }
+  .work-detail-content {
+    .best-work {
+      padding: 15px 31px;
+      column-gap: 9px;
+      font-size: 18px;
+
+      .best-icon {
+        width: 25px;
+        height: 25px;
+      }
+    }
+    section {
+      padding: 30px 0 102px;
+      strong {
+        padding: 0 38px;
+        font-size: 20px;
+      }
+    }
+    .about-team-vedio {
+      margin-top: 46px;
+    }
+    .work-introduce {
+      font-size: 16px;
+    }
+  }
+
+  .work-detail-footer {
+    .download-file {
+      height: 60px;
+      padding: 0 24px;
+      .file-name {
+        font-size: 16px;
+      }
+      .clip-icon {
+        width: 11px;
+        height: 12px;
+        margin-right: 15px;
+      }
+    }
+  }
+}
+
+@include response('phone') {
+  .work-detail-wrap {
+    padding-top: 23px !important;
+  }
+  .work-detail-inr {
+    padding: 15px 12px 32px;
+  }
+
+  .work-detail-header {
+    .team-category {
+      padding: 6px 20px;
+      height: 29px;
+      font-size: 12px;
+      margin-bottom: 18px;
+    }
+    .work-name {
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+    .team-info {
+      font-size: 12px;
+      column-gap: 8px;
+      margin-bottom: 16px;
+      .team-member {
+        padding-left: 8px;
+      }
+    }
+    .team-etc {
+      padding-bottom: 24px;
+      .create-date {
+        font-size: 12px;
+        column-gap: 7px;
+
+        .date-icon {
+          width: 12px;
+          height: 14px;
+        }
+      }
+    }
+  }
+  .work-detail-content {
+    .best-work {
+      padding: 11px 22px;
+      column-gap: 7px;
+      font-size: 12px;
+
+      .best-icon {
+        width: 17px;
+        height: 17px;
+      }
+    }
+    section {
+      padding: 27px 0 60px;
+      strong {
+        padding: 0 10px;
+        font-size: 16px;
+      }
+      > div {
+      }
+    }
+    .about-team-vedio {
+      margin-top: 40px;
+    }
+  }
+
+  .work-detail-footer {
+    .download-file {
+      height: 48px;
+      padding: 0 8px;
+      .file-name {
+        font-size: 16px;
+      }
+      .clip-icon {
+        width: 9px;
+        height: 10px;
+        margin-right: 6px;
+      }
+      .download-icon {
+        width: 11px;
+        height: 11px;
+      }
+    }
+  }
+}

@@ -11,4 +11,13 @@ const getWorksLists = async (pageNum) => {
   }
 };
 
-export { getWorksLists };
+const getWorkDetail = async (id) => {
+  try {
+    const { data } = await client.get(`/works/${id}`);
+    return data;
+  } catch (e) {
+    console.log(e.response);
+  }
+};
+
+export { getWorksLists, getWorkDetail };
