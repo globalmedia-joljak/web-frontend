@@ -10,12 +10,22 @@ import noImage from '../../../../assets/images/노이미지@2x.png';
 import './listOfWorksStyle.scss';
 import { useRef } from 'react';
 import WorkListModal from './WorkListModal';
-import { useAppDispatch } from '../../../../context/appContext';
+import { useAppDispatch, useAppState } from '../../../../context/appContext';
 import { Link } from 'react-router-dom';
 
-const ListOfWorks = ({ match }) => {
+const ListOfWorks = ({ match, history }) => {
   const { worksKR, worksColor } = useAppDispatch();
+  const {
+    userInfo: { name },
+  } = useAppState();
 
+  const [pageNum, setPageNum] = useState(0);
+  const [totalPage, setTotalPage] = useState(false);
+  // const [worksListData] = useAsync(() => getWorksLists(pageNum), [pageNum]);
+
+  // 실제 사용할 데이터 data.workResponseList
+
+  // filter
   const [filterShow, setFilterShow] = useState(false);
   const [choiceValue, seChoiceValue] = useState({
     worksList: [],
@@ -51,15 +61,21 @@ const ListOfWorks = ({ match }) => {
     console.log(choiceValue);
   };
 
-  const handleAddWorks = () => {};
+  // create
+  const handleAddWorks = () => {
+    const isItAuthor = data.workResponseList.find((el) => el.author === name);
+    if (isItAuthor) {
+      const message =
+        '이미 졸업작품을 등록하셨습니다. 졸업작품 상세페이지로 가시겠습니까?';
 
-  const [pageNum, setPageNum] = useState(0);
-  // const [worksListData] = useAsync(() => getWorksLists(pageNum), [pageNum]);
+      return window.confirm(message)
+        ? history.push(`${match.url}/${isItAuthor.id}`)
+        : false;
+    }
+    history.push(`${match.url}/none/create`);
+  };
 
-  // 실제 사용할 데이터 data.workResponseList
-
-  const [totalPage, setTotalPage] = useState(false);
-
+  // list style
   useEffect(() => {
     const workImages = document.querySelectorAll('.work-img-wrap');
     Array.from(workImages).map(
@@ -71,7 +87,6 @@ const ListOfWorks = ({ match }) => {
   const handleFocus = (e) => e.target.parentNode.classList.add('dark');
   const handleBlur = (e) => e.target.parentNode.classList.remove('dark');
 
-  // if (!worksListData.data) return null;
   const { page, workResponseList } = data;
   const projectCategoryStyle = (category) => {
     const style = {

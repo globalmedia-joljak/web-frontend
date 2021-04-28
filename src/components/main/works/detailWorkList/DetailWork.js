@@ -1,6 +1,7 @@
+import { Viewer } from '@toast-ui/react-editor';
 import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
-import { useAppDispatch } from '../../../../context/appContext';
+import { useAppDispatch, useAppState } from '../../../../context/appContext';
 import { useWorksDispatch } from '../../../../context/worksContext';
 import useAsync from '../../../../hooks/useAsync';
 import { getWorkDetail } from '../../../../service/api/work';
@@ -8,8 +9,11 @@ import EditDeleteButton from '../../common/EditDeleteButton';
 import { data } from '../data';
 import './detailWorkStyle.scss';
 
-const DetailWork = ({ match }) => {
+const DetailWork = ({ match, history }) => {
   const { worksKR, worksColor } = useAppDispatch();
+  const {
+    userInfo: { name },
+  } = useAppState();
   const detailId = match.params.id;
   const [best, setBest] = useState(false);
   // TODO: 실제 추가해서 연결해줘야 한다.
@@ -19,13 +23,25 @@ const DetailWork = ({ match }) => {
 
   // const { laodig, data, erro } = workDetail;
 
+  // const [isItAuthor, setIsItAuthor] = useState(false);
   const filterDetailData = () => {
-    return data.workResponseList.filter((el) => el.id === Number(detailId));
+    let detailData = data.workResponseList.filter(
+      (el) => el.id === Number(detailId),
+    );
+    return { detailData };
   };
 
-  const detailData = filterDetailData();
+  const { detailData } = filterDetailData();
+  const handleEdit = () => history.push(`${match.url}/edit`);
+
+  const handleDelete = () => {
+    console.log('delete');
+  };
+
   // console.log(detailData);
+  console.log(detailData);
   const {
+    author,
     projectCategory,
     workName,
     teamName,
@@ -78,7 +94,12 @@ const DetailWork = ({ match }) => {
               <i className="date-icon" />
               {filterDate()}
             </span>
-            <EditDeleteButton />
+            {author === name && (
+              <EditDeleteButton
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
+            )}
           </div>
         </div>
         <div className="work-detail-content">
@@ -107,7 +128,7 @@ const DetailWork = ({ match }) => {
           </section>
           <section className="about-team-introduce">
             <strong>작품 소개</strong>
-            <p className="work-introduce">{content}</p>
+            <Viewer initialValue={content} />
           </section>
         </div>
         <div className="work-detail-footer">
