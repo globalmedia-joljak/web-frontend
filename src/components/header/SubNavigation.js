@@ -1,31 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react/cjs/react.development';
+import { useEffect, useMemo, useState } from 'react/cjs/react.development';
 import { useAppState } from '../../context/appContext';
-
-const tablet = 768;
+import useAsync from '../../hooks/useAsync';
+import { getWorksYears } from '../../service/api/work';
 
 const SubNavigation = ({ type, url }) => {
+  const { crrentYear } = useAppState();
+
   const teamList = [
     { path: `${url}/author`, name: '작가 목록' },
     { path: `${url}/teams`, name: '팀 목록' },
     { path: `${url}/idea`, name: '아이디어 게시판' },
   ];
-  // TODO:데이터에서 년도를 가져올 예정(api연동-----내림차순으로 정렬)
-  const [worksList, setWorksList] = useState([
-    {
-      path: '/works/2021',
-      name: '2021',
-    },
-  ]);
 
-  const { curSize } = useAppState();
+  const [yearsState] = useAsync(() => getWorksYears());
 
-  const subLink = type === 'teams' ? teamList : worksList;
+  const [worksList, setWorksList] = useState([]);
+  const [subLinks, setSubLinks] = useState([]);
+
+  useEffect(() => {
+    if (yearsState.data) {
+      yearsState.data.map((el) => {
+        setWorksList(worksList.concat({ path: `/works/${el}`, name: el }));
+      });
+    } else {
+      setWorksList(
+        worksList.concat({ path: `/works/${crrentYear}`, name: crrentYear }),
+      );
+    }
+    type === 'teams' ? setSubLinks(teamList) : setSubLinks(worksList);
+  }, [yearsState.data]);
 
   return (
     <>
-      {subLink.map(({ path, name, id }, i) => {
+      {subLinks.map(({ path, name, id }, i) => {
         return (
           <li key={i}>
             <Link to={path} className="header-route" id={id}>
