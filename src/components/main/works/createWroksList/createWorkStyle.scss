@@ -1,0 +1,344 @@
+@import '../../../../assets/_mixin.scss';
+@import '../../../../assets/variables';
+
+.work-create-wrap {
+  &.page-box {
+    padding-top: 40px;
+  }
+  .work-create-inr {
+    display: grid;
+    > div {
+      display: inherit;
+    }
+  }
+  .work-editor {
+    height: 700px;
+    > div {
+      height: 100% !important;
+      .tui-editor-defaultUI {
+        border: 1px solid #6d6d6d66;
+        .te-toolbar-section {
+          .tui-editor-defaultUI-toolbar {
+            background-color: #f8f8f8;
+            > button {
+              background-color: transparent;
+              border: none;
+            }
+          }
+        }
+
+        .te-editor-section {
+          .tui-editor {
+            .te-ww-container {
+              background-color: #f8f8f8;
+              .te-editor {
+                .tui-editor-contents {
+                  padding: 42px 72px;
+                }
+              }
+            }
+          }
+        }
+
+        .te-mode-switch-section {
+          display: none !important;
+          border: none;
+          background-color: #f8f8f8;
+          .te-mode-switch {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  select,
+  .category,
+  input {
+    border: 1px solid #6d6d6d66;
+    height: 100%;
+    padding: 7px 12px;
+    background-color: #ffffff;
+    font-size: 18px;
+  }
+}
+
+.work-create-header {
+  > div,
+  .work-create-title {
+    align-items: center;
+  }
+
+  .work-create-title {
+    display: flex;
+    margin-bottom: 40px;
+    gap: 12px;
+    font-size: 28px;
+    .write-icon {
+      @include backgroundImage;
+      // background-image: url('../../../../assets/images/');
+      background-color: lightslategray;
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  > div {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 24px;
+    height: 42px;
+    grid-template-columns: max-content auto;
+
+    strong {
+      width: 96px;
+      font-size: 24px;
+    }
+  }
+  .category {
+    display: flex;
+    align-items: center;
+    color: #000000;
+    font-size: 17px;
+  }
+
+  select {
+    position: relative;
+    width: 50%;
+    max-width: 276px;
+
+    &:focus {
+      outline: none;
+    }
+    option {
+      color: #6d6d6d;
+    }
+
+    // -webkit-appearance: none;
+  }
+}
+
+.work-create-main {
+  row-gap: 40px;
+  .work-row {
+    display: grid;
+    strong {
+      margin-bottom: 24px;
+      font-size: 24px;
+      display: flex;
+      column-gap: 8px;
+      align-items: center;
+      .upload-icon {
+        @include backgroundImage;
+        width: 24px;
+        height: 24px;
+        background-color: gray;
+      }
+    }
+    input {
+      border-radius: 4px;
+      height: 48px;
+      font-size: 16px;
+    }
+
+    &.work-members {
+      #temaName {
+        margin-bottom: 16px;
+      }
+    }
+
+    &.work-images {
+      strong {
+        width: fit-content;
+        margin-bottom: 8px;
+        &:hover {
+          label {
+            color: #7759d1;
+          }
+
+          .upload-icon {
+            opacity: 0.3;
+          }
+        }
+      }
+      p {
+        margin-bottom: 24px;
+        font-size: 20px;
+        color: #6d6d6dcc;
+      }
+      .works-images {
+        height: 300px;
+        width: 100%;
+        background-color: rgba(231, 231, 231, 0.226);
+      }
+
+      &.none {
+        padding: 10px;
+      }
+    }
+
+    label,
+    .upload-icon {
+      cursor: pointer;
+    }
+    .file-input {
+      display: none;
+    }
+  }
+}
+@include response('tablet') {
+  .work-create-wrap {
+    &.page-box {
+      padding-top: 32px;
+    }
+    .work-editor {
+      height: 665px;
+      > div {
+        .tui-editor-defaultUI {
+          .te-editor-section {
+            .tui-editor {
+              .te-ww-container {
+                background-color: #ffffff66;
+                .te-editor {
+                  .tui-editor-contents {
+                    padding: 24px 14px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .work-create-header {
+    .work-create-title {
+      margin-bottom: 31px;
+      gap: 8px;
+      font-size: 22px;
+      .write-icon {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    > div {
+      margin-bottom: 16px;
+      height: 36px;
+
+      select,
+      .category,
+      input {
+        font-size: 15px;
+      }
+      strong {
+        width: 73px;
+        font-size: 17px;
+      }
+    }
+
+    select {
+      width: 218px;
+    }
+  }
+
+  .work-create-main {
+    .work-row {
+      display: grid;
+      strong {
+        margin-bottom: 26px;
+        font-size: 22px;
+      }
+      input {
+        font-size: 12px;
+      }
+      &.work-images {
+        p {
+          margin-bottom: 16px;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+@include response('phone') {
+  .work-create-wrap {
+    &.page-box {
+      padding-top: 24px;
+    }
+    .work-editor {
+      height: 348px;
+      > div {
+        .tui-editor-defaultUI {
+          .te-editor-section {
+            .tui-editor {
+              .te-ww-container {
+                background-color: #ffffff66;
+                .te-editor {
+                  .tui-editor-contents {
+                    padding: 19px 16px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .work-create-header {
+    .work-create-title {
+      margin-bottom: 16px;
+      font-size: 14px;
+      gap: 8px;
+    }
+    > div {
+      margin-bottom: 16px;
+      height: 32px;
+      select,
+      .category,
+      input {
+        font-size: 15px;
+      }
+      strong {
+        // width: 59px;
+        font-size: 16px;
+      }
+    }
+
+    select {
+      width: 100%;
+    }
+  }
+
+  .work-create-main {
+    row-gap: 24px;
+    .work-row {
+      strong {
+        margin-bottom: 8px;
+        font-size: 17px;
+        .upload-icon {
+          width: 18px;
+          height: 18px;
+        }
+      }
+      input {
+        height: 40px;
+        font-size: 11px;
+      }
+
+      &.work-members {
+        #temaName {
+          margin-bottom: 8px;
+        }
+      }
+      &.work-images {
+        p {
+          margin-bottom: 8px;
+        }
+      }
+    }
+  }
+}

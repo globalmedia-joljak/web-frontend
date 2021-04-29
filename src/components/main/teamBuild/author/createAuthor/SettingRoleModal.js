@@ -21,6 +21,7 @@ const SettingRoleModal = ({ handleRoleChoice, modalShow, setModalShow }) => {
         <OccupationListForm
           type="mainProjectRole"
           handleChoice={handleRoleChoice}
+          worktype=""
         />
       </li>
       <li className="list r2">
@@ -29,6 +30,7 @@ const SettingRoleModal = ({ handleRoleChoice, modalShow, setModalShow }) => {
           type="subProjectRole"
           handleChoice={handleRoleChoice}
           txt="선택안함"
+          worktype=""
         />
       </li>
     </ModalTemp>

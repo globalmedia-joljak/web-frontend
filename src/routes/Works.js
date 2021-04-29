@@ -6,10 +6,10 @@ import { useAppState } from '../context/appContext';
 import WorksProvider from '../context/worksContext';
 
 const Projects = ({ match, location }) => {
-  const { crrentYear } = useAppState();
+  const { currentYears } = useAppState();
 
   return (
-    <WorksProvider>
+    <WorksProvider location={location}>
       <main className="works-wrap">
         <div className="section-wrap">
           <section className="side-menu">
@@ -19,11 +19,10 @@ const Projects = ({ match, location }) => {
           </section>
           <section className="contents">
             <div className="content">
-              <Route path={`${match.path}/:year`} component={WorksForm} />
-
               {location.pathname === '/works' && (
-                <Redirect to={`${match.path}/${crrentYear}`} />
+                <Redirect to={`${match.path}/${currentYears}`} />
               )}
+              <Route path={`${match.path}/:year`} component={WorksForm} />
             </div>
           </section>
         </div>

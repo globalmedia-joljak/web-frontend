@@ -31,6 +31,7 @@ const RoleModal = ({
           projectRole={mainRole}
           type="mainProjectRole"
           handleChoice={roleChoice}
+          worktype=""
         />
       </li>
       <li className="list r2">
@@ -40,6 +41,7 @@ const RoleModal = ({
           type="subProjectRole"
           handleChoice={roleChoice}
           txt="선택안함"
+          worktype=""
         />
       </li>
     </ModalTemp>

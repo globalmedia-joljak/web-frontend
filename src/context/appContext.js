@@ -13,8 +13,9 @@ const AppProvider = ({ children }) => {
     scrollHeight: 0,
     clientHeight: 0,
   });
+
   const date = new Date();
-  const crrentYear = date.getFullYear();
+  const currentYears = date.getFullYear();
 
   const [modalShow, setModalShow] = useState(false);
 
@@ -128,7 +129,7 @@ const AppProvider = ({ children }) => {
     scroll,
     userState,
     infinite,
-    crrentYear,
+    currentYears,
   };
   const dispatch = {
     setJobColor,
