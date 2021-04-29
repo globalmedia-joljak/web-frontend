@@ -76,8 +76,7 @@
     font-size: 28px;
     .write-icon {
       @include backgroundImage;
-      // background-image: url('../../../../assets/images/');
-      background-color: lightslategray;
+      background-image: url('../../../../assets/images/create_black@2x.png');
       width: 28px;
       height: 28px;
     }
@@ -130,9 +129,9 @@
       align-items: center;
       .upload-icon {
         @include backgroundImage;
+        background-image: url('../../../../assets/images/add_circle@2x.png');
         width: 24px;
         height: 24px;
-        background-color: gray;
       }
     }
     input {
@@ -153,7 +152,7 @@
         margin-bottom: 8px;
         &:hover {
           label {
-            color: #7759d1;
+            color: #6d6d6dcc;
           }
 
           .upload-icon {
