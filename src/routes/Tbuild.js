@@ -7,7 +7,6 @@ import AuthorForm from '../components/main/teamBuild/author/index.js';
 import TeamsProvider from '../context/teamContext';
 import SubNavigation from '../components/header/SubNavigation';
 import Teams from '../components/main/teamBuild/team/index.js';
-import ListOfAuthorForm from '../components/main/teamBuild/author/authorList/ListOfAuthorForm.js';
 
 const Tbuild = ({ match, location }) => {
   return (

@@ -71,6 +71,7 @@
     padding: 12px 12px;
     display: flex;
     align-items: center;
+<<<<<<< HEAD
     justify-content: center;
     border-radius: 8px;
     text-align: center;
@@ -84,40 +85,78 @@
     }
 
     .idea__id {
+=======
+    border-radius: 8px;
+    text-align: left;
+    box-sizing: border-box;
+    flex-direction: row;
+    width: 100%;
+    .idea__status {
+      width: 10%;
+      order: 0;
+    }
+
+    .idea__id {
+      width: 0;
+>>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
       display: none;
     }
     .idea__title {
       font-size: 20px;
       width: 100%;
+<<<<<<< HEAD
       order: 2;
+=======
+      order: 1;
+>>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
       margin: 10px 0px;
     }
     .idea__required {
       width: 100%;
+<<<<<<< HEAD
       justify-content: center;
       order: 3;
+=======
+      order: 2;
+>>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
     }
     .idea__body__bottom {
       width: 100%;
       display: flex;
+<<<<<<< HEAD
       order: 4;
+=======
+      order: 3;
+>>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
       align-items: center;
       box-sizing: border-box;
       margin-top: 10px;
       margin-bottom: 12px;
       .idea__category {
         width: 30%;
+<<<<<<< HEAD
         order: 4;
       }
       .idea__author {
         width: 30%;
         order: 4;
+=======
+        order: 3;
+      }
+      .idea__author {
+        width: 30%;
+        order: 3;
+>>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
         color: #6d6d6dcc;
       }
       .idea__date {
         width: 30%;
+<<<<<<< HEAD
         order: 4;
 
+=======
+        order: 3;
+>>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
         text-align: right;
         color: #6d6d6dcc;
       }
@@ -160,9 +199,14 @@
       width: 100%;
       display: flex;
       order: 3;
+<<<<<<< HEAD
       align-items: flex-start;
       box-sizing: border-box;
       margin-left: 10%;
+=======
+      align-items: center;
+      box-sizing: border-box;
+>>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
       margin-top: 10px;
       margin-bottom: 12px;
       .idea__category {
@@ -172,6 +216,10 @@
       .idea__required {
         order: 4;
         display: flex;
+<<<<<<< HEAD
+=======
+        align-items: center;
+>>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
         width: 30%;
       }
       .idea__author {
@@ -182,7 +230,10 @@
       .idea__date {
         width: 30%;
         order: 6;
+<<<<<<< HEAD
         margin-left: -10%;
+=======
+>>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
         color: #6d6d6dcc;
       }
     }

@@ -1,10 +1,13 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router';
 import SubNavigation from '../components/header/SubNavigation';
-import ListOfWorks from '../components/main/works/worksList/ListOfWorks';
+import WorksForm from '../components/main/works';
+import { useAppState } from '../context/appContext';
 import WorksProvider from '../context/worksContext';
 
 const Projects = ({ match, location }) => {
+  const { crrentYear } = useAppState();
+
   return (
     <WorksProvider>
       <main className="works-wrap">
@@ -16,10 +19,10 @@ const Projects = ({ match, location }) => {
           </section>
           <section className="contents">
             <div className="content">
-              <Route path={`${match.path}/2021`} component={ListOfWorks} />
+              <Route path={`${match.path}/:year`} component={WorksForm} />
 
               {location.pathname === '/works' && (
-                <Redirect to={`${match.path}/2021`} />
+                <Redirect to={`${match.path}/${crrentYear}`} />
               )}
             </div>
           </section>
