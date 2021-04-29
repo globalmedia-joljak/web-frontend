@@ -22,10 +22,11 @@
     .ideas-top-left {
       display: flex;
       align-items: center;
+
       .ideas-count {
         display: flex;
         h3 {
-          font-size: 28px;
+          font-size: 17px;
           &:nth-child(2) {
             margin-left: 16px;
           }
@@ -39,11 +40,21 @@
         margin-left: 16px;
         h3 {
           color: #5a5a5a;
-          font-size: 28px;
+          font-size: 17px;
           cursor: pointer;
         }
       }
     }
+
+    // .ideas-top-right {
+    //   display: flex;
+    //   position: absolute;
+    //   top: 0%;
+    //   left: 57%;
+    //   .ideas-top-right-button {
+    //     padding: 100px;
+    //   }
+    // }
 
     .ideas-top-right {
       display: flex;
@@ -67,6 +78,7 @@
 
     .ideas-top {
       display: flex;
+      position: relative;
       justify-content: space-between;
       flex-direction: row;
       align-items: center;
@@ -101,8 +113,11 @@
 
       .ideas-top-right {
         display: flex;
-        .create {
-          margin-left: 30px;
+        margin-left: -30px;
+        margin-top: 20px;
+
+        .ideas-top-right-button {
+          padding: 100px;
         }
       }
     }

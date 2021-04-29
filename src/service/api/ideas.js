@@ -1,6 +1,19 @@
 import { client } from './client';
 import { toast } from 'react-toastify';
 
+const getIdea = async (id, history) => {
+  try {
+    const { data } = await client.get(`/ideaboards/${id}`);
+
+    return data;
+  } catch (e) {
+    if (e.response.status === 404) {
+      history.push(`/error`);
+    }
+    console.log(e.response);
+  }
+};
+
 const getIdeas = async (pageNum, error) => {
   try {
     const { data } = await client.get(`/ideaboards`, {
@@ -33,4 +46,4 @@ const createIdea = async (createIdeaRequest) => {
   }
 };
 
-export { getIdeas, createIdea };
+export { getIdea, getIdeas, createIdea };

@@ -164,16 +164,20 @@ const IdeaList = ({ match, history }) => {
             </div>
           </div>
           <div className="ideas-top-right">
-            <ButtonWithIcon
-              btntype="filter"
-              btnTxt="상세검색"
-              handleButton={handleShowFilterModal}
-            />
-            <ButtonWithIcon
-              btntype="create"
-              btnTxt="글쓰기"
-              handleButton={handleCreateTeam}
-            />
+            <div className="ideas-top-right-search">
+              <ButtonWithIcon
+                btntype="filter"
+                btnTxt="상세검색"
+                handleButton={handleShowFilterModal}
+              />
+            </div>
+            <div className="ideas-top-right-create">
+              <ButtonWithIcon
+                btntype="create"
+                btnTxt="글쓰기"
+                handleButton={handleCreateTeam}
+              />
+            </div>
           </div>
         </div>
         <div className="ideas-body">
