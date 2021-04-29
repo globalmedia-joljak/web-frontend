@@ -1,9 +1,20 @@
 import { Editor } from '@toast-ui/react-editor';
 import React from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import { useCallback, useState, useRef } from 'react/cjs/react.development';
+import {
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+} from 'react/cjs/react.development';
 import { useAppDispatch } from '../../../../context/appContext';
+import { useWorksState } from '../../../../context/worksContext';
 import { createWorks } from '../../../../service/api/work';
+import './createWorkStyle.scss';
+import 'tui-color-picker/dist/tui-color-picker.css';
+import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+import '@toast-ui/editor/dist/i18n/ko-kr';
+
 const toolbarItems = [
   'heading',
   'bold',
@@ -31,7 +42,9 @@ const CreateWork = ({ match, history }) => {
   const workState = match.params.state;
   const editorRef = useRef();
   const { worksKR } = useAppDispatch();
+  const { detailData } = useWorksState();
 
+  const [content, setContent] = useState(null);
   const [category, setCategory] = useState(null);
   const [worksName, setWorksName] = useState(null);
   const [teamName, setTeamName] = useState(null);
@@ -64,66 +77,77 @@ const CreateWork = ({ match, history }) => {
       formdata.append(`${queryName}[${i}]`, data);
     });
   });
+
   const handleUploadImages = (e) => {
     const files = e.target.files;
-    let filesArr = [];
 
     setImages([...files]);
 
     if (files.length > 5) {
       toast.warn(`⚠ 이미지는 최대 5개 입니다.`);
       setImages([...files].slice(0, 5));
-      // filesArr = [...files].slice(0, 5);
     } else {
       setImages([...files]);
-      // filesArr = [...files];
     }
-
-    makeArrFromData(filesArr, 'images');
   };
+
   const handleUploadFile = (e) => setFile(e.target.files[0]);
+
+  useEffect(() => {
+    if (workState === 'edit' && detailData) {
+      setContent(detailData.content);
+      setCategory(detailData.projectCategory);
+      setWorksName(detailData.workName);
+      setTeamName(detailData.teamName);
+      setTeamMember(detailData.teamMember.join(' '));
+      setVedio(detailData.teamVideoUrl);
+      setWorksYear(detailData.exhibitedYear);
+      setImages(detailData.imageInfoList);
+      setFile(detailData.fileInfo);
+
+      return;
+    }
+  }, [detailData]);
 
   const handleWorksSubmit = (e) => {
     e.preventDefault();
-    // const requestWorks = {
-    //   exhibitedYear: worksYear,
-    //   content: editorRef.current.getInstance().getHtml(),
-    //   file: file,
-    //   projectCategory: category,
-    //   teamName: teamName,
-    //   teamVideoUrl: vedio,
-    //   workName: worksName,
-    // };
-
-    // const memberArr = teamMember.trim().split(' ');
-    // makeArrFromData(memberArr, 'teamMember');
 
     const requestWorks = {
       exhibitedYear: worksYear,
-      content: editorRef.current.getInstance().getHtml(),
+      content: editorRef.current.getInstance().getHtml() || content,
       file: file,
       projectCategory: category,
       teamName: teamName,
       teamVideoUrl: vedio,
       workName: worksName,
-      teamMember: teamMember ? teamMember.trim().split(' ') : null,
-      images: images,
     };
+
+    if (teamMember) {
+      const memberArr = teamMember
+        .trim()
+        .split(' ')
+        .filter((el) => el !== '');
+
+      makeArrFromData(memberArr, 'teamMember');
+    }
+    if (images) {
+      makeArrFromData(images, 'images');
+    }
 
     for (let item in requestWorks) {
       formdata.append(item, requestWorks[item]);
-      if (!requestWorks[item]) formdata.delete(item);
+      if (!requestWorks[item] || !requestWorks[item] === [])
+        formdata.delete(item);
     }
 
     for (let lala of formdata.entries()) {
       console.log(lala);
     }
+    console.log(requestWorks);
 
     switch (workState) {
       case 'create':
-        // 현재 post 에러
-        // createWorks(formdata, history);
-
+        createWorks(formdata, history);
         return;
 
       case 'edit':
@@ -187,18 +211,18 @@ const CreateWork = ({ match, history }) => {
                 ))}
               </select>
             </div>
-            <div className="boards-category">
+            <div className="works-title">
               <strong>제목</strong>
               <input
                 type="text"
                 placeholder="제목을 입력하세요"
                 onChange={(e) => setWorksName(e.target.value)}
+                defaultValue={worksName}
               />
             </div>
           </div>
           <div className="work-create-main">
             <div className="work-editor">
-              <strong>작품 소개</strong>
               <Editor
                 toolbarItems={toolbarItems}
                 previewStyle="vertical"
@@ -206,34 +230,42 @@ const CreateWork = ({ match, history }) => {
                 usageStatistics={false}
                 placeholder="작품소개 글을 작성해 주세요"
                 ref={editorRef}
+                initialValue={content}
+                plugins={[colorSyntax]}
+                language="ko"
               />
             </div>
-            <div className="work-members">
+            <div className="work-members work-row">
               <strong>팀명&팀원 입력</strong>
               <input
                 type="text"
                 placeholder="팀명을 입력하세요"
                 name="teamName"
                 onChange={(e) => setTeamName(e.target.value)}
+                defaultValue={teamName}
+                id="temaName"
               />
               <input
                 type="text"
                 placeholder="팀원을 입력하세요(이름만 입력, 띄어쓰기로 구분)"
                 name="teamMember"
                 onChange={(e) => setTeamMember(e.target.value)}
+                defaultValue={teamMember}
               />
             </div>
-            <div className="work-teams-vedio">
+            <div className="work-teams-vedio work-row">
               <strong>팀 소개영상</strong>
               <input
                 type="text"
                 placeholder="팀을 소개하는 Youtube 영상 링크를 입력하세요"
                 onChange={(e) => setVedio(e.target.value)}
+                defaultValue={vedio}
               />
             </div>
-            <div className="work-images">
+            <div className="work-images work-row">
               <strong>
                 <label htmlFor="works-image">작품사진</label>
+                <i className="upload-icon" />
               </strong>
               <p>5개까지 업로드 가능</p>
               <input
@@ -242,19 +274,30 @@ const CreateWork = ({ match, history }) => {
                 accept="image/*"
                 id="works-image"
                 onChange={handleUploadImages}
+                defaultValue={images}
+                className="file-input"
               />
-              <ul className="works-images"></ul>
+              {!images ? (
+                <div className="works-images none">
+                  등록된 이미지가 없습니다.
+                </div>
+              ) : (
+                <ul className="works-images"></ul>
+              )}
             </div>
-
-            <div className="work-files">
+            <div className="work-files work-row">
               <i className="clip-icon" />
-              <span className="file-name">파일을 선택해주세요</span>
+              <span className="file-name">
+                {file ? file.originalName : '파일을 선택해주세요'}
+              </span>
               <i className="upload-icon" />
               <input
                 type="file"
                 id="works-file"
                 accept=".pdf"
                 onChange={handleUploadFile}
+                defaultValue={file}
+                className="file-input"
               />
               <label className="upload" htmlFor="works-file" />
             </div>

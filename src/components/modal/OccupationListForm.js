@@ -47,13 +47,13 @@ const OccupationListForm = ({
 
   const { translationKR, setJobColor, worksKR, worksColor } = useAppDispatch();
   const occupations = ['MEDIA_ART', 'DESIGNER', 'DEVELOPER', 'PLANNER'];
-  if (type !== 'mainProjectRole') occupations.push(txt);
+  if (type !== 'mainProjectRole') occupations.concat(txt);
   const className =
     type === 'mainProjectRole' ? 'main' : 'subProjectRole' ? 'sub' : null;
 
   const worksCategory = ['MEDIA_ART', 'WEB_APP', 'SOMETINGS', 'GAME'];
   const exhibitedYear = ['2021'];
-  if (worktype === 'worksList') worksCategory.push(txt);
+  if (worktype === 'worksList') worksCategory.concat(txt);
 
   const worksData = useMemo(() =>
     worktype === 'worksList'

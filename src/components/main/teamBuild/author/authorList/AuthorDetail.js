@@ -32,10 +32,10 @@ const AuthorDetail = ({ match, history }) => {
   if (!data) return null;
   if (error) return <div>상세페이지 에러</div>;
 
-  const handleEdit = () => {
-    if (!classOf) return false;
-    history.push(`${match.url}/edit`);
-  };
+  // const handleEdit = () => {
+  //   if (!classOf) return false;
+  //   history.push(`${match.url}/edit`);
+  // };
 
   const handleDelete = () => {
     const delMessage = window.confirm(
@@ -51,7 +51,7 @@ const AuthorDetail = ({ match, history }) => {
     classOf === match.params.id && (
       <EditDeleteButton
         form={'author'}
-        handleEdit={handleEdit}
+        handleEdit={() => history.push(`${match.url}/edit`)}
         handleDelete={handleDelete}
       />
     );
@@ -88,7 +88,13 @@ const AuthorDetail = ({ match, history }) => {
                 {filterClassOf(user.classOf)}학번
               </span>
             </h2>
-            {isLogin && authorEditBtn()}
+            {classOf === match.params.id && (
+              <EditDeleteButton
+                form={'author'}
+                handleEdit={() => history.push(`${match.url}/edit`)}
+                handleDelete={handleDelete}
+              />
+            )}
           </div>
           <p className="author-introduction">
             {content ?? '등록된 자기소개가 없습니다.'}

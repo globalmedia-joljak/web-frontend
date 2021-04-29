@@ -7,8 +7,10 @@ export const worksStateContext = createContext(null);
 export const worksDispatchContext = createContext(null);
 
 const WorksProvider = ({ children }) => {
-  const value = useMemo(() => ({}), []);
-  const dispatch = useMemo(() => ({}), []);
+  const [detailData, setDetailData] = useState(null);
+
+  const value = useMemo(() => ({ detailData }), [detailData]);
+  const dispatch = useMemo(() => ({ setDetailData }), [setDetailData]);
 
   return (
     <worksStateContext.Provider value={value}>
