@@ -51,7 +51,7 @@ const OccupationListForm = ({
   const className =
     type === 'mainProjectRole' ? 'main' : 'subProjectRole' ? 'sub' : null;
 
-  const worksCategory = ['MEDIA_ART', 'WEB_APP', 'SOMETINGS', 'GAME'];
+  const worksCategory = ['MEDIA_ART', 'WEB_APP', 'ANIMATION_FILM', 'GAME'];
   const exhibitedYear = ['2021'];
   if (worktype === 'worksList') worksCategory.concat(txt);
 
