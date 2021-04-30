@@ -22,18 +22,11 @@
     .ideas-top-left {
       display: flex;
       align-items: center;
-<<<<<<< HEAD
 
       .ideas-count {
         display: flex;
         h3 {
           font-size: 17px;
-=======
-      .ideas-count {
-        display: flex;
-        h3 {
-          font-size: 28px;
->>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
           &:nth-child(2) {
             margin-left: 16px;
           }
@@ -47,29 +40,12 @@
         margin-left: 16px;
         h3 {
           color: #5a5a5a;
-<<<<<<< HEAD
           font-size: 17px;
-=======
-          font-size: 28px;
->>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
           cursor: pointer;
         }
       }
     }
 
-<<<<<<< HEAD
-    // .ideas-top-right {
-    //   display: flex;
-    //   position: absolute;
-    //   top: 0%;
-    //   left: 57%;
-    //   .ideas-top-right-button {
-    //     padding: 100px;
-    //   }
-    // }
-
-=======
->>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
     .ideas-top-right {
       display: flex;
       button {
@@ -92,10 +68,7 @@
 
     .ideas-top {
       display: flex;
-<<<<<<< HEAD
       position: relative;
-=======
->>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
       justify-content: space-between;
       flex-direction: row;
       align-items: center;
@@ -130,16 +103,11 @@
 
       .ideas-top-right {
         display: flex;
-<<<<<<< HEAD
         margin-left: -30px;
         margin-top: 20px;
 
         .ideas-top-right-button {
           padding: 100px;
-=======
-        .create {
-          margin-left: 30px;
->>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
         }
       }
     }

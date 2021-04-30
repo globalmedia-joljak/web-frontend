@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import './CreateIdea.scss';
 import { Editor } from '@toast-ui/react-editor';
@@ -7,6 +7,7 @@ import { useAppState } from '../../../../../context/appContext';
 import MemberRoleSquare from '../../team/teamList/MemberRole';
 import { createIdea } from '../../../../../service/api/ideas';
 import OccupationListForm from '../../../../modal/OccupationListForm';
+import ModalTemp from '../../../../modal/ModalTemp';
 
 const CreateIdea = ({ history }) => {
   const {
@@ -18,8 +19,15 @@ const CreateIdea = ({ history }) => {
   const [status, setStatus] = useState('');
   const [category, setCategory] = useState(null);
   const [file, setFile] = useState(null);
-  const [requiredPositions, setRequiredPosition] = useState(null);
+  const [requiredPositions, setRequiredPosition] = useState([]);
   const [contact, setContact] = useState(null);
+  const [filterShow, setFilterShow] = useState(false);
+  const [developerChecked, setDeveloperChecked] = useState(false);
+  const [designerChecked, setDesignerChecked] = useState(false);
+  const [mediaInfo, setMediaInfo] = useState(null);
+  const [plannerChecked, setPlannerChecked] = useState(false);
+
+  const handleFilter = useCallback((e) => setFilterShow(!filterShow));
 
   const handleSubmit = () => {
     if (!title) {
@@ -30,6 +38,12 @@ const CreateIdea = ({ history }) => {
       toast.error('⛔ 카테고리를 적어주세요.');
       return;
     }
+
+    developerChecked === true ? requiredPositions.push('DEVELOPER') : <></>;
+    designerChecked === true ? requiredPositions.push('DESIGNER') : <></>;
+    plannerChecked === true ? requiredPositions.push('PLANNER') : <></>;
+
+    console.log(requiredPositions);
     const request = {
       title: title,
       category: category,
@@ -62,9 +76,13 @@ const CreateIdea = ({ history }) => {
     document.getElementById('file__name').innerHTML = '파일을 선택해주세요.';
   };
 
+  const handleModalSubmit = (e) => setFilterShow(!filterShow);
+
   const handleStatusChange = (e) => {
     e.target.checked ? setStatus('COMPLETE') : setStatus('ONGOING');
   };
+
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -79,101 +97,199 @@ const CreateIdea = ({ history }) => {
         draggable
         pauseOnHover
       />
-      <div className="idea__wrap">
-        <div className="idea__top">
-          <div className="idea__type">
-            <h2>글쓰기</h2>
-          </div>
-          <div className="board__category">
-            <h3>게시판</h3>
-            <input
-              type="text"
-              defaultValue={'아이디어 게시판'}
-              readOnly={true}
-            />
-          </div>
-          <div className="idea__status">
-            <h3>결성 유무</h3>
-            <div className="idea__status__check">
-              <label className="switch" htmlFor="checkbox">
+      {filterShow ? (
+        <>
+          <ModalTemp
+            modalShow={filterShow}
+            handleCancel={setFilterShow}
+            handleOk={handleModalSubmit}
+            form={'author'}
+            btnTxt="선택완료"
+          >
+            <li className="modal__position">
+              <h3>필요한 포지션</h3>
+              <p>필요한 직군을 선택하세요</p>
+              <div className="modal__position__list">
+                {developerChecked === true ? (
+                  <div
+                    className="modal__developer__checked"
+                    onClick={() => setDeveloperChecked(!developerChecked)}
+                  >
+                    <p>개발자</p>
+                  </div>
+                ) : (
+                  <div
+                    className="modal__developer"
+                    onClick={() => setDeveloperChecked(!developerChecked)}
+                  >
+                    <p>개발자</p>
+                  </div>
+                )}
+
+                {designerChecked === true ? (
+                  <div
+                    className="modal__designer__checked"
+                    onClick={() => setDesignerChecked(!designerChecked)}
+                  >
+                    <p>디자이너</p>
+                  </div>
+                ) : (
+                  <div
+                    className="modal__designer"
+                    onClick={() => setDesignerChecked(!designerChecked)}
+                  >
+                    <p>디자이너</p>
+                  </div>
+                )}
+
+                {plannerChecked === true ? (
+                  <div
+                    className="modal__planner__checked"
+                    onClick={() => setPlannerChecked(!plannerChecked)}
+                  >
+                    <p>기획자</p>
+                  </div>
+                ) : (
+                  <div
+                    className="modal__planner"
+                    onClick={() => setPlannerChecked(!plannerChecked)}
+                  >
+                    <p>기획자</p>
+                  </div>
+                )}
+              </div>
+            </li>
+          </ModalTemp>
+        </>
+      ) : (
+        <>
+          <div className="idea__wrap">
+            <div className="idea__top">
+              <div className="idea__type">
+                <h2>글쓰기</h2>
+              </div>
+              <div className="board__category">
+                <h3>게시판</h3>
                 <input
-                  type="checkbox"
-                  id="checkbox"
-                  onChange={handleStatusChange}
+                  type="text"
+                  defaultValue={'아이디어 게시판'}
+                  readOnly={true}
                 />
-                <div className="slider round"></div>
-              </label>
+              </div>
+              <div className="idea__status">
+                <h3>결성 유무</h3>
+                <div className="idea__status__check">
+                  <label className="switch" htmlFor="checkbox">
+                    <input
+                      type="checkbox"
+                      id="checkbox"
+                      onChange={handleStatusChange}
+                    />
+                    <div className="slider round"></div>
+                  </label>
+                </div>
+              </div>
+              <div className="idea__category">
+                <h3>카테고리</h3>
+                <select
+                  name="selectCategory"
+                  id="selectCategory"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                >
+                  <option value="NONE">선택안함</option>
+                  <option value="WEB_APP">웹/앱</option>
+                  <option value="MEDIA_ART">미디어아트</option>
+                  <option value="ANIMATION">영상/애니메이션</option>
+                  <option value="GAME">게임</option>
+                </select>
+              </div>
+              <div className="idea__title">
+                <h3>제목</h3>
+                <input
+                  type="text"
+                  value={title}
+                  placeholder="제목을 입력하세요"
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="idea__body">
+              <div className="idea__body__editor">
+                <Editor
+                  previewStyle="vertical"
+                  width="1194px"
+                  height="600px"
+                  initialEditType="wysiwyg"
+                  placeholder="글을 작성해주세요"
+                  ref={editorRef}
+                  usageStatistics={false}
+                />
+              </div>
+            </div>
+            <div className="idea__bottom">
+              <div className="idea__required">
+                <div className="idea__required__head">
+                  <h3>필요한 포지션</h3>
+                  <div
+                    className="idea__requried__image"
+                    onClick={handleFilter}
+                  ></div>
+                </div>
+                <div className="idea__required__checked">
+                  {developerChecked === true ? (
+                    <MemberRoleSquare role="DEVELOPER" text="DEVELOPER" />
+                  ) : (
+                    <></>
+                  )}
+                  {designerChecked === true ? (
+                    <MemberRoleSquare role="DESIGNER" text="DESIGNER" />
+                  ) : (
+                    <></>
+                  )}
+
+                  {plannerChecked === true ? (
+                    <MemberRoleSquare role="PLANNER" text="PLANNER" />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </div>
+              <div className="idea__contact">
+                <h3>개인 연락처</h3>
+                <input
+                  type="text"
+                  value={contact}
+                  placeholder="핸드폰 번호나 카카오톡 아이디, 이메일 중 자유롭게 입력해주세요."
+                  onChange={(e) => setContact(e.target.value)}
+                />
+              </div>
+              <div className="idea__file">
+                <label className="idea__file__label" htmlFor="input-file">
+                  <div className="idea__file__label__left">
+                    <div className="file__image"></div>
+                    <p id="file__name">파일을 선택해주세요.</p>
+                  </div>
+                  <button
+                    className="delete__button"
+                    onClick={handleFileDelete}
+                  />
+                </label>
+                <input
+                  type="file"
+                  value={mediaInfo}
+                  name="photo"
+                  id="input-file"
+                  onChange={handleFileChange}
+                />
+              </div>
+            </div>
+            <div className="create__button">
+              <button onClick={handleSubmit}>등록</button>
             </div>
           </div>
-          <div className="idea__category">
-            <h3>카테고리</h3>
-            <select
-              name="selectCategory"
-              id="selectCategory"
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="NONE">선택안함</option>
-              <option value="WEB_APP">웹/앱</option>
-              <option value="MEDIA_ART">미디어아트</option>
-              <option value="ANIMATION">영상/애니메이션</option>
-              <option value="GAME">게임</option>
-            </select>
-          </div>
-          <div className="idea__title">
-            <h3>제목</h3>
-            <input
-              type="text"
-              placeholder="제목을 입력하세요"
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="idea__body">
-          <div className="idea__body__editor">
-            <Editor
-              previewStyle="vertical"
-              width="1194px"
-              height="600px"
-              initialEditType="wysiwyg"
-              placeholder="글을 작성해주세요"
-              ref={editorRef}
-              usageStatistics={false}
-            />
-          </div>
-        </div>
-        <div className="idea__bottom">
-          <div className="idea__required">
-            <h3>필요한 포지션</h3>
-            {/* 모달 */}
-          </div>
-          <div className="idea__contact">
-            <h3>개인 연락처</h3>
-            <input
-              type="text"
-              placeholder="핸드폰 번호나 카카오톡 아이디, 이메일 중 자유롭게 입력해주세요."
-              onChange={(e) => setContact(e.target.value)}
-            />
-          </div>
-          <div className="idea__file">
-            <label className="idea__file__label" htmlFor="input-file">
-              <div className="idea__file__label__left">
-                <div className="file__image"></div>
-                <p id="file__name">파일을 선택해주세요.</p>
-              </div>
-              <button className="delete__button" onClick={handleFileDelete} />
-            </label>
-            <input
-              type="file"
-              name="photo"
-              id="input-file"
-              onChange={handleFileChange}
-            />
-          </div>
-        </div>
-        <div className="create__button">
-          <button onClick={handleSubmit}>등록</button>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 };

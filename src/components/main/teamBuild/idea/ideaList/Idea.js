@@ -35,11 +35,7 @@ function Idea({
   return (
     <Link
       to={{
-<<<<<<< HEAD
         pathname: `idea/${id}`,
-=======
-        pathname: `ideaboards/${id}`,
->>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
         state: {
           id,
         },

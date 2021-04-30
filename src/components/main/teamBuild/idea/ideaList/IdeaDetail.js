@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { useAppState } from '../../../../../context/appContext';
@@ -195,21 +194,6 @@ const IdeaDetail = ({ match, history }) => {
           </div>
         </>
       )}
-=======
-import React from 'react';
-import { useAppDispatch, useAppState } from '../../../../../context/appContext';
-import {
-  useTeamsDispatch,
-  useTeamsState,
-} from '../../../../../context/teamContext';
-import useAsync from '../../../../../hooks/useAsync';
-import { createIdea } from '../../../../../service/api/ideas';
-
-const IdeaDetail = ({ match }) => {
-  return (
-    <div className="idea-detail-wrap">
-      <div className="idea-info"></div>
->>>>>>> f321971ce53a7c5dc0ae4747629b212ab5fd57ef
     </div>
   );
 };

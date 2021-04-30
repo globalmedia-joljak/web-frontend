@@ -108,7 +108,7 @@ const RouterLink = (size, tablet, signOutHandler, isLogin) => {
             </Link>
             {type === 'sub-nav' && size < tablet && (
               <ul className="nav-sub-wrap">
-                <SubNavigation type={id} />
+                <SubNavigation type={id} url={path} />
               </ul>
             )}
           </li>
@@ -131,7 +131,7 @@ const RouterLink = (size, tablet, signOutHandler, isLogin) => {
   );
 };
 
-const Navigation = ({ location: { pathname }, history }) => {
+const Navigation = ({ location: { pathname }, match }) => {
   const navEl = useRef();
   const { userInfo, curSize, scroll } = useAppState();
   const { setUserInfo } = useAppDispatch();
@@ -164,7 +164,13 @@ const Navigation = ({ location: { pathname }, history }) => {
 
   // roter lists
   NavClickEvent(curSize, tablet, navEl);
-  const router = RouterLink(curSize, tablet, signOutHandler, userInfo.isLogin);
+  const router = RouterLink(
+    curSize,
+    tablet,
+    signOutHandler,
+    userInfo.isLogin,
+    match,
+  );
 
   return (
     <header

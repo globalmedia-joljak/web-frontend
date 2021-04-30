@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react/cjs/react.development';
 import { useAppState } from '../../context/appContext';
 import useAsync from '../../hooks/useAsync';
 import { getWorksYears } from '../../service/api/work';
+import TeamList from '../main/teamBuild/team/teamList/TeamList';
 
 const SubNavigation = ({ type, url }) => {
   const { crrentYear } = useAppState();
@@ -14,30 +15,18 @@ const SubNavigation = ({ type, url }) => {
     { path: `${url}/idea`, name: '아이디어 게시판' },
   ];
 
-  const [yearsState] = useAsync(() => getWorksYears());
+  const [worksList, setWorksList] = useState([
+    { path: `${url}/2021`, name: '2021' },
+  ]);
 
-  const [worksList, setWorksList] = useState([]);
-  const [subLinks, setSubLinks] = useState([]);
-
-  useEffect(() => {
-    if (yearsState.data) {
-      yearsState.data.map((el) => {
-        setWorksList(worksList.concat({ path: `/works/${el}`, name: el }));
-      });
-    } else {
-      setWorksList(
-        worksList.concat({ path: `/works/${crrentYear}`, name: crrentYear }),
-      );
-    }
-    type === 'teams' ? setSubLinks(teamList) : setSubLinks(worksList);
-  }, [yearsState.data]);
+  const subLinks = type === 'teams' ? teamList : worksList;
 
   return (
     <>
-      {subLinks.map(({ path, name, id }, i) => {
+      {subLinks.map(({ path, name }, i) => {
         return (
           <li key={i}>
-            <Link to={path} className="header-route" id={id}>
+            <Link to={path} className="header-route" id={i}>
               {name}
             </Link>
           </li>

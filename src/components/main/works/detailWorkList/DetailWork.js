@@ -1,55 +1,37 @@
-import { Viewer } from '@toast-ui/react-editor';
 import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
 import { useAppDispatch, useAppState } from '../../../../context/appContext';
 import { useWorksDispatch } from '../../../../context/worksContext';
 import useAsync from '../../../../hooks/useAsync';
-import { getWorkDetail } from '../../../../service/api/work';
+import { deleteWorks, getWorkDetail } from '../../../../service/api/work';
 import EditDeleteButton from '../../common/EditDeleteButton';
-import { data } from '../data';
 import './detailWorkStyle.scss';
+import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
 
 const DetailWork = ({ match, history }) => {
   const { worksKR, worksColor } = useAppDispatch();
   const {
-    userInfo: { name },
+    currentYears,
+    userInfo: { name, isLogin },
   } = useAppState();
+
+  const { setDetailData } = useWorksDispatch();
+
   const detailId = match.params.id;
   const [best, setBest] = useState(false);
-  // TODO: 실제 추가해서 연결해줘야 한다.
-  // const [workDetail] = useAsync(() => getWorkDetail(detailId), [
-  //   detailId,
-  // ]);
+  const [workDetail] = useAsync(async () => await getWorkDetail(detailId), [
+    detailId,
+  ]);
 
-  // const { laodig, data, erro } = workDetail;
-
-  // const [isItAuthor, setIsItAuthor] = useState(false);
-  const filterDetailData = () => {
-    let detailData = data.workResponseList.filter(
-      (el) => el.id === Number(detailId),
-    );
-    return { detailData };
-  };
-
-  const { detailData } = filterDetailData();
-  const handleEdit = () => history.push(`${match.url}/edit`);
+  const { loading, data, error } = workDetail;
 
   const handleDelete = () => {
-    console.log('delete');
+    const delMessage = window.confirm(`졸업 작품을 삭제 하시겠습니까?`);
+    if (delMessage) {
+      deleteWorks(detailId);
+      setTimeout(() => history.push(`/works/${currentYears}`), 1000);
+    }
   };
-
-  // console.log(detailData);
-  console.log(detailData);
-  const {
-    author,
-    projectCategory,
-    workName,
-    teamName,
-    teamMember,
-    createDate,
-    imageInfoList,
-    content,
-  } = detailData[0];
 
   const filterDate = () => {
     const splitIdx = createDate.indexOf('T');
@@ -73,6 +55,27 @@ const DetailWork = ({ match, history }) => {
     };
     return style;
   };
+
+  if (loading) return <div>로딩중...</div>;
+  if (!data) return null;
+  if (error) return <div>에러 _ worksDetail</div>;
+
+  const handleEdit = () => {
+    setDetailData(data);
+    history.push(`${match.url}/edit`);
+  };
+
+  const {
+    author,
+    projectCategory,
+    workName,
+    teamName,
+    teamMember,
+    createDate,
+    imageInfoList,
+    content,
+  } = data;
+
   return (
     <div className="work-detail-wrap page-box">
       <div className="work-detail-inr">
@@ -128,7 +131,7 @@ const DetailWork = ({ match, history }) => {
           </section>
           <section className="about-team-introduce">
             <strong>작품 소개</strong>
-            <Viewer initialValue={content} />
+            <p>{content}</p>
           </section>
         </div>
         <div className="work-detail-footer">
