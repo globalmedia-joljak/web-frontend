@@ -9,7 +9,7 @@ import {
 } from 'react/cjs/react.development';
 import { useAppDispatch } from '../../../../context/appContext';
 import { useWorksState } from '../../../../context/worksContext';
-import { createWorks } from '../../../../service/api/work';
+import { createWorks, updateWorks } from '../../../../service/api/work';
 import './createWorkStyle.scss';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
@@ -36,7 +36,7 @@ const toolbarItems = [
   'code',
   'codeblock',
 ];
-const worksCategory = ['MEDIA_ART', 'WEB_APP', 'SOMETINGS', 'GAME'];
+const worksCategory = ['MEDIA_ART', 'WEB_APP', 'ANIMATION_FILM', 'GAME'];
 
 const CreateWork = ({ match, history }) => {
   const workState = match.params.state;
@@ -92,6 +92,14 @@ const CreateWork = ({ match, history }) => {
   };
 
   const handleUploadFile = (e) => setFile(e.target.files[0]);
+  const handleFileDel = (e) => {
+    if (!e.target.parentElement.classList.contains('fetch-file')) return false;
+
+    setFile(null);
+    if (detailData.file.modifyName) {
+      return formdata.append('deleteFileName', detailData.modifyName);
+    }
+  };
 
   useEffect(() => {
     if (workState === 'edit' && detailData) {
@@ -136,14 +144,25 @@ const CreateWork = ({ match, history }) => {
 
     for (let item in requestWorks) {
       formdata.append(item, requestWorks[item]);
-      if (!requestWorks[item] || !requestWorks[item] === [])
+      if (item === 'file' && detailData.file) {
+        formdata.delete('file');
+      }
+      // if (item === 'images'&&detailData.images) {
+      //     formdata.delete('images');
+      // }
+      if (!requestWorks[item] || requestWorks[item] === []) {
         formdata.delete(item);
+
+        //   // 이미지는 실제로 넣어봐서 해보자
+        // if (item === 'images' && detailData.images) {
+        //   formdata.append('deleteImagesName', requestWorks[item].modifyName);
+        // }
+      }
     }
 
-    for (let lala of formdata.entries()) {
-      console.log(lala);
+    for (let i of formdata.entries()) {
+      console.log(i);
     }
-    console.log(requestWorks);
 
     switch (workState) {
       case 'create':
@@ -151,11 +170,24 @@ const CreateWork = ({ match, history }) => {
         return;
 
       case 'edit':
-        console.log('edit');
+        // updateWorks({ worksId, history }, formdata);
         return;
       default:
     }
   };
+  const [fileName, setFileName] = useState('파일을 선택해 주세요');
+
+  useEffect(() => {
+    console.log(file);
+    if (file) {
+      return file.name
+        ? setFileName(file.name)
+        : setFileName(detailData.fileInfo.name);
+    } else {
+      return setFileName('파일을 선택해주세요.');
+    }
+  }, [file]);
+  console.log(file);
 
   return (
     <>
@@ -264,8 +296,10 @@ const CreateWork = ({ match, history }) => {
             </div>
             <div className="work-images work-row">
               <strong>
-                <label htmlFor="works-image">작품사진</label>
-                <i className="upload-icon" />
+                <label className="upload" htmlFor="works-image">
+                  작품사진
+                  <i className="upload-icon" />
+                </label>
               </strong>
               <p>5개까지 업로드 가능</p>
               <input
@@ -286,11 +320,18 @@ const CreateWork = ({ match, history }) => {
               )}
             </div>
             <div className="work-files work-row">
-              <i className="clip-icon" />
-              <span className="file-name">
-                {file ? file.originalName : '파일을 선택해주세요'}
-              </span>
-              <i className="upload-icon" />
+              <strong>
+                <label className="upload" htmlFor="works-file">
+                  파일첨부
+                  <i className="upload-icon" />
+                </label>
+              </strong>
+              <div className={`file-box ${file ? 'fetch-file' : ''}`}>
+                <i className="clip-icon" />
+                <span className="file-name">{fileName}</span>
+                <i className="del-file-icon" onClick={handleFileDel} />
+              </div>
+
               <input
                 type="file"
                 id="works-file"
@@ -299,7 +340,6 @@ const CreateWork = ({ match, history }) => {
                 defaultValue={file}
                 className="file-input"
               />
-              <label className="upload" htmlFor="works-file" />
             </div>
           </div>
 

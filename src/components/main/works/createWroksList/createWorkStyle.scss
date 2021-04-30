@@ -12,7 +12,7 @@
     }
   }
   .work-editor {
-    height: 700px;
+    height: 747px;
     > div {
       height: 100% !important;
       .tui-editor-defaultUI {
@@ -124,14 +124,26 @@
     strong {
       margin-bottom: 24px;
       font-size: 24px;
-      display: flex;
-      column-gap: 8px;
-      align-items: center;
-      .upload-icon {
-        @include backgroundImage;
-        background-image: url('../../../../assets/images/add_circle@2x.png');
-        width: 24px;
-        height: 24px;
+
+      label {
+        display: flex;
+        column-gap: 8px;
+        align-items: center;
+        .upload-icon {
+          @include backgroundImage;
+          background-image: url('../../../../assets/images/add_circle@2x.png');
+          width: 24px;
+          height: 24px;
+        }
+      }
+      &:hover {
+        label {
+          color: #6d6d6dcc;
+        }
+
+        .upload-icon {
+          opacity: 0.5;
+        }
       }
     }
     input {
@@ -150,15 +162,6 @@
       strong {
         width: fit-content;
         margin-bottom: 8px;
-        &:hover {
-          label {
-            color: #6d6d6dcc;
-          }
-
-          .upload-icon {
-            opacity: 0.3;
-          }
-        }
       }
       p {
         margin-bottom: 24px;
@@ -176,13 +179,74 @@
       }
     }
 
-    label,
-    .upload-icon {
+    label {
       cursor: pointer;
     }
+
     .file-input {
       display: none;
     }
+
+    &.work-files {
+      margin-bottom: 88px;
+      .file-box {
+        height: 72px;
+        background-color: #ffffff;
+        border-radius: 4px;
+        display: grid;
+        padding: 0 48px;
+        align-items: center;
+        grid-template-columns: repeat(2, max-content) 1fr;
+        font-size: 20px;
+
+        .clip-icon {
+          @include backgroundImage;
+          background-image: url('../../../../assets/images/paperclip@2x.png');
+          width: 15px;
+          height: 16px;
+          margin-right: 16px;
+        }
+        .file-name {
+          color: #6d6d6dcc;
+        }
+        .del-file-icon {
+          @include backgroundImage;
+          background-image: url('../../../../assets/images/delete@2x.png');
+          justify-self: flex-end;
+          width: 22px;
+          height: 22px;
+          cursor: pointer;
+        }
+
+        // 파일을 첨부할경우
+        &.fetch-file {
+          background-color: #baa2ff;
+
+          .file-name {
+            color: #ffffff;
+          }
+          .clip-icon {
+            background-image: url('../../../../assets/images/paperclip_white@2x.png');
+          }
+          .del-file-icon {
+            background-image: url('../../../../assets/images/delete_white@2x.png');
+          }
+        }
+      }
+    }
+  }
+}
+
+.work-create-footer {
+  justify-content: center;
+  button {
+    background-color: #074fd8;
+    box-shadow: 0px 0px 3px #00000029;
+    color: #ffffff;
+    width: 234px;
+    height: 56px;
+    font-size: 20px;
+    border-radius: 4px;
   }
 }
 @include response('tablet') {
@@ -258,6 +322,29 @@
           font-size: 16px;
         }
       }
+
+      &.work-files {
+        .file-box {
+          height: 60px;
+          padding: 0 24px;
+          .clip-icon {
+            width: 11px;
+            height: 12px;
+            margin-right: 15px;
+          }
+          .file-name {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  .work-create-footer {
+    button {
+      width: 172px;
+      height: 41px;
+      font-size: 14px;
     }
   }
 }
@@ -338,6 +425,33 @@
           margin-bottom: 8px;
         }
       }
+      &.work-files {
+        margin-bottom: 40px;
+        padding: 0 11px;
+        .file-box {
+          height: 48px;
+          .clip-icon {
+            width: 9px;
+            height: 10px;
+            margin-right: 6px;
+          }
+          .file-name {
+            font-size: 12px;
+          }
+          .del-file-icon {
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+    }
+  }
+
+  .work-create-footer {
+    button {
+      width: 128px;
+      height: 30px;
+      font-size: 11px;
     }
   }
 }
