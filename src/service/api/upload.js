@@ -13,6 +13,7 @@ const uploadImage = async (classOf, image) => {
     return data;
   } catch (e) {
     console.log(e);
+    console.log(e.response);
   }
 }
 

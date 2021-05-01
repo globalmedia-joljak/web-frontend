@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { getTeam } from '../../../../../service/api/teams';
+import { getTeam, deleteTeam } from '../../../../../service/api/teams';
 import { useAppState } from '../../../../../context/appContext';
 import { Viewer } from '@toast-ui/react-editor';
 import './DetailTeam.scss';
@@ -40,18 +40,20 @@ const DetailTeanm = ({match, history}) => {
   }, []);
 
   const hadleDelete = () => {
-    // TODO : 삭제 API
-    console.log('삭제 api');
+    if (window.confirm("정말로 삭제하시겠습니까?")) {
+      deleteTeam(id).then((response) => {
+        history.push('/team-building/teams');
+      })
+    }
   }
   const hadleUpdate =  () => {
-    // TODO : 수정 API
-    console.log('수정 api');
+    history.push(`${match.url}/update`);
   }
 
   return (
     <div>
       {isLoading ? (
-        <div>loading...</div>
+        <div>Loading...</div>
       ) : (
         <>
         <ToastContainer

@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+
 import '@toast-ui/editor/dist/toastui-editor.css';
-import './CreateTeam.scss';
 import { Editor } from '@toast-ui/react-editor';
 import { ToastContainer, toast } from 'react-toastify';
 import MemberRoleSquare from '../teamList/MemberRole';
 import { useAppState } from '../../../../../context/appContext';
-import { createTeam } from '../../../../../service/api/teams';
 import { uploadImage } from '../../../../../service/api/upload';
+import '../createTeam/CreateTeam.scss';
+import { getTeam, updateTeam } from '../../../../../service/api/teams';
 
 const toolbarItems = [
   'heading',
@@ -31,8 +32,11 @@ const toolbarItems = [
   'codeblock',
 ];
 
-const CreateTeam = ({ history, match }) => {
+const UpdateTeam = ({ match, history }) => {
+  const id = match.params.id;
   const { userInfo } = useAppState();
+  const [team, setTeam] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const editorRef = useRef();
   const [teamName, setTeamName] = useState(null);
@@ -42,6 +46,29 @@ const CreateTeam = ({ history, match }) => {
   const [developers, setDevelopers] = useState(null);
   const [mediaArts, setMediaArts] = useState(null);
   const [planners, setPlanners] = useState(null);
+  const [deleteFileName, setDeleteFileName] = useState(null);
+  const [content, setContent] = useState(null);
+
+
+  useEffect(() => {
+    getTeam(id, history)
+      .then((response) => {
+        setTeam(response);
+        setIsLoading(false);
+        setTeamName(response.teamName);
+        setCategory(response.projectCategory);
+        setDesigners(response.designerMember);
+        setDevelopers(response.developerMember);
+        setPlanners(response.plannerMember);
+        setMediaArts(response.mediaArtMember);
+        setContent(response.content);
+        if (response.author !== userInfo.classOf)
+          history.push(history.push("/error"));
+      })
+      .catch((e) => {
+        history.push(`/error`);
+      });
+  }, []);
 
   const handleSubmit = () => {
     if (!teamName) {
@@ -52,11 +79,13 @@ const CreateTeam = ({ history, match }) => {
       toast.error('⛔ 카테고리를 정해주세요.');
       return;
     }
+
     const request = {
       teamName: teamName,
       content: editorRef.current.getInstance().getHtml(),
       projectCategory: category,
     };
+
     if (file) {
       request['file'] = file;
     }
@@ -72,17 +101,22 @@ const CreateTeam = ({ history, match }) => {
     if (planners) {
       request['plannerMember'] = planners;
     }
-    createTeam(request)
-      .then((response) => {
-        console.log(response);
-        history.push(`/team-building/teams/${response.id}`);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+    if (deleteFileName) {
+      request['deleteFileName'] = deleteFileName;
+    }
 
+    updateTeam(id, request)
+    .then((response) => {
+      history.push(`/team-building/teams/${id}`);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+
+  };
+  
   const handleFileChange = (e) => {
+    handleFileDelete();
     const file = e.target.files[0];
     setFile(file);
     if (!file) {
@@ -93,6 +127,9 @@ const CreateTeam = ({ history, match }) => {
   };
 
   const handleFileDelete = () => {
+    if (team.fileInfo) {
+      setDeleteFileName(team.fileInfo.modifyName);
+    }
     setFile(null);
     document.getElementById('file__name').innerHTML = '파일을 선택해주세요.';
   };
@@ -110,7 +147,7 @@ const CreateTeam = ({ history, match }) => {
         draggable
         pauseOnHover
       />
-      {!userInfo.classOf ? (<div>Loading...</div>) : (
+      {isLoading ? (<div>Loading...</div>) : (
         <div className="team__wrap">
         <div className="team__top">
           <div className="team__type">
@@ -126,11 +163,12 @@ const CreateTeam = ({ history, match }) => {
               name="selectCategory"
               id="selectCategory"
               onChange={(e) => setCategory(e.target.value)}
+              value={category ? category : "NONE"}
             >
               <option value="NONE">선택안함</option>
               <option value="WEB_APP">웹/앱</option>
               <option value="MEDIA_ART">미디어아트</option>
-              <option value="ANIMATION_FILM">영상/애니메이션</option>
+              <option value="ANIMATION">영상/애니메이션</option>
               <option value="GAME">게임</option>
             </select>
           </div>
@@ -140,6 +178,7 @@ const CreateTeam = ({ history, match }) => {
               type="text"
               placeholder="팀명을 입력하세요"
               onChange={(e) => setTeamName(e.target.value)}
+              value={teamName ? teamName : ""}
             />
           </div>
         </div>
@@ -152,6 +191,7 @@ const CreateTeam = ({ history, match }) => {
               height="600px"
               initialEditType="wysiwyg"
               placeholder="글을 작성해주세요"
+              initialValue={team.content}
               ref={editorRef}
               usageStatistics={false}
               hooks={{
@@ -174,15 +214,16 @@ const CreateTeam = ({ history, match }) => {
                 type="text"
                 onChange={(e) => setDesigners(e.target.value)}
                 placeholder="이름(학번) 형식으로 입력해주세요. ex)홍길동(20151234)"
+                value={designers ? designers : ""}
               />
             </div>
             <div className="team__member">
               <MemberRoleSquare role="DEVELOPER" text="DEVELOPER" />
-
               <input
                 type="text"
                 onChange={(e) => setDevelopers(e.target.value)}
                 placeholder="이름(학번) 형식으로 입력해주세요. ex)홍길동(20151234)"
+                value={developers ? developers  : ""}
               />
             </div>
             <div className="team__member">
@@ -191,6 +232,7 @@ const CreateTeam = ({ history, match }) => {
                 type="text"
                 onChange={(e) => setMediaArts(e.target.value)}
                 placeholder="이름(학번) 형식으로 입력해주세요. ex)홍길동(20151234)"
+                value={mediaArts ? mediaArts  : ""}
               />
             </div>
             <div className="team__member">
@@ -199,13 +241,16 @@ const CreateTeam = ({ history, match }) => {
                 type="text"
                 onChange={(e) => setPlanners(e.target.value)}
                 placeholder="이름(학번) 형식으로 입력해주세요. ex)홍길동(20151234)"
+                value={planners ? planners  : ""}
               />
             </div>
             <div className="team__file">
               <label className="team__file__label" htmlFor="input-file">
                 <div className="team__file__label__left">
                   <div className="file__image"></div>
-                  <p id="file__name">파일을 선택해주세요.</p>
+                    <p id="file__name">
+                      {!team.fileInfo? '파일을 선택해주세요.' :  team.fileInfo.originalName}
+                    </p>
                 </div>
                 <button
                   className="delete__button"
@@ -226,9 +271,8 @@ const CreateTeam = ({ history, match }) => {
         </div>
       </div>
       )}
-    
     </>
   );
-};
+}
 
-export default CreateTeam;
+export default UpdateTeam;

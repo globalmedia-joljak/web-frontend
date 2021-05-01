@@ -102,3 +102,22 @@
     
   }
 }
+
+@include response('tablet') {
+  .team {
+  
+    .team__teamname {
+      font-size: 14px;
+    }
+    .team__members {
+      width: 100%;
+      order: 2;
+    }
+
+    .team__body__bottom {
+      font-size: 12px;
+    }
+    
+    
+  }
+}
