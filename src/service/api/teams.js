@@ -41,12 +41,42 @@ const createTeam = async (createTeamRequest) => {
 
     return data;
   } catch (e) {
+    console.log(e.response);
     toast.error('일시적인 오류가 발생했습니다. 오류가 지속되면 관리자에게 문의해주세요.');
+  }
+}
+
+const updateTeam = async (id, updateTeamRequest) => {
+  const formdata = new FormData();
+
+  for (let attr in updateTeamRequest) {
+    formdata.append(attr, updateTeamRequest[attr]);
+  }
+
+  try {
+    const { data } = await client.patch(`/teams/${id}`, formdata, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+    return data;
+  } catch (e) {
+    console.log(e.response);
+    toast.error('일시적인 오류가 발생했습니다. 오류가 지속되면 관리자에게 문의해주세요.');
+  }
+}
+
+const deleteTeam = async (id) => {
+  try {
+    await client.delete(`/teams/${id}`)
+  } catch (e) {
+    console.log(e.response);
   }
 }
 
 export {
   getTeam,
   getTeams,
-  createTeam
+  createTeam,
+  updateTeam,
+  deleteTeam,
 };

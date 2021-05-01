@@ -69,14 +69,31 @@
       }
       .teams-top-right {
         display: flex;
-        .create {
-          margin-left: 40px;
+        button {
+          &:last-child {
+            margin-left: 24px;
+          }
         }
       }
     }
   
     .teams-body {
       
+    }
+  }
+}
+
+@include response('phone') {
+  .teams-wrap {
+  
+    .teams-top {
+      .teams-top-right {
+        button {
+          &:last-child {
+            margin-left: 8px;
+          }
+        }
+      }
     }
   }
 }
