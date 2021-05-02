@@ -1,24 +1,30 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import './CreateIdea.scss';
+import './updateIdea.scss';
 import { Editor } from '@toast-ui/react-editor';
 import { ToastContainer, toast } from 'react-toastify';
 import { useAppState } from '../../../../../context/appContext';
 import MemberRoleSquare from '../../team/teamList/MemberRole';
-import { createIdea } from '../../../../../service/api/ideas';
+import {
+  getIdea,
+  updateIdea,
+  createIdea,
+} from '../../../../../service/api/ideas';
 import ModalTemp from '../../../../modal/ModalTemp';
 import { uploadImage } from '../../../../../service/api/upload';
 
-const CreateIdea = ({ history }) => {
+const UpdateIdea = ({ match, history }) => {
   const {
     userInfo: { isLogin, classOf },
   } = useAppState();
   const { userInfo } = useAppState();
+  const id = match.params.id;
 
   const editorRef = useRef();
   const [title, setTitle] = useState('');
+  const [idea, setIdea] = useState(null);
   const [status, setStatus] = useState('ONGOING');
-
+  const [isLoading, setIsLoading] = useState(true);
   const [category, setCategory] = useState('');
   const [file, setFile] = useState(null);
   const [requiredPositions, setRequiredPositions] = useState([]);
@@ -31,6 +37,36 @@ const CreateIdea = ({ history }) => {
   const [mediaArtChecked, setMediaArtChecked] = useState(false);
   const [content, setContent] = useState('');
   let formdata = new FormData();
+
+  useEffect(() => {
+    getIdea(id, history).then((response) => {
+      setIdea(response);
+
+      setTitle(response.title);
+      setIsLoading(false);
+      setCategory(response.category);
+
+      setContent(response.content);
+      setStatus(response.status);
+      setContact(response.contact);
+      for (let attr in response.requiredPositions) {
+        response.requiredPositions[attr] === 'DEVELOPER' ? (
+          setDeveloperChecked(true)
+        ) : response.requiredPositions[attr] === 'DESIGNER' ? (
+          setDesignerChecked(true)
+        ) : response.requiredPositions[attr] === 'PLANNER' ? (
+          setPlannerChecked(true)
+        ) : response.requiredPositions[attr] === 'MEDIA_ART' ? (
+          setMediaArtChecked(true)
+        ) : (
+          <></>
+        );
+      }
+      if (response.classOf !== userInfo.classOf) {
+        history.push(history.push('/error'));
+      }
+    });
+  }, []);
 
   const handleFilter = useCallback((e) => {
     setContent(editorRef.current.getInstance().getHtml());
@@ -61,6 +97,7 @@ const CreateIdea = ({ history }) => {
       content: editorRef.current.getInstance().getHtml(),
       contact: contact,
     };
+
     if (file) {
       request['file'] = file;
     }
@@ -69,7 +106,7 @@ const CreateIdea = ({ history }) => {
       formdata.append(attr, request[attr]);
     }
 
-    createIdea(formdata).then((response) => {
+    updateIdea(id, formdata).then((response) => {
       history.push(`/team-building/idea/${response.id}`);
     });
   };
@@ -101,8 +138,6 @@ const CreateIdea = ({ history }) => {
     });
   });
 
-  useEffect(() => {}, []);
-
   return (
     <>
       <ToastContainer
@@ -116,6 +151,7 @@ const CreateIdea = ({ history }) => {
         draggable
         pauseOnHover
       />
+
       {filterShow ? (
         <>
           <ModalTemp
@@ -196,6 +232,8 @@ const CreateIdea = ({ history }) => {
             </li>
           </ModalTemp>
         </>
+      ) : isLoading ? (
+        <div>Loading...</div>
       ) : (
         <>
           <div className="idea__wrap">
@@ -215,12 +253,23 @@ const CreateIdea = ({ history }) => {
                 <h3>결성 유무</h3>
                 <div className="idea__status__check">
                   <label className="switch" htmlFor="checkbox">
-                    <input
-                      type="checkbox"
-                      id="checkbox"
-                      value={status}
-                      onChange={handleStatusChange}
-                    />
+                    {idea.status === 'ONGOING' ? (
+                      <input
+                        type="checkbox"
+                        id="checkbox"
+                        value={status}
+                        onChange={handleStatusChange}
+                      />
+                    ) : (
+                      <input
+                        checked
+                        type="checkbox"
+                        id="checkbox"
+                        value={status}
+                        onChange={handleStatusChange}
+                      />
+                    )}
+
                     <div className="slider round"></div>
                   </label>
                 </div>
@@ -257,7 +306,7 @@ const CreateIdea = ({ history }) => {
                   width="1194px"
                   height="600px"
                   initialEditType="wysiwyg"
-                  initialValue={content}
+                  initialValue={idea.content}
                   placeholder="글을 작성해주세요"
                   ref={editorRef}
                   usageStatistics={false}
@@ -312,20 +361,24 @@ const CreateIdea = ({ history }) => {
                   onChange={(e) => setContact(e.target.value)}
                 />
               </div>
+
               <div className="idea__file">
                 <label className="idea__file__label" htmlFor="input-file">
                   <div className="idea__file__label__left">
                     <div className="file__image"></div>
-                    <p id="file__name">파일을 선택해주세요.</p>
+                    <p id="file__name">
+                      {!idea.fileInfo
+                        ? '파일을 선택해주세요.'
+                        : idea.fileInfo.originalName}
+                    </p>
                   </div>
                   <button
                     className="delete__button"
                     onClick={handleFileDelete}
-                  />
+                  ></button>
                 </label>
                 <input
                   type="file"
-                  value={mediaInfo}
                   name="photo"
                   id="input-file"
                   onChange={handleFileChange}
@@ -342,4 +395,4 @@ const CreateIdea = ({ history }) => {
   );
 };
 
-export default CreateIdea;
+export default UpdateIdea;

@@ -26,13 +26,7 @@ const getIdeas = async (pageNum, error) => {
   }
 };
 
-const createIdea = async (createIdeaRequest) => {
-  const formdata = new FormData();
-
-  for (let attr in createIdeaRequest) {
-    formdata.append(attr, createIdeaRequest[attr]);
-  }
-
+const createIdea = async (formdata) => {
   try {
     const { data } = await client.post(`/ideaboards`, formdata, {
       headers: { 'Content-Type': 'multipart/form-data' },
@@ -46,4 +40,27 @@ const createIdea = async (createIdeaRequest) => {
   }
 };
 
-export { getIdea, getIdeas, createIdea };
+const updateIdea = async (id, formdata) => {
+  try {
+    const { data } = await client.patch(`/ideaboards/${id}`, formdata, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+    return data;
+  } catch (e) {
+    console.log(e.response);
+    toast.error(
+      '일시적인 오류가 발생했습니다. 오류가 지속되면 관리자에게 문의해주세요.',
+    );
+  }
+};
+
+const deleteIdea = async (id) => {
+  try {
+    await client.delete(`/ideaboards/${id}`);
+  } catch (e) {
+    console.log(e.response);
+  }
+};
+
+export { getIdea, getIdeas, createIdea, deleteIdea, updateIdea };

@@ -29,9 +29,6 @@
     opacity: 0.3;
   }
 
-  .idea__status__ongoing {
-  }
-
   .idea__id {
     order: 1;
     width: 5%;
@@ -63,6 +60,9 @@
     text-align: right;
   }
 }
+.idea:hover {
+  background-color: #00000029;
+}
 
 @include response('tablet') {
   .idea {
@@ -93,20 +93,20 @@
     }
     .idea__title {
       font-size: 20px;
-      width: 100%;
+      width: 90%;
       order: 1;
       margin-left: 90px;
       margin-top: 10px;
       margin-bottom: 10px;
     }
     .idea__required {
-      width: 100%;
+      width: 90%;
       margin-left: 90px;
       justify-content: flex-start;
       order: 3;
     }
     .idea__body__bottom {
-      width: 100%;
+      width: 90%;
       display: flex;
       margin-left: 90px;
       order: 4;
