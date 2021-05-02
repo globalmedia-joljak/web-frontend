@@ -69,116 +69,65 @@
     background-color: #ffffff;
     margin-bottom: 32px;
     padding: 12px 12px;
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     border-radius: 8px;
     text-align: left;
-    box-sizing: border-box;
-    flex-direction: row;
-    width: 100%;
-    .idea__status {
-      width: 10%;
-      order: 0;
-    }
 
-    .idea__id {
-      width: 0;
-      display: none;
-    }
-    .idea__title {
-      font-size: 20px;
-      width: 100%;
-      order: 1;
-      margin: 10px 0px;
-    }
-    .idea__required {
-      width: 100%;
-      order: 2;
-    }
-    .idea__body__bottom {
-      width: 100%;
-      display: flex;
-      order: 3;
-      align-items: center;
-      box-sizing: border-box;
-      margin-top: 10px;
-      margin-bottom: 12px;
-      .idea__category {
-        width: 30%;
-        order: 3;
-      }
-      .idea__author {
-        width: 30%;
-        order: 3;
-        color: #6d6d6dcc;
-      }
-      .idea__date {
-        width: 30%;
-        order: 3;
-        text-align: right;
-        color: #6d6d6dcc;
-      }
-    }
-  }
-}
-
-@include response('phone') {
-  .idea {
-    background-color: #ffffff;
-    margin-bottom: 32px;
-    padding: 12px 12px;
-    display: flex;
-    align-items: center;
-    border-radius: 8px;
-    text-align: left;
     box-sizing: border-box;
     flex-direction: column;
     width: 100%;
+
     .idea__status {
       width: 10%;
-      order: 0;
+      order: 1;
+      position: absolute;
+      left: 4%;
+      top: 42%;
     }
 
     .idea__id {
-      width: 0;
       display: none;
     }
     .idea__title {
       font-size: 20px;
-      width: 50%;
+      width: 100%;
       order: 1;
-      margin: 10px 0px;
+      margin-left: 90px;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
     .idea__required {
       width: 100%;
-      order: 2;
+      margin-left: 90px;
+      justify-content: flex-start;
+      order: 3;
     }
     .idea__body__bottom {
       width: 100%;
       display: flex;
-      order: 3;
-      align-items: center;
+      margin-left: 90px;
+      order: 4;
+      align-items: flex-start;
       box-sizing: border-box;
       margin-top: 10px;
       margin-bottom: 12px;
       .idea__category {
         width: 30%;
-        order: 3;
-      }
-      .idea__required {
         order: 4;
-        display: flex;
-        align-items: center;
-        width: 30%;
       }
       .idea__author {
         width: 30%;
-        order: 5;
+        order: 4;
         color: #6d6d6dcc;
       }
       .idea__date {
         width: 30%;
-        order: 6;
+        order: 4;
+        margin-left: -10%;
+        text-align: right;
         color: #6d6d6dcc;
       }
     }
