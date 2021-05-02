@@ -195,6 +195,7 @@ const SignUp = ({ history, location }) => {
                 projectRole={mainProjectRole}
                 type="mainProjectRole"
                 handleChoice={handleChoice}
+                worktype=""
               />
             </li>
             <li className="list r2">
@@ -204,6 +205,7 @@ const SignUp = ({ history, location }) => {
                 type="subProjectRole"
                 handleChoice={handleChoice}
                 txt="선택안함"
+                worktype=""
               />
             </li>
             {curSize > tablet && (
