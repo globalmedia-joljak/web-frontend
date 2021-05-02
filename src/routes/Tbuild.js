@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import ListOfIdeaForm from '../components/main/teamBuild/idea/ListOfIdeaForm.js';
+
 import Ideas from '../components/main/teamBuild/idea/index.js';
 import '../components/mainStyle.scss';
 import AuthorForm from '../components/main/teamBuild/author/index.js';

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { useAppState } from '../../../../../context/appContext';
 import { Viewer } from '@toast-ui/react-editor';
-import { getIdea } from '../../../../../service/api/ideas';
+import { getIdea, deleteIdea } from '../../../../../service/api/ideas';
 import './IdeaDetail.scss';
 import MemberRoleSquare from '../../team/teamList/MemberRole';
 import Ideas from '..';
@@ -23,8 +23,6 @@ const IdeaDetail = ({ match, history }) => {
         history.push(`/error`);
         console.log(e);
       });
-    // setIdea(dummy);
-    // setIsLoading(false);
   }, []);
 
   const translateIdeaCategory = (value) => {
@@ -43,10 +41,15 @@ const IdeaDetail = ({ match, history }) => {
   };
 
   const handleDelete = () => {
-    // todo: 삭제
+    if (window.confirm('정말로 삭제하시겠습니까?')) {
+      deleteIdea(id).then((response) => {
+        history.push('/team-building/idea');
+      });
+    }
   };
+
   const handleUpdate = () => {
-    // todo: 수정
+    history.push(`${match.url}/update`);
   };
 
   return (
@@ -140,6 +143,12 @@ const IdeaDetail = ({ match, history }) => {
                       />
                     ) : required === 'PLANNER' ? (
                       <MemberRoleSquare key={2} role="PLANNER" text="PLANNER" />
+                    ) : required === 'MEDIA_ART' ? (
+                      <MemberRoleSquare
+                        key={3}
+                        role="MEDIA_ART"
+                        text="MEDIA_ART"
+                      />
                     ) : (
                       <></>
                     ),

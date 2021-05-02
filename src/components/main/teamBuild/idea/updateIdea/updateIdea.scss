@@ -286,10 +286,8 @@
       align-items: flex-start;
       padding: 20px 0px;
       border-top: 1px solid #6d6d6d66;
-
       .idea__required__head {
         display: flex;
-        cursor: pointer;
       }
       .idea__requried__image {
         @include backgroundImage;
@@ -297,6 +295,7 @@
         width: 20px;
         height: 20px;
         margin-left: 10px;
+        cursor: pointer;
       }
       .idea__required__checked {
         display: flex;

@@ -1,24 +1,30 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import './CreateIdea.scss';
+import './updateIdea.scss';
 import { Editor } from '@toast-ui/react-editor';
 import { ToastContainer, toast } from 'react-toastify';
 import { useAppState } from '../../../../../context/appContext';
 import MemberRoleSquare from '../../team/teamList/MemberRole';
-import { createIdea } from '../../../../../service/api/ideas';
+import {
+  getIdea,
+  updateIdea,
+  createIdea,
+} from '../../../../../service/api/ideas';
 import ModalTemp from '../../../../modal/ModalTemp';
 import { uploadImage } from '../../../../../service/api/upload';
 
-const CreateIdea = ({ history }) => {
+const UpdateIdea = ({ match, history }) => {
   const {
     userInfo: { isLogin, classOf },
   } = useAppState();
   const { userInfo } = useAppState();
-
+  const id = match.params.id;
+  const [ideaId, setIdeaId] = useState('');
   const editorRef = useRef();
   const [title, setTitle] = useState('');
+  const [idea, setIdea] = useState(null);
   const [status, setStatus] = useState('ONGOING');
-
+  const [isLoading, setIsLoading] = useState(true);
   const [category, setCategory] = useState('');
   const [file, setFile] = useState(null);
   const [requiredPositions, setRequiredPositions] = useState([]);
@@ -31,6 +37,35 @@ const CreateIdea = ({ history }) => {
   const [mediaArtChecked, setMediaArtChecked] = useState(false);
   const [content, setContent] = useState('');
   let formdata = new FormData();
+
+  useEffect(() => {
+    getIdea(id, history).then((response) => {
+      setIdea(response);
+      setIdeaId(response.id);
+      setTitle(response.title);
+      setIsLoading(false);
+      setCategory(response.category);
+      setContent(response.content);
+      setContact(response.contact);
+      for (let attr in response.requiredPositions) {
+        response.requiredPositions[attr] === 'DEVELOPER' ? (
+          setDeveloperChecked(true)
+        ) : response.requiredPositions[attr] === 'DESIGNER' ? (
+          setDesignerChecked(true)
+        ) : response.requiredPositions[attr] === 'PLANNER' ? (
+          setPlannerChecked(true)
+        ) : response.requiredPositions[attr] === 'MEDIA_ART' ? (
+          setMediaArtChecked(true)
+        ) : (
+          <></>
+        );
+      }
+      if (response.classOf !== userInfo.classOf) {
+        history.push(history.push('/error'));
+      }
+      console.log(response);
+    });
+  }, []);
 
   const handleFilter = useCallback((e) => {
     setContent(editorRef.current.getInstance().getHtml());
@@ -61,6 +96,7 @@ const CreateIdea = ({ history }) => {
       content: editorRef.current.getInstance().getHtml(),
       contact: contact,
     };
+
     if (file) {
       request['file'] = file;
     }
@@ -69,7 +105,7 @@ const CreateIdea = ({ history }) => {
       formdata.append(attr, request[attr]);
     }
 
-    createIdea(formdata).then((response) => {
+    updateIdea(ideaId, formdata).then((response) => {
       history.push(`/team-building/idea/${response.id}`);
     });
   };
@@ -101,8 +137,6 @@ const CreateIdea = ({ history }) => {
     });
   });
 
-  useEffect(() => {}, []);
-
   return (
     <>
       <ToastContainer
@@ -116,6 +150,7 @@ const CreateIdea = ({ history }) => {
         draggable
         pauseOnHover
       />
+
       {filterShow ? (
         <>
           <ModalTemp
@@ -196,6 +231,8 @@ const CreateIdea = ({ history }) => {
             </li>
           </ModalTemp>
         </>
+      ) : isLoading ? (
+        <div>Loading...</div>
       ) : (
         <>
           <div className="idea__wrap">
@@ -257,7 +294,7 @@ const CreateIdea = ({ history }) => {
                   width="1194px"
                   height="600px"
                   initialEditType="wysiwyg"
-                  initialValue={content}
+                  initialValue={idea.content}
                   placeholder="글을 작성해주세요"
                   ref={editorRef}
                   usageStatistics={false}
@@ -274,9 +311,12 @@ const CreateIdea = ({ history }) => {
             </div>
             <div className="idea__bottom">
               <div className="idea__required">
-                <div className="idea__required__head" onClick={handleFilter}>
+                <div className="idea__required__head">
                   <h3>필요한 포지션</h3>
-                  <div className="idea__requried__image"></div>
+                  <div
+                    className="idea__requried__image"
+                    onClick={handleFilter}
+                  ></div>
                 </div>
                 <div className="idea__required__checked">
                   {developerChecked === true ? (
@@ -342,4 +382,4 @@ const CreateIdea = ({ history }) => {
   );
 };
 
-export default CreateIdea;
+export default UpdateIdea;

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
+
 import CreateIdea from './createIdea/CreateIdea.js';
 import IdeaDetail from './ideaList/IdeaDetail.js';
 import IdeaList from './ideaList/IdeaList.js';
+import UpdateIdea from './updateIdea/updateIdea.js';
 
 const Ideas = ({ match }) => {
   return (
@@ -14,6 +16,7 @@ const Ideas = ({ match }) => {
           path={`${match.path}/create`}
           component={CreateIdea}
         />
+        <Route path={`${match.path}/:id/update`} component={UpdateIdea} />
         <Route exact path={`${match.path}/:id`} component={IdeaDetail} />
       </Switch>
     </>
