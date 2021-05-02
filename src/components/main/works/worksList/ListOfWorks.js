@@ -10,6 +10,7 @@ import './listOfWorksStyle.scss';
 import WorkListModal from './WorkListModal';
 import { useAppDispatch, useAppState } from '../../../../context/appContext';
 import { Link } from 'react-router-dom';
+import { Viewer } from '@toast-ui/react-editor';
 
 const ListOfWorks = ({ match, history, location }) => {
   const { worksKR, worksColor } = useAppDispatch();
@@ -204,8 +205,7 @@ const ListOfWorks = ({ match, history, location }) => {
                               ))}
                             </span>
                           </b>
-                          {/* <Viewer initialValue={content} /> */}
-                          <p className="work-content">{content}</p>
+                          <Viewer initialValue={content} />
                         </div>
                       </Link>
                     </li>

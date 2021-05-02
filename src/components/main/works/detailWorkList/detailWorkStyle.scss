@@ -90,7 +90,7 @@
     width: 89%;
     border-top: 1px solid #000000cc;
     position: relative;
-    padding: 44px 0 180px;
+    margin-bottom: 180px;
     max-width: 990px;
     strong {
       background-color: #ffffff;
@@ -102,7 +102,7 @@
       font-size: 28px;
     }
     .sec-content {
-      background-color: rgba(177, 180, 177, 0.267);
+      margin-top: 44px;
     }
   }
   .about-team-vedio {
@@ -110,22 +110,76 @@
   }
   .tui-editor-contents {
     font-size: 22px;
+    margin-top: 44px;
+  }
+  .work-images {
+    position: relative;
+    overflow: hidden;
+
+    .slide-wrap {
+      position: absolute;
+      display: flex;
+      flex-wrap: wrap;
+
+      .slide {
+        height: 100%;
+        span {
+          display: block;
+          @include widthHeight;
+          @include backgroundImage;
+        }
+      }
+    }
+
+    .slide-btn-box {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background-color: #00000066;
+      height: 100%;
+      visibility: hidden;
+      button {
+        width: 72px;
+        height: 72px;
+        position: absolute;
+        @include centerPosition;
+        @include backgroundImage;
+        background-image: url('../../../../assets/images/arrow_right@2x.png');
+
+        &#prev-btn {
+          left: 24px;
+          transform: scaleX(-1) translateY(-50%);
+        }
+        &#next-btn {
+          right: 24px;
+        }
+      }
+    }
+
+    &:hover {
+      .slide-btn-box {
+        visibility: visible;
+      }
+    }
   }
 }
 
 .work-detail-footer {
-  .download-file {
+  .file-box {
+    height: 72px;
     display: grid;
     cursor: pointer;
-    border-radius: 4px;
-    height: 72px;
-    background-color: #f2f2f2;
     grid-template-columns: repeat(2, max-content) 1fr;
     align-items: center;
     padding: 0 48px;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    cursor: context-menu;
+
     .file-name {
       color: #6d6d6dcc;
       font-size: 20px;
+      height: fit-content;
     }
 
     i {
@@ -144,16 +198,18 @@
       height: 16px;
     }
 
-    &:hover {
-      background-color: #baa2ff;
-      .file-name {
-        color: #ffffff;
-      }
-      .clip-icon {
-        background-image: url('../../../../assets/images/paperclip_white@2x.png');
-      }
-      .download-icon {
-        background-image: url('../../../../assets/images/download_white@2x.png');
+    &.exist {
+      &:hover {
+        background-color: #baa2ff;
+        .file-name {
+          color: #ffffff;
+        }
+        .clip-icon {
+          background-image: url('../../../../assets/images/paperclip_white@2x.png');
+        }
+        .download-icon {
+          background-image: url('../../../../assets/images/download_white@2x.png');
+        }
       }
     }
   }
@@ -211,7 +267,7 @@
       }
     }
     section {
-      padding: 30px 0 102px;
+      margin-bottom: 102px;
       strong {
         padding: 0 38px;
         font-size: 20px;
@@ -223,11 +279,29 @@
     }
     .tui-editor-contents {
       font-size: 16px;
+      margin-top: 30px;
+    }
+    .sec-content {
+      margin-top: 30px;
+    }
+    .work-images {
+      .slide-btn-box {
+        button {
+          width: 45px;
+          height: 45px;
+          &.prev-btn {
+            left: 0;
+          }
+          &.next-btn {
+            right: 0;
+          }
+        }
+      }
     }
   }
 
   .work-detail-footer {
-    .download-file {
+    .file-box {
       height: 60px;
       padding: 0 24px;
       .file-name {
@@ -294,21 +368,34 @@
       }
     }
     section {
-      padding: 27px 0 60px;
+      margin-bottom: 60px;
       strong {
         padding: 0 10px;
         font-size: 16px;
       }
-      > div {
+      .sec-content {
+        margin-top: 27px;
       }
     }
+
     .about-team-vedio {
       margin-top: 40px;
+    }
+    .work-images {
+      .slide-btn-box {
+        button {
+          width: 28px;
+          height: 28px;
+        }
+      }
+    }
+    .tui-editor-contents {
+      margin-top: 27px;
     }
   }
 
   .work-detail-footer {
-    .download-file {
+    .file-box {
       height: 48px;
       padding: 0 8px;
       .file-name {
