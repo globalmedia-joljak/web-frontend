@@ -8,82 +8,6 @@ import Idea from './Idea';
 import { Link } from 'react-router-dom';
 import { useAppState } from '../../../../../context/appContext.js';
 
-const dummy = {
-  ideaBoardResponseList: {
-    content: [
-      {
-        classOf: 'string',
-        contact: 'string',
-        content: 'string',
-        category: 'WEB_APP',
-        createDate: '2021-04-24T17:30:13.648Z',
-        id: 0,
-        mainProjectRole: 'DEVELOPER',
-        mediaInfo: {
-          fileExtension: 'string',
-          fullPath: 'string',
-          mediaType: 'IMAGE',
-          modifyName: 'string',
-          originalName: 'string',
-          url: 'string',
-        },
-        modifiedDate: '2021-04-24T17:30:13.648Z',
-        name: 'kevin',
-        requiredPositions: ['DEVELOPER', 'PLANNER', 'DESIGNER'],
-        status: 'COMPLETE',
-        title: '최강남대문 쌍절곤',
-      },
-      {
-        classOf: 'string',
-        contact: 'string',
-        content: 'string',
-        category: 'MEDIA_ART',
-        createDate: '2021-04-24T17:30:13.648Z',
-        id: 1,
-        mainProjectRole: 'DEVELOPER',
-        mediaInfo: {
-          fileExtension: 'string',
-          fullPath: 'string',
-          mediaType: 'IMAGE',
-          modifyName: 'string',
-          originalName: 'string',
-          url: 'string',
-        },
-        modifiedDate: '2021-04-24T17:30:13.648Z',
-        name: 'kevin',
-        requiredPositions: ['DEVELOPER', 'PLANNER', 'DESIGNER'],
-        status: 'ONGOING',
-        title: '최강남대문 쌍절곤',
-      },
-    ],
-    empty: true,
-    first: true,
-    last: true,
-    number: 0,
-    numberOfElements: 2,
-    pageable: {
-      offset: 0,
-      pageNumber: 0,
-      pageSize: 0,
-      paged: true,
-      sort: {
-        empty: true,
-        sorted: true,
-        unsorted: true,
-      },
-      unpaged: true,
-    },
-    size: 0,
-    sort: {
-      empty: true,
-      sorted: true,
-      unsorted: true,
-    },
-    totalElements: 2,
-    totalPages: 0,
-  },
-};
-
 const IdeaList = ({ match, history }) => {
   const {
     userInfo: { isLogin, classOf },
@@ -103,7 +27,7 @@ const IdeaList = ({ match, history }) => {
   useEffect(() => {
     getIdeas(0)
       .then((response) => {
-        const { ideaBoardResponseList } = dummy;
+        const { ideaBoardResponseList } = response;
         setIdeas(ideaBoardResponseList.content);
         setPageInfo({
           ...pageInfo,

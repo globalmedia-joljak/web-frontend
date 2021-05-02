@@ -55,7 +55,7 @@ const CreateIdea = ({ history }) => {
     }
 
     createIdea(request).then((response) => {
-      history.push(`/ideas/${response.id}`);
+      history.push(`/ideaboards/${response.id}`);
     });
   };
 
