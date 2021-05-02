@@ -1,4 +1,5 @@
-import React, { useState, useCallback }  from 'react';
+import React, { useState, useCallback } from 'react';
+
 import Signinbackground from './image/SigninbackgroundHalf.png';
 import globalmediaLogo from './image/GlobalMedia_Logo.png';
 import style from './SignIn.scss';
@@ -10,10 +11,10 @@ import { client } from '../../service/api/client';
 
 const SignIn = ({ history, location }) => {
   location.state = { show: false };
-  
+
   const [signinInfo, setSigninInfo] = useState({
     classOf: '',
-    password: ''
+    password: '',
   });
   const [autoSignin, setAutoSignin] = useState(false);
 
@@ -26,8 +27,8 @@ const SignIn = ({ history, location }) => {
     } else {
       setAutoSignin(false);
     }
-  }
-  
+  };
+
   const handleSigninSubmit = useCallback((e, i, name) => {
     if (!signinInfo.classOf || !signinInfo.password) {
       toast.error('⛔ 로그인/비밀번호를 입력해주세요.');
@@ -36,35 +37,40 @@ const SignIn = ({ history, location }) => {
 
     const signInRequest = {
       classOf: signinInfo.classOf,
-      password: signinInfo.password
-    }
+      password: signinInfo.password,
+    };
 
-    signin(signInRequest).then(function (response) {
-      const { data } = response;
-      client.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken.token}`;
-      localStorage.setItem('userName', data.user.name)
-      localStorage.setItem('userClassOf', data.user.classOf)
-      localStorage.setItem('accessToken', data.accessToken.token)
-      if (autoSignin) {
-        localStorage.setItem('refreshToken', data.refreshToken)
-      }
-      
-      setUserInfo({
-        ...userInfo,
-        classOf: data.user.classOf,
-        name: data.user.name,
-        isLogin: true
+    signin(signInRequest)
+      .then(function (response) {
+        const { data } = response;
+        client.defaults.headers.common[
+          'Authorization'
+        ] = `Bearer ${data.accessToken.token}`;
+        localStorage.setItem('userName', data.user.name);
+        localStorage.setItem('userClassOf', data.user.classOf);
+        localStorage.setItem('accessToken', data.accessToken.token);
+        if (autoSignin) {
+          localStorage.setItem('refreshToken', data.refreshToken);
+        }
+
+        setUserInfo({
+          ...userInfo,
+          classOf: data.user.classOf,
+          name: data.user.name,
+          isLogin: true,
+        });
+        history.push('/');
+      })
+      .catch(() => {
+        toast.error(
+          '⛔ 입력한 아이디와 비밀번호가 일치하지 않습니다. 아이디 또는 비밀번호를 다시 한번 입력해 주세요.',
+        );
       });
-      history.push('/');
-    })
-    .catch(() => {
-      toast.error('⛔ 입력한 아이디와 비밀번호가 일치하지 않습니다. 아이디 또는 비밀번호를 다시 한번 입력해 주세요.');
-    });
   });
 
   return (
     <>
-    <ToastContainer
+      <ToastContainer
         position="top-center"
         autoClose={3000}
         hideProgressBar={false}
@@ -75,71 +81,78 @@ const SignIn = ({ history, location }) => {
         draggable
         pauseOnHover
       />
-    <div className="login-container">
-      <div className="login-left login">
-        <div className="globalmedia-logo">
+      <div className="login-container">
+        <div className="login-left">
+          <div className="globalmedia-logo">
+            <a href="/">
+              <img
+                src={globalmediaLogo}
+                alt="My dongho"
+                className="globalmedia-logo-image"
+              />
+            </a>
+
+            <a href="/" />
+          </div>
+          <div className="login-form-div">
+            <div className="login-form">
+              <input
+                className="login-input"
+                type="text"
+                name="query"
+                placeholder="학번"
+                onChange={(e) =>
+                  setSigninInfo({
+                    ...signinInfo,
+                    classOf: e.target.value,
+                  })
+                }
+              />
+              <div className="check-info"></div>
+              <input
+                className="login-input"
+                type="password"
+                name="query"
+                placeholder="비밀번호"
+                onChange={(e) =>
+                  setSigninInfo({
+                    ...signinInfo,
+                    password: e.target.value,
+                  })
+                }
+              />
+              <div className="check-info"></div>
+
+              <label className="remember-id-container">
+                자동 로그인
+                <input type="checkbox" onChange={onAutoSigninCheckBoxHandler} />
+                <span className="remember-id-checkmark"></span>
+              </label>
+
+              <button
+                className="log-button"
+                type="button"
+                onClick={handleSigninSubmit}
+              >
+                로그인
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="login-right">
           <img
-            src={globalmediaLogo}
+            src={Signinbackground}
             alt="My dongho"
-            className="globalmedia-logo-image"
+            className="Signinbackground"
           />
+          <p className="url-signUp">
+            <a href="/signup" className="signUp">
+              회원가입
+            </a>
+          </p>
         </div>
-        <div className="login-form-div">
-          <form className="login-form">
-            <input
-              className="login-input"
-              type="text"
-              name="query"
-              placeholder="학번"
-              onChange={(e) => setSigninInfo({
-                ...signinInfo,
-                classOf: e.target.value
-              })}
-            />
-            <div className="check-info"></div>
-            <input
-              className="login-input"
-              type="password"
-              name="query"
-              placeholder="비밀번호"
-              onChange={(e) => setSigninInfo({
-                ...signinInfo,
-                password: e.target.value
-              })}
-            />
-            <div className="check-info"></div>
-
-            <label className="remember-id-container">
-              자동 로그인
-              <input type="checkbox" onChange={onAutoSigninCheckBoxHandler} />
-              <span className="remember-id-checkmark"></span>
-            </label>
-
-            <button className="log-button" type="button" onClick={handleSigninSubmit}>
-              로그인
-            </button>
-          </form>
-        </div>
-        <p className="url-signUp">
-          <a href="/signup" className="signUp">
-            회원가입
-          </a>
-        </p>
       </div>
-
-      <div className="login-right login">
-        <img
-          src={Signinbackground}
-          alt="My dongho"
-          className="Signinbackground"
-        />
-        <p className="url-signUp">
-          <a href="/signup" className="signUp">
-            회원가입
-          </a>
-        </p>
-      </div>
-    </div>
     </>
   );
 };

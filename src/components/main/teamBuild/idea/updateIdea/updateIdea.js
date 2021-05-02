@@ -19,7 +19,7 @@ const UpdateIdea = ({ match, history }) => {
   } = useAppState();
   const { userInfo } = useAppState();
   const id = match.params.id;
-  const [ideaId, setIdeaId] = useState('');
+
   const editorRef = useRef();
   const [title, setTitle] = useState('');
   const [idea, setIdea] = useState(null);
@@ -41,11 +41,13 @@ const UpdateIdea = ({ match, history }) => {
   useEffect(() => {
     getIdea(id, history).then((response) => {
       setIdea(response);
-      setIdeaId(response.id);
+
       setTitle(response.title);
       setIsLoading(false);
       setCategory(response.category);
+
       setContent(response.content);
+      setStatus(response.status);
       setContact(response.contact);
       for (let attr in response.requiredPositions) {
         response.requiredPositions[attr] === 'DEVELOPER' ? (
@@ -63,7 +65,6 @@ const UpdateIdea = ({ match, history }) => {
       if (response.classOf !== userInfo.classOf) {
         history.push(history.push('/error'));
       }
-      console.log(response);
     });
   }, []);
 
@@ -105,7 +106,7 @@ const UpdateIdea = ({ match, history }) => {
       formdata.append(attr, request[attr]);
     }
 
-    updateIdea(ideaId, formdata).then((response) => {
+    updateIdea(id, formdata).then((response) => {
       history.push(`/team-building/idea/${response.id}`);
     });
   };
@@ -252,12 +253,23 @@ const UpdateIdea = ({ match, history }) => {
                 <h3>결성 유무</h3>
                 <div className="idea__status__check">
                   <label className="switch" htmlFor="checkbox">
-                    <input
-                      type="checkbox"
-                      id="checkbox"
-                      value={status}
-                      onChange={handleStatusChange}
-                    />
+                    {idea.status === 'ONGOING' ? (
+                      <input
+                        type="checkbox"
+                        id="checkbox"
+                        value={status}
+                        onChange={handleStatusChange}
+                      />
+                    ) : (
+                      <input
+                        checked
+                        type="checkbox"
+                        id="checkbox"
+                        value={status}
+                        onChange={handleStatusChange}
+                      />
+                    )}
+
                     <div className="slider round"></div>
                   </label>
                 </div>
@@ -271,7 +283,7 @@ const UpdateIdea = ({ match, history }) => {
                   onChange={(e) => setCategory(e.target.value)}
                 >
                   <option value="NONE">선택안함</option>
-                  <option value="WEB_APP">웹/앱</option>
+                  <option value="WEB_APP">웹/앱 서비스</option>
                   <option value="MEDIA_ART">미디어아트</option>
                   <option value="ANIMATION">영상/애니메이션</option>
                   <option value="GAME">게임</option>
@@ -311,12 +323,9 @@ const UpdateIdea = ({ match, history }) => {
             </div>
             <div className="idea__bottom">
               <div className="idea__required">
-                <div className="idea__required__head">
+                <div className="idea__required__head" onClick={handleFilter}>
                   <h3>필요한 포지션</h3>
-                  <div
-                    className="idea__requried__image"
-                    onClick={handleFilter}
-                  ></div>
+                  <div className="idea__requried__image"></div>
                 </div>
                 <div className="idea__required__checked">
                   {developerChecked === true ? (
@@ -352,20 +361,24 @@ const UpdateIdea = ({ match, history }) => {
                   onChange={(e) => setContact(e.target.value)}
                 />
               </div>
+
               <div className="idea__file">
                 <label className="idea__file__label" htmlFor="input-file">
                   <div className="idea__file__label__left">
                     <div className="file__image"></div>
-                    <p id="file__name">파일을 선택해주세요.</p>
+                    <p id="file__name">
+                      {!idea.fileInfo
+                        ? '파일을 선택해주세요.'
+                        : idea.fileInfo.originalName}
+                    </p>
                   </div>
                   <button
                     className="delete__button"
                     onClick={handleFileDelete}
-                  />
+                  ></button>
                 </label>
                 <input
                   type="file"
-                  value={mediaInfo}
                   name="photo"
                   id="input-file"
                   onChange={handleFileChange}
