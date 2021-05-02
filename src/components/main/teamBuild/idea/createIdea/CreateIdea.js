@@ -6,7 +6,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useAppState } from '../../../../../context/appContext';
 import MemberRoleSquare from '../../team/teamList/MemberRole';
 import { createIdea } from '../../../../../service/api/ideas';
-import OccupationListForm from '../../../../modal/OccupationListForm';
 import ModalTemp from '../../../../modal/ModalTemp';
 
 const CreateIdea = ({ history }) => {
@@ -15,16 +14,16 @@ const CreateIdea = ({ history }) => {
   } = useAppState();
 
   const editorRef = useRef();
-  const [title, setTitle] = useState(null);
-  const [status, setStatus] = useState('');
-  const [category, setCategory] = useState(null);
+  const [title, setTitle] = useState('');
+  const [status, setStatus] = useState('ONGOING');
+  const [category, setCategory] = useState('');
   const [file, setFile] = useState(null);
   const [requiredPositions, setRequiredPosition] = useState([]);
-  const [contact, setContact] = useState(null);
+  const [contact, setContact] = useState('');
   const [filterShow, setFilterShow] = useState(false);
   const [developerChecked, setDeveloperChecked] = useState(false);
   const [designerChecked, setDesignerChecked] = useState(false);
-  const [mediaInfo, setMediaInfo] = useState(null);
+  const [mediaInfo, setMediaInfo] = useState('');
   const [plannerChecked, setPlannerChecked] = useState(false);
 
   const handleFilter = useCallback((e) => setFilterShow(!filterShow));
@@ -43,7 +42,6 @@ const CreateIdea = ({ history }) => {
     designerChecked === true ? requiredPositions.push('DESIGNER') : <></>;
     plannerChecked === true ? requiredPositions.push('PLANNER') : <></>;
 
-    console.log(requiredPositions);
     const request = {
       title: title,
       category: category,
@@ -183,6 +181,7 @@ const CreateIdea = ({ history }) => {
                     <input
                       type="checkbox"
                       id="checkbox"
+                      value={status}
                       onChange={handleStatusChange}
                     />
                     <div className="slider round"></div>

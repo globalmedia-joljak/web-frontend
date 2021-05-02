@@ -34,7 +34,7 @@ const createIdea = async (createIdeaRequest) => {
   }
 
   try {
-    const { data } = await client.post(`/ideas`, formdata, {
+    const { data } = await client.post(`/ideaboards`, formdata, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
