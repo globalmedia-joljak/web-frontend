@@ -218,7 +218,6 @@ const CreateAuthor = ({ history, match }) => {
 
   useEffect(() => {
     if (!detailData) return false;
-    console.log(detailData);
 
     const { portfolioLinks } = detailData;
 
@@ -244,6 +243,7 @@ const CreateAuthor = ({ history, match }) => {
       }
     }
   }, [detailData]);
+
   const handleChange = (e) => {
     setPortfolio({
       ...portfolio,
