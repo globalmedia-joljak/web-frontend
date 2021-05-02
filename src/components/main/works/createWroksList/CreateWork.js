@@ -7,13 +7,19 @@ import {
   useRef,
   useEffect,
 } from 'react/cjs/react.development';
-import { useAppDispatch } from '../../../../context/appContext';
+import { useAppDispatch, useAppState } from '../../../../context/appContext';
 import { useWorksState } from '../../../../context/worksContext';
-import { createWorks, updateWorks } from '../../../../service/api/work';
+import {
+  createWorks,
+  getWorkDetail,
+  updateWorks,
+} from '../../../../service/api/work';
 import './createWorkStyle.scss';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import '@toast-ui/editor/dist/i18n/ko-kr';
+import { uploadImage } from '../../../../service/api/upload';
+import useAsync from '../../../../hooks/useAsync';
 
 const toolbarItems = [
   'heading',
@@ -40,8 +46,11 @@ const worksCategory = ['MEDIA_ART', 'WEB_APP', 'ANIMATION_FILM', 'GAME'];
 
 const CreateWork = ({ match, history }) => {
   const workState = match.params.state;
+  const worksId = match.params.id;
   const editorRef = useRef();
+
   const { worksKR } = useAppDispatch();
+  const { userInfo } = useAppState;
   const { detailData } = useWorksState();
 
   const [content, setContent] = useState(null);
@@ -50,6 +59,18 @@ const CreateWork = ({ match, history }) => {
   const [teamName, setTeamName] = useState(null);
   const [teamMember, setTeamMember] = useState(null);
   const [vedio, setVedio] = useState(null);
+
+  const [worksDetail, setWorksDetail] = useState();
+  const [workDetailState, refetch] = useAsync(
+    () => getWorkDetail(match.params.id, history),
+    [match.params.id, history],
+  );
+
+  useEffect(() => {
+    if (workDetailState.data) {
+      setWorksDetail(workDetailState.data);
+    }
+  }, []);
 
   // year
   const [worksYear, setWorksYear] = useState(null);
@@ -72,14 +93,46 @@ const CreateWork = ({ match, history }) => {
   const [file, setFile] = useState(null);
   let formdata = new FormData();
 
+  const selectedFn = (el, type) => {
+    return Array.from(el.options).map((opt) => {
+      if (opt.value === type) {
+        return (opt.selected = true);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const selected = document.querySelectorAll('select');
+
+    Array.from(selected).map((el) => {
+      if (el.name === 'exhibit') {
+        selectedFn(el, worksYear);
+      }
+
+      if (el.name === 'category') {
+        selectedFn(el, category);
+      }
+    });
+    if (!images) {
+      previewImg();
+    }
+  });
+
   const makeArrFromData = useCallback((arr, queryName) => {
     return arr.map((data, i) => {
       formdata.append(`${queryName}[${i}]`, data);
     });
   });
 
+  const deleleteArrFromData = useCallback((arr, queryName) => {
+    return arr.map((data, i) => {
+      formdata.delete(`${queryName}[${i}]`, data);
+    });
+  });
+
   const handleUploadImages = (e) => {
     const files = e.target.files;
+    const reader = new FileReader();
 
     setImages([...files]);
 
@@ -92,30 +145,46 @@ const CreateWork = ({ match, history }) => {
   };
 
   const handleUploadFile = (e) => setFile(e.target.files[0]);
+
   const handleFileDel = (e) => {
     if (!e.target.parentElement.classList.contains('fetch-file')) return false;
 
     setFile(null);
-    if (detailData.file.modifyName) {
+    if (detailData.fileInfo.modifyName) {
       return formdata.append('deleteFileName', detailData.modifyName);
     }
   };
 
-  useEffect(() => {
-    if (workState === 'edit' && detailData) {
-      setContent(detailData.content);
-      setCategory(detailData.projectCategory);
-      setWorksName(detailData.workName);
-      setTeamName(detailData.teamName);
-      setTeamMember(detailData.teamMember.join(' '));
-      setVedio(detailData.teamVideoUrl);
-      setWorksYear(detailData.exhibitedYear);
-      setImages(detailData.imageInfoList);
-      setFile(detailData.fileInfo);
+  const previewImg = () => {
+    if (!images) return false;
+    const worksImgaes = document.querySelectorAll('.works-images > li');
 
-      return;
+    images.map((image, i) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        return ([...worksImgaes][
+          i
+        ].style.backgroundImage = `url(${reader.result})`);
+      };
+
+      reader.readAsDataURL(images[i]);
+    });
+  };
+
+  useEffect(() => {
+    if (workState === 'edit' && worksDetail) {
+      setContent(worksDetail.content);
+      setCategory(worksDetail.projectCategory);
+      setWorksName(worksDetail.workName);
+      setTeamName(worksDetail.teamName);
+      setTeamMember(worksDetail.teamMember.join(' '));
+      setVedio(worksDetail.teamVideoUrl);
+      setWorksYear(worksDetail.exhibitedYear);
+      setImages(worksDetail.imageInfoList);
+      setFile(worksDetail.fileInfo);
     }
-  }, [detailData]);
+  }, [worksDetail]);
 
   const handleWorksSubmit = (e) => {
     e.preventDefault();
@@ -144,19 +213,23 @@ const CreateWork = ({ match, history }) => {
 
     for (let item in requestWorks) {
       formdata.append(item, requestWorks[item]);
-      if (item === 'file' && detailData.file) {
-        formdata.delete('file');
+
+      if (workState === 'edit' && worksDetail) {
+        if (worksDetail.fileInfo) {
+          formdata.delete('file');
+        }
+
+        if (worksDetail.imageInfoList) {
+          deleleteArrFromData(images, 'images');
+        }
       }
-      // if (item === 'images'&&detailData.images) {
-      //     formdata.delete('images');
-      // }
+
       if (!requestWorks[item] || requestWorks[item] === []) {
         formdata.delete(item);
 
-        //   // 이미지는 실제로 넣어봐서 해보자
-        // if (item === 'images' && detailData.images) {
-        //   formdata.append('deleteImagesName', requestWorks[item].modifyName);
-        // }
+        if (item === 'images' && detailData.images) {
+          makeArrFromData('deleteImagesName', requestWorks[item].modifyName);
+        }
       }
     }
 
@@ -170,24 +243,24 @@ const CreateWork = ({ match, history }) => {
         return;
 
       case 'edit':
-        // updateWorks({ worksId, history }, formdata);
+        updateWorks({ worksId, history }, formdata);
         return;
       default:
     }
   };
-  const [fileName, setFileName] = useState('파일을 선택해 주세요');
 
+  const [fileName, setFileName] = useState('파일을 선택해 주세요');
   useEffect(() => {
-    console.log(file);
+    if (!file) return false;
+
     if (file) {
-      return file.name
+      file.name
         ? setFileName(file.name)
-        : setFileName(detailData.fileInfo.name);
+        : setFileName(worksDetail.fileInfo.originalName);
     } else {
-      return setFileName('파일을 선택해주세요.');
+      setFileName('파일을 선택해주세요.');
     }
   }, [file]);
-  console.log(file);
 
   return (
     <>
@@ -265,6 +338,14 @@ const CreateWork = ({ match, history }) => {
                 initialValue={content}
                 plugins={[colorSyntax]}
                 language="ko"
+                hooks={{
+                  addImageBlobHook: (blob, callback) => {
+                    uploadImage(userInfo.classOf, blob).then((response) => {
+                      callback(response.url, 'alt text');
+                    });
+                    return false;
+                  },
+                }}
               />
             </div>
             <div className="work-members work-row">
@@ -316,7 +397,20 @@ const CreateWork = ({ match, history }) => {
                   등록된 이미지가 없습니다.
                 </div>
               ) : (
-                <ul className="works-images"></ul>
+                <ul className="works-images">
+                  {images &&
+                    images.map((img, i) => (
+                      <li
+                        key={i}
+                        className="work-img"
+                        style={{
+                          backgroundImage: `url(${
+                            workState === 'eidt' && img.url
+                          })`,
+                        }}
+                      ></li>
+                    ))}
+                </ul>
               )}
             </div>
             <div className="work-files work-row">

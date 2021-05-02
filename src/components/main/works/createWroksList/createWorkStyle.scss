@@ -112,8 +112,6 @@
     option {
       color: #6d6d6d;
     }
-
-    // -webkit-appearance: none;
   }
 }
 
@@ -172,6 +170,13 @@
         height: 300px;
         width: 100%;
         background-color: rgba(231, 231, 231, 0.226);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        li {
+          @include backgroundImage;
+          width: calc(20% - 4px);
+        }
       }
 
       &.none {
