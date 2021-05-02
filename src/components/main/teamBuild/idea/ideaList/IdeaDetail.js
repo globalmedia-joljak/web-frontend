@@ -7,29 +7,6 @@ import './IdeaDetail.scss';
 import MemberRoleSquare from '../../team/teamList/MemberRole';
 import Ideas from '..';
 
-const dummy = {
-  category: 'WEB_APP',
-  classOf: 'string',
-  contact: '010132465',
-  content: 'aslkdfjasldfjeijfelkj',
-  createDate: '2021-04-27T11:46:42.061Z',
-  id: 0,
-  mainProjectRole: 'DEVELOPER',
-  mediaInfo: {
-    fileExtension: 'string',
-    fullPath: 'string',
-    mediaType: 'IMAGE',
-    modifyName: 'string',
-    originalName: 'adkfasdlkfjasdlkfjaldkfj',
-    url: 'string',
-  },
-  modifiedDate: '2021-04-27T11:46:42.061Z',
-  name: '정만덕',
-  requiredPositions: ['DEVELOPER', 'DESIGNER'],
-  status: 'ONGOING',
-  title: '최강남대문 쌍절곤',
-};
-
 const IdeaDetail = ({ match, history }) => {
   const id = match.params.id;
   const [isLoading, setIsLoading] = useState(true);
@@ -37,17 +14,17 @@ const IdeaDetail = ({ match, history }) => {
   const { userInfo } = useAppState();
 
   useEffect(() => {
-    // getIdea(id, history)
-    //   .then((response) => {
-    //     setIdea(dummy);
-    //     setIsLoading(false);
-    //   })
-    //   .catch((e) => {
-    //     history.push(`/error`);
-    //     console.log(e);
-    //   });
-    setIdea(dummy);
-    setIsLoading(false);
+    getIdea(id, history)
+      .then((response) => {
+        setIdea(response);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        history.push(`/error`);
+        console.log(e);
+      });
+    // setIdea(dummy);
+    // setIsLoading(false);
   }, []);
 
   const translateIdeaCategory = (value) => {
