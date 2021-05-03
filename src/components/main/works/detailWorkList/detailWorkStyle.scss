@@ -92,7 +92,7 @@
     position: relative;
     margin-bottom: 180px;
     max-width: 990px;
-    strong {
+    .sec-title {
       background-color: #ffffff;
       position: absolute;
       left: 50%;
@@ -108,9 +108,13 @@
   .about-team-vedio {
     margin-top: 96px;
   }
+
   .tui-editor-contents {
     font-size: 22px;
     margin-top: 44px;
+    p {
+      word-break: break-all;
+    }
   }
   .work-images {
     position: relative;
@@ -162,6 +166,15 @@
       }
     }
   }
+  .about-team-introduce {
+    .introduce-none {
+      color: #b3b3b3;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }
 
 .work-detail-footer {
@@ -201,6 +214,7 @@
     &.exist {
       &:hover {
         background-color: #baa2ff;
+        cursor: pointer;
         .file-name {
           color: #ffffff;
         }
@@ -268,7 +282,7 @@
     }
     section {
       margin-bottom: 102px;
-      strong {
+      .sec-title {
         padding: 0 38px;
         font-size: 20px;
         width: fit-content;
@@ -369,7 +383,7 @@
     }
     section {
       margin-bottom: 60px;
-      strong {
+      .sec-title {
         padding: 0 10px;
         font-size: 16px;
       }

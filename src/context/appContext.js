@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useMemo } from 'react/cjs/react.development';
 import useAsync from '../hooks/useAsync';
 import { getUser } from '../service/api/users';
 
@@ -122,23 +123,37 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const value = {
-    curSize,
-    modalShow,
-    userInfo,
-    scroll,
-    userState,
-    infinite,
-    currentYears,
-  };
-  const dispatch = {
-    setJobColor,
-    setModalShow,
-    setUserInfo,
-    translationKR,
-    worksKR,
-    worksColor,
-  };
+  const value = useMemo(
+    () => ({
+      curSize,
+      modalShow,
+      userInfo,
+      scroll,
+      userState,
+      infinite,
+      currentYears,
+    }),
+    [curSize, modalShow, userInfo, scroll, userState, infinite, currentYears],
+  );
+
+  const dispatch = useMemo(
+    () => ({
+      setJobColor,
+      setModalShow,
+      setUserInfo,
+      translationKR,
+      worksKR,
+      worksColor,
+    }),
+    [
+      setJobColor,
+      setModalShow,
+      setUserInfo,
+      translationKR,
+      worksKR,
+      worksColor,
+    ],
+  );
 
   return (
     <appStateContext.Provider value={value}>

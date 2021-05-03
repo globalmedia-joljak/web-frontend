@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
 import { useAppDispatch, useAppState } from '../../../../context/appContext';
-import { useWorksDispatch } from '../../../../context/worksContext';
+
 import useAsync from '../../../../hooks/useAsync';
 import { deleteWorks, getWorkDetail } from '../../../../service/api/work';
 import EditDeleteButton from '../../common/EditDeleteButton';
@@ -18,15 +18,11 @@ const DetailWork = ({ match, history }) => {
     curSize,
   } = useAppState();
 
-  const { setDetailData } = useWorksDispatch();
-
   const detailId = match.params.id;
   const [best, setBest] = useState(false);
-  const [workDetail2, setWorkDetail] = useState(null);
-  const [workDetail, refetch] = useAsync(
-    async () => await getWorkDetail(detailId),
-    [detailId],
-  );
+  const [workDetail] = useAsync(async () => await getWorkDetail(detailId), [
+    detailId,
+  ]);
 
   const { loading, data, error } = workDetail;
 
@@ -97,10 +93,7 @@ const DetailWork = ({ match, history }) => {
   if (!data) return null;
   if (error) return <div>에러 _ worksDetail</div>;
 
-  const handleEdit = () => {
-    setDetailData(data);
-    history.push(`${match.url}/edit`);
-  };
+  const handleEdit = () => history.push(`${match.url}/edit`);
 
   const handleSlide = (e) => {
     const btnType = e.target.id;
@@ -129,7 +122,7 @@ const DetailWork = ({ match, history }) => {
     teamVideoUrl,
     fileInfo,
   } = data;
-  console.log(data);
+
   return (
     <div className="work-detail-wrap page-box">
       <div className="work-detail-inr">
@@ -166,7 +159,7 @@ const DetailWork = ({ match, history }) => {
             </div>
           )}
           <section className="about-team-vedio">
-            <strong>팀 소개영상</strong>
+            <strong className="sec-title">팀 소개영상</strong>
             <div className="team-vedio sec-content">
               <video
                 controls
@@ -180,7 +173,7 @@ const DetailWork = ({ match, history }) => {
             </div>
           </section>
           <section className="about-team-images">
-            <strong>작품 사진</strong>
+            <strong className="sec-title">작품 사진</strong>
             <div className="work-images sec-content">
               {imageInfoList ? (
                 <>
@@ -204,8 +197,12 @@ const DetailWork = ({ match, history }) => {
             </div>
           </section>
           <section className="about-team-introduce">
-            <strong>작품 소개</strong>
-            <Viewer initialValue={content} />
+            <strong className="sec-title">작품 소개</strong>
+            {content ? (
+              <Viewer width="inherit" initialValue={content} />
+            ) : (
+              <p className="introduce-none">등록된 작품소개가 없습니다.</p>
+            )}
           </section>
         </div>
         <div className="work-detail-footer">
