@@ -47,8 +47,6 @@ const UpdateTeam = ({ match, history }) => {
   const [mediaArts, setMediaArts] = useState(null);
   const [planners, setPlanners] = useState(null);
   const [deleteFileName, setDeleteFileName] = useState(null);
-  const [content, setContent] = useState(null);
-
 
   useEffect(() => {
     getTeam(id, history)
@@ -61,8 +59,7 @@ const UpdateTeam = ({ match, history }) => {
         setDevelopers(response.developerMember);
         setPlanners(response.plannerMember);
         setMediaArts(response.mediaArtMember);
-        setContent(response.content);
-        if (response.author !== userInfo.classOf)
+        if (response.author !== userInfo.name)
           history.push(history.push("/error"));
       })
       .catch((e) => {
