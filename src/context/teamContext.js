@@ -10,8 +10,6 @@ import mediaArt from '../assets/images/Members_MediaArt@2x.png';
 import designer from '../assets/images/Members_design@2x.png';
 import developer from '../assets/images/Members_dev@2x.png';
 import planner from '../assets/images/Members_Planner@2x.png';
-import useAsync from '../hooks/useAsync';
-import { getAuthorProfileDetail } from '../service/api/profile';
 
 export const teamStateContext = createContext(null);
 export const teamDispatchContext = createContext(null);

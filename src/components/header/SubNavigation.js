@@ -1,12 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useEffect, useMemo, useState } from 'react/cjs/react.development';
+import { useEffect, useState } from 'react/cjs/react.development';
 import { useAppState } from '../../context/appContext';
-import useAsync from '../../hooks/useAsync';
-import { getWorksYears } from '../../service/api/work';
-import TeamList from '../main/teamBuild/team/teamList/TeamList';
 
-const SubNavigation = ({ type, url }) => {
+const SubNavigation = ({ type, url, years }) => {
   const { crrentYear } = useAppState();
 
   const teamList = [
@@ -15,9 +12,14 @@ const SubNavigation = ({ type, url }) => {
     { path: `${url}/idea`, name: '아이디어 게시판' },
   ];
 
-  const [worksList, setWorksList] = useState([
-    { path: `${url}/2021`, name: '2021' },
-  ]);
+  const [worksList, setWorksList] = useState([]);
+  useEffect(() => {
+    if (years) {
+      years.map((year) => {
+        setWorksList(worksList.concat({ path: `${url}/${year}`, name: year }));
+      });
+    }
+  }, []);
 
   const subLinks = type === 'teams' ? teamList : worksList;
 

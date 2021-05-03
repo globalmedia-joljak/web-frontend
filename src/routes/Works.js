@@ -1,34 +1,42 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router';
+import { useEffect, useState } from 'react/cjs/react.development';
 import SubNavigation from '../components/header/SubNavigation';
 import WorksForm from '../components/main/works';
 import { useAppState } from '../context/appContext';
-import WorksProvider from '../context/worksContext';
+import { getWorksYears } from '../service/api/work';
 
-const Projects = ({ match, location }) => {
+const Works = ({ match, location }) => {
   const { currentYears } = useAppState();
+  const [years, setYears] = useState(null);
+
+  useEffect(() => {
+    getWorksYears()
+      .then((res) => {
+        return setYears(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
-    <WorksProvider location={location}>
-      <main className="works-wrap">
-        <div className="section-wrap">
-          <section className="side-menu">
-            <ul>
-              <SubNavigation type="works" url={match.url} />
-            </ul>
-          </section>
-          <section className="contents">
-            <div className="content">
-              {location.pathname === '/works' && (
-                <Redirect to={`${match.path}/${currentYears}`} />
-              )}
-              <Route path={`${match.path}/:year`} component={WorksForm} />
-            </div>
-          </section>
-        </div>
-      </main>
-    </WorksProvider>
+    <main className="works-wrap">
+      <div className="section-wrap">
+        <section className="side-menu">
+          <ul>
+            <SubNavigation type="works" url={match.url} years={years} />
+          </ul>
+        </section>
+        <section className="contents">
+          <div className="content">
+            {location.pathname === '/works' && (
+              <Redirect to={`${match.path}/${currentYears}`} />
+            )}
+            <Route path={`${match.path}/:year`} component={WorksForm} />
+          </div>
+        </section>
+      </div>
+    </main>
   );
 };
 
-export default Projects;
+export default Works;
