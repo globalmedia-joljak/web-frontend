@@ -1,6 +1,31 @@
 @import '../../../../../assets/_mixin.scss';
 @import '../../../../../assets/_variables.scss';
 
+.hero-img {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 16vw;
+  .hero-img__left {
+    h1 {
+      margin-bottom: 33px;
+      font-weight: 800;
+      font-size: 32px;
+    }
+    h2 {
+      font-size: 24px;
+    }
+  }
+  .hero-img__right {
+    @include backgroundImage;
+    background-image: url('../../../../../assets/images/Teams_image.png');
+    width: 370px;
+    height: 280px;
+
+  }
+
+}
+
 .teams-wrap {
   position: relative;
   margin: 53px auto 0;
@@ -39,10 +64,65 @@
   }
 
   .teams-body {    
+    .teams-body-title {
+      width: 100%;
+      margin-bottom: 16px;
+      padding-left: 24px;
+      padding-right: 24px;
+      thead {
+        tr {
+          text-align: left;
+          th {
+            font-weight: 400;
+            &:nth-child(1) {
+              width: 5%;
+            }
+            &:nth-child(2) {
+              width: 25%;
+            }
+            &:nth-child(3) {
+              width: 13%;
+            }
+            &:nth-child(4) {
+              width: 35%;
+            }
+            &:nth-child(5) {
+              width: 12%;
+            }
+            &:nth-child(6) {
+              width: 10%;
+            }
+          }
+        }
+        
+      }
+    }
+    .last-list {
+      text-align: center;
+    }
   }
+  
+
 }
 
 @include response('tablet') {
+  .hero-img {
+    padding: 0px 10vw;
+    .hero-img__left {
+      h1 {
+        margin-bottom: 12px;
+        font-weight: 800;
+        font-size: 26px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+    }
+    .hero-img__right {
+      width: 218px;
+      height: 164px;
+    }
+  }
   .teams-wrap {
     margin-top: 24px;
     min-width: 0;
@@ -65,7 +145,6 @@
           }
           
         }
-        // justify-content: flex-start;
       }
       .teams-top-right {
         display: flex;
@@ -78,14 +157,32 @@
     }
   
     .teams-body {
-      
+      .teams-body-title {
+        display: none;
+      }
     }
   }
 }
 
 @include response('phone') {
+  .hero-img {
+    padding: 0px 5vw;
+    .hero-img__left {
+      h1 {
+        margin-bottom: 12px;
+        font-weight: 800;
+        font-size: 18px;
+      }
+      h2 {
+        font-size: 13px;
+      }
+    }
+    .hero-img__right {
+      width: 152px;
+      height: 114px;
+    }
+  }
   .teams-wrap {
-  
     .teams-top {
       .teams-top-right {
         button {
