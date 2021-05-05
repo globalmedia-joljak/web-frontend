@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import selectJobIcon from './image/Modal@2x.png';
+import globalmediaLogo from './image/GlobalMedia_Logo.png';
 import './SignUp.scss';
 import OccupationListForm from '../../components/modal/OccupationListForm.js';
 import ModalTemp from '../../components/modal/ModalTemp.js';
@@ -216,129 +217,140 @@ const SignUp = ({ history, location }) => {
           </ModalTemp>
         ) : (
           <div className="el-main">
-            <form>
-              <div className="sub-info">
-                <div className="info-title">계정정보</div>
-                <div className="info-body">
-                  <div className="input-id group-start">
+            <div className="home-image">
+              <a href="/">
+                <img
+                  src={globalmediaLogo}
+                  alt="My dongho"
+                  width="100px"
+                  height="100px"
+                  className="globalmedia-logo-image"
+                />
+              </a>
+            </div>
+            <div className="sub-info">
+              <div className="info-title">계정정보</div>
+              <div className="info-body">
+                <div className="input-id group-start">
+                  <input
+                    type="text"
+                    name="student_code"
+                    id="student_code"
+                    placeholder="학번을 입력해주세요"
+                    defaultValue={userInfo.classOf}
+                    onChange={(e) =>
+                      setUserInfo({
+                        ...userInfo,
+                        classOf: e.target.value,
+                      })
+                    }
+                    className="signUp-input"
+                    maxLength="20"
+                  />
+                  <div className="check-info"></div>
+                </div>
+                <div className="input-password">
+                  <div className="form1-input-password">
                     <input
-                      type="text"
-                      name="student_code"
-                      id="student_code"
-                      placeholder="학번을 입력해주세요"
-                      defaultValue={userInfo.classOf}
-                      onChange={(e) =>
-                        setUserInfo({
-                          ...userInfo,
-                          classOf: e.target.value,
-                        })
-                      }
+                      type="password"
+                      name="password"
+                      id="password"
+                      value={passwd}
+                      placeholder="비밀번호를 입력하세요"
+                      onChange={(e) => setPasswd(e.target.value)}
+                      className="signUp-input passwrod1"
+                      maxLength="20"
+                    />
+                    <div className="check-info">
+                      <p>{passwordError}</p>
+                    </div>
+                  </div>
+                  <div className="form2-input-password ">
+                    <input
+                      type="password"
+                      name="confirm_password"
+                      id="confirm_password"
+                      value={confirmPasswd}
+                      placeholder="비밀번호를 다시 확인하세요"
+                      onChange={(e) => setConfirmPasswd(e.target.value)}
                       className="signUp-input"
                       maxLength="20"
                     />
                     <div className="check-info"></div>
                   </div>
-                  <div className="input-password">
-                    <div className="form1-input-password">
-                      <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        value={passwd}
-                        placeholder="비밀번호를 입력하세요"
-                        onChange={(e) => setPasswd(e.target.value)}
-                        className="signUp-input passwrod1"
-                        maxLength="20"
-                      />
-                      <div className="check-info">{passwordError}</div>
-                    </div>
-                    <div className="form2-input-password ">
-                      <input
-                        type="password"
-                        name="confirm_password"
-                        id="confirm_password"
-                        value={confirmPasswd}
-                        placeholder="비밀번호를 다시 확인하세요"
-                        onChange={(e) => setConfirmPasswd(e.target.value)}
-                        className="signUp-input"
-                        maxLength="20"
-                      />
-                      <div className="check-info"></div>
-                    </div>
-                  </div>
                 </div>
               </div>
-              <div className="sub-info">
-                <div className="info-title">개인정보</div>
-                <div className="info-body">
-                  <div className="input-name group-start">
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      placeholder="이름을 입력해주세요"
-                      defaultValue={userInfo.name}
-                      onChange={(e) =>
-                        setUserInfo({
-                          ...userInfo,
-                          name: e.target.value,
-                        })
-                      }
-                      className="signUp-input insert-name"
-                      maxLength="20"
+            </div>
+            <div className="sub-info-private">
+              <div className="info-title-private">개인정보</div>
+              <div className="info-body">
+                <div className="input-name group-start">
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="이름을 입력해주세요"
+                    defaultValue={userInfo.name}
+                    onChange={(e) =>
+                      setUserInfo({
+                        ...userInfo,
+                        name: e.target.value,
+                      })
+                    }
+                    className="insert-name"
+                    maxLength="20"
+                  />
+                  <button className="select-job" onClick={handleClick}>
+                    직군 선택
+                    <img
+                      src={selectJobIcon}
+                      alt="No icon"
+                      className="selectJobIcon"
                     />
-                    <button className="select-job" onClick={handleClick}>
-                      직군 선택
-                      <img
-                        src={selectJobIcon}
-                        alt="No icon"
-                        className="selectJobIcon"
-                      />
-                    </button>
-                  </div>
-                  <div className="check-info"></div>
-                  <div className="input-phone">
-                    <input
-                      type="text"
-                      name="phone_number"
-                      id="phone_number"
-                      placeholder="핸드폰 번호(- 제외)"
-                      defaultValue={userInfo.phoneNumber}
-                      onChange={(e) =>
-                        setUserInfo({
-                          ...userInfo,
-                          phoneNumber: e.target.value,
-                        })
-                      }
-                      className="signUp-input"
-                      maxLength="12"
-                    />
-                  </div>
-                  <div className="check-info"></div>
+                  </button>
                 </div>
+                <div className="check-info"></div>
+                <div className="input-phone">
+                  <input
+                    type="text"
+                    name="phone_number"
+                    id="phone_number"
+                    placeholder="핸드폰 번호(- 제외)"
+                    defaultValue={userInfo.phoneNumber}
+                    onChange={(e) =>
+                      setUserInfo({
+                        ...userInfo,
+                        phoneNumber: e.target.value,
+                      })
+                    }
+                    className="signUp-input"
+                    maxLength="12"
+                  />
+                </div>
+                <div className="check-info"></div>
               </div>
-              <div className="sub-info">
-                <div className="info-title">인증번호</div>
-                <div className="info-body">
-                  <div className="input-auth-num group-start">
-                    <input
-                      type="text"
-                      name="auth_number"
-                      id="auth_number"
-                      placeholder="인증번호를 입력하세요"
-                      defaultValue={userInfo.inviteCode}
-                      onChange={(e) =>
-                        setUserInfo({
-                          ...userInfo,
-                          inviteCode: e.target.value,
-                        })
-                      }
-                      className="signUp-input"
-                      maxLength="10"
-                    />
-                  </div>
-                  <div className="check-info"></div>
+            </div>
+            <div className="sub-info">
+              <div className="info-title">인증번호</div>
+              <div className="info-body">
+                <div className="input-auth-num group-start">
+                  <input
+                    type="text"
+                    name="auth_number"
+                    id="auth_number"
+                    placeholder="인증번호를 입력하세요"
+                    defaultValue={userInfo.inviteCode}
+                    onChange={(e) =>
+                      setUserInfo({
+                        ...userInfo,
+                        inviteCode: e.target.value,
+                      })
+                    }
+                    className="signUp-input"
+                    maxLength="10"
+                  />
                 </div>
+                <div className="check-info"></div>
               </div>
               <button
                 type="button"
@@ -347,7 +359,7 @@ const SignUp = ({ history, location }) => {
               >
                 가입하기
               </button>
-            </form>
+            </div>
           </div>
         )}
       </div>

@@ -91,66 +91,67 @@ const SignIn = ({ history, location }) => {
                 className="globalmedia-logo-image"
               />
             </a>
-
-            <a href="/" />
           </div>
-          <div className="login-form-div">
-            <div className="login-form">
-              <input
-                className="login-input"
-                type="text"
-                name="query"
-                placeholder="학번"
-                onChange={(e) =>
-                  setSigninInfo({
-                    ...signinInfo,
-                    classOf: e.target.value,
-                  })
-                }
-              />
-              <div className="check-info"></div>
-              <input
-                className="login-input"
-                type="password"
-                name="query"
-                placeholder="비밀번호"
-                onChange={(e) =>
-                  setSigninInfo({
-                    ...signinInfo,
-                    password: e.target.value,
-                  })
-                }
-              />
-              <div className="check-info"></div>
 
+          <div className="login-input">
+            <input
+              className="login-input"
+              type="text"
+              name="query"
+              placeholder="학번"
+              onChange={(e) =>
+                setSigninInfo({
+                  ...signinInfo,
+                  classOf: e.target.value,
+                })
+              }
+            />
+
+            <div className="check-info"></div>
+
+            <input
+              className="login-input"
+              type="password"
+              name="query"
+              placeholder="비밀번호"
+              onChange={(e) =>
+                setSigninInfo({
+                  ...signinInfo,
+                  password: e.target.value,
+                })
+              }
+            />
+            <div className="check-info"></div>
+
+            <div className="auto-login">
               <label className="remember-id-container">
                 자동 로그인
                 <input type="checkbox" onChange={onAutoSigninCheckBoxHandler} />
                 <span className="remember-id-checkmark"></span>
               </label>
-
-              <button
-                className="log-button"
-                type="button"
-                onClick={handleSigninSubmit}
-              >
-                로그인
-              </button>
             </div>
+          </div>
+          <div className="login-button" onClick={handleSigninSubmit}>
+            <p>로그인</p>
+          </div>
+
+          <div className="signup-char-tablet">
+            <p className="url-signUp">
+              <a href="/signup" className="signUp">
+                회원가입
+              </a>
+            </p>
           </div>
         </div>
 
         <div className="login-right">
-          <img
-            src={Signinbackground}
-            alt="My dongho"
-            className="Signinbackground"
-          />
-          <p className="url-signUp">
-            <a href="/signup" className="signUp">
-              회원가입
-            </a>
-          </p>
+          <div className="signup-char">
+            <p className="url-signUp">
+              <a href="/signup" className="signUp">
+                회원가입
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </>

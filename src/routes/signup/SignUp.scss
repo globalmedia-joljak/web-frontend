@@ -1,370 +1,416 @@
-@import "../../assets/_mixin.scss";
+@import '../../assets/_mixin.scss';
 
 body {
-	margin: 0;
-	padding: 0;
-	background-color: #f2f2f2;
-	color: #333;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+  .el-main {
+    display: flex;
+    width: 50%;
+    height: 600px;
+    background-color: #ffffff;
+    align-items: flex-start;
+    justify-content: center;
+    border-radius: 32px;
+    margin: 80px auto;
+    flex-direction: column;
+    padding-left: 50px;
+    .home-image {
+      a {
+        img {
+          margin-top: -20%;
+          margin-left: -5%;
+        }
+      }
+    }
+  }
+  .sub-info {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
 
-	.signUp-input {
-		border: 1px solid #837d7d66;
-		text-align: left;
+    .info-title {
+      margin-top: 15px;
+      font-size: 25px;
+      font: normal normal bold 28px/41px Noto Sans KR;
+    }
+    .info-body {
+      display: flex;
+      flex-direction: column;
 
-		font: normal normal normal 28px/41px Noto Sans KR;
+      input {
+        margin-bottom: 5px;
+        border: 1px solid #837d7d66;
+        text-align: left;
 
-		color: black;
-		opacity: 1;
-		text-indent: 19px;
+        font: normal normal normal 16px/24px Noto Sans KR;
 
-		width: 400px;
-		height: 79px;
-		margin-left: 30px;
-		border-radius: 10px;
-	}
+        color: black;
+        opacity: 1;
+        text-indent: 19px;
 
-	.select-job {
-		border: 1px solid #837d7d66;
-		margin-left: 30px;
-		height: 79px;
-		border-radius: 10px;
-		width: 213px;
+        width: 300px;
+        height: 60px;
+        margin-left: 30px;
+        border-radius: 10px;
+      }
+      .check-info {
+        height: 10px;
+        margin-left: 30px;
+        p {
+          color: red;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+  .input-password {
+    display: flex;
+    flex-direction: row;
+  }
+  .sub-info-private {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    .info-title-private {
+      margin-top: 15px;
+      font-size: 25px;
+      font: normal normal bold 28px/41px Noto Sans KR;
+    }
+    .info-body {
+      display: flex;
+      flex-direction: column;
+      input {
+        margin-bottom: 10px;
+        border: 1px solid #837d7d66;
+        text-align: left;
 
-		padding-left: 0px;
+        font: normal normal normal 16px/24px Noto Sans KR;
 
-		text-align: center;
-		font: normal normal normal 28px/41px Noto Sans KR;
-		letter-spacing: 0px;
-		background-color: white;
-		color: #00000080;
-		opacity: 1;
+        color: black;
+        opacity: 1;
+        text-indent: 19px;
 
-		.selectJobIcon{
-			width:10%;
-			height:27%;
-			margin-left:10%;
-		}
-	}
+        width: 300px;
+        height: 60px;
+        margin-left: 30px;
+        border-radius: 10px;
+      }
+      .select-job {
+        border: 1px solid #837d7d66;
+        margin-left: 30px;
+        height: 60px;
+        border-radius: 10px;
+        width: 213px;
 
-	.signUp-container {
-		display: flex;
-		position: relative;
-		padding-top: 30px;
-		width: 1200px;
-		height: 800px;
-		background-color: #ffffff;
-		margin: 62px auto;
-		flex-direction: column;
-		justify-content: space-evenly;
-		align-items: center;
-		border-radius: 32px;
-		box-shadow: 0px 3px 6px #00000029;
+        padding-left: 0px;
 
-		.check-info {
-			margin-left: 40px;
-			margin-top: 8px;
-			margin-bottom: 3px;
-			width: 350px;
-			height: 20px;
-			font-size: 16px;
-			color: red;
-		}
+        text-align: center;
+        font: normal normal normal 16px/24px Noto Sans KR;
+        letter-spacing: 0px;
+        background-color: white;
+        color: #00000080;
+        opacity: 1;
 
-		.el-main {
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-			align-items: center;
-			width: 100%;
+        .selectJobIcon {
+          width: 20px;
+          height: 20px;
+          margin-left: 10%;
+        }
+      }
+    }
+  }
 
-			.sub-info {
-				width: 100%;
-				display: flex;
-				flex-direction: row;
-				justify-content: center;
-
-				.info-title {
-					font-size: 25px;
-					margin-top: 20px;
-					font: normal normal bold 32px/47px Noto Sans KR;
-				}
-
-				.info-body {
-					display: flex;
-					flex-direction: column;
-					width: 900px;
-					margin-bottom: 10px;
-
-					.input-password {
-						display: flex;
-
-						flex-direction: row;
-					}
-				}
-			}
-
-			.sub-private-info {
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-
-				.info-body {
-					display: flex;
-					flex-direction: column;
-					align-items: stretch;
-				}
-			}
-
-			.sub-auth-num {
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				justify-content: center;
-			}
-
-			.signUp-button {
-				position: absolute;
-				width: 240px;
-				height: 80px;
-				cursor: pointer;
-				top: 605px;
-				left: 835px;
-
-				background: #9a609c 0% 0% no-repeat padding-box;
-				border-radius: 8px;
-				border-style: none;
-				font: normal normal medium Noto Sans KR;
-				font-size: 23px;
-				letter-spacing: 0px;
-				color: #ffffff;
-				opacity: 1;
-			}
-		}
-	}
+  .signUp-button {
+    width: 220px;
+    height: 60px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-left: 100px;
+    background: #9a609c 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    border-style: none;
+    font: normal normal medium Noto Sans KR;
+    font-size: 23px;
+    letter-spacing: 0px;
+    color: #ffffff;
+    opacity: 1;
+  }
 }
-@include response("tablet") {
-	body {
-		margin: 0;
-		padding: 0;
-		background-color: #f2f2f2;
-		color: #333;
 
-		.signUp-input {
-			border: 1px solid #837d7d66;
-			text-align: left;
+@media (max-width: 1503px) and (min-width: 418px) {
+  body {
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    .el-main {
+      display: flex;
+      width: 90%;
+      height: 800px;
+      background-color: #ffffff;
+      align-items: flex-start;
+      justify-content: center;
+      border-radius: 32px;
+      margin: 80px auto;
+      flex-direction: column;
+      padding-left: 50px;
+    }
+    .sub-info {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 20px;
+      .info-title {
+        margin-top: 15px;
+        font-size: 25px;
+        font: normal normal bold 28px/41px Noto Sans KR;
+      }
+      .info-body {
+        display: flex;
+        flex-direction: column;
+        input {
+          margin-bottom: 10px;
+          border: 1px solid #837d7d66;
+          text-align: left;
 
-			font: normal normal normal 16px/24px Noto Sans KR;
+          font: normal normal normal 16px/24px Noto Sans KR;
 
-			color: black;
-			opacity: 1;
-			text-indent: 19px;
+          color: black;
+          opacity: 1;
+          text-indent: 19px;
 
-			width: 374px;
-			height: 42px;
-			margin-left: 30px;
-			border-radius: 4px;
-		}
+          width: 130%;
+          height: 60px;
+          margin-left: 50px;
+          border-radius: 5px;
+        }
+        .check-info {
+          height: 25px;
+          margin-left: 60px;
+          p {
+            color: red;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+    .input-password {
+      display: flex;
+      flex-direction: column;
+    }
+    .sub-info-private {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 20px;
+      .info-title-private {
+        margin-top: 15px;
+        font-size: 25px;
+        font: normal normal bold 28px/41px Noto Sans KR;
+      }
+      .info-body {
+        display: flex;
+        flex-direction: column;
+        input {
+          margin-bottom: 10px;
+          border: 1px solid #837d7d66;
+          text-align: left;
 
-		.select-job {
-			margin-left: 30px;
-			height: 42px;
-			border-radius: 10px;
-			width: 116px;
+          font: normal normal normal 16px/24px Noto Sans KR;
 
-			padding-left: 19px;
+          color: black;
+          opacity: 1;
+          text-indent: 19px;
 
-			text-align: left;
-			font: normal normal normal 16px/24px Noto Sans KR;
-			letter-spacing: 0px;
-			color: #00000080;
-			opacity: 1;
-		}
+          width: 250px;
+          height: 60px;
+          margin-left: 50px;
+          border-radius: 5px;
+        }
+        .select-job {
+          border: 1px solid #837d7d66;
+          margin-left: 30px;
+          height: 60px;
+          border-radius: 5px;
+          width: 170px;
 
-		.signUp-container {
-			display: flex;
-			position: relative;
-			width: 608px;
-			height: 790px;
-			background-color: #ffffff;
-			margin: 62px auto;
-			flex-direction: column;
-			justify-content: space-evenly;
-			align-items: center;
-			border-radius: 32px;
-			box-shadow: 0px 3px 6px #00000029;
+          padding-left: 0px;
 
-			.el-main {
-				display: flex;
-				margin-top: -90px;
-				flex-direction: column;
-				justify-content: space-between;
-				align-items: center;
-				width: 100%;
+          text-align: center;
+          font: normal normal normal 16px/24px Noto Sans KR;
+          letter-spacing: 0px;
+          background-color: white;
+          color: #00000080;
+          opacity: 1;
 
-				.sub-info {
-					width: 100%;
-					margin-bottom: 50px;
-					display: flex;
-					flex-direction: row;
-					justify-content: center;
+          .selectJobIcon {
+            width: 20px;
+            height: 20px;
+            margin-left: 10%;
+          }
+        }
+      }
+    }
 
-					.info-title {
-						font-size: 25px;
-						width: 100px;
-						margin-left: 150px;
-						margin-top: 0px;
-						font: normal normal bold 22px/33px Noto Sans KR;
-					}
-
-					.info-body {
-						display: flex;
-						flex-direction: column;
-						width: 590px;
-						margin-bottom: 10px;
-
-						.insert-name {
-							width: 234px;
-							height: 42px;
-						}
-
-						.input-password {
-							display: flex;
-
-							flex-direction: column;
-						}
-					}
-				}
-
-				.signUp-button {
-					position: absolute;
-					width: 286px;
-					height: 64px;
-					cursor: pointer;
-					top: 674px;
-					left: 175px;
-				}
-			}
-		}
-	}
+    .signUp-button {
+      width: 220px;
+      height: 60px;
+      cursor: pointer;
+      margin-top: 120px;
+      margin-left: -30%;
+      background: #9a609c 0% 0% no-repeat padding-box;
+      border-radius: 8px;
+      border-style: none;
+      font: normal normal medium Noto Sans KR;
+      font-size: 23px;
+      letter-spacing: 0px;
+      color: #ffffff;
+      opacity: 1;
+    }
+  }
 }
-@include response("phone") {
-	body {
-		margin: 0;
-		padding: 0;
-		background-color: #f2f2f2;
-		color: #333;
-		.signUp-input {
-			border: 1px solid #837d7d66;
-			text-align: left;
 
-			font: normal normal normal 16px/24px Noto Sans KR;
+@media (max-width: 613px) {
+  body {
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    .el-main {
+      display: flex;
+      width: 90%;
+      height: 750px;
+      background-color: #ffffff;
+      align-items: flex-start;
+      justify-content: center;
+      border-radius: 32px;
+      margin: 0px auto;
+      flex-direction: column;
+      padding-left: 20px;
+    }
+    .sub-info {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+      .info-title {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        font: normal normal bold 16px/24px Noto Sans KR;
+      }
+      .info-body {
+        display: flex;
+        flex-direction: column;
+        input {
+          margin-bottom: 5px;
+          border: 1px solid #837d7d66;
+          text-align: left;
 
-			color: black;
-			opacity: 1;
-			text-indent: 19px;
+          font: normal normal normal 16px/24px Noto Sans KR;
 
-			width: 272px;
-			height: 36px;
-			margin-left: 24px;
-			border-radius: 4px;
-		}
+          color: black;
+          opacity: 1;
+          text-indent: 19px;
 
-		.select-job {
-			margin-left: 16px;
-			height: 36px;
-			border-radius: 4px;
-			width: 72px;
+          width: 300px;
+          height: 40px;
+          margin-left: 0px;
+          border-radius: 5px;
+        }
+        .check-info {
+          height: 10px;
+          margin-left: 30px;
+          p {
+            color: red;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+    .input-password {
+      display: flex;
+      flex-direction: column;
+    }
+    .sub-info-private {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+      .info-title-private {
+        margin-top: 15px;
+        font-size: 25px;
+        margin-bottom: 15px;
+        font: normal normal bold 16px/24px Noto Sans KR;
+      }
+      .info-body {
+        display: flex;
+        flex-direction: column;
+        .insert-name {
+          margin-bottom: 10px;
+          border: 1px solid #837d7d66;
+          text-align: left;
 
-			padding-left: 4px;
+          font: normal normal normal 16px/24px Noto Sans KR;
 
-			text-align: left;
-			font: normal normal normal 12px/18px Noto Sans KR;
-			letter-spacing: 0px;
-			color: #00000080;
-			opacity: 1;
-		}
+          color: black;
+          opacity: 1;
+          text-indent: 19px;
 
-		.signUp-container {
-			display: flex;
-			position: relative;
-			width: 320px;
-			height: 650px;
-			background-color: #ffffff;
-			margin: 62px auto;
-			flex-direction: column;
-			justify-content: space-evenly;
-			align-items: center;
-			border-radius: 32px;
-			box-shadow: 0px 3px 6px #00000029;
+          width: 200px;
+          height: 40px;
+          margin-left: 0px;
+          border-radius: 5px;
+        }
+        input {
+          margin-bottom: 10px;
+          border: 1px solid #837d7d66;
+          text-align: left;
 
-			.check-info {
-				margin-left: 40px;
-				margin-top: 3px;
-				margin-bottom: 3px;
-				width: 250px;
-				height: 10px;
-				font-size: 20%;
-				color: red;
-			}
+          font: normal normal normal 16px/24px Noto Sans KR;
 
-			.el-main {
-				display: flex;
-				flex-direction: column;
-				align-items: flex-start;
-				width: 100%;
+          color: black;
+          opacity: 1;
+          text-indent: 19px;
 
-				.sub-info {
-					width: 100%;
-					margin-bottom: 30px;
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
+          width: 300px;
+          height: 40px;
+          margin-left: 0px;
+          border-radius: 5px;
+        }
+        .select-job {
+          border: 1px solid #837d7d66;
+          margin-left: 30px;
+          height: 40px;
+          border-radius: 5px;
+          width: 70px;
 
-					.info-title {
-						font-size: 25px;
-						width: 100px;
-						margin-left: 24px;
-						margin-top: 0px;
-						margin-bottom: 12px;
-						font: normal normal bold 22px/33px Noto Sans KR;
-					}
+          padding-left: 0px;
 
-					.info-body {
-						display: flex;
-						flex-direction: column;
-						width: 590px;
-						margin-bottom: 10px;
+          text-align: center;
+          font-size: 10px;
+          letter-spacing: 0px;
+          background-color: white;
+          color: #00000080;
+          opacity: 1;
 
-						.insert-name {
-							width: 184px;
-							height: 36px;
-						}
+          .selectJobIcon {
+            width: 10px;
+            height: 10px;
+            margin-left: 10%;
+          }
+        }
+      }
+    }
 
-						.input-password {
-							display: flex;
-
-							flex-direction: column;
-						}
-					}
-				}
-
-				.signUp-button {
-					position: absolute;
-					width: 208px;
-					height: 42px;
-					cursor: pointer;
-					top: 580px;
-					left: 58px;
-
-					background: #9a609c 0% 0% no-repeat padding-box;
-					border-radius: 8px;
-					border-style: none;
-
-					font-size: 17px;
-					letter-spacing: 0px;
-					color: #ffffff;
-					opacity: 1;
-				}
-			}
-		}
-	}
+    .signUp-button {
+      width: 220px;
+      height: 45px;
+      cursor: pointer;
+      margin-top: 50px;
+      margin-left: 45px;
+      background: #9a609c 0% 0% no-repeat padding-box;
+      border-radius: 8px;
+      border-style: none;
+      font: normal normal medium Noto Sans KR;
+      font-size: 15px;
+      letter-spacing: 0px;
+      color: #ffffff;
+      opacity: 1;
+    }
+  }
 }
