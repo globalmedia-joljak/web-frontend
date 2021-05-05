@@ -29,6 +29,7 @@
         display: block;
         @include backgroundImage;
         @include widthHeight;
+        background-size: cover;
         transition: transform ease 0.3s;
         .work-hover-bg {
           position: absolute;
@@ -66,7 +67,7 @@
 
     .team-name {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 12px;
       column-gap: 8px;
       color: #00000099;
@@ -74,24 +75,25 @@
         padding-left: 8px;
         border-left: 1px solid #6d6d6d99;
         display: inherit;
+        flex-wrap: wrap;
         column-gap: 4px;
         i {
           color: #00000099;
         }
       }
     }
-
-    .work-content {
-      font-size: 14px;
-      color: #000000;
-      max-height: 60px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      word-break: break-all;
-      line-height: inherit;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
+    .tui-editor-contents {
+      p {
+        font-size: 14px;
+        max-height: 60px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        line-height: inherit;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
     }
   }
 }

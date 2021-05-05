@@ -178,15 +178,12 @@ const CreateAuthor = ({ history, match }) => {
 
         return;
       case 'edit':
-        console.log('수정');
-
         setPortfolioShow(true);
         setPortfolioEdit(true);
         setPortfolio({
           ...data,
         });
 
-        console.log(portfolio);
         return;
 
       default:
@@ -295,7 +292,7 @@ const CreateAuthor = ({ history, match }) => {
       case 'create':
         createAuthorProfile(classOf, formdata);
         setTimeout(() => {
-          history.push(`/author/${classOf}`);
+          history.push(`/team-building/author/${classOf}`);
         }, 1500);
         return;
 
@@ -307,7 +304,7 @@ const CreateAuthor = ({ history, match }) => {
         updateAuthorProfile(classOf, formdata);
         toast.success('✅ 작가목록이 수정 되었습니다.');
         setTimeout(() => {
-          history.push(`team-building/author/${classOf}`);
+          history.push(`/team-building/author/${classOf}`);
         }, 1500);
         return;
 

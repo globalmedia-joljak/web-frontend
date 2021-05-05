@@ -12,7 +12,7 @@ import { useAppDispatch, useAppState } from '../../../../context/appContext';
 import { Link } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
 
-const ListOfWorks = ({ match, history, location }) => {
+const ListOfWorks = ({ match, history }) => {
   const { worksKR, worksColor } = useAppDispatch();
   const {
     userInfo: { name, isLogin },
@@ -108,6 +108,11 @@ const ListOfWorks = ({ match, history, location }) => {
   };
 
   const { page, workResponseList } = data;
+  console.log(workResponseList);
+
+  const listItemBackgroundImg = (imageInfoList) => {
+    // return imageInfoList ? `url(${imageInfoList[0].url})` : `url(${noImage})`;
+  };
 
   return (
     <>
@@ -169,7 +174,7 @@ const ListOfWorks = ({ match, history, location }) => {
                   ({
                     id,
                     content,
-                    url,
+                    imageInfoList,
                     projectCategory,
                     teamMember,
                     teamName,
@@ -181,7 +186,9 @@ const ListOfWorks = ({ match, history, location }) => {
                           <i
                             className="work-img"
                             style={{
-                              backgroundImage: `url(${url ?? noImage})`,
+                              backgroundImage: listItemBackgroundImg(
+                                imageInfoList,
+                              ),
                             }}
                           >
                             <i className="work-hover-bg" />
