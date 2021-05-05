@@ -234,7 +234,7 @@ const CreateIdea = ({ history }) => {
                   onChange={(e) => setCategory(e.target.value)}
                 >
                   <option value="NONE">선택안함</option>
-                  <option value="WEB_APP">웹/앱 서비스</option>
+                  <option value="WEB_APP">웹/앱</option>
                   <option value="MEDIA_ART">미디어아트</option>
                   <option value="ANIMATION">영상/애니메이션</option>
                   <option value="GAME">게임</option>
