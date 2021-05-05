@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import selectJobIcon from './image/Modal@2x.png';
+import globalmediaLogo from './image/GlobalMedia_Logo.png';
 import './SignUp.scss';
 import OccupationListForm from '../../components/modal/OccupationListForm.js';
 import ModalTemp from '../../components/modal/ModalTemp.js';
@@ -216,6 +217,17 @@ const SignUp = ({ history, location }) => {
           </ModalTemp>
         ) : (
           <div className="el-main">
+            <div className="home-image">
+              <a href="/">
+                <img
+                  src={globalmediaLogo}
+                  alt="My dongho"
+                  width="100px"
+                  height="100px"
+                  className="globalmedia-logo-image"
+                />
+              </a>
+            </div>
             <div className="sub-info">
               <div className="info-title">계정정보</div>
               <div className="info-body">

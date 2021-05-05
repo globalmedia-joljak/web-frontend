@@ -91,8 +91,6 @@ const SignIn = ({ history, location }) => {
                 className="globalmedia-logo-image"
               />
             </a>
-
-            <a href="/" />
           </div>
 
           <div className="login-input">

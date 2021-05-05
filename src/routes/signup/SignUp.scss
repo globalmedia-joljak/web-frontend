@@ -15,11 +15,20 @@ body {
     margin: 80px auto;
     flex-direction: column;
     padding-left: 50px;
+    .home-image {
+      a {
+        img {
+          margin-top: -20%;
+          margin-left: -5%;
+        }
+      }
+    }
   }
   .sub-info {
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
+
     .info-title {
       margin-top: 15px;
       font-size: 25px;
@@ -129,7 +138,7 @@ body {
   }
 }
 
-@media (max-width: 1324px) and (min-width: 418px) {
+@media (max-width: 1503px) and (min-width: 418px) {
   body {
     background-color: #f2f2f2;
     margin: 0;
@@ -137,7 +146,7 @@ body {
     .el-main {
       display: flex;
       width: 90%;
-      height: 750px;
+      height: 800px;
       background-color: #ffffff;
       align-items: flex-start;
       justify-content: center;
