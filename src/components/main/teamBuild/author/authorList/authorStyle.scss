@@ -9,9 +9,10 @@
     width: 100%;
     li {
       background-color: #ffffff;
-      min-width: 277px;
-      height: 537px;
+      min-width: 258px;
+      // height: 537px;
       border-radius: 16px;
+      width: 25%;
       width: calc(25% - 22.5px);
       box-shadow: 1px 1px 3px #00000029;
       cursor: pointer;
@@ -20,6 +21,7 @@
         display: grid;
         padding: 24px;
         padding-top: 32px;
+        grid-template-rows: repeat(4, max-content);
       }
       .main-role {
         display: grid;
@@ -66,8 +68,8 @@
         place-self: center;
         background-color: #6d6d6d15;
         @include backgroundImage;
-        width: $web-author-img;
-        height: $web-author-img;
+        align-self: flex-end;
+        width: 100%;
         transition: transform ease 0.3s;
         overflow: hidden;
         background-size: cover;
@@ -109,7 +111,7 @@
       li {
         min-width: 188px;
         width: calc(33.3333333333% - 15px);
-        height: 414px;
+        // height: 414px;
         a {
           padding: 16px;
           padding-top: 24px;
@@ -135,10 +137,6 @@
           width: $tablet-sub-role-txt-w;
           height: $tablet-sub-role-txt-h;
         }
-        .author-img {
-          width: $tablet-author-img;
-          height: $tablet-author-img;
-        }
       }
     }
   }
@@ -151,7 +149,7 @@
       li {
         min-width: 152px;
         width: calc(50% - 8px);
-        height: 383px;
+        // height: 383px;
         a {
           padding: 10px;
         }
@@ -173,10 +171,6 @@
         .sub-role {
           font-size: 10px;
           margin-bottom: 48px;
-        }
-        .author-img {
-          width: $phone-author-img;
-          height: $phone-author-img;
         }
 
         &:hover {

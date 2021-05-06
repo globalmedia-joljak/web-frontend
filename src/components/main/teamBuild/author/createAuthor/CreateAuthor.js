@@ -39,31 +39,31 @@ const CreateAuthor = ({ history, match }) => {
 
   // set Image
   const [file, setFile] = useState(null);
-  const [isDefault, setIsDefault] = useState(true);
   const [customCN, setCustomCN] = useState('');
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
-    setIsDefault(false);
   };
 
-  useEffect(() => {
-    previewImg();
-    !isDefault ? setCustomCN('exist-img') : setCustomCN('');
-  }, [file, isDefault]);
-
   const previewImg = () => {
-    if (!file) return false;
     const roleBackground = document.querySelector('.img');
-    if (isDefault) {
+    if (!roleBackground) return false;
+
+    if (file) {
+      setCustomCN('exist-img');
+      if (file.url) {
+        return (roleBackground.style.backgroundImage = `url(${file.url})`);
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          return (roleBackground.style.backgroundImage = `url(${reader.result})`);
+        };
+        return reader.readAsDataURL(file);
+      }
+    } else {
+      setCustomCN('');
       return (roleBackground.style.backgroundImage = 'none');
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      return (roleBackground.style.backgroundImage = `url(${reader.result})`);
-    };
-    reader.readAsDataURL(file);
-    setCustomCN('exist-img');
   };
 
   //set role
@@ -120,9 +120,11 @@ const CreateAuthor = ({ history, match }) => {
         mainRole: profileDetail.data.user.mainProjectRole,
         subRole: profileDetail.data.user.subProjectRole,
       });
-      return;
+      if (profileDetail.data.mediaInfo) {
+        setFile(profileDetail.data.mediaInfo);
+      }
     }
-  }, [type, profileDetail]);
+  }, [type, profileDetail, userState]);
 
   // set introduce
   const [textLen, setTextLen] = useState(0);
@@ -222,8 +224,6 @@ const CreateAuthor = ({ history, match }) => {
 
     const { portfolioLinks } = profileDetail.data;
 
-    if (!profileDetail.data) {
-    }
     if (type === 'edit') {
       if (!profileDetail.data) {
         return history.push(`/author/${classOf}`);
@@ -301,7 +301,7 @@ const CreateAuthor = ({ history, match }) => {
         return;
 
       case 'edit':
-        if (profileDetail.data.mediaInfo && isDefault) {
+        if (profileDetail.data.mediaInfo) {
           formdata.append(
             'deleteFileName',
             profileDetail.data.mediaInfo.modifyName,
@@ -327,6 +327,15 @@ const CreateAuthor = ({ history, match }) => {
       border: 'none',
     };
   };
+
+  const setDefaultImage = () => {
+    setFile(null);
+    toast.success(`✅ 기본 이미지로 설정 하였습니다.`);
+  };
+
+  useEffect(() => {
+    previewImg();
+  }, [file, portfolioShow]);
 
   return (
     <>
@@ -387,7 +396,7 @@ const CreateAuthor = ({ history, match }) => {
                     onChange={handleFileChange}
                   />
                 </div>
-                <div className="default-img" onClick={() => setIsDefault(true)}>
+                <div className="default-img" onClick={setDefaultImage}>
                   <div
                     className="img"
                     style={{
