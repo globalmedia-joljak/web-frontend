@@ -148,7 +148,7 @@ const ListOfWorks = ({ match, history }) => {
                 전체 작가 인원
                 <span>{workResponseList.totalElements}</span>
               </h3>
-              <div className="search-list">
+              {/* <div className="search-list">
                 <span className="search-icon" />
                 <input
                   type="text"
@@ -156,13 +156,13 @@ const ListOfWorks = ({ match, history }) => {
                   onFocus={(e) => e.target.parentNode.classList.add('dark')}
                   onBlur={(e) => e.target.parentNode.classList.remove('dark')}
                 />
-              </div>
+              </div> */}
               <div className="main-functions">
-                <ButtonWIthIcon
+                {/* <ButtonWIthIcon
                   btntype="filter"
                   btnTxt="상세검색"
                   handleButton={() => setFilterShow(true)}
-                />
+                /> */}
                 <ButtonWIthIcon
                   btntype="create"
                   btnTxt="등록하기"
