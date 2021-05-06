@@ -3,6 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useAppDispatch, useAppState } from '../../../../../context/appContext';
 import {
   createAuthorProfile,
+  getAuthorProfileDetail,
   updateAuthorProfile,
 } from '../../../../../service/api/profile';
 import AuthorButton from '../../../common/ButtonWIthIcon';
@@ -10,10 +11,8 @@ import './editAuthorStyle.scss';
 import EditDeleteButton from '../../../common/EditDeleteButton';
 import PortfolioModal from './PortfolioModal';
 import RoleModal from './RoleModal';
-import {
-  useTeamsDispatch,
-  useTeamsState,
-} from '../../../../../context/teamContext';
+import { useTeamsDispatch } from '../../../../../context/teamContext';
+import useAsync from '../../../../../hooks/useAsync';
 
 const CreateAuthor = ({ history, match }) => {
   const setImgEl = useRef();
@@ -22,7 +21,7 @@ const CreateAuthor = ({ history, match }) => {
     userInfo: { classOf },
   } = useAppState();
   const { setJobColor, translationKR } = useAppDispatch();
-  const { detailData } = useTeamsState();
+
   const { setDefaultImg } = useTeamsDispatch();
 
   const [createAuthorQuery, setCreateAuthorQuery] = useState({
@@ -30,6 +29,11 @@ const CreateAuthor = ({ history, match }) => {
     mainRole: null,
     subRole: null,
   });
+
+  const authorId = match.params.id;
+  const [profileDetail] = useAsync(() => getAuthorProfileDetail(authorId), [
+    authorId,
+  ]);
 
   const type = match.params.state;
 
@@ -109,16 +113,16 @@ const CreateAuthor = ({ history, match }) => {
       });
     }
 
-    if (type === 'edit' && detailData.portfolioLinks) {
+    if (type === 'edit' && profileDetail.data) {
       setCreateAuthorQuery({
         ...createAuthorQuery,
-        introduce: detailData.content,
-        mainRole: detailData.user.mainProjectRole,
-        subRole: detailData.user.subProjectRole,
+        introduce: profileDetail.data.content,
+        mainRole: profileDetail.data.user.mainProjectRole,
+        subRole: profileDetail.data.user.subProjectRole,
       });
       return;
     }
-  }, [type, detailData]);
+  }, [type, profileDetail]);
 
   // set introduce
   const [textLen, setTextLen] = useState(0);
@@ -214,17 +218,17 @@ const CreateAuthor = ({ history, match }) => {
   };
 
   useEffect(() => {
-    if (!detailData) return false;
+    if (!profileDetail.data) return false;
 
-    const { portfolioLinks } = detailData;
+    const { portfolioLinks } = profileDetail.data;
 
-    if (!detailData) {
+    if (!profileDetail.data) {
     }
     if (type === 'edit') {
-      if (!detailData) {
+      if (!profileDetail.data) {
         return history.push(`/author/${classOf}`);
       }
-      if (detailData.portfolioLinks) {
+      if (profileDetail.data.portfolioLinks) {
         setPortfolioLinks(
           portfolioLinks.map((link, i) => {
             return {
@@ -239,7 +243,7 @@ const CreateAuthor = ({ history, match }) => {
         });
       }
     }
-  }, [detailData]);
+  }, [profileDetail.data]);
 
   const handleChange = (e) => {
     setPortfolio({
@@ -297,8 +301,11 @@ const CreateAuthor = ({ history, match }) => {
         return;
 
       case 'edit':
-        if (detailData.mediaInfo && isDefault) {
-          formdata.append('deleteFileName', detailData.mediaInfo.modifyName);
+        if (profileDetail.data.mediaInfo && isDefault) {
+          formdata.append(
+            'deleteFileName',
+            profileDetail.data.mediaInfo.modifyName,
+          );
         }
 
         updateAuthorProfile(classOf, formdata);

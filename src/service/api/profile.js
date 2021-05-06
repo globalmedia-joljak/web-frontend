@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import { client } from './client';
 
 const getAuthorProfileList = async (pageNum) => {
@@ -20,18 +19,14 @@ const createAuthorProfile = async (classOf, createAuthorData) => {
     });
 
     return;
-  } catch (e) {
-    toast.error('대표직군이 선택 되어있는지 확인해 주세요.');
-  }
+  } catch (e) {}
 };
 
 const deleteAuthorProfile = async (classOf) => {
   try {
     await client.delete(`/profiles/${classOf}`);
     return;
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 };
 
 const updateAuthorProfile = async (classOf, updateProfileRequest) => {
@@ -39,9 +34,7 @@ const updateAuthorProfile = async (classOf, updateProfileRequest) => {
     return await client.patch(`/profiles/${classOf}`, updateProfileRequest, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
-  } catch (e) {
-    console.log(e.response);
-  }
+  } catch (e) {}
 };
 
 export {

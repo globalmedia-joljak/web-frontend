@@ -8,6 +8,7 @@ import {
   getAuthorProfileDetail,
 } from '../../../../../service/api/profile';
 import EditDeleteButton from '../../../common/EditDeleteButton';
+import './authorDetailStyle.scss';
 
 const AuthorDetail = ({ match, history }) => {
   const { translationKR, setJobColor } = useAppDispatch();
@@ -15,7 +16,7 @@ const AuthorDetail = ({ match, history }) => {
     userInfo: { isLogin, classOf, name },
   } = useAppState();
 
-  const { filterClassOf, setDefaultImg, setDetailData } = useTeamsDispatch();
+  const { filterClassOf, setDefaultImg } = useTeamsDispatch();
 
   const [profileDetail] = useAsync(
     () => getAuthorProfileDetail(match.params.id),
@@ -23,19 +24,6 @@ const AuthorDetail = ({ match, history }) => {
   );
 
   const { loading, data, error } = profileDetail;
-
-  useEffect(() => {
-    if (data) setDetailData(profileDetail.data);
-  }, [profileDetail.data]);
-
-  if (loading) return <div>로딩중...</div>;
-  if (!data) return null;
-  if (error) return <div>상세페이지 에러</div>;
-
-  // const handleEdit = () => {
-  //   if (!classOf) return false;
-  //   history.push(`${match.url}/edit`);
-  // };
 
   const handleDelete = () => {
     const delMessage = window.confirm(
@@ -47,14 +35,9 @@ const AuthorDetail = ({ match, history }) => {
     }
   };
 
-  const authorEditBtn = () =>
-    classOf === match.params.id && (
-      <EditDeleteButton
-        form={'author'}
-        handleEdit={() => history.push(`${match.url}/edit`)}
-        handleDelete={handleDelete}
-      />
-    );
+  if (loading) return <div>로딩중...</div>;
+  if (!data) return null;
+  if (error) return <div>상세페이지 에러</div>;
 
   const { user, portfolioLinks, content, mediaInfo } = profileDetail.data;
 

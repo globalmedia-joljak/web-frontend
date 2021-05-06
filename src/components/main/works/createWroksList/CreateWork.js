@@ -119,6 +119,8 @@ const CreateWork = ({ match, history }) => {
     if (yearsState.data) {
       setYears(yearsState.data);
     }
+
+    previewImg();
   });
 
   // updload File & images
@@ -149,7 +151,6 @@ const CreateWork = ({ match, history }) => {
     } else {
       setImages([...files]);
     }
-    previewImg();
   };
 
   const handleUploadFile = (e) => setFile(e.target.files[0]);
@@ -164,7 +165,7 @@ const CreateWork = ({ match, history }) => {
   const previewImg = () => {
     if (!images) return false;
     const worksImgaes = document.querySelectorAll('.works-images > li');
-
+    console.log(images);
     [...worksImgaes].map((image, i) => {
       if (!images[i].originalName) {
         const reader = new FileReader();

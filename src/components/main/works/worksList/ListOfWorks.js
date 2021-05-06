@@ -11,6 +11,7 @@ import WorkListModal from './WorkListModal';
 import { useAppDispatch, useAppState } from '../../../../context/appContext';
 import { Link } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
+import HeroImageForm from '../../common/HeroImageForm';
 
 const ListOfWorks = ({ match, history }) => {
   const { worksKR, worksColor } = useAppDispatch();
@@ -79,7 +80,6 @@ const ListOfWorks = ({ match, history }) => {
 
   const handleModalSubmit = () => {
     setFilterShow(false);
-    console.log(choiceValue);
   };
   // create
   const handleAddWorks = () => {
@@ -108,7 +108,6 @@ const ListOfWorks = ({ match, history }) => {
   };
 
   const { page, workResponseList } = data;
-  console.log(workResponseList);
 
   const listItemBackgroundImg = (imageInfoList) => {
     // return imageInfoList ? `url(${imageInfoList[0].url})` : `url(${noImage})`;
@@ -137,7 +136,12 @@ const ListOfWorks = ({ match, history }) => {
         />
       ) : (
         <>
-          <div className="hero-img"></div>
+          <HeroImageForm
+            type="works"
+            heroTitle="졸업작품"
+            heroContent="역대 졸업작품들을 감상해보세요"
+            heroContent2=""
+          />
           <div className="works-wrap content-size">
             <div className="content-header">
               <h3>
