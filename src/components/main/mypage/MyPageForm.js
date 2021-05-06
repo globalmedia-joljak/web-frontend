@@ -14,6 +14,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useAppState } from '../../../context/appContext';
 import { useEffect } from 'react/cjs/react.development';
 import { checkMypagePassword } from '../../../service/api/auth';
+import HeroImageForm from '../common/HeroImageForm';
 
 const settingLists = {
   setPassword: [
@@ -172,7 +173,6 @@ const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
 
     if (className === CHECK_CN) {
       const checkKr = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi;
-      console.log(contactVal[name]);
       switch (name) {
         case 'phoneNumber':
           if (!/^\d{3}\d{3,4}\d{4}$/.test(contactVal[name])) {
@@ -272,7 +272,12 @@ const MyPageForm = () => {
       <main>
         <div className="mypage-wrap">
           {succed && <SucceedPopUp />}
-          <div className="profile"></div>
+          <HeroImageForm
+            type="mypage"
+            heroTitle="마이페이지"
+            heroContent="비밀번호와 개인 연락처를 "
+            heroContent2="관리 할수 있습니다."
+          />
 
           <div className="section-wrap inr">
             <section className="set-privacy show">

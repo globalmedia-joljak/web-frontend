@@ -1,6 +1,6 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router';
-import AuthorDetail from './authorList/AuthorDetail.js';
+import { Route } from 'react-router';
+import AuthorDetail from './detailAuthor/AuthorDetail.js';
 import ListOfAuthorForm from './authorList/ListOfAuthorForm.js';
 import CreateAuthor from './createAuthor/CreateAuthor.js';
 

@@ -12,6 +12,7 @@ import { getAuthorProfileList } from '../../../../../service/api/profile.js';
 import { toast, ToastContainer } from 'react-toastify';
 import ButtonWIthIcon from '../../../common/ButtonWIthIcon.js';
 import { useEffect } from 'react/cjs/react.development';
+import HeroImageForm from '../../../common/HeroImageForm';
 
 const ListOfAuthorForm = ({ match, history }) => {
   const {
@@ -136,7 +137,12 @@ const ListOfAuthorForm = ({ match, history }) => {
         </ModalTemp>
       ) : (
         <>
-          <div className="hero-img"></div>
+          <HeroImageForm
+            type="author"
+            heroTitle="작가목록"
+            heroContent="이번 졸업작품에 참여하는"
+            heroContent2="작가들의 목록입니다."
+          />
           <div className="author-wrap content-size" ref={createAuthorEl}>
             <div className="content-header">
               <h3>

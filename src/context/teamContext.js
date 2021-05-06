@@ -17,8 +17,6 @@ export const teamDispatchContext = createContext(null);
 const TeamsProvider = ({ children }) => {
   const [showCreate, setShowCreate] = useState(false);
   const filterClassOf = useCallback((classOf) => classOf.substr(2, 2));
-  const [detailData, setDetailData] = useState({});
-  const [selected, setSelected] = useState(null);
 
   const setDefaultImg = (role) => {
     switch (role) {
@@ -34,19 +32,15 @@ const TeamsProvider = ({ children }) => {
     }
   };
 
-  const value = useMemo(() => ({ showCreate, detailData }), [
-    showCreate,
-    detailData,
-  ]);
+  const value = useMemo(() => ({ showCreate }), [showCreate]);
 
   const dispatch = useMemo(
     () => ({
       filterClassOf,
       setShowCreate,
       setDefaultImg,
-      setDetailData,
     }),
-    [filterClassOf, setShowCreate, setDefaultImg, setDetailData],
+    [filterClassOf, setShowCreate, setDefaultImg],
   );
 
   return (
