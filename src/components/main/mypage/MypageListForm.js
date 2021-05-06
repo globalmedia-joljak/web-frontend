@@ -97,7 +97,7 @@ const MypageListForm = ({
                 name={name}
                 placeholder={placeholder}
                 type={inputType}
-                onChange={(e) => handleChange(e, type, name)}
+                onInput={(e) => handleChange(e, type, name)}
                 defaultValue={data.user[name] === null ? '' : data.user[name]}
                 readOnly={type === 'password' ? false : !edit}
               />
