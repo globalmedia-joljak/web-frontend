@@ -1,11 +1,46 @@
-@import "../../mainStyle.scss";
+@import '../../mainStyle.scss';
 
 .home-wrap {
   margin-top: -$header-heigth-web;
-  @include mainRow("r3", "home", 76px, 600px);
+  @include mainRow('r3', 'home', 76px, 600px);
   .heroImg {
     @include backgroundImage;
-    background-color: rgba(171, 192, 131, 0.61);
+    background-image: url('../../../assets/images/Home_image_notext@2x.png');
+    background-size: cover;
+    display: grid;
+    align-content: center;
+    .hero-contetns {
+      width: 90%;
+      margin: 0 auto;
+      max-width: 1111px;
+      font-size: 40px;
+      display: grid;
+      p,
+      strong {
+        text-shadow: 0px 0px 10px #c6d356cc;
+        color: #ffffff;
+      }
+      strong {
+        margin-bottom: 24px;
+      }
+      p {
+        margin-bottom: 48px;
+      }
+      button {
+        a {
+          padding: 15px 41px;
+          width: fit-content;
+          color: #ffffffcc;
+          font-size: 20px;
+          border: 1px solid #ffffff99;
+          transition: all ease 0.3s;
+          &:hover {
+            color: #ffffff;
+            border: 1px solid #ffffff;
+          }
+        }
+      }
+    }
   }
   .section-wrap {
     margin: 0 auto;
@@ -39,9 +74,30 @@
   }
 }
 
-@include response("tablet") {
+@include response('tablet') {
   .home-wrap {
-    @include mainRow("r3", "home", 60px, 560px);
+    @include mainRow('r3', 'home', 60px, 560px);
+
+    .heroImg {
+      .hero-contetns {
+        strong,
+        p {
+          font-size: 24px;
+        }
+        s strong {
+          margin-bottom: 20px;
+        }
+        p {
+          margin-bottom: 20px;
+        }
+        button {
+          a {
+            padding: 11px 25px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
 
     .section-wrap {
       section {
@@ -69,9 +125,31 @@
   }
 }
 
-@include response("phone") {
+@include response('phone') {
   .home-wrap {
-    @include mainRow("r3", "home", 93px, 291px);
+    @include mainRow('r3', 'home', 93px, 291px);
+
+    .heroImg {
+      .hero-contetns {
+        strong,
+        p {
+          font-size: 13px;
+        }
+        strong {
+          margin-bottom: 8px;
+        }
+        p {
+          margin-bottom: 12px;
+        }
+        button {
+          a {
+            padding: 7px 13px;
+            font-size: 7px;
+          }
+        }
+      }
+    }
+
     .section-wrap {
       section {
         padding: 0 5% 97px;
