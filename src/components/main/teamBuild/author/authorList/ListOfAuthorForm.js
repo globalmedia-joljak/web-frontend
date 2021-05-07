@@ -7,7 +7,10 @@ import ModalTemp from '../../../../modal/ModalTemp';
 import OccupationListForm from '../../../../modal/OccupationListForm';
 import ThereIsNoList from '../../../common/ThereIsNoList';
 import './authorStyle.scss';
-import { getAuthorProfileList } from '../../../../../service/api/profile.js';
+import {
+  getAuthorProfileDetail,
+  getAuthorProfileList,
+} from '../../../../../service/api/profile.js';
 
 import { toast, ToastContainer } from 'react-toastify';
 import ButtonWIthIcon from '../../../common/ButtonWIthIcon.js';
@@ -27,10 +30,13 @@ const ListOfAuthorForm = ({ match, history }) => {
   const [filterShow, setFilterShow] = useState(false);
   const [filterRole, setFilterRole] = useState(null);
 
-  const [profilePageNum, setProfilePageNum] = useState(0);
   const [authorList, setAuthorList] = useState([]);
-  const [filterList, setFilterList] = useState([]);
-  const [totalPage, setTotalPage] = useState(0);
+  const [lastPage, setLastPage] = useState(false);
+  const [pageInfo, setPageInfo] = useState({
+    page: 0,
+    last: false,
+    totalElements: 0,
+  });
 
   useEffect(() => {
     const authorImg = document.querySelectorAll('.author-img');
@@ -41,46 +47,43 @@ const ListOfAuthorForm = ({ match, history }) => {
     }
   });
 
-  const [profileList] = useAsync(() => getAuthorProfileList(profilePageNum), [
-    profilePageNum,
-  ]);
-
-  useEffect(() => {
-    if (!filterRole || filterRole === '전체') {
-      setFilterList(authorList);
-    } else {
-      setFilterList(
-        authorList.filter((author) => {
-          return filterRole === author.user.mainProjectRole;
-        }),
-      );
-    }
-  }, [authorList, filterRole, setFilterList]);
-
+  // 필터관련내용
   const handleFilter = useCallback((e) => setFilterShow(!filterShow));
   const handleChoice = useCallback((e) => setFilterRole(e.target.value), [
     setFilterRole,
   ]);
 
-  const [total, setTotal] = useState(true);
+  useEffect(() => {
+    const { scrollTop, scrollHeight, clientHeight } = infinite;
+    if (scrollTop === 0 || clientHeight === 0 || scrollHeight === 0)
+      return false;
+
+    if (scrollTop + clientHeight >= scrollHeight - 10) {
+      setLastPage(true);
+    }
+  }, [lastPage, infinite]);
 
   useEffect(() => {
-    // TODO : 스크롤시 데이터를 추가로 불러와 주어야 한다
-    if (!profileList.data) return;
-    setAuthorList(profileList.data.content);
-
-    const { scrollTop, scrollHeight, clientHeight } = infinite;
-    if (scrollTop === 0 || clientHeight === 0 || scrollHeight === 0) return;
-
-    if (scrollTop + clientHeight >= scrollHeight) {
-      console.log('여기서 데이터를 더 가져와야 한다.');
+    setLastPage(false);
+    if (!pageInfo.last) {
+      handleNextPage();
     }
-  }, [profileList, profilePageNum, totalPage]);
+  }, [lastPage]);
 
-  const { loading, data, error } = profileList;
-  if (loading) return <div>로딩중...</div>;
-  if (!data) return null;
-  if (error) return <div></div>;
+  const handleNextPage = () => {
+    getAuthorProfileList(pageInfo.page)
+      .then((res) => {
+        setAuthorList([...authorList, ...res.content]);
+
+        setPageInfo({
+          ...pageInfo,
+          page: res.pageable.pageNumber + 1,
+          last: res.last,
+          totalElements: res.totalElements,
+        });
+      })
+      .catch((e) => console.log(e));
+  };
 
   const handleSubmit = (e) => setFilterShow(!filterShow);
 
@@ -92,8 +95,9 @@ const ListOfAuthorForm = ({ match, history }) => {
       setTimeout(() => history.push('/signin'), 2300);
       return false;
     }
+    console.log(authorList);
 
-    const filterAuthor = data.content.find(
+    const filterAuthor = authorList.find(
       (author) => author.user.classOf === classOf,
     );
 
@@ -156,18 +160,18 @@ const ListOfAuthorForm = ({ match, history }) => {
             <div className="content-header">
               <h3>
                 전체 작가 인원
-                <span>{total ? data.totalElements : filterList.length}</span>
+                <span>{pageInfo.totalElements}</span>
               </h3>
               {/* <div className="search-list">
                 <span className="search-icon" />
                 <input type="text" placeholder="이름, 학번 검색" />
               </div> */}
               <div className="main-functions">
-                <ButtonWIthIcon
+                {/* <ButtonWIthIcon
                   btntype="filter"
                   btnTxt="상세검색"
                   handleButton={handleFilter}
-                />
+                /> */}
                 <ButtonWIthIcon
                   btntype="create"
                   btnTxt="등록하기"
@@ -176,11 +180,11 @@ const ListOfAuthorForm = ({ match, history }) => {
               </div>
             </div>
 
-            {filterList.length < 1 ? (
+            {authorList.length < 1 ? (
               <ThereIsNoList type="team-building" />
             ) : (
               <ul className="author-list">
-                {filterList.map(
+                {authorList.map(
                   ({
                     id,
                     user: { classOf, name, mainProjectRole, subProjectRole },
@@ -198,8 +202,10 @@ const ListOfAuthorForm = ({ match, history }) => {
                           ></span>
                         </b>
                         <strong className="author-name">
-                          {name}
-                          <span>{filterClassOf(classOf)}학번</span>
+                          <span className="name">{name}</span>
+                          <span className="classof">
+                            {filterClassOf(classOf)}학번
+                          </span>
                         </strong>
                         <span
                           className="sub-role"
@@ -228,6 +234,7 @@ const ListOfAuthorForm = ({ match, history }) => {
                 )}
               </ul>
             )}
+            {pageInfo.last && <p className="last-list">마지막 게시글입니다.</p>}
           </div>
         </>
       )}
