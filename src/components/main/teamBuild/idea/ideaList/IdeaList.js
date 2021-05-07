@@ -99,7 +99,14 @@ const IdeaList = ({ match, history }) => {
           <h1>
             아이디어 게시판<br></br>
           </h1>
-          <h2>아이디어들을 모아볼 수 있습니다</h2>
+          {curSize >= 768 ? (
+            <h2>아이디어들을 모아볼 수 있습니다</h2>
+          ) : (
+            <h2>
+              아이디어들을
+              <br /> 모아볼 수 있습니다
+            </h2>
+          )}
         </div>
         <div className="hero-img__right__idea"></div>
       </div>
@@ -124,13 +131,7 @@ const IdeaList = ({ match, history }) => {
                 </div>
               </div>
               <div className="ideas-top-right">
-                <div className="ideas-top-right-search">
-                  {/* <ButtonWithIcon
-                btntype="filter"
-                btnTxt="상세검색"
-                handleButton={handleShowFilterModal}
-              /> */}
-                </div>
+                <div className="ideas-top-right-search"></div>
                 <div className="ideas-top-right-create">
                   <ButtonWithIcon
                     btntype="create"

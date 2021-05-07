@@ -87,7 +87,7 @@
       .ideas-count {
         display: flex;
         h3 {
-          font-size: 17px;
+          font: normal normal medium 28px/41px Noto Sans KR;
           &:nth-child(2) {
             margin-left: 16px;
           }
@@ -101,7 +101,7 @@
         margin-left: 16px;
         h3 {
           color: #5a5a5a;
-          font-size: 17px;
+          font: normal normal medium 24px/36px Noto Sans KR;
           cursor: pointer;
         }
       }
@@ -165,7 +165,7 @@
         .ideas-count {
           display: flex;
           h3 {
-            font-size: 16px;
+            font: normal normal medium 16px/24px Noto Sans KR;
             &:nth-child(2) {
               margin-left: 8px;
             }
@@ -179,7 +179,7 @@
           h3 {
             color: #5a5a5a;
             margin-left: 0px;
-            font-size: 16px;
+            font: normal normal normal 16px/24px Noto Sans KR;
             cursor: pointer;
           }
         }
@@ -195,8 +195,36 @@
         }
       }
     }
+  }
+}
 
-    .ideas-body {
+@include response('phone') {
+  .hero-img {
+    padding: 0px 5vw;
+    .hero-img__left {
+      h1 {
+        margin-bottom: 12px;
+        font-weight: 800;
+        font-size: 18px;
+      }
+      h2 {
+        font-size: 13px;
+      }
+    }
+    .hero-img__right__idea {
+      width: 152px;
+      height: 114px;
+    }
+  }
+  .ideas-wrap {
+    .ideas-top {
+      .ideas-top-left {
+        .ideas-count {
+          h3 {
+            font-size: 15px;
+          }
+        }
+      }
     }
   }
 }

@@ -6,7 +6,7 @@ body {
   padding: 0;
   .el-main {
     display: flex;
-    width: 50%;
+    width: 950px;
     height: 600px;
     background-color: #ffffff;
     align-items: flex-start;
@@ -138,113 +138,119 @@ body {
   }
 }
 
-@media (max-width: 1503px) and (min-width: 418px) {
+@media (max-width: 920px) and (min-width: 673px) {
   body {
     background-color: #f2f2f2;
     margin: 0;
     padding: 0;
+
     .el-main {
       display: flex;
       width: 90%;
       height: 800px;
       background-color: #ffffff;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
       border-radius: 32px;
       margin: 80px auto;
       flex-direction: column;
       padding-left: 50px;
     }
-    .sub-info {
+    .sub-wrapper {
       display: flex;
-      flex-direction: row;
-      margin-bottom: 20px;
-      .info-title {
-        margin-top: 15px;
-        font-size: 25px;
-        font: normal normal bold 28px/41px Noto Sans KR;
-      }
-      .info-body {
+      flex-direction: column;
+
+      .sub-info {
         display: flex;
-        flex-direction: column;
-        input {
-          margin-bottom: 10px;
-          border: 1px solid #837d7d66;
-          text-align: left;
-
-          font: normal normal normal 16px/24px Noto Sans KR;
-
-          color: black;
-          opacity: 1;
-          text-indent: 19px;
-
-          width: 130%;
-          height: 60px;
-          margin-left: 50px;
-          border-radius: 5px;
+        flex-direction: row;
+        margin-bottom: 20px;
+        .info-title {
+          margin-top: 15px;
+          font-size: 25px;
+          font: normal normal bold 28px/41px Noto Sans KR;
         }
-        .check-info {
-          height: 25px;
-          margin-left: 60px;
-          p {
-            color: red;
-            font-size: 15px;
+        .info-body {
+          display: flex;
+          flex-direction: column;
+          input {
+            margin-bottom: 10px;
+            border: 1px solid #837d7d66;
+            text-align: left;
+
+            font: normal normal normal 16px/24px Noto Sans KR;
+
+            color: black;
+            opacity: 1;
+            text-indent: 19px;
+
+            width: 130%;
+            height: 60px;
+            margin-left: 50px;
+            border-radius: 5px;
+          }
+          .check-info {
+            height: 25px;
+            margin-left: 60px;
+            p {
+              color: red;
+              font-size: 15px;
+            }
           }
         }
       }
-    }
-    .input-password {
-      display: flex;
-      flex-direction: column;
-    }
-    .sub-info-private {
-      display: flex;
-      flex-direction: row;
-      margin-bottom: 20px;
-      .info-title-private {
-        margin-top: 15px;
-        font-size: 25px;
-        font: normal normal bold 28px/41px Noto Sans KR;
-      }
-      .info-body {
+      .input-password {
         display: flex;
         flex-direction: column;
-        input {
-          margin-bottom: 10px;
-          border: 1px solid #837d7d66;
-          text-align: left;
-
-          font: normal normal normal 16px/24px Noto Sans KR;
-
-          color: black;
-          opacity: 1;
-          text-indent: 19px;
-
-          width: 250px;
-          height: 60px;
-          margin-left: 50px;
-          border-radius: 5px;
+      }
+      .sub-info-private {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 20px;
+        .info-title-private {
+          margin-top: 15px;
+          font-size: 25px;
+          font: normal normal bold 28px/41px Noto Sans KR;
         }
-        .select-job {
-          border: 1px solid #837d7d66;
-          margin-left: 30px;
-          height: 60px;
-          border-radius: 5px;
-          width: 170px;
+        .info-body {
+          display: flex;
+          flex-direction: column;
+          input {
+            margin-bottom: 10px;
+            border: 1px solid #837d7d66;
+            text-align: left;
 
-          padding-left: 0px;
+            font: normal normal normal 16px/24px Noto Sans KR;
 
-          text-align: center;
-          font: normal normal normal 16px/24px Noto Sans KR;
-          letter-spacing: 0px;
-          background-color: white;
-          color: #00000080;
-          opacity: 1;
+            color: black;
+            opacity: 1;
+            text-indent: 19px;
 
-          .selectJobIcon {
-            width: 20px;
-            height: 20px;
-            margin-left: 10%;
+            width: 200px;
+            height: 60px;
+            margin-left: 50px;
+            border-radius: 5px;
+          }
+          .select-job {
+            border: 1px solid #837d7d66;
+            margin-left: 30px;
+            height: 60px;
+            border-radius: 5px;
+            width: 170px;
+
+            padding-left: 0px;
+
+            text-align: center;
+            font: normal normal normal 16px/24px Noto Sans KR;
+            letter-spacing: 0px;
+            background-color: white;
+            color: #00000080;
+            opacity: 1;
+
+            .selectJobIcon {
+              width: 20px;
+              height: 20px;
+              margin-left: 10%;
+            }
           }
         }
       }
@@ -268,7 +274,7 @@ body {
   }
 }
 
-@media (max-width: 613px) {
+@media (max-width: 673px) {
   body {
     background-color: #f2f2f2;
     margin: 0;
@@ -278,7 +284,7 @@ body {
       width: 90%;
       height: 750px;
       background-color: #ffffff;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
       border-radius: 32px;
       margin: 0px auto;
@@ -302,13 +308,13 @@ body {
           border: 1px solid #837d7d66;
           text-align: left;
 
-          font: normal normal normal 16px/24px Noto Sans KR;
+          font-size: 12px;
 
           color: black;
           opacity: 1;
           text-indent: 19px;
 
-          width: 300px;
+          width: 250px;
           height: 40px;
           margin-left: 0px;
           border-radius: 5px;
@@ -345,13 +351,12 @@ body {
           border: 1px solid #837d7d66;
           text-align: left;
 
-          font: normal normal normal 16px/24px Noto Sans KR;
-
+          font-size: 12px;
           color: black;
           opacity: 1;
           text-indent: 19px;
 
-          width: 200px;
+          width: 150px;
           height: 40px;
           margin-left: 0px;
           border-radius: 5px;
@@ -361,13 +366,13 @@ body {
           border: 1px solid #837d7d66;
           text-align: left;
 
-          font: normal normal normal 16px/24px Noto Sans KR;
+          font-size: 12px;
 
           color: black;
           opacity: 1;
           text-indent: 19px;
 
-          width: 300px;
+          width: 250px;
           height: 40px;
           margin-left: 0px;
           border-radius: 5px;
@@ -402,7 +407,7 @@ body {
       height: 45px;
       cursor: pointer;
       margin-top: 50px;
-      margin-left: 45px;
+      margin-left: 8px;
       background: #9a609c 0% 0% no-repeat padding-box;
       border-radius: 8px;
       border-style: none;
