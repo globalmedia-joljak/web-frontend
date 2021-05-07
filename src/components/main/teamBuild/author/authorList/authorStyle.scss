@@ -39,10 +39,19 @@
       }
 
       .author-name {
-        font-weight: bold;
-        font-size: 24px;
         padding-bottom: 12px;
-        span {
+        display: flex;
+        align-items: center;
+        .name {
+          max-width: 130px;
+          font-weight: bold;
+          font-size: 24px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          color: #000000cc;
+        }
+        .classof {
           margin-left: 12px;
           font-size: 20px;
           color: #00000099;
@@ -110,7 +119,7 @@
       li {
         min-width: 188px;
         width: calc(33.3333333333% - 15px);
-        // height: 414px;
+
         a {
           padding: 16px;
           padding-top: 24px;
@@ -125,8 +134,12 @@
           }
         }
         .author-name {
-          font-size: 17px;
-          span {
+          .name {
+            max-width: 100px;
+            font-weight: bold;
+            font-size: 17px;
+          }
+          .classof {
             margin-left: 8px;
             font-size: 14px;
           }
@@ -161,8 +174,12 @@
           }
         }
         .author-name {
-          font-size: 16px;
-          span {
+          .name {
+            max-width: 100px;
+            font-weight: bold;
+            font-size: 16px;
+          }
+          .classof {
             margin-left: 4px;
             font-size: 12px;
           }

@@ -34,7 +34,9 @@ const updateAuthorProfile = async (classOf, updateProfileRequest) => {
     return await client.patch(`/profiles/${classOf}`, updateProfileRequest, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
-  } catch (e) {}
+  } catch (e) {
+    console.log(e.response);
+  }
 };
 
 export {

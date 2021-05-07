@@ -201,8 +201,10 @@ const ListOfAuthorForm = ({ match, history }) => {
                           ></span>
                         </b>
                         <strong className="author-name">
-                          {name}
-                          <span>{filterClassOf(classOf)}학번</span>
+                          <span className="name">{name}</span>
+                          <span className="classof">
+                            {filterClassOf(classOf)}학번
+                          </span>
                         </strong>
                         <span
                           className="sub-role"

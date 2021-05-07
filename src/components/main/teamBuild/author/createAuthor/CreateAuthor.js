@@ -258,6 +258,7 @@ const CreateAuthor = ({ history, match }) => {
     );
     toast.success(`${title}이 삭제 되었습니다.`);
   };
+  console.log(createAuthorQuery.introduce);
 
   const handleSubmitAuthor = () => {
     if (createAuthorQuery.mainRole === null) {
@@ -457,7 +458,7 @@ const CreateAuthor = ({ history, match }) => {
                 <textarea
                   name="introduce"
                   maxLength={1000}
-                  onChange={handleTextArea}
+                  onInput={handleTextArea}
                   defaultValue={createAuthorQuery.introduce}
                 ></textarea>
                 <span
