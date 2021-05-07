@@ -9,10 +9,12 @@ import {
 } from '../../../../../service/api/profile';
 import EditDeleteButton from '../../../common/EditDeleteButton';
 import './authorDetailStyle.scss';
+const phone = 426;
 
 const AuthorDetail = ({ match, history }) => {
   const { translationKR, setJobColor } = useAppDispatch();
   const {
+    curSize,
     userInfo: { isLogin, classOf, name },
   } = useAppState();
 
@@ -35,11 +37,33 @@ const AuthorDetail = ({ match, history }) => {
     }
   };
 
+  useEffect(() => {
+    const imagesBox = document.querySelector('.author-img-box');
+    const backgroundImg = document.querySelector('.author-bg');
+
+    if (imagesBox) {
+      imagesBox.style.height = `${
+        Math.floor(imagesBox.clientWidth / 3) + imagesBox.clientWidth
+      }px`;
+
+      if (backgroundImg) {
+        if (curSize > phone) {
+          return (backgroundImg.style.height = `${
+            Math.floor(imagesBox.clientHeight / 6) + imagesBox.clientHeight
+          }px`);
+        } else {
+          return (backgroundImg.style.height = `${imagesBox.clientHeight}px`);
+        }
+      }
+    }
+  });
+
   if (loading) return <div>로딩중...</div>;
   if (!data) return null;
   if (error) return <div>상세페이지 에러</div>;
 
   const { user, portfolioLinks, content, mediaInfo } = profileDetail.data;
+  const { instagramId, kakaoId, phoneNumber } = user;
 
   return (
     <div className="author-detail-wrap page-box">
@@ -107,15 +131,15 @@ const AuthorDetail = ({ match, history }) => {
         <ul className="contacts">
           <li className="phone">
             <i className="contact-img"></i>
-            <span>연락처</span>
+            <span>{phoneNumber}</span>
           </li>
           <li className="kakao">
             <i className="contact-img"></i>
-            <span>연락처</span>
+            <span>{kakaoId}</span>
           </li>
           <li className="instagram">
             <i className="contact-img"></i>
-            <span>연락처</span>
+            <span>{instagramId}</span>
           </li>
         </ul>
       </div>
