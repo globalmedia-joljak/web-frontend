@@ -374,6 +374,15 @@
 }
 
 @include response('tablet') {
+  .modal__position {
+    .modal__position__list {
+      display: flex;
+      flex-direction: column;
+      .modal__job {
+        margin-top: 15px;
+      }
+    }
+  }
   .idea__wrap {
     margin: 26px 0 83px;
     min-width: 0;

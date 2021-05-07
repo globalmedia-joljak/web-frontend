@@ -50,7 +50,7 @@
   }
   .idea__author {
     order: 5;
-    width: 12%;
+    width: 15%;
     margin-left: 10px;
   }
 
@@ -95,31 +95,31 @@
       font-size: 20px;
       width: 90%;
       order: 1;
-      margin-left: 90px;
+      margin-left: 60px;
       margin-top: 10px;
       margin-bottom: 10px;
     }
     .idea__required {
       width: 90%;
-      margin-left: 90px;
+      margin-left: 60px;
       justify-content: flex-start;
       order: 3;
     }
     .idea__body__bottom {
       width: 90%;
       display: flex;
-      margin-left: 90px;
+      margin-left: 60px;
       order: 4;
       align-items: flex-start;
       box-sizing: border-box;
       margin-top: 10px;
       margin-bottom: 12px;
       .idea__category {
-        width: 30%;
+        width: 22%;
         order: 4;
       }
       .idea__author {
-        width: 30%;
+        width: 40%;
         order: 4;
         color: #6d6d6dcc;
       }
@@ -136,4 +136,16 @@
 
 .hidden {
   display: none;
+}
+
+@include response('phone') {
+  .idea {
+    .idea__title {
+      font-size: 14px;
+    }
+
+    .idea__body__bottom {
+      font-size: 12px;
+    }
+  }
 }

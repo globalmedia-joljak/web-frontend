@@ -23,7 +23,7 @@ const UpdateIdea = ({ match, history }) => {
   const editorRef = useRef();
   const [title, setTitle] = useState('');
   const [idea, setIdea] = useState(null);
-  const [status, setStatus] = useState('ONGOING');
+  const [status, setStatus] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [category, setCategory] = useState('');
   const [file, setFile] = useState(null);
@@ -41,10 +41,10 @@ const UpdateIdea = ({ match, history }) => {
   useEffect(() => {
     getIdea(id, history).then((response) => {
       setIdea(response);
-
       setTitle(response.title);
       setIsLoading(false);
       setCategory(response.category);
+      setStatus(response.status);
 
       setContent(response.content);
       setStatus(response.status);
@@ -129,7 +129,11 @@ const UpdateIdea = ({ match, history }) => {
   const handleModalSubmit = (e) => setFilterShow(!filterShow);
 
   const handleStatusChange = (e) => {
-    e.target.checked ? setStatus('COMPLETE') : setStatus('ONGOING');
+    if (e.target.value === 'COMPLETE') {
+      setStatus('ONGOING');
+    } else {
+      setStatus('COMPLETE');
+    }
   };
 
   const makeArrFromData = useCallback((arr, queryName) => {
@@ -253,22 +257,13 @@ const UpdateIdea = ({ match, history }) => {
                 <h3>결성 유무</h3>
                 <div className="idea__status__check">
                   <label className="switch" htmlFor="checkbox">
-                    {idea.status === 'ONGOING' ? (
-                      <input
-                        type="checkbox"
-                        id="checkbox"
-                        value={status}
-                        onChange={handleStatusChange}
-                      />
-                    ) : (
-                      <input
-                        checked
-                        type="checkbox"
-                        id="checkbox"
-                        value={status}
-                        onChange={handleStatusChange}
-                      />
-                    )}
+                    <input
+                      type="checkbox"
+                      id="checkbox"
+                      value={status}
+                      defaultChecked={status === 'ONGOING' ? false : true}
+                      onClick={handleStatusChange}
+                    />
 
                     <div className="slider round"></div>
                   </label>

@@ -8,6 +8,7 @@ import MemberRoleSquare from '../../team/teamList/MemberRole';
 import { createIdea } from '../../../../../service/api/ideas';
 import ModalTemp from '../../../../modal/ModalTemp';
 import { uploadImage } from '../../../../../service/api/upload';
+import { render } from '@testing-library/react';
 
 const CreateIdea = ({ history }) => {
   const {
@@ -92,16 +93,18 @@ const CreateIdea = ({ history }) => {
   const handleModalSubmit = (e) => setFilterShow(!filterShow);
 
   const handleStatusChange = (e) => {
-    e.target.checked ? setStatus('COMPLETE') : setStatus('ONGOING');
+    if (e.target.value === 'COMPLETE') {
+      setStatus('ONGOING');
+    } else {
+      setStatus('COMPLETE');
+    }
   };
 
   const makeArrFromData = useCallback((arr, queryName) => {
     return arr.map((data, i) => {
       formdata.append(`${queryName}[${i}]`, data);
     });
-  });
-
-  useEffect(() => {}, []);
+  }, []);
 
   return (
     <>
@@ -131,14 +134,14 @@ const CreateIdea = ({ history }) => {
               <div className="modal__position__list">
                 {developerChecked === true ? (
                   <div
-                    className="modal__developer__checked"
+                    className="modal__developer__checked modal__job"
                     onClick={() => setDeveloperChecked(!developerChecked)}
                   >
                     <p>개발자</p>
                   </div>
                 ) : (
                   <div
-                    className="modal__developer"
+                    className="modal__developer modal__job"
                     onClick={() => setDeveloperChecked(!developerChecked)}
                   >
                     <p>개발자</p>
@@ -147,14 +150,14 @@ const CreateIdea = ({ history }) => {
 
                 {designerChecked === true ? (
                   <div
-                    className="modal__designer__checked"
+                    className="modal__designer__checked modal__job"
                     onClick={() => setDesignerChecked(!designerChecked)}
                   >
                     <p>디자이너</p>
                   </div>
                 ) : (
                   <div
-                    className="modal__designer"
+                    className="modal__designer modal__job"
                     onClick={() => setDesignerChecked(!designerChecked)}
                   >
                     <p>디자이너</p>
@@ -163,14 +166,14 @@ const CreateIdea = ({ history }) => {
 
                 {plannerChecked === true ? (
                   <div
-                    className="modal__planner__checked"
+                    className="modal__planner__checked modal__job"
                     onClick={() => setPlannerChecked(!plannerChecked)}
                   >
                     <p>기획자</p>
                   </div>
                 ) : (
                   <div
-                    className="modal__planner"
+                    className="modal__planner modal__job"
                     onClick={() => setPlannerChecked(!plannerChecked)}
                   >
                     <p>기획자</p>
@@ -179,14 +182,14 @@ const CreateIdea = ({ history }) => {
 
                 {mediaArtChecked === true ? (
                   <div
-                    className="modal__media__checked"
+                    className="modal__media__checked modal__job"
                     onClick={() => setMediaArtChecked(!mediaArtChecked)}
                   >
                     <p>미디어아트</p>
                   </div>
                 ) : (
                   <div
-                    className="modal__media"
+                    className="modal__media modal__job"
                     onClick={() => setMediaArtChecked(!mediaArtChecked)}
                   >
                     <p>미디어아트</p>
@@ -219,8 +222,10 @@ const CreateIdea = ({ history }) => {
                       type="checkbox"
                       id="checkbox"
                       value={status}
+                      defaultChecked={status === 'ONGOING' ? false : true}
                       onChange={handleStatusChange}
                     />
+
                     <div className="slider round"></div>
                   </label>
                 </div>
