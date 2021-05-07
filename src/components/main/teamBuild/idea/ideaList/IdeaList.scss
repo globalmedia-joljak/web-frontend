@@ -122,6 +122,23 @@
 }
 
 @include response('tablet') {
+  .hero-img {
+    padding: 0px 10vw;
+    .hero-img__left {
+      h1 {
+        margin-bottom: 12px;
+        font-weight: 800;
+        font-size: 26px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+    }
+    .hero-img__right__idea {
+      width: 218px;
+      height: 164px;
+    }
+  }
   .ideas-wrap {
     margin-top: 24px;
     min-width: 0;

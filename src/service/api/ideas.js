@@ -42,8 +42,10 @@ const createIdea = async (formdata) => {
 
 const updateIdea = async (id, formdata) => {
   try {
-    const { data } = await client.put(`/ideaboards/${id}`, formdata, {
-      headers: { 'Content-Type': 'multipart/form-data' },
+    const { data } = await client.patch(`/ideaboards/${id}`, formdata, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
 
     return data;

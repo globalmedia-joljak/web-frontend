@@ -30,7 +30,7 @@ const IdeaDetail = ({ match, history }) => {
       case 'MEDIA_ART':
         return '미디어아트';
       case 'WEB_APP':
-        return '웹/앱 서비스';
+        return '웹/앱';
       case 'ANIMATION/FILM':
         return '영상/애니메이션';
       case 'GAME':
