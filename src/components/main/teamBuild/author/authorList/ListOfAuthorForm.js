@@ -12,6 +12,7 @@ import { getAuthorProfileList } from '../../../../../service/api/profile.js';
 import { toast, ToastContainer } from 'react-toastify';
 import ButtonWIthIcon from '../../../common/ButtonWIthIcon.js';
 import { useEffect } from 'react/cjs/react.development';
+import HeroImageForm from '../../../common/HeroImageForm';
 
 const ListOfAuthorForm = ({ match, history }) => {
   const {
@@ -31,10 +32,30 @@ const ListOfAuthorForm = ({ match, history }) => {
   const [filterList, setFilterList] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
 
-  const [profileList, refetch] = useAsync(
-    () => getAuthorProfileList(profilePageNum),
-    [profilePageNum],
-  );
+  useEffect(() => {
+    const authorImg = document.querySelectorAll('.author-img');
+    if (authorImg) {
+      [...authorImg].map((el) => {
+        return (el.style.height = `${el.clientWidth}px`);
+      });
+    }
+  });
+
+  const [profileList] = useAsync(() => getAuthorProfileList(profilePageNum), [
+    profilePageNum,
+  ]);
+
+  useEffect(() => {
+    if (!filterRole || filterRole === '전체') {
+      setFilterList(authorList);
+    } else {
+      setFilterList(
+        authorList.filter((author) => {
+          return filterRole === author.user.mainProjectRole;
+        }),
+      );
+    }
+  }, [authorList, filterRole, setFilterList]);
 
   const handleFilter = useCallback((e) => setFilterShow(!filterShow));
   const handleChoice = useCallback((e) => setFilterRole(e.target.value), [
@@ -55,18 +76,6 @@ const ListOfAuthorForm = ({ match, history }) => {
       console.log('여기서 데이터를 더 가져와야 한다.');
     }
   }, [profileList, profilePageNum, totalPage]);
-
-  useEffect(() => {
-    if (!filterRole || filterRole === '전체') {
-      setFilterList(authorList);
-    } else {
-      setFilterList(
-        authorList.filter((author) => {
-          return filterRole === author.user.mainProjectRole;
-        }),
-      );
-    }
-  }, [authorList, filterRole, setFilterList]);
 
   const { loading, data, error } = profileList;
   if (loading) return <div>로딩중...</div>;
@@ -131,22 +140,28 @@ const ListOfAuthorForm = ({ match, history }) => {
               type="filterChoice"
               handleChoice={handleChoice}
               txt="전체"
+              worktype=""
             />
           </li>
         </ModalTemp>
       ) : (
         <>
-          <div className="hero-img"></div>
+          <HeroImageForm
+            type="author"
+            heroTitle="작가목록"
+            heroContent="이번 졸업작품에 참여하는"
+            heroContent2="작가들의 목록입니다."
+          />
           <div className="author-wrap content-size" ref={createAuthorEl}>
             <div className="content-header">
               <h3>
                 전체 작가 인원
                 <span>{total ? data.totalElements : filterList.length}</span>
               </h3>
-              <div className="search-list">
+              {/* <div className="search-list">
                 <span className="search-icon" />
                 <input type="text" placeholder="이름, 학번 검색" />
-              </div>
+              </div> */}
               <div className="main-functions">
                 <ButtonWIthIcon
                   btntype="filter"

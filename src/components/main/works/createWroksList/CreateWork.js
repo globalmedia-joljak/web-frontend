@@ -119,6 +119,8 @@ const CreateWork = ({ match, history }) => {
     if (yearsState.data) {
       setYears(yearsState.data);
     }
+
+    previewImg();
   });
 
   // updload File & images
@@ -149,7 +151,6 @@ const CreateWork = ({ match, history }) => {
     } else {
       setImages([...files]);
     }
-    previewImg();
   };
 
   const handleUploadFile = (e) => setFile(e.target.files[0]);

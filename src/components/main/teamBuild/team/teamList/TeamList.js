@@ -20,6 +20,7 @@ const TeamList = ({ match, history }) => {
   });
   const [isBottom, setIsBottom] = useState(false);
   const { curSize } = useAppState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
@@ -63,6 +64,9 @@ const TeamList = ({ match, history }) => {
       .catch((e) => {
         console.log(e);
       });
+
+      setIsLoading(false);
+
   };
 
   const handleShowFilterModal = () => {
@@ -79,6 +83,9 @@ const TeamList = ({ match, history }) => {
   };
   return (
     <>
+    {
+      isLoading? (<div>Loading...</div>) : (
+        <>
       <ToastContainer
         position="top-center"
         autoClose={2000}
@@ -101,7 +108,27 @@ const TeamList = ({ match, history }) => {
       </div>
       <div className="teams-wrap">
       {pageInfo.totalElements == 0 ? (
+        <>
+        <div className="teams-top">
+        <div className="teams-top-left">
+          <h3>전체 팀 수</h3>
+          <h3>{pageInfo.totalElements}</h3>
+        </div>
+        <div className="teams-top-right">
+          {/* <ButtonWIthIcon
+            btntype="filter"
+            btnTxt="상세검색"
+            handleButton={handleShowFilterModal}
+          /> */}
+          <ButtonWIthIcon
+            btntype="create"
+            btnTxt="등록하기"
+            handleButton={handleCreateTeam}
+          />
+        </div>
+      </div>
         <ThereIsNoList type="team-building" />
+        </>
       ) : (
         <>
         <div className="teams-top">
@@ -161,6 +188,9 @@ const TeamList = ({ match, history }) => {
       )}
         
       </div>
+    </>
+      )
+    }
     </>
   );
 };

@@ -12,6 +12,9 @@ import { updateUserInfo } from '../../../service/api/users.js';
 import MypageListForm from './MypageListForm';
 import { toast, ToastContainer } from 'react-toastify';
 import { useAppState } from '../../../context/appContext';
+import { useEffect } from 'react/cjs/react.development';
+import { checkMypagePassword } from '../../../service/api/auth';
+import HeroImageForm from '../common/HeroImageForm';
 
 const settingLists = {
   setPassword: [
@@ -70,7 +73,7 @@ const settingLists = {
 };
 
 const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
-  const { classOf, curPw } = userInfo;
+  const { classOf } = userInfo;
   const { contactVal } = state;
   const { setSucced, contactDispatch } = dispatch;
   const { settingList, setSettingList } = setLists;
@@ -93,31 +96,44 @@ const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
 
     const { name: targetName } = e.target.previousSibling;
 
+    const signInRequest = {
+      classOf,
+      password: currentPassword,
+    };
+
     if (targetName === 'currentPassword') {
       const passwordLsit = e.target.form.children;
       const contactForm = e.target.form.offsetParent.nextSibling;
 
-      if (currentPassword !== curPw) {
-        toast.error('⛔ 비밀번호를 다시 확인해 주세요');
-        return false;
-      } else {
-        const SHOW = 'show';
+      checkMypagePassword(signInRequest)
+        .then((res) => {
+          const SHOW = 'show';
 
-        setSettingList({
-          ...settingList,
-          setPassword: settingList.setPassword.map((data, index) => {
-            if (index === i) data.btn = !data.btn;
+          setSettingList({
+            ...settingList,
+            setPassword: settingList.setPassword.map((data, index) => {
+              if (index === i) data.btn = !data.btn;
 
-            return data;
-          }),
+              return data;
+            }),
+          });
+
+          // e.target.previousSibling.readOnly = true;
+          Array.from(passwordLsit).map((el) => el.classList.add(SHOW));
+          contactForm.classList.add(SHOW);
+
+          return;
+        })
+        .catch((e) => {
+          console.log(e);
+          if (currentPassword === '') {
+            toast.error(`⛔ 비밀번호를 입력해 주세요.`);
+          } else {
+            toast.error('⛔ 비밀번호를 다시 확인해 주세요');
+          }
+
+          return false;
         });
-
-        e.target.previousSibling.readOnly = true;
-        Array.from(passwordLsit).map((el) => el.classList.add(SHOW));
-        contactForm.classList.add(SHOW);
-
-        return;
-      }
     }
 
     if (targetName === 'checkPassword') {
@@ -157,15 +173,18 @@ const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
 
     if (className === CHECK_CN) {
       const checkKr = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi;
-
       switch (name) {
         case 'phoneNumber':
           if (!/^\d{3}\d{3,4}\d{4}$/.test(contactVal[name])) {
-            toast.error('⛔ 휴대폰 번호를 확인해 주세요.');
+            toast.error(
+              '⛔ 휴대폰 번호는 (-)없이 숫자만 가능합니다. 번호를 확인해 주세요.',
+            );
             return false;
           }
-          updateUserInfo(classOf, 'phonenumber', contactVal[name]);
-          toast.success('✅ 전화번호가 변경 됐습니다.');
+          updateUserInfo(
+            { classOf, url: 'phonenumber', succed: '전화번호' },
+            contactVal[name],
+          );
           return;
 
         case 'kakaoId':
@@ -173,8 +192,11 @@ const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
             toast.error('⛔ 영문으로 표기해 주세요');
             return false;
           }
-          updateUserInfo(classOf, 'kakaoid', contactVal[name]);
-          toast.success('✅ 카카오톡ID가 변경 됐습니다.');
+
+          updateUserInfo(
+            { classOf, url: 'kakaoid', succed: '카카오톡ID' },
+            contactVal[name],
+          );
           return;
 
         case 'instagramId':
@@ -182,9 +204,10 @@ const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
             toast.error('⛔ 영문으로 표기해 주세요');
             return false;
           }
-
-          updateUserInfo(classOf, 'instagramid', contactVal[name]);
-          toast.success('✅ 인스타그램ID가 변경 됐습니다.');
+          updateUserInfo(
+            { classOf, url: 'instagramid', succed: '인스타그램ID' },
+            contactVal[name],
+          );
           return;
 
         default:
@@ -201,11 +224,10 @@ const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
 const MyPageForm = () => {
   const state = useMypageState();
   const {
+    userInfo,
     userState: { loading, data, error },
   } = useAppState();
   const { succed } = state;
-
-  const { userInfo } = useAppState();
 
   const dispatch = useMypageDispatch();
 
@@ -250,7 +272,12 @@ const MyPageForm = () => {
       <main>
         <div className="mypage-wrap">
           {succed && <SucceedPopUp />}
-          <div className="profile"></div>
+          <HeroImageForm
+            type="mypage"
+            heroTitle="마이페이지"
+            heroContent="비밀번호와 개인 연락처를 "
+            heroContent2="관리 할수 있습니다."
+          />
 
           <div className="section-wrap inr">
             <section className="set-privacy show">

@@ -3,6 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useAppDispatch, useAppState } from '../../../../../context/appContext';
 import {
   createAuthorProfile,
+  getAuthorProfileDetail,
   updateAuthorProfile,
 } from '../../../../../service/api/profile';
 import AuthorButton from '../../../common/ButtonWIthIcon';
@@ -10,10 +11,8 @@ import './editAuthorStyle.scss';
 import EditDeleteButton from '../../../common/EditDeleteButton';
 import PortfolioModal from './PortfolioModal';
 import RoleModal from './RoleModal';
-import {
-  useTeamsDispatch,
-  useTeamsState,
-} from '../../../../../context/teamContext';
+import { useTeamsDispatch } from '../../../../../context/teamContext';
+import useAsync from '../../../../../hooks/useAsync';
 
 const CreateAuthor = ({ history, match }) => {
   const setImgEl = useRef();
@@ -22,7 +21,7 @@ const CreateAuthor = ({ history, match }) => {
     userInfo: { classOf },
   } = useAppState();
   const { setJobColor, translationKR } = useAppDispatch();
-  const { detailData } = useTeamsState();
+
   const { setDefaultImg } = useTeamsDispatch();
 
   const [createAuthorQuery, setCreateAuthorQuery] = useState({
@@ -31,35 +30,40 @@ const CreateAuthor = ({ history, match }) => {
     subRole: null,
   });
 
+  const authorId = match.params.id;
+  const [profileDetail] = useAsync(() => getAuthorProfileDetail(authorId), [
+    authorId,
+  ]);
+
   const type = match.params.state;
 
   // set Image
   const [file, setFile] = useState(null);
-  const [isDefault, setIsDefault] = useState(true);
   const [customCN, setCustomCN] = useState('');
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
-    setIsDefault(false);
   };
 
-  useEffect(() => {
-    previewImg();
-    !isDefault ? setCustomCN('exist-img') : setCustomCN('');
-  }, [file, isDefault]);
-
   const previewImg = () => {
-    if (!file) return false;
     const roleBackground = document.querySelector('.img');
-    if (isDefault) {
+    if (!roleBackground) return false;
+
+    if (file) {
+      setCustomCN('exist-img');
+      if (file.url) {
+        return (roleBackground.style.backgroundImage = `url(${file.url})`);
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          return (roleBackground.style.backgroundImage = `url(${reader.result})`);
+        };
+        return reader.readAsDataURL(file);
+      }
+    } else {
+      setCustomCN('');
       return (roleBackground.style.backgroundImage = 'none');
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      return (roleBackground.style.backgroundImage = `url(${reader.result})`);
-    };
-    reader.readAsDataURL(file);
-    setCustomCN('exist-img');
   };
 
   //set role
@@ -109,16 +113,18 @@ const CreateAuthor = ({ history, match }) => {
       });
     }
 
-    if (type === 'edit' && detailData.portfolioLinks) {
+    if (type === 'edit' && profileDetail.data) {
       setCreateAuthorQuery({
         ...createAuthorQuery,
-        introduce: detailData.content,
-        mainRole: detailData.user.mainProjectRole,
-        subRole: detailData.user.subProjectRole,
+        introduce: profileDetail.data.content,
+        mainRole: profileDetail.data.user.mainProjectRole,
+        subRole: profileDetail.data.user.subProjectRole,
       });
-      return;
+      if (profileDetail.data.mediaInfo) {
+        setFile(profileDetail.data.mediaInfo);
+      }
     }
-  }, [type, detailData]);
+  }, [type, profileDetail, userState]);
 
   // set introduce
   const [textLen, setTextLen] = useState(0);
@@ -214,17 +220,15 @@ const CreateAuthor = ({ history, match }) => {
   };
 
   useEffect(() => {
-    if (!detailData) return false;
+    if (!profileDetail.data) return false;
 
-    const { portfolioLinks } = detailData;
+    const { portfolioLinks } = profileDetail.data;
 
-    if (!detailData) {
-    }
     if (type === 'edit') {
-      if (!detailData) {
+      if (!profileDetail.data) {
         return history.push(`/author/${classOf}`);
       }
-      if (detailData.portfolioLinks) {
+      if (profileDetail.data.portfolioLinks) {
         setPortfolioLinks(
           portfolioLinks.map((link, i) => {
             return {
@@ -239,7 +243,7 @@ const CreateAuthor = ({ history, match }) => {
         });
       }
     }
-  }, [detailData]);
+  }, [profileDetail.data]);
 
   const handleChange = (e) => {
     setPortfolio({
@@ -297,8 +301,11 @@ const CreateAuthor = ({ history, match }) => {
         return;
 
       case 'edit':
-        if (detailData.mediaInfo && isDefault) {
-          formdata.append('deleteFileName', detailData.mediaInfo.modifyName);
+        if (profileDetail.data.mediaInfo) {
+          formdata.append(
+            'deleteFileName',
+            profileDetail.data.mediaInfo.modifyName,
+          );
         }
 
         updateAuthorProfile(classOf, formdata);
@@ -320,6 +327,15 @@ const CreateAuthor = ({ history, match }) => {
       border: 'none',
     };
   };
+
+  const setDefaultImage = () => {
+    setFile(null);
+    toast.success(`✅ 기본 이미지로 설정 하였습니다.`);
+  };
+
+  useEffect(() => {
+    previewImg();
+  }, [file, portfolioShow]);
 
   return (
     <>
@@ -380,7 +396,7 @@ const CreateAuthor = ({ history, match }) => {
                     onChange={handleFileChange}
                   />
                 </div>
-                <div className="default-img" onClick={() => setIsDefault(true)}>
+                <div className="default-img" onClick={setDefaultImage}>
                   <div
                     className="img"
                     style={{
