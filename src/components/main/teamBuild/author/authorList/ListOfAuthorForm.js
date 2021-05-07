@@ -95,8 +95,9 @@ const ListOfAuthorForm = ({ match, history }) => {
       setTimeout(() => history.push('/signin'), 2300);
       return false;
     }
+    console.log(authorList);
 
-    const filterAuthor = authorList.content.find(
+    const filterAuthor = authorList.find(
       (author) => author.user.classOf === classOf,
     );
 
