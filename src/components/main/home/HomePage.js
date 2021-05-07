@@ -23,17 +23,16 @@ const HomePage = () => {
             관람할 수 있습니다.
           </p>
           <div className="home-video">
-            <video controls></video>
+          <iframe 
+            width="80%" 
+            height="315" 
+            src="https://www.youtube.com/embed/BdgGZwcUC4M" 
+            title="YouTube video player" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowFullScreen>
 
-            {/* <iframe
-              width="560"
-              height="315"
-              src="https://youtu.be/MZ9XK1f6o58"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe> */}
+          </iframe>
             <h3>2021 글로벌미디어학부 졸업작품 '묻고 답하다' 스케치</h3>
           </div>
         </section>
