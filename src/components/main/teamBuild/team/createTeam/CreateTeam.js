@@ -74,7 +74,6 @@ const CreateTeam = ({ history, match }) => {
     }
     createTeam(request)
       .then((response) => {
-        console.log(response);
         history.push(`/team-building/teams/${response.id}`);
       })
       .catch((e) => {
@@ -110,123 +109,124 @@ const CreateTeam = ({ history, match }) => {
         draggable
         pauseOnHover
       />
-      {!userInfo.classOf ? (<div>Loading...</div>) : (
+      {!userInfo.classOf ? (
+        <div>Loading...</div>
+      ) : (
         <div className="team__wrap">
-        <div className="team__top">
-          <div className="team__type">
-            <h2>글쓰기</h2>
-          </div>
-          <div className="board__category">
-            <h3>게시판</h3>
-            <input type="text" defaultValue={'팀 목록'} readOnly={true} />
-          </div>
-          <div className="team__category">
-            <h3>카테고리</h3>
-            <select
-              name="selectCategory"
-              id="selectCategory"
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="NONE">선택안함</option>
-              <option value="WEB_APP">웹/앱</option>
-              <option value="MEDIA_ART">미디어아트</option>
-              <option value="ANIMATION_FILM">영상/애니메이션</option>
-              <option value="GAME">게임</option>
-            </select>
-          </div>
-          <div className="team__title">
-            <h3>팀명</h3>
-            <input
-              type="text"
-              placeholder="팀명을 입력하세요"
-              onChange={(e) => setTeamName(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="team__body">
-          <div className="team__body__editor">
-            <Editor
-              toolbarItems={toolbarItems}
-              previewStyle="vertical"
-              width="1194px"
-              height="600px"
-              initialEditType="wysiwyg"
-              placeholder="글을 작성해주세요"
-              ref={editorRef}
-              usageStatistics={false}
-              hooks={{
-                addImageBlobHook: (blob, callback) => {
-                  uploadImage(userInfo.classOf, blob).then((response) => {
-                    callback(response.url, 'alt text');
-                  });
-                  return false;
-                },
-              }}
-            />
-          </div>
-        </div>
-        <div className="team__bottom">
-          <div className="team__members">
-            <h3>팀 구성원</h3>
-            <div className="team__member">
-              <MemberRoleSquare role="DESIGNER" text="DESIGNER" />
+          <div className="team__top">
+            <div className="team__type">
+              <h2>글쓰기</h2>
+            </div>
+            <div className="board__category">
+              <h3>게시판</h3>
+              <input type="text" defaultValue={'팀 목록'} readOnly={true} />
+            </div>
+            <div className="team__category">
+              <h3>카테고리</h3>
+              <select
+                name="selectCategory"
+                id="selectCategory"
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="NONE">선택안함</option>
+                <option value="WEB_APP">웹/앱</option>
+                <option value="MEDIA_ART">미디어아트</option>
+                <option value="ANIMATION_FILM">영상/애니메이션</option>
+                <option value="GAME">게임</option>
+              </select>
+            </div>
+            <div className="team__title">
+              <h3>팀명</h3>
               <input
                 type="text"
-                onChange={(e) => setDesigners(e.target.value)}
-                placeholder="이름(학번) 형식으로 입력해주세요. ex)홍길동(20151234)"
+                placeholder="팀명을 입력하세요"
+                onChange={(e) => setTeamName(e.target.value)}
               />
             </div>
-            <div className="team__member">
-              <MemberRoleSquare role="DEVELOPER" text="DEVELOPER" />
+          </div>
+          <div className="team__body">
+            <div className="team__body__editor">
+              <Editor
+                toolbarItems={toolbarItems}
+                previewStyle="vertical"
+                width="1194px"
+                height="600px"
+                initialEditType="wysiwyg"
+                placeholder="글을 작성해주세요"
+                ref={editorRef}
+                usageStatistics={false}
+                hooks={{
+                  addImageBlobHook: (blob, callback) => {
+                    uploadImage(userInfo.classOf, blob).then((response) => {
+                      callback(response.url, 'alt text');
+                    });
+                    return false;
+                  },
+                }}
+              />
+            </div>
+          </div>
+          <div className="team__bottom">
+            <div className="team__members">
+              <h3>팀 구성원</h3>
+              <div className="team__member">
+                <MemberRoleSquare role="DESIGNER" text="DESIGNER" />
+                <input
+                  type="text"
+                  onChange={(e) => setDesigners(e.target.value)}
+                  placeholder="이름(학번) 형식으로 입력해주세요. ex)홍길동(20151234)"
+                />
+              </div>
+              <div className="team__member">
+                <MemberRoleSquare role="DEVELOPER" text="DEVELOPER" />
 
-              <input
-                type="text"
-                onChange={(e) => setDevelopers(e.target.value)}
-                placeholder="이름(학번) 형식으로 입력해주세요. ex)홍길동(20151234)"
-              />
-            </div>
-            <div className="team__member">
-              <MemberRoleSquare role="MEDIA_ART" text="MEDIA_ART" />
-              <input
-                type="text"
-                onChange={(e) => setMediaArts(e.target.value)}
-                placeholder="이름(학번) 형식으로 입력해주세요. ex)홍길동(20151234)"
-              />
-            </div>
-            <div className="team__member">
-              <MemberRoleSquare role="PLANNER" text="PLANNER" />
-              <input
-                type="text"
-                onChange={(e) => setPlanners(e.target.value)}
-                placeholder="이름(학번) 형식으로 입력해주세요. ex)홍길동(20151234)"
-              />
-            </div>
-            <div className="team__file">
-              <label className="team__file__label" htmlFor="input-file">
-                <div className="team__file__label__left">
-                  <div className="file__image"></div>
-                  <p id="file__name">파일을 선택해주세요.</p>
-                </div>
-                <button
-                  className="delete__button"
-                  onClick={handleFileDelete}
-                ></button>
-              </label>
-              <input
-                type="file"
-                name="photo"
-                id="input-file"
-                onChange={handleFileChange}
-              />
+                <input
+                  type="text"
+                  onChange={(e) => setDevelopers(e.target.value)}
+                  placeholder="이름(학번) 형식으로 입력해주세요. ex)홍길동(20151234)"
+                />
+              </div>
+              <div className="team__member">
+                <MemberRoleSquare role="MEDIA_ART" text="MEDIA_ART" />
+                <input
+                  type="text"
+                  onChange={(e) => setMediaArts(e.target.value)}
+                  placeholder="이름(학번) 형식으로 입력해주세요. ex)홍길동(20151234)"
+                />
+              </div>
+              <div className="team__member">
+                <MemberRoleSquare role="PLANNER" text="PLANNER" />
+                <input
+                  type="text"
+                  onChange={(e) => setPlanners(e.target.value)}
+                  placeholder="이름(학번) 형식으로 입력해주세요. ex)홍길동(20151234)"
+                />
+              </div>
+              <div className="team__file">
+                <label className="team__file__label" htmlFor="input-file">
+                  <div className="team__file__label__left">
+                    <div className="file__image"></div>
+                    <p id="file__name">파일을 선택해주세요.</p>
+                  </div>
+                  <button
+                    className="delete__button"
+                    onClick={handleFileDelete}
+                  ></button>
+                </label>
+                <input
+                  type="file"
+                  name="photo"
+                  id="input-file"
+                  onChange={handleFileChange}
+                />
+              </div>
             </div>
           </div>
+          <div className="create__button">
+            <button onClick={handleSubmit}>등록</button>
+          </div>
         </div>
-        <div className="create__button">
-          <button onClick={handleSubmit}>등록</button>
-        </div>
-      </div>
       )}
-    
     </>
   );
 };
