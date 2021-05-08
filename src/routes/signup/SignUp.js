@@ -3,6 +3,7 @@ import selectJobIcon from './image/Modal@2x.png';
 import globalmediaLogo from './image/GlobalMedia_Logo.png';
 import './SignUp.scss';
 import OccupationListForm from '../../components/modal/OccupationListForm.js';
+import OccupationListFormSub from '../../components/modal/OccupationListFormSub';
 import ModalTemp from '../../components/modal/ModalTemp.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -142,7 +143,7 @@ const SignUp = ({ history, location }) => {
       phoneNumber: userInfo.phoneNumber,
       password: passwd,
       mainProjectRole: mainProjectRole,
-      subProjectRole: subProjectRole === '선택안함' ? null : subProjectRole,
+      subProjectRole: subProjectRole === 'NOCHOICE' ? null : subProjectRole,
     };
 
     const successSignup = () => {
@@ -205,7 +206,7 @@ const SignUp = ({ history, location }) => {
             </li>
             <li className="list r2">
               <h3>부가직군</h3>
-              <OccupationListForm
+              <OccupationListFormSub
                 projectRole={subProjectRole}
                 type="subProjectRole"
                 handleChoice={handleChoice}
