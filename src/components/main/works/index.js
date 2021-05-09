@@ -1,5 +1,5 @@
 import { Route } from 'react-router';
-import CreateWork from './createWroksList/CreateWork';
+import CreateWork from './createWork/CreateWork';
 import DetailWork from './detailWorkList/DetailWork';
 import ListOfWorks from './worksList/ListOfWorks';
 

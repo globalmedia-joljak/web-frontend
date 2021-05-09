@@ -278,10 +278,6 @@ const CreateWork = ({ match, history }) => {
       return false;
     }
 
-    // for (let i of formdata.entries()) {
-    //   console.log(i);
-    // }
-
     switch (workState) {
       case 'create':
         createWorks(formdata, history);
@@ -297,7 +293,7 @@ const CreateWork = ({ match, history }) => {
         if (!file && worksDetail.fileInfo) {
           formdata.append('deleteFileName', worksDetail.fileInfo.modifyName);
         }
-        // updateWorks({ worksId, history }, formdata);
+        updateWorks({ worksId, history }, formdata);
         return;
 
       default:
