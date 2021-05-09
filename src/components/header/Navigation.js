@@ -51,7 +51,7 @@ const NavClickEvent = (size, tablet, navEl) => {
         case tagFilter('header-route'):
           const SHOW = 'show';
 
-          if (id === 'teams' || id === 'project') {
+          if (id === 'teams' || id === 'works') {
             return parentElement.classList.contains(SHOW)
               ? parentElement.classList.remove(SHOW)
               : parentElement.classList.add(SHOW);
@@ -87,7 +87,7 @@ const NavClickEvent = (size, tablet, navEl) => {
 let navRoutes = [
   { id: 'notice', path: '/notice', name: '공지사항' },
   { id: 'teams', path: '/team-building', name: '팀 빌딩', type: 'sub-nav' },
-  { id: 'project', path: '/works', name: '졸업작품', type: 'sub-nav' },
+  { id: 'works', path: '/works', name: '졸업작품', type: 'sub-nav' },
 ];
 
 // routes_template
@@ -114,7 +114,7 @@ const RouterLink = (size, tablet, signOutHandler, isLogin) => {
           </li>
         );
       })}
-      {size < tablet && (
+      {size <= tablet && (
         <li>
           {isLogin ? (
             <Link to="/" className="header-route" onClick={signOutHandler}>
@@ -186,7 +186,7 @@ const Navigation = ({ location: { pathname }, match }) => {
           </h1>
 
           <nav className="h-nav" ref={navEl}>
-            {curSize < tablet ? (
+            {curSize <= tablet ? (
               <div className="header-nav-tablet">
                 <div className="header-nav-tablet-inr">
                   <h1 className="header-logo">
