@@ -140,7 +140,9 @@ const Navigation = ({ location: { pathname }, match }) => {
   const tablet = 768;
   const { hStyle } = NavStyling(navEl, curSize, tablet);
   const headerDisplayStyle = () => {
-    return pathname === '/signin' || pathname === '/signup'
+    return pathname === '/signin' ||
+      pathname === '/signup' ||
+      pathname === '/error'
       ? 'hidden'
       : 'visible';
   };

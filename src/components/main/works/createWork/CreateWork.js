@@ -84,7 +84,7 @@ const CreateWork = ({ match, history }) => {
   }, []);
 
   useEffect(() => {
-    if (workState === 'edit' && worksDetail) {
+    if (worksDetail && workState === 'edit') {
       setContent(worksDetail.content);
       setCategory(worksDetail.projectCategory);
       setWorksYear(worksDetail.exhibitedYear);
@@ -96,7 +96,6 @@ const CreateWork = ({ match, history }) => {
         teamMember: worksDetail.teamMember.join(' '),
         teamVideoUrl: worksDetail.teamVideoUrl,
       });
-      return;
     }
   }, [worksDetail]);
 
@@ -135,6 +134,7 @@ const CreateWork = ({ match, history }) => {
       formdata.append(`${queryName}[${i}]`, data);
     });
   });
+
   const deleteArrFromData = useCallback((arr, queryName) => {
     return arr.map((data, i) => {
       formdata.delete(`${queryName}[${i}]`, data);
@@ -214,7 +214,6 @@ const CreateWork = ({ match, history }) => {
       projectCategory: category,
       ...worksInput,
     };
-    console.log(requestWorks);
 
     if (teamMember) {
       const memberArr = teamMember
@@ -277,10 +276,6 @@ const CreateWork = ({ match, history }) => {
     if (teamMember === '' || !teamMember) {
       toast.error(`⛔팀원을 기입해 주세요`);
       return false;
-    }
-
-    for (let i of formdata.entries()) {
-      console.log(i);
     }
 
     switch (workState) {

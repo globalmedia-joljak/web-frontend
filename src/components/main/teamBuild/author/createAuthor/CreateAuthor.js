@@ -121,6 +121,8 @@ const CreateAuthor = ({ history, match }) => {
         mainRole: profileDetail.data.user.mainProjectRole,
         subRole: profileDetail.data.user.subProjectRole,
       });
+
+      setTextLen(profileDetail.data.content.length);
       if (profileDetail.data.mediaInfo) {
         setFile(profileDetail.data.mediaInfo);
       }
@@ -272,7 +274,6 @@ const CreateAuthor = ({ history, match }) => {
     }
 
     const formdata = new FormData();
-
     if (file) {
       if (file.modifyName) {
         formdata.delete('image');
@@ -303,7 +304,7 @@ const CreateAuthor = ({ history, match }) => {
         return;
 
       case 'edit':
-        if (profileDetail.data.mediaInfo) {
+        if (profileDetail.data.mediaInfo && !file.modifyName) {
           formdata.append(
             'deleteFileName',
             profileDetail.data.mediaInfo.modifyName,

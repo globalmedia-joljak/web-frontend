@@ -6,7 +6,10 @@ import ModalTemp from '../../../../modal/ModalTemp';
 import OccupationListForm from '../../../../modal/OccupationListForm';
 import ThereIsNoList from '../../../common/ThereIsNoList';
 import './authorStyle.scss';
-import { getAuthorProfileList } from '../../../../../service/api/profile.js';
+import {
+  getAuthorProfileDetail,
+  getAuthorProfileList,
+} from '../../../../../service/api/profile.js';
 
 import { toast, ToastContainer } from 'react-toastify';
 import ButtonWIthIcon from '../../../common/ButtonWIthIcon.js';
@@ -68,18 +71,16 @@ const ListOfAuthorForm = ({ match, history }) => {
   }, [lastPage]);
 
   const handleNextPage = () => {
-    getAuthorProfileList(pageInfo.page)
-      .then((res) => {
-        setAuthorList([...authorList, ...res.content]);
+    getAuthorProfileList(pageInfo.page).then((res) => {
+      setAuthorList([...authorList, ...res.content]);
 
-        setPageInfo({
-          ...pageInfo,
-          page: res.pageable.pageNumber + 1,
-          last: res.last,
-          totalElements: res.totalElements,
-        });
-      })
-      .catch((e) => console.log(e));
+      setPageInfo({
+        ...pageInfo,
+        page: res.pageable.pageNumber + 1,
+        last: res.last,
+        totalElements: res.totalElements,
+      });
+    });
   };
 
   const handleSubmit = (e) => setFilterShow(!filterShow);
@@ -92,23 +93,21 @@ const ListOfAuthorForm = ({ match, history }) => {
       setTimeout(() => history.push('/signin'), 2300);
       return false;
     }
-    console.log(authorList);
 
-    const filterAuthor = authorList.find(
-      (author) => author.user.classOf === classOf,
-    );
+    getAuthorProfileDetail(classOf)
+      .then((res) => {
+        const message =
+          '이미 작가등록을 하셨습니다. 작가 목록 페이지로 가시겠습니까?';
 
-    if (filterAuthor) {
-      if (!classOf) return false;
-      const message =
-        '이미 작가등록을 하셨습니다. 작가 목록 페이지로 가시겠습니까?';
+        if (window.confirm(message)) history.push(`${match.url}/${classOf}`);
 
-      if (window.confirm(message)) history.push(`${match.url}/${classOf}`);
-
-      return false;
-    }
-
-    history.push(`${match.url}/${classOf}/create`);
+        return false;
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          history.push(`${match.url}/${classOf}/create`);
+        }
+      });
   };
 
   return (
