@@ -51,9 +51,9 @@ const createWorks = async (createWorksData, history) => {
   } catch (e) {
     console.log(e.response);
     toast.error(`⛔ 서비스 오류. 졸업작품 페이지로 이동합니다.`);
-    // setTimeout(() => {
-    //   history.push(`/works`);
-    // }, 1300);
+    setTimeout(() => {
+      history.push(`/works`);
+    }, 1300);
   }
 };
 
@@ -72,9 +72,9 @@ const updateWorks = async ({ worksId, history }, updateWorksData) => {
     console.log(e.response);
 
     toast.error(`⛔ 서비스 오류. 졸업작품 페이지로 이동합니다.`);
-    // setTimeout(() => {
-    //   history.push(`/works`);
-    // }, 1300);
+    setTimeout(() => {
+      history.push(`/works`);
+    }, 1300);
   }
 };
 

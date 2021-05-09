@@ -91,7 +91,12 @@ const EditDeleteButton = ({ handleEdit, handleDelete, form }) => {
         수정
       </SetButton>
       <SetButton size={size} onClick={handleDelete} form={form}>
-        <SetIcon btntype="delete" size={size} form={form} />
+        <SetIcon
+          btntype="delete"
+          size={size}
+          form={form}
+          className="del-icon"
+        />
         삭제
       </SetButton>
     </SettingButtonBlock>

@@ -2,15 +2,11 @@ import React, { useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppState } from '../../../../../context/appContext';
 import { useTeamsDispatch } from '../../../../../context/teamContext';
-import useAsync from '../../../../../hooks/useAsync';
 import ModalTemp from '../../../../modal/ModalTemp';
 import OccupationListForm from '../../../../modal/OccupationListForm';
 import ThereIsNoList from '../../../common/ThereIsNoList';
 import './authorStyle.scss';
-import {
-  getAuthorProfileDetail,
-  getAuthorProfileList,
-} from '../../../../../service/api/profile.js';
+import { getAuthorProfileList } from '../../../../../service/api/profile.js';
 
 import { toast, ToastContainer } from 'react-toastify';
 import ButtonWIthIcon from '../../../common/ButtonWIthIcon.js';
@@ -22,6 +18,7 @@ const ListOfAuthorForm = ({ match, history }) => {
     infinite,
     userInfo: { isLogin, classOf },
   } = useAppState();
+
   const { translationKR, setJobColor } = useAppDispatch();
   const { filterClassOf, setDefaultImg } = useTeamsDispatch();
 
@@ -154,7 +151,7 @@ const ListOfAuthorForm = ({ match, history }) => {
             type="author"
             heroTitle="작가목록"
             heroContent="이번 졸업작품에 참여하는"
-            heroContent2="작가들의 목록입니다."
+            heroContent2=" 작가들의 목록입니다."
           />
           <div className="author-wrap content-size" ref={createAuthorEl}>
             <div className="content-header">

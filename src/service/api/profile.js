@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { client } from './client';
 
 const getAuthorProfileList = async (pageNum) => {
@@ -12,11 +13,15 @@ const getAuthorProfileDetail = async (classOf) => {
   return data.simpleProfile;
 };
 
-const createAuthorProfile = async (classOf, createAuthorData) => {
+const createAuthorProfile = async ({ classOf, history }, createAuthorData) => {
   try {
     await client.post(`/profiles/${classOf}`, createAuthorData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
+    toast.success(`✅작가 생성이 완료 되었습니다.`);
+    setTimeout(() => {
+      history.push(`/team-building/author/${classOf}`);
+    }, 1500);
 
     return;
   } catch (e) {}
@@ -29,11 +34,18 @@ const deleteAuthorProfile = async (classOf) => {
   } catch (e) {}
 };
 
-const updateAuthorProfile = async (classOf, updateProfileRequest) => {
+const updateAuthorProfile = async (
+  { classOf, history },
+  updateProfileRequest,
+) => {
   try {
-    return await client.patch(`/profiles/${classOf}`, updateProfileRequest, {
+    await client.patch(`/profiles/${classOf}`, updateProfileRequest, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
+    toast.success(`✅ 작가목록이 수정 되었습니다.`);
+    setTimeout(() => {
+      history.push(`/team-building/author/${classOf}`);
+    }, 1500);
   } catch (e) {
     console.log(e.response);
   }

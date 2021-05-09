@@ -107,6 +107,21 @@
   }
   .about-team-vedio {
     margin-top: 96px;
+
+    iframe {
+      @include widthHeight;
+      background-color: #b3b3b315;
+    }
+  }
+  .about-team-images {
+    .no-images {
+      height: 200px;
+      text-align: center;
+      color: #b3b3b3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .tui-editor-contents {

@@ -115,6 +115,7 @@
 @include response('tablet') {
   .author-wrap {
     .author-list {
+      justify-content: center;
       gap: 33px 22px;
       li {
         min-width: 188px;

@@ -192,7 +192,7 @@
 $maxTablet: 768px;
 $maxPhone-XL: 447px;
 $maxPhone-L: 425px;
-$maxPhone-M: 320px;
+$maxPhone-M: 338px;
 
 @mixin response($device) {
   @if $device == 'phone' {

@@ -62,7 +62,8 @@
 
       .home-video {
         max-width: 867px;
-        video {
+        height: 488px;
+        iframe {
           @include widthHeight;
         }
         h3 {
@@ -79,6 +80,7 @@
     @include mainRow('r3', 'home', 60px, 560px);
 
     .heroImg {
+      padding-top: 60px;
       .hero-contetns {
         strong,
         p {
@@ -115,6 +117,7 @@
         .home-video {
           max-width: 608px;
           margin: 0 auto;
+          height: 342px;
           h3 {
             font-size: 24px;
             padding-top: 24px;
@@ -164,6 +167,7 @@
 
         .home-video {
           max-width: 320px;
+          height: 180px;
           h3 {
             font-size: 12px;
             padding-top: 16px;
