@@ -14,9 +14,7 @@ const Tbuild = ({ match, location }) => {
       <main className="team-build-wrap">
         <div className="section-wrap">
           <section className="side-menu">
-            <ul>
-              <SubNavigation type="teams" url={match.url} />
-            </ul>
+            <SubNavigation type="teams" url={match.url} />
           </section>
           <section className="contents">
             <div className="content">

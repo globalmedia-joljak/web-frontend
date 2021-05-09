@@ -3,7 +3,7 @@ import { client } from './client';
 
 const getAuthorProfileList = async (pageNum) => {
   const { data } = await client.get(`/profiles`, {
-    params: { size: 10, page: pageNum },
+    params: { size: 8, page: pageNum },
   });
   return data.simpleProfilePage;
 };

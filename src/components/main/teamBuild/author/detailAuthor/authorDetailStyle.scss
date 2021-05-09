@@ -20,6 +20,7 @@
       position: relative;
       @include backgroundImage;
       background-size: cover;
+      background-color: #ffffff;
       .author-bg {
         z-index: -1;
         position: absolute;

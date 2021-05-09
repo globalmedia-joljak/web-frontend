@@ -14,8 +14,7 @@ const DetailWork = ({ match, history }) => {
 
   const {
     currentYears,
-    userInfo: { name, isLogin },
-    curSize,
+    userInfo: { name },
   } = useAppState();
 
   const detailId = match.params.id;
@@ -32,11 +31,6 @@ const DetailWork = ({ match, history }) => {
       deleteWorks(detailId);
       setTimeout(() => history.push(`/works/${currentYears}`), 1000);
     }
-  };
-
-  const filterDate = () => {
-    const splitIdx = createDate.indexOf('T');
-    return createDate.slice(0, splitIdx).split('-').join('. ');
   };
 
   const slideRef = useRef();
@@ -93,8 +87,6 @@ const DetailWork = ({ match, history }) => {
   if (!data) return null;
   if (error) return <div>에러 _ worksDetail</div>;
 
-  const handleEdit = () => history.push(`${match.url}/edit`);
-
   const handleSlide = (e) => {
     const btnType = e.target.id;
 
@@ -116,11 +108,11 @@ const DetailWork = ({ match, history }) => {
     workName,
     teamName,
     teamMember,
-    createDate,
     imageInfoList,
     content,
     teamVideoUrl,
     fileInfo,
+    exhibitedYear,
   } = data;
 
   return (
@@ -142,11 +134,11 @@ const DetailWork = ({ match, history }) => {
           <div className="team-etc">
             <span className="create-date">
               <i className="date-icon" />
-              {filterDate()}
+              {exhibitedYear}
             </span>
             {author === name && (
               <EditDeleteButton
-                handleEdit={handleEdit}
+                handleEdit={() => history.push(`${match.url}/edit`)}
                 handleDelete={handleDelete}
               />
             )}
