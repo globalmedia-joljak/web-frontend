@@ -58,7 +58,9 @@ const CreateWork = ({ match, history }) => {
   const editorRef = useRef();
 
   const { worksKR } = useAppDispatch();
-  const { userInfo } = useAppState;
+  const { userInfo } = useAppState();
+
+  if (!userInfo.isLogin) history.push(`/works`);
 
   const [worksInput, setWorksInput] = useState({
     workName: null,
@@ -243,27 +245,37 @@ const CreateWork = ({ match, history }) => {
         formdata.delete('teamMember');
       }
 
-      if (!requestWorks[item] || requestWorks[item] === []) {
+      if (!requestWorks[item]) {
         formdata.delete(item);
       }
     }
 
-    if (requestWorks.exhibitedYear === '연도를 선택하세요') {
+    if (
+      !requestWorks.exhibitedYear ||
+      requestWorks.exhibitedYear === '연도를 선택하세요'
+    ) {
       toast.error(`⛔잠품 출시 년도를 선택해 주세요.`);
       return false;
     }
-    if (requestWorks.projectCategory === '카테고리를 선택하세요') {
+    if (
+      !requestWorks.projectCategory ||
+      requestWorks.projectCategory === '카테고리를 선택하세요'
+    ) {
       toast.error(`⛔카테고리를 선택해 주세요.`);
       return false;
     }
 
     if (workName === '' || !workName) {
-      toast.error(`⛔작품 제목은 반드시 기입해 주세요`);
+      toast.error(`⛔작품 제목을 기입해 주세요`);
+      return false;
+    }
+    if (teamName === '' || !teamName) {
+      toast.error(`⛔팀이름을 기입해 주세요`);
       return false;
     }
 
     if (teamMember === '' || !teamMember) {
-      toast.error(`⛔팀원은 반드시 기입해 주세요`);
+      toast.error(`⛔팀원을 기입해 주세요`);
       return false;
     }
 

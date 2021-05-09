@@ -8,22 +8,13 @@ import { getWorksYears } from '../service/api/work';
 
 const Works = ({ match, location }) => {
   const { currentYears } = useAppState();
-  const [years, setYears] = useState(null);
-
-  useEffect(() => {
-    getWorksYears()
-      .then((res) => {
-        return setYears(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <main className="works-wrap">
       <div className="section-wrap">
         <section className="side-menu">
           <ul>
-            <SubNavigation type="works" url={match.url} years={years} />
+            <SubNavigation type="works" url={match.url} />
           </ul>
         </section>
         <section className="contents">

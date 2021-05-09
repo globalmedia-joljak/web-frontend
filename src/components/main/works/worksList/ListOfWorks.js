@@ -2,7 +2,6 @@ import React from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import ThereIsNoList from '../../common/ThereIsNoList';
 import ButtonWIthIcon from '../../common/ButtonWIthIcon.js';
-import useAsync from '../../../../hooks/useAsync';
 import { useEffect, useState } from 'react/cjs/react.development';
 import { getWorksLists } from '../../../../service/api/work.js';
 import noImage from '../../../../assets/images/노이미지@2x.png';
@@ -16,13 +15,48 @@ import HeroImageForm from '../../common/HeroImageForm';
 const ListOfWorks = ({ match, history }) => {
   const { worksKR, worksColor } = useAppDispatch();
   const {
+    infinite,
     userInfo: { name, isLogin },
   } = useAppState();
 
-  const [pageNum, setPageNum] = useState(0);
+  const [worksList, setWorksList] = useState([]);
+  const [lastPage, setLastPage] = useState(false);
+  const [pageInfo, setPageInfo] = useState({
+    page: 0,
+    last: false,
+    totalElements: 0,
+  });
 
-  const [worksListData] = useAsync(() => getWorksLists(pageNum), [pageNum]);
-  const { loading, data, error } = worksListData;
+  useEffect(() => {
+    const { scrollTop, scrollHeight, clientHeight } = infinite;
+    if (scrollTop === 0 || clientHeight === 0 || scrollHeight === 0)
+      return false;
+
+    if (scrollTop + clientHeight >= scrollHeight - 10) {
+      setLastPage(true);
+    }
+  }, [lastPage, infinite]);
+
+  useEffect(() => {
+    setLastPage(false);
+    if (!pageInfo.last) {
+      handleNextPage();
+    }
+  }, [lastPage]);
+
+  const handleNextPage = () => {
+    getWorksLists(pageInfo.page).then((res) => {
+      const worksData = res.workResponseList;
+      setWorksList([...worksList, ...worksData.content]);
+
+      setPageInfo({
+        ...pageInfo,
+        page: worksData.pageable.pageNumber + 1,
+        last: worksData.last,
+        totalElements: worksData.totalElements,
+      });
+    });
+  };
 
   // filter
   const [filterShow, setFilterShow] = useState(false);
@@ -39,6 +73,8 @@ const ListOfWorks = ({ match, history }) => {
         (img.style.height = `${Math.floor(img.offsetWidth / 3) * 1.8}px`),
     );
   });
+
+  console.log(worksList);
 
   const projectCategoryStyle = (category) => {
     const style = {
@@ -74,13 +110,10 @@ const ListOfWorks = ({ match, history }) => {
     });
   };
 
-  if (loading) return <div>로딩중...</div>;
-  if (!data) return null;
-  if (error) return <div>listof work error</div>;
-
   const handleModalSubmit = () => {
     setFilterShow(false);
   };
+
   // create
   const handleAddWorks = () => {
     if (!isLogin) {
@@ -91,9 +124,7 @@ const ListOfWorks = ({ match, history }) => {
       return false;
     }
 
-    const isItAuthor = data.workResponseList.content.find(
-      (el) => el.author === name,
-    );
+    const isItAuthor = worksList.find((el) => el.author === name);
 
     if (isItAuthor) {
       const message =
@@ -107,10 +138,8 @@ const ListOfWorks = ({ match, history }) => {
     history.push(`${match.url}/none/create`);
   };
 
-  const { page, workResponseList } = data;
-
   const listItemBackgroundImg = (imageInfoList) => {
-    // return imageInfoList ? `url(${imageInfoList[0].url})` : `url(${noImage})`;
+    return imageInfoList ? `url(${imageInfoList[0].url})` : `url(${noImage})`;
   };
 
   return (
@@ -145,8 +174,7 @@ const ListOfWorks = ({ match, history }) => {
           <div className="works-wrap content-size">
             <div className="content-header">
               <h3>
-                전체 작가 인원
-                <span>{workResponseList.totalElements}</span>
+                전체 작품 수<span>{pageInfo.totalElements}</span>
               </h3>
               {/* <div className="search-list">
                 <span className="search-icon" />
@@ -170,59 +198,64 @@ const ListOfWorks = ({ match, history }) => {
                 />
               </div>
             </div>
-            {workResponseList.totalElements === 0 ? (
+            {pageInfo.totalElements === 0 ? (
               <ThereIsNoList type="works" />
             ) : (
-              <ul className="works-list">
-                {workResponseList.content.map(
-                  ({
-                    id,
-                    content,
-                    imageInfoList,
-                    projectCategory,
-                    teamMember,
-                    teamName,
-                    workName,
-                  }) => (
-                    <li key={id}>
-                      <Link to={`${match.url}/${id}`}>
-                        <span className="work-img-wrap">
-                          <i
-                            className="work-img"
-                            style={{
-                              backgroundImage: listItemBackgroundImg(
-                                imageInfoList,
-                              ),
-                            }}
-                          >
-                            <i className="work-hover-bg" />
-                          </i>
-                        </span>
-                        <div className="work-contets-wrap">
-                          <strong className="work-name">
-                            {workName}
-                            <span
-                              className="project-category"
-                              style={projectCategoryStyle(projectCategory)}
+              <>
+                <ul className="works-list">
+                  {worksList.map(
+                    ({
+                      id,
+                      content,
+                      imageInfoList,
+                      projectCategory,
+                      teamMember,
+                      teamName,
+                      workName,
+                    }) => (
+                      <li key={id}>
+                        <Link to={`${match.url}/${id}`}>
+                          <span className="work-img-wrap">
+                            <i
+                              className="work-img"
+                              style={{
+                                backgroundImage: listItemBackgroundImg(
+                                  imageInfoList,
+                                ),
+                              }}
                             >
-                              {worksKR(projectCategory)}
-                            </span>
-                          </strong>
-                          <b className="team-name">
-                            {teamName}
-                            <span className="members">
-                              {teamMember.map((name, i) => (
-                                <i key={i}>{name}</i>
-                              ))}
-                            </span>
-                          </b>
-                          <Viewer initialValue={content} />
-                        </div>
-                      </Link>
-                    </li>
-                  ),
+                              <i className="work-hover-bg" />
+                            </i>
+                          </span>
+                          <div className="work-contets-wrap">
+                            <strong className="work-name">
+                              {workName}
+                              <span
+                                className="project-category"
+                                style={projectCategoryStyle(projectCategory)}
+                              >
+                                {worksKR(projectCategory)}
+                              </span>
+                            </strong>
+                            <b className="team-name">
+                              {teamName}
+                              <span className="members">
+                                {teamMember.map((name, i) => (
+                                  <i key={i}>{name}</i>
+                                ))}
+                              </span>
+                            </b>
+                            <Viewer initialValue={content} />
+                          </div>
+                        </Link>
+                      </li>
+                    ),
+                  )}
+                </ul>
+                {pageInfo.last && (
+                  <p className="last-list">마지막 게시글입니다.</p>
                 )}
-              </ul>
+              </>
             )}
           </div>
         </>
