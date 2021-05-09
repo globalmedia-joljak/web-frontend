@@ -31,31 +31,36 @@
 
   .idea__id {
     order: 1;
-    width: 5%;
+    font: normal normal 16px/24px Noto Sans KR;
+    width: 8%;
   }
   .idea__title {
     order: 2;
-    width: 25%;
+    width: 29%;
+    font: normal normal 16px/24px Noto Sans KR;
   }
   .idea__category {
     order: 3;
-    width: 13%;
+    width: 15%;
     margin-right: 10px;
+    font: normal normal 16px/24px Noto Sans KR;
   }
   .idea__required {
     order: 4;
     display: flex;
     align-items: center;
-    width: 35%;
+    width: 40%;
   }
   .idea__author {
     order: 5;
-    width: 15%;
+    font: normal normal 16px/24px Noto Sans KR;
+    width: 14%;
     margin-left: 10px;
   }
 
   .idea__date {
     order: 6;
+    font: normal normal 16px/24px Noto Sans KR;
     width: 10%;
     text-align: right;
   }
