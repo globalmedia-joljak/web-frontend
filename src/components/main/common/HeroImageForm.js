@@ -115,7 +115,7 @@ const HeroTitle = styled.h1`
   }}
 `;
 
-const ContentBox = styled.p`
+const ContentBox = styled.h2`
   font-weight: bold;
   color: #000000cc;
   font-size: ${({ size }) =>

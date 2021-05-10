@@ -14,8 +14,7 @@ const DetailWork = ({ match, history }) => {
 
   const {
     currentYears,
-    userInfo: { name, isLogin },
-    curSize,
+    userInfo: { name },
   } = useAppState();
 
   const detailId = match.params.id;
@@ -32,11 +31,6 @@ const DetailWork = ({ match, history }) => {
       deleteWorks(detailId);
       setTimeout(() => history.push(`/works/${currentYears}`), 1000);
     }
-  };
-
-  const filterDate = () => {
-    const splitIdx = createDate.indexOf('T');
-    return createDate.slice(0, splitIdx).split('-').join('. ');
   };
 
   const slideRef = useRef();
@@ -93,8 +87,6 @@ const DetailWork = ({ match, history }) => {
   if (!data) return null;
   if (error) return <div>에러 _ worksDetail</div>;
 
-  const handleEdit = () => history.push(`${match.url}/edit`);
-
   const handleSlide = (e) => {
     const btnType = e.target.id;
 
@@ -116,11 +108,11 @@ const DetailWork = ({ match, history }) => {
     workName,
     teamName,
     teamMember,
-    createDate,
     imageInfoList,
     content,
     teamVideoUrl,
     fileInfo,
+    exhibitedYear,
   } = data;
 
   return (
@@ -142,11 +134,11 @@ const DetailWork = ({ match, history }) => {
           <div className="team-etc">
             <span className="create-date">
               <i className="date-icon" />
-              {filterDate()}
+              {exhibitedYear}
             </span>
             {author === name && (
               <EditDeleteButton
-                handleEdit={handleEdit}
+                handleEdit={() => history.push(`${match.url}/edit`)}
                 handleDelete={handleDelete}
               />
             )}
@@ -161,40 +153,34 @@ const DetailWork = ({ match, history }) => {
           <section className="about-team-vedio">
             <strong className="sec-title">팀 소개영상</strong>
             <div className="team-vedio sec-content">
-              <video
-                controls
-                style={{ width: '100%', height: '100%' }}
-                autoPlay
-              >
-                <source src="https://youtu.be/yZw9G8Zl0UI" />
-                <source type="video/ogg" src={teamVideoUrl} />
-                해당 브라우저는 vedio를 지원하지 않습니다.
-              </video>
+              <iframe
+                src={`https://www.youtube.com/embed//${teamVideoUrl}`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
             </div>
           </section>
           <section className="about-team-images">
             <strong className="sec-title">작품 사진</strong>
-            <div className="work-images sec-content">
-              {imageInfoList ? (
-                <>
-                  <ul className="slide-wrap" ref={slideRef}>
-                    {imageInfoList.map((image, i) => (
-                      <li key={i} className="slide">
-                        <span
-                          style={{ backgroundImage: `url(${image.url})` }}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="slide-btn-box">
-                    <button type="button" id="prev-btn" onClick={handleSlide} />
-                    <button type="button" id="next-btn" onClick={handleSlide} />
-                  </div>
-                </>
-              ) : (
-                '등록된 작품 사진이 없습니다.'
-              )}
-            </div>
+            {imageInfoList ? (
+              <div className="work-images sec-content">
+                <ul className="slide-wrap" ref={slideRef}>
+                  {imageInfoList.map((image, i) => (
+                    <li key={i} className="slide">
+                      <span style={{ backgroundImage: `url(${image.url})` }} />
+                    </li>
+                  ))}
+                </ul>
+                <div className="slide-btn-box">
+                  <button type="button" id="prev-btn" onClick={handleSlide} />
+                  <button type="button" id="next-btn" onClick={handleSlide} />
+                </div>
+              </div>
+            ) : (
+              <p className="no-images"> 등록된 작품 사진이 없습니다.</p>
+            )}
           </section>
           <section className="about-team-introduce">
             <strong className="sec-title">작품 소개</strong>

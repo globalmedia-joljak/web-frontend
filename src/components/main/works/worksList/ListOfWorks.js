@@ -2,9 +2,11 @@ import React from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import ThereIsNoList from '../../common/ThereIsNoList';
 import ButtonWIthIcon from '../../common/ButtonWIthIcon.js';
-import useAsync from '../../../../hooks/useAsync';
 import { useEffect, useState } from 'react/cjs/react.development';
-import { getWorksLists } from '../../../../service/api/work.js';
+import {
+  getWorksLists,
+  getWorksYearList,
+} from '../../../../service/api/work.js';
 import noImage from '../../../../assets/images/노이미지@2x.png';
 import './listOfWorksStyle.scss';
 import WorkListModal from './WorkListModal';
@@ -16,13 +18,52 @@ import HeroImageForm from '../../common/HeroImageForm';
 const ListOfWorks = ({ match, history }) => {
   const { worksKR, worksColor } = useAppDispatch();
   const {
-    userInfo: { name, isLogin },
+    infinite,
+    userInfo: { isLogin },
   } = useAppState();
 
-  const [pageNum, setPageNum] = useState(0);
+  const [worksList, setWorksList] = useState([]);
+  const [lastPage, setLastPage] = useState(false);
+  const [pageInfo, setPageInfo] = useState({
+    page: 0,
+    last: false,
+    totalElements: 0,
+  });
 
-  const [worksListData] = useAsync(() => getWorksLists(pageNum), [pageNum]);
-  const { loading, data, error } = worksListData;
+  useEffect(() => {
+    const { scrollTop, scrollHeight, clientHeight } = infinite;
+    if (scrollTop === 0 || clientHeight === 0 || scrollHeight === 0)
+      return false;
+
+    if (scrollTop + clientHeight >= scrollHeight - 10) {
+      setLastPage(true);
+    }
+  }, [lastPage, match.url]);
+
+  useEffect(() => {
+    setLastPage(false);
+    if (!pageInfo.last) getWorksData();
+  }, [lastPage, match.url]);
+
+  const getWorksData = () => {
+    getWorksYearList(
+      {
+        pageNum: pageInfo.page,
+        year: match.params.year,
+      },
+      history,
+    ).then((res) => {
+      const worksData = res.workResponseList;
+      setWorksList([...worksList, ...worksData.content]);
+
+      setPageInfo({
+        ...pageInfo,
+        page: worksData.pageable.pageNumber + 1,
+        last: worksData.last,
+        totalElements: worksData.totalElements,
+      });
+    });
+  };
 
   // filter
   const [filterShow, setFilterShow] = useState(false);
@@ -31,24 +72,6 @@ const ListOfWorks = ({ match, history }) => {
     exhibitedYear: [],
   });
 
-  // list style
-  useEffect(() => {
-    const workImages = document.querySelectorAll('.work-img-wrap');
-    Array.from(workImages).map(
-      (img) =>
-        (img.style.height = `${Math.floor(img.offsetWidth / 3) * 1.8}px`),
-    );
-  });
-
-  const projectCategoryStyle = (category) => {
-    const style = {
-      color: worksColor(category),
-      borderColor: worksColor(category),
-    };
-    return style;
-  };
-
-  // filter
   const handleChoiceCategory = (e) => {
     const { name, value, checked } = e.target;
 
@@ -74,13 +97,6 @@ const ListOfWorks = ({ match, history }) => {
     });
   };
 
-  if (loading) return <div>로딩중...</div>;
-  if (!data) return null;
-  if (error) return <div>listof work error</div>;
-
-  const handleModalSubmit = () => {
-    setFilterShow(false);
-  };
   // create
   const handleAddWorks = () => {
     if (!isLogin) {
@@ -91,26 +107,28 @@ const ListOfWorks = ({ match, history }) => {
       return false;
     }
 
-    const isItAuthor = data.workResponseList.content.find(
-      (el) => el.author === name,
-    );
-
-    if (isItAuthor) {
-      const message =
-        '이미 졸업작품을 등록하셨습니다. 졸업작품 상세페이지로 가시겠습니까?';
-
-      return window.confirm(message)
-        ? history.push(`${match.url}/${isItAuthor.id}`)
-        : false;
-    }
-
     history.push(`${match.url}/none/create`);
   };
 
-  const { page, workResponseList } = data;
+  // list style
+  useEffect(() => {
+    const workImages = document.querySelectorAll('.work-img-wrap');
+    Array.from(workImages).map(
+      (img) =>
+        (img.style.height = `${Math.floor(img.offsetWidth / 3) * 1.8}px`),
+    );
+  });
+
+  const projectCategoryStyle = (category) => {
+    const style = {
+      color: worksColor(category),
+      borderColor: worksColor(category),
+    };
+    return style;
+  };
 
   const listItemBackgroundImg = (imageInfoList) => {
-    // return imageInfoList ? `url(${imageInfoList[0].url})` : `url(${noImage})`;
+    return imageInfoList ? `url(${imageInfoList[0].url})` : `url(${noImage})`;
   };
 
   return (
@@ -130,7 +148,7 @@ const ListOfWorks = ({ match, history }) => {
       {filterShow ? (
         <WorkListModal
           modalShow={filterShow}
-          handleSubmit={handleModalSubmit}
+          handleSubmit={() => setFilterShow(false)}
           handleCancel={setFilterShow}
           handleChoice={handleChoiceCategory}
         />
@@ -145,8 +163,7 @@ const ListOfWorks = ({ match, history }) => {
           <div className="works-wrap content-size">
             <div className="content-header">
               <h3>
-                전체 작가 인원
-                <span>{workResponseList.totalElements}</span>
+                전체 작품 수<span>{worksList ? worksList.length : 0}</span>
               </h3>
               {/* <div className="search-list">
                 <span className="search-icon" />
@@ -170,59 +187,65 @@ const ListOfWorks = ({ match, history }) => {
                 />
               </div>
             </div>
-            {workResponseList.totalElements === 0 ? (
+            {worksList.length === 0 ? (
               <ThereIsNoList type="works" />
             ) : (
-              <ul className="works-list">
-                {workResponseList.content.map(
-                  ({
-                    id,
-                    content,
-                    imageInfoList,
-                    projectCategory,
-                    teamMember,
-                    teamName,
-                    workName,
-                  }) => (
-                    <li key={id}>
-                      <Link to={`${match.url}/${id}`}>
-                        <span className="work-img-wrap">
-                          <i
-                            className="work-img"
-                            style={{
-                              backgroundImage: listItemBackgroundImg(
-                                imageInfoList,
-                              ),
-                            }}
-                          >
-                            <i className="work-hover-bg" />
-                          </i>
-                        </span>
-                        <div className="work-contets-wrap">
-                          <strong className="work-name">
-                            {workName}
-                            <span
-                              className="project-category"
-                              style={projectCategoryStyle(projectCategory)}
-                            >
-                              {worksKR(projectCategory)}
+              <>
+                <ul className="works-list">
+                  {worksList.length > 0 &&
+                    worksList.map(
+                      ({
+                        id,
+                        content,
+                        imageInfoList,
+                        projectCategory,
+                        teamMember,
+                        teamName,
+                        workName,
+                      }) => (
+                        <li key={id}>
+                          <Link to={`${match.url}/${id}`}>
+                            <span className="work-img-wrap">
+                              <i
+                                className="work-img"
+                                style={{
+                                  backgroundImage: listItemBackgroundImg(
+                                    imageInfoList,
+                                  ),
+                                }}
+                              >
+                                <i className="work-hover-bg" />
+                              </i>
                             </span>
-                          </strong>
-                          <b className="team-name">
-                            {teamName}
-                            <span className="members">
-                              {teamMember.map((name, i) => (
-                                <i key={i}>{name}</i>
-                              ))}
-                            </span>
-                          </b>
-                          <Viewer initialValue={content} />
-                        </div>
-                      </Link>
-                    </li>
-                  ),
+                            <div className="work-contets-wrap">
+                              <strong className="work-name">
+                                {workName}
+                                <span
+                                  className="project-category"
+                                  style={projectCategoryStyle(projectCategory)}
+                                >
+                                  {worksKR(projectCategory)}
+                                </span>
+                              </strong>
+                              <b className="team-name">
+                                {teamName}
+                                <span className="members">
+                                  {teamMember.map((name, i) => (
+                                    <i key={i}>{name}</i>
+                                  ))}
+                                </span>
+                              </b>
+                              <Viewer initialValue={content} />
+                            </div>
+                          </Link>
+                        </li>
+                      ),
+                    )}
+                </ul>
+                {pageInfo.last && (
+                  <p className="last-list">마지막 게시글입니다.</p>
                 )}
-              </ul>
+              </>
             )}
           </div>
         </>

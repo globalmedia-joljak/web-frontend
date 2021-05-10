@@ -25,6 +25,20 @@ const getWorksLists = async (pageNum, history) => {
   }
 };
 
+const getWorksYearList = async ({ pageNum, year }, history) => {
+  try {
+    const { data } = await client.get('/works/search', {
+      params: { size: 10, page: pageNum, exhibitedYear: year },
+    });
+    return data;
+  } catch (e) {
+    if (e.response.status === 404) {
+      history.push(`/error`);
+    }
+    console.log(e.response);
+  }
+};
+
 const getWorkDetail = async (id, history) => {
   try {
     const { data } = await client.get(`/works/${id}`);
@@ -51,9 +65,9 @@ const createWorks = async (createWorksData, history) => {
   } catch (e) {
     console.log(e.response);
     toast.error(`⛔ 서비스 오류. 졸업작품 페이지로 이동합니다.`);
-    // setTimeout(() => {
-    //   history.push(`/works`);
-    // }, 1300);
+    setTimeout(() => {
+      history.push(`/works`);
+    }, 1300);
   }
 };
 
@@ -62,6 +76,7 @@ const updateWorks = async ({ worksId, history }, updateWorksData) => {
     await client.patch(`/works/${worksId}`, updateWorksData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
+
     toast.success(
       `✅ 졸업작품이 수정 되었습니다. 졸업작품 상세페이지로 이동합니다.`,
     );
@@ -72,9 +87,9 @@ const updateWorks = async ({ worksId, history }, updateWorksData) => {
     console.log(e.response);
 
     toast.error(`⛔ 서비스 오류. 졸업작품 페이지로 이동합니다.`);
-    // setTimeout(() => {
-    //   history.push(`/works`);
-    // }, 1300);
+    setTimeout(() => {
+      history.push(`/works`);
+    }, 1300);
   }
 };
 
@@ -94,4 +109,5 @@ export {
   createWorks,
   updateWorks,
   deleteWorks,
+  getWorksYearList,
 };

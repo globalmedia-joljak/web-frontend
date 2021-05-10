@@ -18,9 +18,10 @@ const CreateAuthor = ({ history, match }) => {
   const setImgEl = useRef();
   const {
     userState,
-    userInfo: { classOf },
+    userInfo: { classOf, isLogin },
   } = useAppState();
   const { setJobColor, translationKR } = useAppDispatch();
+  if (!isLogin) history.push('/team-building');
 
   const { setDefaultImg } = useTeamsDispatch();
 
@@ -120,6 +121,8 @@ const CreateAuthor = ({ history, match }) => {
         mainRole: profileDetail.data.user.mainProjectRole,
         subRole: profileDetail.data.user.subProjectRole,
       });
+
+      setTextLen(profileDetail.data.content.length);
       if (profileDetail.data.mediaInfo) {
         setFile(profileDetail.data.mediaInfo);
       }
@@ -258,7 +261,6 @@ const CreateAuthor = ({ history, match }) => {
     );
     toast.success(`${title}이 삭제 되었습니다.`);
   };
-  console.log(createAuthorQuery.introduce);
 
   const handleSubmitAuthor = () => {
     if (createAuthorQuery.mainRole === null) {
@@ -272,9 +274,12 @@ const CreateAuthor = ({ history, match }) => {
     }
 
     const formdata = new FormData();
-
     if (file) {
-      formdata.append('image', file);
+      if (file.modifyName) {
+        formdata.delete('image');
+      } else {
+        formdata.append('image', file);
+      }
     }
 
     // portfolio
@@ -295,25 +300,18 @@ const CreateAuthor = ({ history, match }) => {
 
     switch (type) {
       case 'create':
-        createAuthorProfile(classOf, formdata);
-        setTimeout(() => {
-          history.push(`/team-building/author/${classOf}`);
-        }, 1500);
+        createAuthorProfile({ classOf, history }, formdata);
         return;
 
       case 'edit':
-        if (profileDetail.data.mediaInfo) {
+        if (profileDetail.data.mediaInfo && !file.modifyName) {
           formdata.append(
             'deleteFileName',
             profileDetail.data.mediaInfo.modifyName,
           );
         }
 
-        updateAuthorProfile(classOf, formdata);
-        toast.success('✅ 작가목록이 수정 되었습니다.');
-        setTimeout(() => {
-          history.push(`/team-building/author/${classOf}`);
-        }, 1500);
+        updateAuthorProfile({ classOf, history }, formdata);
         return;
 
       default:

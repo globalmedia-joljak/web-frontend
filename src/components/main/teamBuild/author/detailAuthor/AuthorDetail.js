@@ -31,10 +31,7 @@ const AuthorDetail = ({ match, history }) => {
     const delMessage = window.confirm(
       `${name}님을 작가목록에서 삭제 하시겠습니까?`,
     );
-    if (delMessage) {
-      deleteAuthorProfile(classOf);
-      setTimeout(() => history.push(`/author`), 1000);
-    }
+    if (delMessage) deleteAuthorProfile(classOf);
   };
 
   useEffect(() => {
