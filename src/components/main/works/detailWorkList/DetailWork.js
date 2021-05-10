@@ -154,7 +154,7 @@ const DetailWork = ({ match, history }) => {
             <strong className="sec-title">팀 소개영상</strong>
             <div className="team-vedio sec-content">
               <iframe
-                src=""
+                src={`https://www.youtube.com/embed//${teamVideoUrl}`}
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

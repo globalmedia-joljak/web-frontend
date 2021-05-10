@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import { Viewer } from '@toast-ui/react-editor';
 import HeroImageForm from '../../common/HeroImageForm';
 
-const ListOfWorks = ({ match, history, location }) => {
+const ListOfWorks = ({ match, history }) => {
   const { worksKR, worksColor } = useAppDispatch();
   const {
     infinite,
@@ -38,12 +38,12 @@ const ListOfWorks = ({ match, history, location }) => {
     if (scrollTop + clientHeight >= scrollHeight - 10) {
       setLastPage(true);
     }
-  }, [lastPage, infinite]);
+  }, [lastPage, match.url]);
 
   useEffect(() => {
     setLastPage(false);
     if (!pageInfo.last) getWorksData();
-  }, []);
+  }, [lastPage, match.url]);
 
   const getWorksData = () => {
     getWorksYearList(
