@@ -75,11 +75,9 @@ const CreateWork = ({ match, history }) => {
 
   useEffect(() => {
     if (workState === 'edit') {
-      getWorkDetail(match.params.id, history)
-        .then((res) => {
-          setWorkDetail(res);
-        })
-        .catch((err) => console.log(err.response));
+      getWorkDetail(match.params.id, history).then((res) => {
+        setWorkDetail(res);
+      });
     }
   }, []);
 
@@ -218,8 +216,6 @@ const CreateWork = ({ match, history }) => {
       projectCategory: category,
       ...worksInput,
     };
-
-    console.log(requestWorks.content);
 
     if (teamMember) {
       const memberArr = teamMember

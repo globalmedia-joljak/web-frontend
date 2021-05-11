@@ -268,9 +268,10 @@ main {
   }
 
   .page-box {
-    min-width: 320px;
+    min-width: 280px;
     margin-bottom: 160px;
     padding: 0 3%;
+    box-sizing: border-box;
   }
 
   .list-none {
