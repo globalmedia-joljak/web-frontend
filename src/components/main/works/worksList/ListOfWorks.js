@@ -3,17 +3,14 @@ import { toast, ToastContainer } from 'react-toastify';
 import ThereIsNoList from '../../common/ThereIsNoList';
 import ButtonWIthIcon from '../../common/ButtonWIthIcon.js';
 import { useEffect, useState } from 'react/cjs/react.development';
-import {
-  getWorksLists,
-  getWorksYearList,
-} from '../../../../service/api/work.js';
+import { getWorksYearList } from '../../../../service/api/work.js';
 import noImage from '../../../../assets/images/노이미지@2x.png';
 import './listOfWorksStyle.scss';
 import WorkListModal from './WorkListModal';
 import { useAppDispatch, useAppState } from '../../../../context/appContext';
 import { Link } from 'react-router-dom';
-import { Viewer } from '@toast-ui/react-editor';
 import HeroImageForm from '../../common/HeroImageForm';
+import LoadingForm from '../../common/LoadingForm';
 
 const ListOfWorks = ({ match, history }) => {
   const { worksKR, worksColor } = useAppDispatch();
@@ -22,6 +19,7 @@ const ListOfWorks = ({ match, history }) => {
     userInfo: { isLogin },
   } = useAppState();
 
+  const [loading, setLoading] = useState(false);
   const [worksList, setWorksList] = useState([]);
   const [lastPage, setLastPage] = useState(false);
   const [pageInfo, setPageInfo] = useState({
@@ -42,7 +40,19 @@ const ListOfWorks = ({ match, history }) => {
 
   useEffect(() => {
     setLastPage(false);
-    if (!pageInfo.last) getWorksData();
+
+    if (!pageInfo.last) {
+      setLoading(true);
+      if (pageInfo.page === 0) {
+        setLoading(false);
+        getWorksData();
+      } else {
+        setTimeout(() => {
+          setLoading(false);
+          getWorksData();
+        }, [1000]);
+      }
+    }
   }, [match.url, lastPage]);
 
   const getWorksData = () => {
@@ -209,9 +219,8 @@ const ListOfWorks = ({ match, history }) => {
                               <i
                                 className="work-img"
                                 style={{
-                                  backgroundImage: listItemBackgroundImg(
-                                    imageInfoList,
-                                  ),
+                                  backgroundImage:
+                                    listItemBackgroundImg(imageInfoList),
                                 }}
                               >
                                 <i className="work-hover-bg" />
@@ -235,13 +244,13 @@ const ListOfWorks = ({ match, history }) => {
                                   ))}
                                 </span>
                               </b>
-                              <Viewer initialValue={content} />
                             </div>
                           </Link>
                         </li>
                       ),
                     )}
                 </ul>
+                {loading && <LoadingForm />}
                 {pageInfo.last && (
                   <p className="last-list">마지막 게시글입니다.</p>
                 )}

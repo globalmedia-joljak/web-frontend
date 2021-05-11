@@ -40,7 +40,7 @@ const SubNavigation = ({ type, url, location }) => {
       }
     }
 
-    type === 'teams' ? setSubLinks(teamList) : setSubLinks(worksList);
+    type === 't-build' ? setSubLinks(teamList) : setSubLinks(worksList);
   }, [yearsList, type]);
 
   const ulRefs = useRef();
@@ -53,13 +53,15 @@ const SubNavigation = ({ type, url, location }) => {
       if (ulRefs.current) {
         const links = [...ulRefs.current.children];
         links.map((link) => {
-          console.log();
           if (link.classList.contains('click')) {
             link.classList.remove('click');
           }
-          if (link.children[0].id === pathname) {
-            link.classList.add('click');
-          }
+
+          filterPathName.find((path) => {
+            if (path === link.children[0].id) {
+              link.classList.add('click');
+            }
+          });
         });
       }
     }

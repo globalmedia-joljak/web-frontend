@@ -7,7 +7,6 @@ import { deleteWorks, getWorkDetail } from '../../../../service/api/work';
 import EditDeleteButton from '../../common/EditDeleteButton';
 import './detailWorkStyle.scss';
 import { Viewer } from '@toast-ui/react-editor';
-import { client } from '../../../../service/api/client';
 
 const DetailWork = ({ match, history }) => {
   const { worksKR, worksColor } = useAppDispatch();
@@ -19,9 +18,10 @@ const DetailWork = ({ match, history }) => {
 
   const detailId = match.params.id;
   const [best, setBest] = useState(false);
-  const [workDetail] = useAsync(async () => await getWorkDetail(detailId), [
-    detailId,
-  ]);
+  const [workDetail] = useAsync(
+    async () => await getWorkDetail(detailId),
+    [detailId],
+  );
 
   const { loading, data, error } = workDetail;
 

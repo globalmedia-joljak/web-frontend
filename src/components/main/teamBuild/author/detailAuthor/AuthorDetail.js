@@ -15,7 +15,7 @@ const AuthorDetail = ({ match, history }) => {
   const { translationKR, setJobColor } = useAppDispatch();
   const {
     curSize,
-    userInfo: { isLogin, classOf, name },
+    userInfo: { classOf, name },
   } = useAppState();
 
   const { filterClassOf, setDefaultImg } = useTeamsDispatch();
@@ -32,6 +32,7 @@ const AuthorDetail = ({ match, history }) => {
       `${name}님을 작가목록에서 삭제 하시겠습니까?`,
     );
     if (delMessage) deleteAuthorProfile(classOf);
+    setTimeout(() => history.push('/team-building/author'), 1200);
   };
 
   useEffect(() => {
