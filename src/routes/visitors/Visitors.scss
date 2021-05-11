@@ -1,0 +1,83 @@
+@import '../../assets/_mixin.scss';
+@import '../../assets/_variables.scss';
+
+.hero-img {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 16vw;
+  .hero-img__contents {
+    h1 {
+      margin-bottom: 33px;
+      font-weight: 800;
+      font-size: 32px;
+    }
+    h2 {
+      font-size: 24px;
+    }
+  }
+  .hero-img__logo {
+    @include backgroundImage;
+    background-image: url('../../../src/assets/images/GuestBook_image.png');
+    width: 370px;
+    height: 280px;
+
+  }
+
+}
+
+.visitors__wrap {
+  position: relative;
+  margin: 53px auto 0;
+  padding: 0 4.3% 154px;
+  width: 100%;
+  max-width: 1293px;
+  min-width: 616px;
+  box-sizing: border-box;
+  background-color: blue($color: #000000);
+}
+
+@include response('tablet') {
+  .hero-img {
+    padding: 0px 10vw;
+    .hero-img__contents {
+      h1 {
+        margin-bottom: 12px;
+        font-weight: 800;
+        font-size: 26px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+    }
+    .hero-img__logo {
+      width: 218px;
+      height: 164px;
+    }
+  }
+  .visitors__wrap {
+    margin-top: 24px;
+    min-width: 0;
+    padding: 0 3%;
+  }
+}
+
+@include response('phone') {
+  .hero-img {
+    padding: 0px 5vw;
+    .hero-img__contents {
+      h1 {
+        margin-bottom: 12px;
+        font-weight: 800;
+        font-size: 18px;
+      }
+      h2 {
+        font-size: 13px;
+      }
+    }
+    .hero-img__logo {
+      width: 152px;
+      height: 114px;
+    }
+  }
+}
