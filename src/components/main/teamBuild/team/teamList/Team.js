@@ -7,7 +7,7 @@ import { useAppState } from "../../../../../context/appContext";
 
 function Team({id, teamName, category, designerMember, developerMember, mediaArtMember, plannerMember, author, createdDate}) {
   const { curSize } = useAppState();
-  const size = curSize < 768 ? 'tablet' : curSize < 425 ? 'phone' : 'web';
+  const size = curSize <= 768 ? 'tablet' : curSize <= 425 ? 'phone' : 'web';
   const translateCategory = (value) => {
     switch (value) {
       case 'MEDIA_ART' :
@@ -33,29 +33,35 @@ function Team({id, teamName, category, designerMember, developerMember, mediaArt
         <div className="team__id">
           {id}
         </div>
-        <div className="team__teamname">
-          {teamName}
-        </div>
+
         {
           size !== 'web' ? (
+            <>
+            <div className="team__teamname">
+              {teamName.length > 15 ? teamName.substring(0, 15) + '...' : teamName}
+            </div>
             <div className="team__body__bottom">
               <div className="team__category">
                 {translateCategory(category)}
               </div>
               <div className="team__author">
-                {author}
+                {author.length > 8 ? author.substring(0, 7) + '...' : author}
               </div>
               <div className="team__date">
                 {createdDate.split('T')[0]}
               </div>
             </div>
+            </>
           ) : (
             <>
+            <div className="team__teamname">
+              {teamName.length > 10 ? teamName.substring(0, 8) + '...' : teamName}
+            </div>
             <div className="team__category">
-              {category}
+              {translateCategory(category)}
             </div>
             <div className="team__author">
-              {author}
+              {author.length > 5 ? author.substring(0, 5) + '...' : author}
             </div>
             <div className="team__date">
               {createdDate.split('T')[0]}
