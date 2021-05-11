@@ -17,7 +17,7 @@ const Works = ({ match, location }) => {
     <main className="works-wrap">
       <div className="section-wrap">
         <section className="side-menu">
-          <SubNavigation type="works" url={match.url} />
+          <SubNavigation type="works" url={match.url} location={location} />
         </section>
         <section className="contents">
           <div className="content">

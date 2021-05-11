@@ -152,15 +152,19 @@ const DetailWork = ({ match, history }) => {
           )}
           <section className="about-team-vedio">
             <strong className="sec-title">팀 소개영상</strong>
-            <div className="team-vedio sec-content">
-              <iframe
-                src={`https://www.youtube.com/embed//${teamVideoUrl}`}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
+            {teamVideoUrl ? (
+              <div className="team-vedio sec-content">
+                <iframe
+                  src={`https://www.youtube.com/embed//${teamVideoUrl}`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            ) : (
+              <p className="no-vedio">등록된 영상이 없습니다.</p>
+            )}
           </section>
           <section className="about-team-images">
             <strong className="sec-title">작품 사진</strong>

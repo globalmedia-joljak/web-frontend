@@ -24,8 +24,6 @@ const HomePage = () => {
           </p>
           <div className="home-video">
             <iframe
-              // width="80%"
-              // height="315"
               src="https://www.youtube.com/embed/BdgGZwcUC4M"
               title="YouTube video player"
               frameBorder="0"
