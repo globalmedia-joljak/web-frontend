@@ -162,14 +162,14 @@ const IdeaList = ({ match, history }) => {
                     id={idea.id}
                     title={
                       idea.title.length >= 15
-                        ? idea.title.substring(0, 15).concat('...')
+                        ? idea.title.substring(0, 14).concat('...')
                         : idea.title
                     }
                     category={idea.category}
                     requiredPositions={idea.requiredPositions}
                     author={
                       idea.name.length >= 6
-                        ? idea.name.substring(0, 6).concat('...')
+                        ? idea.name.substring(0, 5).concat('...')
                         : idea.name
                     }
                     status={idea.status}
