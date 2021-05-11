@@ -22,6 +22,7 @@ import {
 import { client } from './service/api/client';
 import { useAppState, useAppDispatch } from './context/appContext';
 import Navigation from './components/header/Navigation';
+import Visitors from './routes/visitors/Visitors';
 
 const App = () => {
   const { userInfo } = useAppState();
@@ -107,6 +108,7 @@ const App = () => {
           <Route path="/team-building" component={Tbuild} />
           <Route path="/works" component={Works} />
           <Route path="/search" exact={true} component={Search} />
+          <Route path="/visitors/:year" exact={true} component={Visitors} />
           <Route path="*" component={ErrorPage} />
         </Switch>
       </BrowserRouter>
