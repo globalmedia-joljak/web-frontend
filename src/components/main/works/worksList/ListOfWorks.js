@@ -38,12 +38,12 @@ const ListOfWorks = ({ match, history }) => {
     if (scrollTop + clientHeight >= scrollHeight - 10) {
       setLastPage(true);
     }
-  }, [lastPage, match.url]);
+  }, [lastPage]);
 
   useEffect(() => {
     setLastPage(false);
     if (!pageInfo.last) getWorksData();
-  }, [lastPage, match.url]);
+  }, [match.url, lastPage]);
 
   const getWorksData = () => {
     getWorksYearList(

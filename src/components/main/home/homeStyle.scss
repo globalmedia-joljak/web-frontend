@@ -12,7 +12,7 @@
   @include mainRow('r3', 'home', 76px, 600px);
   .heroImg {
     @include backgroundImage;
-    background-image: url('../../../assets/images/Home_image_notext@2x.png');
+    background-image: url('../../../assets/images/Home_image_HD@2x.png');
     background-size: cover;
     display: grid;
     align-content: center;

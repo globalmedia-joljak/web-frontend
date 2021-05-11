@@ -1,5 +1,12 @@
 @import '../../../../assets/_mixin.scss';
-
+@mixin noData {
+  height: 200px;
+  text-align: center;
+  color: #b3b3b3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .work-detail-wrap {
   padding-top: 72px !important;
 }
@@ -112,15 +119,13 @@
       @include widthHeight;
       background-color: #b3b3b315;
     }
+    .no-vedio {
+      @include noData;
+    }
   }
   .about-team-images {
     .no-images {
-      height: 200px;
-      text-align: center;
-      color: #b3b3b3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include noData;
     }
   }
 
@@ -183,11 +188,7 @@
   }
   .about-team-introduce {
     .introduce-none {
-      color: #b3b3b3;
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include noData;
     }
   }
 }

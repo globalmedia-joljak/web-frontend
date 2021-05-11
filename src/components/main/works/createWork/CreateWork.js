@@ -85,7 +85,11 @@ const CreateWork = ({ match, history }) => {
 
   useEffect(() => {
     if (worksDetail && workState === 'edit') {
-      setContent(worksDetail.content);
+      if (editorRef.current)
+        setContent(
+          editorRef.current.getInstance().setHtml(worksDetail.content),
+        );
+
       setCategory(worksDetail.projectCategory);
       setWorksYear(worksDetail.exhibitedYear);
       setImages(worksDetail.imageInfoList);
@@ -214,6 +218,8 @@ const CreateWork = ({ match, history }) => {
       projectCategory: category,
       ...worksInput,
     };
+
+    console.log(requestWorks.content);
 
     if (teamMember) {
       const memberArr = teamMember
