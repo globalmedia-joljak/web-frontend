@@ -13,8 +13,11 @@ import PortfolioModal from './PortfolioModal';
 import RoleModal from './RoleModal';
 import { useTeamsDispatch } from '../../../../../context/teamContext';
 import useAsync from '../../../../../hooks/useAsync';
+import useTitle from '../../../../../hooks/useTitle';
 
 const CreateAuthor = ({ history, match }) => {
+  useTitle(`:작가 - ${match.params['state'] === 'create' ? '등록하기' : '수정하기'}`);
+  console.log(match);
   const setImgEl = useRef();
   const {
     userState,

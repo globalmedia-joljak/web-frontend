@@ -7,8 +7,11 @@ import ThereIsNoList from '../../../common/ThereIsNoList';
 import Idea from './Idea';
 import { Link } from 'react-router-dom';
 import { useAppState } from '../../../../../context/appContext.js';
+import useTitle from '../../../../../hooks/useTitle.js';
 
 const IdeaList = ({ match, history }) => {
+  useTitle(`:아이디어`);
+
   const {
     userInfo: { isLogin, classOf },
   } = useAppState();

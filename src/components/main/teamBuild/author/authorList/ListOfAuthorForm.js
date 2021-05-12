@@ -16,8 +16,11 @@ import ButtonWIthIcon from '../../../common/ButtonWIthIcon.js';
 import { useEffect } from 'react/cjs/react.development';
 import HeroImageForm from '../../../common/HeroImageForm';
 import LoadingForm from '../../../common/LoadingForm';
+import useTitle from '../../../../../hooks/useTitle';
 
 const ListOfAuthorForm = ({ match, history }) => {
+  useTitle(`:작가`);
+
   const {
     infinite,
     userInfo: { isLogin, classOf },

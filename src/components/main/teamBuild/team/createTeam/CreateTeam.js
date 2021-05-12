@@ -7,6 +7,7 @@ import MemberRoleSquare from '../teamList/MemberRole';
 import { useAppState } from '../../../../../context/appContext';
 import { createTeam } from '../../../../../service/api/teams';
 import { uploadImage } from '../../../../../service/api/upload';
+import useTitle from '../../../../../hooks/useTitle';
 
 const toolbarItems = [
   'heading',
@@ -32,6 +33,7 @@ const toolbarItems = [
 ];
 
 const CreateTeam = ({ history, match }) => {
+  useTitle(':팀 등록');
   const { userInfo } = useAppState();
 
   const editorRef = useRef();

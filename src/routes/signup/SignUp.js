@@ -9,10 +9,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { signup } from '../../service/api/auth';
 import { useAppState } from '../../context/appContext';
+import useTitle from '../../hooks/useTitle';
 
 const tablet = 768;
 
 const SignUp = ({ history, location }) => {
+  useTitle(':회원가입');
   location.state = { show: false };
 
   const { curSize } = useAppState();

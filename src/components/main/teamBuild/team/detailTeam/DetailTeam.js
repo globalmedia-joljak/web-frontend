@@ -5,6 +5,7 @@ import { useAppState } from '../../../../../context/appContext';
 import { Viewer } from '@toast-ui/react-editor';
 import './DetailTeam.scss';
 import MemberRoleSquare from '../teamList/MemberRole';
+import useTitle from '../../../../../hooks/useTitle';
 
 const translateTeamCategory = (category) => {
   switch (category) {
@@ -26,7 +27,8 @@ const DetailTeanm = ({match, history}) => {
   const { userInfo } = useAppState();
   const [team, setTeam] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+  useTitle(`:팀 - 상세보기`);
+
   useEffect(() => {
     getTeam(id, history)
       .then((response) => {
@@ -101,7 +103,11 @@ const DetailTeanm = ({match, history}) => {
             </div>
           </div>
           <div className="team__detail__body">
-            <Viewer initialValue={team.content}></Viewer>
+            <Viewer 
+              initialValue={team.content}
+              isWysiwygMode={true}
+            >
+            </Viewer>
           </div>
           <div className="team__detail__bottom">
             <div className="team__members">
