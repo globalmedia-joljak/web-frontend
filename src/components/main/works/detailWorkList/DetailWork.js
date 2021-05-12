@@ -7,8 +7,11 @@ import { deleteWorks, getWorkDetail } from '../../../../service/api/work';
 import EditDeleteButton from '../../common/EditDeleteButton';
 import './detailWorkStyle.scss';
 import { Viewer } from '@toast-ui/react-editor';
+import useTitle from '../../../../hooks/useTitle';
 
 const DetailWork = ({ match, history }) => {
+  useTitle(`:졸업작품 - 상세보기`);
+
   const { worksKR, worksColor } = useAppDispatch();
 
   const {

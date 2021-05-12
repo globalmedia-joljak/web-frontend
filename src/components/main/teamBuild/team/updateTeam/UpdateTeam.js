@@ -8,6 +8,7 @@ import { useAppState } from '../../../../../context/appContext';
 import { uploadImage } from '../../../../../service/api/upload';
 import '../createTeam/CreateTeam.scss';
 import { getTeam, updateTeam } from '../../../../../service/api/teams';
+import useTitle from '../../../../../hooks/useTitle';
 
 const toolbarItems = [
   'heading',
@@ -33,6 +34,8 @@ const toolbarItems = [
 ];
 
 const UpdateTeam = ({ match, history }) => {
+  useTitle(`:팀 수정`);
+
   const id = match.params.id;
   const { userInfo } = useAppState();
   const [team, setTeam] = useState(null);

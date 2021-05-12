@@ -11,8 +11,11 @@ import { useAppDispatch, useAppState } from '../../../../context/appContext';
 import { Link } from 'react-router-dom';
 import HeroImageForm from '../../common/HeroImageForm';
 import LoadingForm from '../../common/LoadingForm';
+import useTitle from '../../../../hooks/useTitle';
 
 const ListOfWorks = ({ match, history }) => {
+  useTitle(`:졸업작품 - ${match.params['year'] ? match.params['year'] : '리스트'}`);
+
   const { worksKR, worksColor } = useAppDispatch();
   const {
     infinite,

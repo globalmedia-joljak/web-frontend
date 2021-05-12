@@ -6,8 +6,11 @@ import { getIdea, deleteIdea } from '../../../../../service/api/ideas';
 import './IdeaDetail.scss';
 import MemberRoleSquare from '../../team/teamList/MemberRole';
 import Ideas from '..';
+import useTitle from '../../../../../hooks/useTitle';
 
 const IdeaDetail = ({ match, history }) => {
+  useTitle(`:아이디어 - 상세보기`);
+
   const id = match.params.id;
   const [isLoading, setIsLoading] = useState(true);
   const [idea, setIdea] = useState(null);

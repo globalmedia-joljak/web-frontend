@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from './footer/Footer.js';
 import './homeStyle.scss';
+import useTitle from '../../../hooks/useTitle.js';
 
 const HomePage = () => {
+  useTitle('');
   return (
     <div className="home-wrap">
       <div className="heroImg">

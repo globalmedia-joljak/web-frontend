@@ -8,8 +8,10 @@ import Team from './Team';
 import { Link } from 'react-router-dom';
 import { useAppState } from '../../../../../context/appContext.js';
 import LoadingForm from '../../../common/LoadingForm.js';
+import useTitle from '../../../../../hooks/useTitle.js';
 
 const TeamList = ({ match, history }) => {
+  useTitle(':팀');
   const {
     userInfo: { isLogin, classOf },
   } = useAppState();

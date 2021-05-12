@@ -9,9 +9,12 @@ import {
 } from '../../../../../service/api/profile';
 import EditDeleteButton from '../../../common/EditDeleteButton';
 import './authorDetailStyle.scss';
+import useTitle from '../../../../../hooks/useTitle';
 const phone = 426;
 
 const AuthorDetail = ({ match, history }) => {
+  useTitle(`:작가 - ${match.params['id']}`);
+
   const { translationKR, setJobColor } = useAppDispatch();
   const {
     curSize,
