@@ -24,6 +24,21 @@ const HomePage = () => {
             쉽게 졸업작품 프로젝트를 위한 팀을 매칭시켜주고, 역대 졸업 작품들을
             관람할 수 있습니다.
           </p>
+          <div className="guestbook-wrap">
+            <div className="guestbook-ment">
+              <p>
+                졸업 작품을 위해 고생한 작가들에게
+                <br />
+                방명록을 작성해보세요
+              </p>
+            </div>
+            <div className="guestbook-photo-wrap">
+              <div className="guestbook-photo"></div>
+              <div className="guestbook-photo"></div>
+              <div className="guestbook-photo"></div>
+            </div>
+            <div className="guestbook-go">방명록 쓰러가기</div>
+          </div>
           <div className="home-video">
             <iframe
               src="https://www.youtube.com/embed/BdgGZwcUC4M"

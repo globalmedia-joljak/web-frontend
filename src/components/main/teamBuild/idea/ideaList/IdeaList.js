@@ -8,6 +8,7 @@ import Idea from './Idea';
 import { Link } from 'react-router-dom';
 import { useAppState } from '../../../../../context/appContext.js';
 import useTitle from '../../../../../hooks/useTitle.js';
+import LoadingForm from '../../../common/LoadingForm.js';
 
 const IdeaList = ({ match, history }) => {
   useTitle(`:아이디어`);
@@ -21,10 +22,11 @@ const IdeaList = ({ match, history }) => {
     last: false,
     totalElements: 0,
   });
-
+  const [isLoading, setIsLoading] = useState(true);
   const [toggleIdea, setToggleIdea] = useState(false);
   const [isBottom, setIsBottom] = useState(false);
   const { curSize } = useAppState();
+  const [scrollLoading, setScrollLoading] = useState(false);
   const onClickToggle = () => {
     toggleIdea ? setToggleIdea(false) : setToggleIdea(true);
   };
@@ -53,6 +55,7 @@ const IdeaList = ({ match, history }) => {
   };
 
   const handleNextPage = async () => {
+    setScrollLoading(true);
     getIdeas(pageInfo.page)
       .then((response) => {
         const { ideaBoardResponseList } = response;
@@ -66,10 +69,15 @@ const IdeaList = ({ match, history }) => {
           last: ideaBoardResponseList.last,
           totalElements: ideaBoardResponseList.totalElements,
         });
+
+        setScrollLoading(false);
       })
       .catch((e) => {
         console.log(e);
+        setScrollLoading(false);
       });
+
+    setIsLoading(false);
   };
 
   const handleShowFilterModal = () => {
@@ -181,6 +189,7 @@ const IdeaList = ({ match, history }) => {
                   />
                 ))}
               </div>
+              {scrollLoading && <LoadingForm />}
               {pageInfo.last ? (
                 <div className="last-list">
                   <p>마지막 게시글입니다</p>

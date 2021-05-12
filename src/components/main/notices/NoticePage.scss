@@ -1,0 +1,15 @@
+@import '../../../assets/_mixin.scss';
+@import '../../../assets/_variables.scss';
+
+.notice-wrap {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(252, 252, 252);
+  .poster {
+    @include backgroundImage;
+    background-image: url('../../../assets/images/joljak_poster.png');
+    margin: auto auto;
+    width: 70%;
+    height: 100%;
+  }
+}

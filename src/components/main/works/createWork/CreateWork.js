@@ -54,8 +54,12 @@ const selectedFn = (el, type) => {
 };
 
 const CreateWork = ({ match, history }) => {
-  useTitle(`:졸업작품 - ${match.params['state'] == 'create'? '등록하기' : '수정하기'}`);
-  console.log(match)
+  useTitle(
+    `:졸업작품 - ${
+      match.params['state'] == 'create' ? '등록하기' : '수정하기'
+    }`,
+  );
+
   const workState = match.params.state;
   const worksId = match.params.id;
   const editorRef = useRef();

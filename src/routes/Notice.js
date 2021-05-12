@@ -1,7 +1,13 @@
-import React from "react";
+import React from 'react';
+import { Route } from 'react-router-dom';
+import NoticePage from '../components/main/notices/NoticePage.js';
 
-const Notice = (props) => {
-  return <main>공지사항페이지 이다.</main>;
+const Notices = ({ match, location }) => {
+  return (
+    <main>
+      <NoticePage />
+    </main>
+  );
 };
 
-export default Notice;
+export default Notices;
