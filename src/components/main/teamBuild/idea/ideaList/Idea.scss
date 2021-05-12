@@ -150,7 +150,15 @@
     }
 
     .idea__body__bottom {
-      font-size: 12px;
+      .idea__category {
+        font-size: 12px;
+      }
+      .idea__author {
+        font-size: 12px;
+      }
+      .idea__date {
+        font-size: 12px;
+      }
     }
   }
 }
