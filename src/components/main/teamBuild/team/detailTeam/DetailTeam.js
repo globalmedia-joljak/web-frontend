@@ -101,7 +101,11 @@ const DetailTeanm = ({match, history}) => {
             </div>
           </div>
           <div className="team__detail__body">
-            <Viewer initialValue={team.content}></Viewer>
+            <Viewer 
+              initialValue={team.content}
+              isWysiwygMode={true}
+            >
+            </Viewer>
           </div>
           <div className="team__detail__bottom">
             <div className="team__members">

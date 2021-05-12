@@ -7,6 +7,7 @@ import ThereIsNoList from '../../../common/ThereIsNoList';
 import Team from './Team';
 import { Link } from 'react-router-dom';
 import { useAppState } from '../../../../../context/appContext.js';
+import LoadingForm from '../../../common/LoadingForm.js';
 
 const TeamList = ({ match, history }) => {
   const {
@@ -21,6 +22,7 @@ const TeamList = ({ match, history }) => {
   const [isBottom, setIsBottom] = useState(false);
   const { curSize } = useAppState();
   const [isLoading, setIsLoading] = useState(true);
+  const [scrollLoading, setScrollLoading] = useState(false);
 
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
@@ -47,6 +49,7 @@ const TeamList = ({ match, history }) => {
   }
 
   const handleNextPage = async () => {
+    setScrollLoading(true);
     getTeams(pageInfo.page)
       .then((response) => {
         const { getTeamResponsePage } = response;
@@ -60,13 +63,15 @@ const TeamList = ({ match, history }) => {
           last: getTeamResponsePage.last,
           totalElements: getTeamResponsePage.totalElements,
         });
+
+        setScrollLoading(false);
       })
       .catch((e) => {
         console.log(e);
+        setScrollLoading(false);
       });
 
       setIsLoading(false);
-
   };
 
   const handleShowFilterModal = () => {
@@ -180,6 +185,7 @@ const TeamList = ({ match, history }) => {
               />
             ))}
           </div>
+          {scrollLoading && <LoadingForm />}
           {
             pageInfo.last ? <div className="last-list"><p>마지막 게시글입니다</p></div> : <div></div>
           }
