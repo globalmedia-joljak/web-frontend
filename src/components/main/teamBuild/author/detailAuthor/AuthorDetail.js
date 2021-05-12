@@ -9,13 +9,16 @@ import {
 } from '../../../../../service/api/profile';
 import EditDeleteButton from '../../../common/EditDeleteButton';
 import './authorDetailStyle.scss';
+import useTitle from '../../../../../hooks/useTitle';
 const phone = 426;
 
 const AuthorDetail = ({ match, history }) => {
+  useTitle(`:작가 - ${match.params['id']}`);
+
   const { translationKR, setJobColor } = useAppDispatch();
   const {
     curSize,
-    userInfo: { isLogin, classOf, name },
+    userInfo: { classOf, name },
   } = useAppState();
 
   const { filterClassOf, setDefaultImg } = useTeamsDispatch();
@@ -32,6 +35,7 @@ const AuthorDetail = ({ match, history }) => {
       `${name}님을 작가목록에서 삭제 하시겠습니까?`,
     );
     if (delMessage) deleteAuthorProfile(classOf);
+    setTimeout(() => history.push('/team-building/author'), 1200);
   };
 
   useEffect(() => {

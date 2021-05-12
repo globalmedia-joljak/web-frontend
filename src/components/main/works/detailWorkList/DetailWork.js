@@ -7,9 +7,11 @@ import { deleteWorks, getWorkDetail } from '../../../../service/api/work';
 import EditDeleteButton from '../../common/EditDeleteButton';
 import './detailWorkStyle.scss';
 import { Viewer } from '@toast-ui/react-editor';
-import { client } from '../../../../service/api/client';
+import useTitle from '../../../../hooks/useTitle';
 
 const DetailWork = ({ match, history }) => {
+  useTitle(`:졸업작품 - 상세보기`);
+
   const { worksKR, worksColor } = useAppDispatch();
 
   const {
@@ -19,9 +21,10 @@ const DetailWork = ({ match, history }) => {
 
   const detailId = match.params.id;
   const [best, setBest] = useState(false);
-  const [workDetail] = useAsync(async () => await getWorkDetail(detailId), [
-    detailId,
-  ]);
+  const [workDetail] = useAsync(
+    async () => await getWorkDetail(detailId),
+    [detailId],
+  );
 
   const { loading, data, error } = workDetail;
 
@@ -152,15 +155,19 @@ const DetailWork = ({ match, history }) => {
           )}
           <section className="about-team-vedio">
             <strong className="sec-title">팀 소개영상</strong>
-            <div className="team-vedio sec-content">
-              <iframe
-                src={`https://www.youtube.com/embed//${teamVideoUrl}`}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
+            {teamVideoUrl ? (
+              <div className="team-vedio sec-content">
+                <iframe
+                  src={`https://www.youtube.com/embed//${teamVideoUrl}`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            ) : (
+              <p className="no-vedio">등록된 영상이 없습니다.</p>
+            )}
           </section>
           <section className="about-team-images">
             <strong className="sec-title">작품 사진</strong>

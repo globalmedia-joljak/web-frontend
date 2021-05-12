@@ -12,8 +12,11 @@ import {
 } from '../../../../../service/api/ideas';
 import ModalTemp from '../../../../modal/ModalTemp';
 import { uploadImage } from '../../../../../service/api/upload';
+import useTitle from '../../../../../hooks/useTitle';
 
 const UpdateIdea = ({ match, history }) => {
+  useTitle(`:아이디어 - 수정하기`);
+
   const {
     userInfo: { isLogin, classOf },
   } = useAppState();

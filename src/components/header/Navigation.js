@@ -51,7 +51,7 @@ const NavClickEvent = (size, tablet, navEl) => {
         case tagFilter('header-route'):
           const SHOW = 'show';
 
-          if (id === 'teams' || id === 'works') {
+          if (id === 't-build' || id === 'works') {
             return parentElement.classList.contains(SHOW)
               ? parentElement.classList.remove(SHOW)
               : parentElement.classList.add(SHOW);
@@ -70,7 +70,7 @@ const NavClickEvent = (size, tablet, navEl) => {
     // tablet사이즈일때 부터
     if (size < tablet) {
       navEl.current.addEventListener('click', handleClick);
-    } else if (size > tablet) {
+    } else {
       navEl.current.classList.remove('on');
       navEl.current.removeEventListener('click', handleClick);
     }
@@ -86,7 +86,7 @@ const NavClickEvent = (size, tablet, navEl) => {
 
 let navRoutes = [
   { id: 'notice', path: '/notice', name: '공지사항' },
-  { id: 'teams', path: '/team-building', name: '팀 빌딩', type: 'sub-nav' },
+  { id: 't-build', path: '/team-building', name: '팀 빌딩', type: 'sub-nav' },
   { id: 'works', path: '/works', name: '졸업작품', type: 'sub-nav' },
 ];
 

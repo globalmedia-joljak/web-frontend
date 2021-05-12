@@ -15,8 +15,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import ButtonWIthIcon from '../../../common/ButtonWIthIcon.js';
 import { useEffect } from 'react/cjs/react.development';
 import HeroImageForm from '../../../common/HeroImageForm';
+import LoadingForm from '../../../common/LoadingForm';
+import useTitle from '../../../../../hooks/useTitle';
 
 const ListOfAuthorForm = ({ match, history }) => {
+  useTitle(`:작가`);
+
   const {
     infinite,
     userInfo: { isLogin, classOf },
@@ -30,6 +34,7 @@ const ListOfAuthorForm = ({ match, history }) => {
   const [filterShow, setFilterShow] = useState(false);
   const [filterRole, setFilterRole] = useState(null);
 
+  const [loading, setLoading] = useState(false);
   const [authorList, setAuthorList] = useState([]);
   const [lastPage, setLastPage] = useState(false);
   const [pageInfo, setPageInfo] = useState({
@@ -49,9 +54,10 @@ const ListOfAuthorForm = ({ match, history }) => {
 
   // 필터관련내용
   const handleFilter = useCallback((e) => setFilterShow(!filterShow));
-  const handleChoice = useCallback((e) => setFilterRole(e.target.value), [
-    setFilterRole,
-  ]);
+  const handleChoice = useCallback(
+    (e) => setFilterRole(e.target.value),
+    [setFilterRole],
+  );
 
   useEffect(() => {
     const { scrollTop, scrollHeight, clientHeight } = infinite;
@@ -66,9 +72,18 @@ const ListOfAuthorForm = ({ match, history }) => {
   useEffect(() => {
     setLastPage(false);
     if (!pageInfo.last) {
-      handleNextPage();
+      setLoading(true);
+      if (pageInfo.page === 0) {
+        setLoading(false);
+        handleNextPage();
+      } else {
+        setTimeout(() => {
+          setLoading(false);
+          handleNextPage();
+        }, [1000]);
+      }
     }
-  }, [lastPage]);
+  }, [lastPage, match.url]);
 
   const handleNextPage = () => {
     getAuthorProfileList(pageInfo.page).then((res) => {
@@ -179,56 +194,59 @@ const ListOfAuthorForm = ({ match, history }) => {
             {authorList.length < 1 ? (
               <ThereIsNoList type="team-building" />
             ) : (
-              <ul className="author-list">
-                {authorList.map(
-                  ({
-                    id,
-                    user: { classOf, name, mainProjectRole, subProjectRole },
-                    mediaInfo,
-                  }) => (
-                    <li key={id}>
-                      <Link to={`${match.url}/${classOf}`}>
-                        <b className="main-role">
-                          {translationKR(mainProjectRole)}
+              <>
+                <ul className="author-list">
+                  {authorList.map(
+                    ({
+                      id,
+                      user: { classOf, name, mainProjectRole, subProjectRole },
+                      mediaInfo,
+                    }) => (
+                      <li key={id}>
+                        <Link to={`${match.url}/${classOf}`}>
+                          <b className="main-role">
+                            {translationKR(mainProjectRole)}
+                            <span
+                              className="main-role-hover"
+                              style={{
+                                backgroundColor: setJobColor(mainProjectRole),
+                              }}
+                            ></span>
+                          </b>
+                          <strong className="author-name">
+                            <span className="name">{name}</span>
+                            <span className="classof">
+                              {filterClassOf(classOf)}학번
+                            </span>
+                          </strong>
                           <span
-                            className="main-role-hover"
+                            className="sub-role"
                             style={{
-                              backgroundColor: setJobColor(mainProjectRole),
+                              borderColor: setJobColor(subProjectRole),
+                              color: setJobColor(subProjectRole),
                             }}
-                          ></span>
-                        </b>
-                        <strong className="author-name">
-                          <span className="name">{name}</span>
-                          <span className="classof">
-                            {filterClassOf(classOf)}학번
+                          >
+                            {translationKR(subProjectRole)}
                           </span>
-                        </strong>
-                        <span
-                          className="sub-role"
-                          style={{
-                            borderColor: setJobColor(subProjectRole),
-                            color: setJobColor(subProjectRole),
-                          }}
-                        >
-                          {translationKR(subProjectRole)}
-                        </span>
-                        <i
-                          className="author-img"
-                          style={{
-                            backgroundImage: `url(${
-                              mediaInfo
-                                ? mediaInfo.url
-                                : setDefaultImg(mainProjectRole)
-                            })`,
-                          }}
-                        >
-                          <i className="hover-bg" />
-                        </i>
-                      </Link>
-                    </li>
-                  ),
-                )}
-              </ul>
+                          <i
+                            className="author-img"
+                            style={{
+                              backgroundImage: `url(${
+                                mediaInfo
+                                  ? mediaInfo.url
+                                  : setDefaultImg(mainProjectRole)
+                              })`,
+                            }}
+                          >
+                            <i className="hover-bg" />
+                          </i>
+                        </Link>
+                      </li>
+                    ),
+                  )}
+                </ul>
+                {loading && <LoadingForm />}
+              </>
             )}
             {pageInfo.last && <p className="last-list">마지막 게시글입니다.</p>}
           </div>

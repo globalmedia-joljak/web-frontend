@@ -8,8 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { signin } from '../../service/api/auth';
 import { useAppState, useAppDispatch } from '../../context/appContext';
 import { client } from '../../service/api/client';
+import useTitle from '../../hooks/useTitle';
 
 const SignIn = ({ history, location }) => {
+  useTitle(':로그인');
   location.state = { show: false };
 
   const [signinInfo, setSigninInfo] = useState({

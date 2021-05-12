@@ -13,8 +13,11 @@ import PortfolioModal from './PortfolioModal';
 import RoleModal from './RoleModal';
 import { useTeamsDispatch } from '../../../../../context/teamContext';
 import useAsync from '../../../../../hooks/useAsync';
+import useTitle from '../../../../../hooks/useTitle';
 
 const CreateAuthor = ({ history, match }) => {
+  useTitle(`:작가 - ${match.params['state'] === 'create' ? '등록하기' : '수정하기'}`);
+  console.log(match);
   const setImgEl = useRef();
   const {
     userState,
@@ -32,9 +35,10 @@ const CreateAuthor = ({ history, match }) => {
   });
 
   const authorId = match.params.id;
-  const [profileDetail] = useAsync(() => getAuthorProfileDetail(authorId), [
-    authorId,
-  ]);
+  const [profileDetail] = useAsync(
+    () => getAuthorProfileDetail(authorId),
+    [authorId],
+  );
 
   const type = match.params.state;
 
@@ -122,7 +126,9 @@ const CreateAuthor = ({ history, match }) => {
         subRole: profileDetail.data.user.subProjectRole,
       });
 
-      setTextLen(profileDetail.data.content.length);
+      if (profileDetail.data.content) {
+        setTextLen(profileDetail.data.content.length);
+      }
       if (profileDetail.data.mediaInfo) {
         setFile(profileDetail.data.mediaInfo);
       }

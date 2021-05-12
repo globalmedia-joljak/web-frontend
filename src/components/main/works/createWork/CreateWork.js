@@ -20,6 +20,7 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { uploadImage } from '../../../../service/api/upload';
 import useAsync from '../../../../hooks/useAsync';
+import useTitle from '../../../../hooks/useTitle';
 
 const toolbarItems = [
   'heading',
@@ -53,6 +54,8 @@ const selectedFn = (el, type) => {
 };
 
 const CreateWork = ({ match, history }) => {
+  useTitle(`:졸업작품 - ${match.params['state'] == 'create'? '등록하기' : '수정하기'}`);
+  console.log(match)
   const workState = match.params.state;
   const worksId = match.params.id;
   const editorRef = useRef();
@@ -75,17 +78,19 @@ const CreateWork = ({ match, history }) => {
 
   useEffect(() => {
     if (workState === 'edit') {
-      getWorkDetail(match.params.id, history)
-        .then((res) => {
-          setWorkDetail(res);
-        })
-        .catch((err) => console.log(err.response));
+      getWorkDetail(match.params.id, history).then((res) => {
+        setWorkDetail(res);
+      });
     }
   }, []);
 
   useEffect(() => {
     if (worksDetail && workState === 'edit') {
-      setContent(worksDetail.content);
+      if (editorRef.current)
+        setContent(
+          editorRef.current.getInstance().setHtml(worksDetail.content),
+        );
+
       setCategory(worksDetail.projectCategory);
       setWorksYear(worksDetail.exhibitedYear);
       setImages(worksDetail.imageInfoList);

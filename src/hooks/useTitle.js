@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
-const useTitle = (initialTitle = "CRUD TEST") => {
+const useTitle = (initialTitle = "") => {
   const [title, setTitle] = useState(initialTitle);
 
   const updateTitle = () => {
     const htmlTitle = document.querySelector("title");
-    htmlTitle.innerHTML = `${title}JOLJAK`;
+    htmlTitle.innerHTML = `졸작${title}`;
   };
   useEffect(updateTitle, [title]);
 
