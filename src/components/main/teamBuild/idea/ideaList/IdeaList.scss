@@ -85,11 +85,11 @@
     .ideas-top-left {
       display: flex;
       align-items: center;
-
+      font-size: 28px;
       .ideas-count {
         display: flex;
         h3 {
-          font: normal normal medium 28px/41px Noto Sans KR;
+          font: 28px;
           &:nth-child(2) {
             margin-left: 16px;
           }
@@ -165,6 +165,7 @@
 
       .ideas-top-left {
         display: flex;
+        font-size: 16px;
         .ideas-count {
           display: flex;
           h3 {
@@ -223,6 +224,7 @@
   .ideas-wrap {
     .ideas-top {
       .ideas-top-left {
+        font-size: 15px;
         .ideas-count {
           h3 {
             font-size: 15px;

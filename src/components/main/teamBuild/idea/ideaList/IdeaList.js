@@ -67,6 +67,7 @@ const IdeaList = ({ match, history }) => {
           ...pageInfo,
           page: ideaBoardResponseList.pageable.pageNumber + 1,
           last: ideaBoardResponseList.last,
+          // totalElements: 0,
           totalElements: ideaBoardResponseList.totalElements,
         });
 
@@ -123,13 +124,33 @@ const IdeaList = ({ match, history }) => {
       </div>
       <div className="ideas-wrap">
         {pageInfo.totalElements == 0 ? (
-          <ThereIsNoList />
+          <>
+            <div className="ideas-top">
+              <div className="ideas-top-left">
+                <h3>전체 아이디어 수 </h3>
+                <h3>{pageInfo.totalElements}</h3>
+              </div>
+              <div className="ideas-top-right">
+                {/* <ButtonWIthIcon
+      btntype="filter"
+      btnTxt="상세검색"
+      handleButton={handleShowFilterModal}
+    /> */}
+                <ButtonWithIcon
+                  btntype="create"
+                  btnTxt="등록하기"
+                  handleButton={handleCreateTeam}
+                />
+              </div>
+            </div>
+            <ThereIsNoList type="team-building" />
+          </>
         ) : (
           <>
             <div className="ideas-top">
               <div className="ideas-top-left">
                 <div className="ideas-count">
-                  <h3>전체 아이디어 수</h3>
+                  <h3>전체 아이디어 수 </h3>
                   <h3>{pageInfo.totalElements}</h3>
                 </div>
                 <div className="sidebar">|</div>
