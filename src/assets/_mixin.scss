@@ -109,7 +109,7 @@
     }
   } @else if $row == 'r3' {
     @if $name == 'home' {
-      grid-template-rows: minmax(33.3%, $max) 1fr $size;
+      grid-template-rows: max-content 1fr $size;
     }
   }
 }
