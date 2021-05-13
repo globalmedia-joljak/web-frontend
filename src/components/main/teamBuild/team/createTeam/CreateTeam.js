@@ -33,7 +33,7 @@ const toolbarItems = [
 ];
 
 const CreateTeam = ({ history, match }) => {
-  useTitle(':팀 등록');
+  useTitle(':팀 - 등록하기');
   const { userInfo } = useAppState();
 
   const editorRef = useRef();

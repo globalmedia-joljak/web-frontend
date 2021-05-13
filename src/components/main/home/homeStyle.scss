@@ -98,7 +98,21 @@
             height: 270px;
             margin-left: 2.5%;
             margin-right: 2.5%;
-            background-color: yellow;
+          }
+          .guestbook-photo-img01 {
+            @include backgroundImage;
+            background-size: cover;
+            background-image: url('../../../assets/images/2021_left_img.png');
+          }
+          .guestbook-photo-img02 {
+            @include backgroundImage;
+            background-size: cover;
+            background-image: url('../../../assets/images/2021_middle_img.png');
+          }
+          .guestbook-photo-img03 {
+            @include backgroundImage;
+            background-size: cover;
+            background-image: url('../../../assets/images/2021_right_img.png');
           }
         }
         .guestbook-go {
@@ -109,6 +123,9 @@
           border: 1px solid #837d7d66;
           width: 300px;
           height: 60px;
+          &:hover {
+            color: #837d7d66;
+          }
         }
       }
 
