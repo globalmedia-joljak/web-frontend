@@ -118,14 +118,12 @@ const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
             }),
           });
 
-          // e.target.previousSibling.readOnly = true;
           Array.from(passwordLsit).map((el) => el.classList.add(SHOW));
           contactForm.classList.add(SHOW);
 
           return;
         })
         .catch((e) => {
-          console.log(e);
           if (currentPassword === '') {
             toast.error(`⛔ 비밀번호를 입력해 주세요.`);
           } else {

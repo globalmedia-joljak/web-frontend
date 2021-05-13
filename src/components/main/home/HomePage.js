@@ -3,9 +3,22 @@ import { Link } from 'react-router-dom';
 import Footer from './footer/Footer.js';
 import './homeStyle.scss';
 import useTitle from '../../../hooks/useTitle.js';
+import { useEffect, useRef } from 'react/cjs/react.development';
+import { useAppState } from '../../../context/appContext.js';
 
 const HomePage = () => {
+  const photoEl = useRef();
+  const { currentYears } = useAppState();
   useTitle('');
+
+  useEffect(() => {
+    if (photoEl.current) {
+      const photo = [...photoEl.current.children];
+      photo.map((el) => {
+        el.style.height = `${el.clientWidth}px`;
+      });
+    }
+  });
   return (
     <div className="home-wrap">
       <div className="heroImg">
@@ -18,12 +31,12 @@ const HomePage = () => {
         </div>
       </div>
       <div className="section-wrap">
-        <section>
+        <section className="home-content">
           <h2>글로벌미디어학부 학생들을 위한 '졸작' 서비스</h2>
-          <p>
+          <strong>
             쉽게 졸업작품 프로젝트를 위한 팀을 매칭시켜주고, 역대 졸업 작품들을
             관람할 수 있습니다.
-          </p>
+          </strong>
           <div className="guestbook-wrap">
             <div className="guestbook-ment">
               <p>
@@ -37,11 +50,16 @@ const HomePage = () => {
               <div className="guestbook-photo guestbook-photo-img02"></div>
               <div className="guestbook-photo guestbook-photo-img03"></div>
             </div>
-              <Link to='/visitors/2021' className="guestbook-go">
-                방명록 남기기
-              </Link>
+            <Link to="/visitors/2021" className="guestbook-go">
+              방명록 남기기
+            </Link>
           </div>
-          <div className="home-video">
+          <button className="guestbook-go">
+            <Link to={`/visitors/${currentYears}`}>방명록 쓰러가기</Link>
+          </button>
+        </section>
+        <section className="home-video">
+          <div className="home-video-inr">
             <iframe
               src="https://www.youtube.com/embed/BdgGZwcUC4M"
               title="YouTube video player"
@@ -49,8 +67,8 @@ const HomePage = () => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
-            <h3>2021 글로벌미디어학부 졸업작품 '묻고 답하다' 스케치</h3>
           </div>
+          <strong>2021 글로벌미디어학부 졸업작품 '묻고 답하다' 스케치</strong>
         </section>
       </div>
       <Footer />
