@@ -102,37 +102,36 @@
           justify-content: center;
           margin: 32px 0;
           .guestbook-photo {
-            width: 300px;
-            height: 270px;
-            margin-left: 2.5%;
-            margin-right: 2.5%;
+            width: 33.333%;
+            max-width: 378px;
+
+            @include backgroundImage;
           }
           .guestbook-photo-img01 {
-            @include backgroundImage;
-            background-size: cover;
             background-image: url('../../../assets/images/2021_left_img.png');
           }
           .guestbook-photo-img02 {
-            @include backgroundImage;
-            background-size: cover;
             background-image: url('../../../assets/images/2021_middle_img.png');
           }
           .guestbook-photo-img03 {
-            @include backgroundImage;
-            background-size: cover;
             background-image: url('../../../assets/images/2021_right_img.png');
           }
         }
-        .guestbook-go {
-          display: flex;
-          justify-content: center;
-          align-items: center;
 
-          border: 1px solid #837d7d66;
-          width: 300px;
-          height: 60px;
-          &:hover {
+        .guestbook-go {
+          margin-bottom: 54px;
+          a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #837d7d66;
             color: #837d7d66;
+            padding: 16px 122px;
+            font-size: 20px;
+            &:hover {
+              color: #000000cc;
+              border-color: #000000cc;
+            }
           }
         }
       }

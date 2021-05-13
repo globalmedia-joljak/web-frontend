@@ -37,23 +37,20 @@ const HomePage = () => {
             쉽게 졸업작품 프로젝트를 위한 팀을 매칭시켜주고, 역대 졸업 작품들을
             관람할 수 있습니다.
           </strong>
-          <div className="guestbook-wrap">
-            <div className="guestbook-ment">
-              <p>
-                졸업 작품을 위해 고생한 작가들에게
-                <br />
-                방명록을 작성해보세요
-              </p>
-            </div>
-            <div className="guestbook-photo-wrap">
-              <div className="guestbook-photo guestbook-photo-img01"></div>
-              <div className="guestbook-photo guestbook-photo-img02"></div>
-              <div className="guestbook-photo guestbook-photo-img03"></div>
-            </div>
-            <Link to="/visitors/2021" className="guestbook-go">
-              방명록 남기기
-            </Link>
+        </section>
+        <section className="guestbook-wrap">
+          <strong>
+            졸업 작품을 위해 고생한 작가들에게
+            <br />
+            방명록을 작성해보세요
+          </strong>
+
+          <div className="guestbook-photo-wrap" ref={photoEl}>
+            <div className="guestbook-photo guestbook-photo-img01"></div>
+            <div className="guestbook-photo guestbook-photo-img02"></div>
+            <div className="guestbook-photo guestbook-photo-img03"></div>
           </div>
+
           <button className="guestbook-go">
             <Link to={`/visitors/${currentYears}`}>방명록 쓰러가기</Link>
           </button>
