@@ -147,9 +147,14 @@
   .idea {
     .idea__title {
       font-size: 14px;
+      margin-left: 30px;
+    }
+    .idea__required {
+      margin-left: 30px;
     }
 
     .idea__body__bottom {
+      margin-left: 30px;
       .idea__category {
         font-size: 12px;
       }
