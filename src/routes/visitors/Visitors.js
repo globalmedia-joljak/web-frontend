@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import Disqus, { DiscussionEmbed, CommentCount} from 'disqus-react';
 import '../../components/mainStyle.scss';
 import './Visitors.scss';
+import useTitle from '../../hooks/useTitle';
 
 const Visitors = ({ match, history, location}) => {
+  useTitle(`:방명록 - ${match.params['year']}`);
 
   return (
     <main className="team-build-wrap">
