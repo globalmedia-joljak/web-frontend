@@ -33,11 +33,13 @@ const HomePage = () => {
               </p>
             </div>
             <div className="guestbook-photo-wrap">
-              <div className="guestbook-photo"></div>
-              <div className="guestbook-photo"></div>
-              <div className="guestbook-photo"></div>
+              <div className="guestbook-photo guestbook-photo-img01"></div>
+              <div className="guestbook-photo guestbook-photo-img02"></div>
+              <div className="guestbook-photo guestbook-photo-img03"></div>
             </div>
-            <div className="guestbook-go">방명록 쓰러가기</div>
+              <Link to='/visitors/2021' className="guestbook-go">
+                방명록 남기기
+              </Link>
           </div>
           <div className="home-video">
             <iframe

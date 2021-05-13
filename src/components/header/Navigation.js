@@ -85,9 +85,9 @@ const NavClickEvent = (size, tablet, navEl) => {
 };
 
 let navRoutes = [
-  { id: 'notice', path: '/notice', name: '묻고 답하다' },
   { id: 't-build', path: '/team-building', name: '팀 빌딩', type: 'sub-nav' },
   { id: 'works', path: '/works', name: '졸업작품', type: 'sub-nav' },
+  { id: 'notice', path: '/visitors/2021', name: '방명록' },
 ];
 
 // routes_template
