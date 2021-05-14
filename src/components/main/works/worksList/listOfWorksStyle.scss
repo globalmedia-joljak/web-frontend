@@ -1,5 +1,10 @@
 @import '../../../../assets/_mixin.scss';
-
+@mixin ellipsisTxt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+}
 .works-list {
   display: flex;
   flex-wrap: wrap;
@@ -8,6 +13,8 @@
     cursor: pointer;
     width: calc(33.33333% - 20px);
     overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 8px #00000029;
 
     &:hover {
       .work-img {
@@ -23,7 +30,6 @@
     }
     .work-img-wrap {
       position: relative;
-      border-radius: 16px;
       overflow: hidden;
       .work-img {
         display: block;
@@ -46,40 +52,41 @@
     }
 
     .work-contets-wrap {
-      padding: 12px 8px 7px;
+      padding: 16px 24px 31px;
+    }
+    .project-category {
+      font-size: 18px;
+      margin-bottom: 16px;
+      font-weight: bold;
+      display: block;
     }
 
     .work-name {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 4px;
+      margin-bottom: 16px;
       font-size: 24px;
       color: #000000;
       font-weight: bold;
-      .project-category {
-        font-size: 12px;
-        border-radius: 12px;
-        border: 1px solid;
-        padding: 3px 11px;
-      }
     }
 
     .team-name {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 12px;
-      column-gap: 8px;
+      margin-bottom: 4px;
       color: #00000099;
-      .members {
-        padding-left: 8px;
-        border-left: 1px solid #6d6d6d99;
-        display: inherit;
-        flex-wrap: wrap;
-        column-gap: 4px;
-        i {
-          color: #00000099;
-        }
+      font-size: 14px;
+      display: block;
+    }
+    .members {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 4px;
+      font-size: 18px;
+      font-weight: bold;
+      @include ellipsisTxt;
+
+      i {
+        color: #000000;
       }
     }
     .tui-editor-contents {
@@ -103,7 +110,10 @@
       width: calc(50% - 16px);
       min-width: 197px;
       .work-contets-wrap {
-        padding: 12px 0 0;
+        padding: 16px 24px;
+      }
+      .project-category {
+        font-size: 16px;
       }
       .work-name {
         font-size: 20px;
@@ -116,6 +126,15 @@
     row-gap: 32px;
     li {
       width: 100%;
+      .work-contets-wrap {
+        padding: 16px 17px;
+      }
+      .project-category {
+        font-size: 17px;
+      }
+      .work-name {
+        font-size: 21px;
+      }
     }
   }
 }

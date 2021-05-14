@@ -14,7 +14,9 @@ import LoadingForm from '../../common/LoadingForm';
 import useTitle from '../../../../hooks/useTitle';
 
 const ListOfWorks = ({ match, history }) => {
-  useTitle(`:졸업작품 - ${match.params['year'] ? match.params['year'] : '리스트'}`);
+  useTitle(
+    `:졸업작품 - ${match.params['year'] ? match.params['year'] : '리스트'}`,
+  );
 
   const { worksKR, worksColor } = useAppDispatch();
   const {
@@ -43,39 +45,33 @@ const ListOfWorks = ({ match, history }) => {
 
   useEffect(() => {
     setLastPage(false);
-
-    if (!pageInfo.last) {
-      setLoading(true);
-      if (pageInfo.page === 0) {
-        setLoading(false);
-        getWorksData();
-      } else {
-        setTimeout(() => {
-          setLoading(false);
-          getWorksData();
-        }, [1000]);
-      }
-    }
+    if (!pageInfo.last) getWorksData();
   }, [match.url, lastPage]);
 
   const getWorksData = () => {
+    setLoading(true);
     getWorksYearList(
       {
         pageNum: pageInfo.page,
         year: match.params.year,
       },
       history,
-    ).then((res) => {
-      const worksData = res.workResponseList;
-      setWorksList([...worksList, ...worksData.content]);
+    )
+      .then((res) => {
+        const worksData = res.workResponseList;
+        setWorksList([...worksList, ...worksData.content]);
 
-      setPageInfo({
-        ...pageInfo,
-        page: worksData.pageable.pageNumber + 1,
-        last: worksData.last,
-        totalElements: worksData.totalElements,
+        setPageInfo({
+          ...pageInfo,
+          page: worksData.pageable.pageNumber + 1,
+          last: worksData.last,
+          totalElements: worksData.totalElements,
+        });
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
       });
-    });
   };
 
   // filter
@@ -135,7 +131,6 @@ const ListOfWorks = ({ match, history }) => {
   const projectCategoryStyle = (category) => {
     const style = {
       color: worksColor(category),
-      borderColor: worksColor(category),
     };
     return style;
   };
@@ -209,7 +204,6 @@ const ListOfWorks = ({ match, history }) => {
                     worksList.map(
                       ({
                         id,
-                        content,
                         imageInfoList,
                         projectCategory,
                         teamMember,
@@ -230,23 +224,19 @@ const ListOfWorks = ({ match, history }) => {
                               </i>
                             </span>
                             <div className="work-contets-wrap">
-                              <strong className="work-name">
-                                {workName}
-                                <span
-                                  className="project-category"
-                                  style={projectCategoryStyle(projectCategory)}
-                                >
-                                  {worksKR(projectCategory)}
-                                </span>
-                              </strong>
-                              <b className="team-name">
-                                {teamName}
-                                <span className="members">
-                                  {teamMember.map((name, i) => (
-                                    <i key={i}>{name}</i>
-                                  ))}
-                                </span>
-                              </b>
+                              <span
+                                className="project-category"
+                                style={projectCategoryStyle(projectCategory)}
+                              >
+                                {worksKR(projectCategory)}
+                              </span>
+                              <strong className="work-name">{workName}</strong>
+                              <b className="team-name">{teamName}</b>
+                              <span className="members">
+                                {teamMember.map((name, i) => (
+                                  <i key={i}>{name}</i>
+                                ))}
+                              </span>
                             </div>
                           </Link>
                         </li>
