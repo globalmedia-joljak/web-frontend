@@ -2,9 +2,6 @@
 @import '../../../../assets/variables';
 
 .work-create-wrap {
-  &.page-box {
-    padding-top: 40px;
-  }
   .work-create-inr {
     display: grid;
     > div {
@@ -86,7 +83,6 @@
     display: grid;
     gap: 14px;
     margin-bottom: 24px;
-    height: 42px;
     grid-template-columns: max-content auto;
 
     strong {
@@ -274,6 +270,10 @@
     border-radius: 4px;
   }
 }
+
+.page-box {
+  padding-top: 40px;
+}
 @include response('tablet') {
   .work-create-wrap {
     &.page-box {
@@ -313,8 +313,7 @@
 
     > div {
       margin-bottom: 16px;
-      height: 36px;
-
+      gap: 0;
       select,
       .category,
       input {
@@ -327,7 +326,7 @@
     }
 
     select {
-      width: 218px;
+      min-width: 218px;
     }
   }
 
@@ -410,7 +409,6 @@
     }
     > div {
       margin-bottom: 16px;
-      height: 32px;
       select,
       .category,
       input {
@@ -423,6 +421,8 @@
 
     select {
       width: 100%;
+      max-width: none;
+      min-width: none;
     }
   }
 
@@ -457,7 +457,6 @@
       }
       &.work-files {
         margin-bottom: 40px;
-        padding: 0 11px;
         .file-box {
           height: 48px;
           .clip-icon {
