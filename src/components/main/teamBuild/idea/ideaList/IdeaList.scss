@@ -89,7 +89,7 @@
       .ideas-count {
         display: flex;
         h3 {
-          font: 28px;
+          font-size: 28px;
           &:nth-child(2) {
             margin-left: 16px;
           }
@@ -103,7 +103,7 @@
         margin-left: 16px;
         h3 {
           color: #5a5a5a;
-          font: normal normal medium 24px/36px Noto Sans KR;
+          font-size: 28px;
           cursor: pointer;
         }
       }
