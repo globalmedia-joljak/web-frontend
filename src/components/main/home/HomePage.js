@@ -24,7 +24,7 @@ const HomePage = () => {
       <div className="heroImg">
         <div className="hero-contetns">
           <strong>글로벌미디어학부</strong>
-          <p>2021 졸업작품 전시회 '問答'</p>
+          <p>2021 졸업작품 전시회 '묻고 답하다'</p>
           <button>
             <Link to="/works">졸업작품 보러가기</Link>
           </button>
