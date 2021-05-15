@@ -9,8 +9,11 @@ import { createIdea } from '../../../../../service/api/ideas';
 import ModalTemp from '../../../../modal/ModalTemp';
 import { uploadImage } from '../../../../../service/api/upload';
 import { render } from '@testing-library/react';
+import useTitle from '../../../../../hooks/useTitle';
 
 const CreateIdea = ({ history }) => {
+  useTitle(`:아이디어 - 등록하기`);
+
   const {
     userInfo: { isLogin, classOf },
   } = useAppState();

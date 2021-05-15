@@ -16,8 +16,9 @@ import useAsync from '../../../../../hooks/useAsync';
 import useTitle from '../../../../../hooks/useTitle';
 
 const CreateAuthor = ({ history, match }) => {
-  useTitle(`:작가 - ${match.params['state'] === 'create' ? '등록하기' : '수정하기'}`);
-  console.log(match);
+  useTitle(
+    `:작가 - ${match.params['state'] === 'create' ? '등록하기' : '수정하기'}`,
+  );
   const setImgEl = useRef();
   const {
     userState,

@@ -71,31 +71,27 @@ const ListOfAuthorForm = ({ match, history }) => {
 
   useEffect(() => {
     setLastPage(false);
-    if (!pageInfo.last) {
-      setLoading(true);
-      if (pageInfo.page === 0) {
-        setLoading(false);
-        handleNextPage();
-      } else {
-        setTimeout(() => {
-          setLoading(false);
-          handleNextPage();
-        }, [1000]);
-      }
-    }
-  }, [lastPage, match.url]);
+    if (!pageInfo.last) handleNextPage();
+  }, [lastPage]);
 
   const handleNextPage = () => {
-    getAuthorProfileList(pageInfo.page).then((res) => {
-      setAuthorList([...authorList, ...res.content]);
+    setLoading(true);
+    getAuthorProfileList(pageInfo.page)
+      .then((res) => {
+        setAuthorList([...authorList, ...res.content]);
 
-      setPageInfo({
-        ...pageInfo,
-        page: res.pageable.pageNumber + 1,
-        last: res.last,
-        totalElements: res.totalElements,
+        setPageInfo({
+          ...pageInfo,
+          page: res.pageable.pageNumber + 1,
+          last: res.last,
+          totalElements: res.totalElements,
+        });
+
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
       });
-    });
   };
 
   const handleSubmit = (e) => setFilterShow(!filterShow);

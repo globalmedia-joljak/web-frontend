@@ -105,14 +105,10 @@
     }
   }
 }
-
 .page-box {
   margin: 0 auto 92px;
   max-width: 1052px;
-  box-sizing: content-box;
-  padding: 0 6%;
 }
-
 @include response('tablet') {
   .author-wrap {
     .author-list {

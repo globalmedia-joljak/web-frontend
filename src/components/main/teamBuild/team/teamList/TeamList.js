@@ -52,7 +52,8 @@ const TeamList = ({ match, history }) => {
 
   const handleNextPage = async () => {
     setScrollLoading(true);
-    getTeams(pageInfo.page)
+    try {
+      await getTeams(pageInfo.page)
       .then((response) => {
         const { getTeamResponsePage } = response;
     
@@ -72,7 +73,9 @@ const TeamList = ({ match, history }) => {
         console.log(e);
         setScrollLoading(false);
       });
+    } catch(error) {
 
+    }
       setIsLoading(false);
   };
 

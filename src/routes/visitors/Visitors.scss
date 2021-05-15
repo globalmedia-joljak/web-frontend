@@ -35,6 +35,42 @@
   min-width: 616px;
   box-sizing: border-box;
   background-color: blue($color: #000000);
+  .visitors__poster {
+    padding-bottom: 100px;
+    .visitors__poster__img {
+      padding: 0;
+      margin: 0;
+      @include backgroundImage;
+      background-image: url('../../assets/images/joljak_poster.png');
+      background-position: left;
+      width: 100%;
+      height: 100vh;
+    }
+    .visitors__poster__contents {
+      .visitors__poster__content {
+        margin-top: 30px;
+        h2 {
+          margin-top: 15px;
+          margin-bottom: 10px;
+        }
+        h2 span {
+          color: white;
+          background-color: #6d6d6dcc;
+          font-family: 'Eulyoo1945-SemiBold';
+
+        }
+        p {
+          font-family: 'Eulyoo1945-SemiBold';
+        }
+        .location__image {
+          @include backgroundImage;
+          background-image: url('../../assets/images/2021_location.png');
+          width: 300px;
+          height: 300px;
+        }
+      }
+    }
+  }
 }
 
 @include response('tablet') {
@@ -60,6 +96,18 @@
     min-width: 0;
     padding: 0 3%;
   }
+
+  .visitors__wrap {
+    margin-top: 24px;
+    min-width: 0;
+    padding: 0 3%;
+    .visitors__poster {
+      .visitors__poster__img {
+        height: 100%;
+        height: 80vh;
+      }
+    }
+  }
 }
 
 @include response('phone') {
@@ -79,5 +127,10 @@
       width: 152px;
       height: 114px;
     }
+  }
+  .visitors__wrap {
+    margin-top: 0px;
+    min-width: 0;
+    padding: 0 3%;
   }
 }

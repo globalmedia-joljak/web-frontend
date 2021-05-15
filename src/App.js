@@ -13,6 +13,7 @@ import {
 } from './routes';
 import './assets/style.scss';
 import './components/mainStyle.scss';
+import ReactGA from 'react-ga';
 
 import {
   getAccessTokenByRefreshToken,
@@ -27,6 +28,8 @@ import Visitors from './routes/visitors/Visitors';
 const App = () => {
   const { userInfo } = useAppState();
   const { setUserInfo } = useAppDispatch();
+  ReactGA.initialize('UA-196921248-1');
+  ReactGA.pageview(window.location.pathname + window.location.search);
 
   useEffect(() => {
     const refreshToken = stoargeInfo.refreshToken;
@@ -45,6 +48,7 @@ const App = () => {
             name: stoargeInfo.userName,
             isLogin: true,
           });
+          ReactGA.set({ userId: userInfo });
         })
         .catch((e) => {
           console.log(e.response);
