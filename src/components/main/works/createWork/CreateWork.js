@@ -236,8 +236,8 @@ const CreateWork = ({ match, history }) => {
     if (images) {
       makeArrFromData(images, 'images');
     } else {
-      if (worksDetail.imageInfoList) {
-        const delImages = worksDetail.imageInfoList.map((img) => {
+      if (workState === 'edit' && worksDetail.imageInfoList) {
+        worksDetail.imageInfoList.map((img) => {
           formdata.append('deleteImagesName', img.modifyName);
         });
       }
