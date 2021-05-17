@@ -41,12 +41,12 @@ const ListOfWorks = ({ match, history }) => {
     if (scrollTop + clientHeight >= scrollHeight - 10) {
       setLastPage(true);
     }
-  }, [lastPage]);
+  }, [lastPage, infinite]);
 
   useEffect(() => {
     setLastPage(false);
     if (!pageInfo.last) getWorksData();
-  }, [match.url, lastPage]);
+  }, [lastPage, match.url]);
 
   const getWorksData = () => {
     setLoading(true);
@@ -60,7 +60,6 @@ const ListOfWorks = ({ match, history }) => {
       .then((res) => {
         const worksData = res.workResponseList;
         setWorksList([...worksList, ...worksData.content]);
-
         setPageInfo({
           ...pageInfo,
           page: worksData.pageable.pageNumber + 1,
@@ -171,7 +170,8 @@ const ListOfWorks = ({ match, history }) => {
           <div className="works-wrap content-size">
             <div className="content-header">
               <h3>
-                전체 작품 수<span>{worksList ? worksList.length : 0}</span>
+                전체 작품 수
+                <span>{worksList ? pageInfo.totalElements : 0}</span>
               </h3>
               {/* <div className="search-list">
                 <span className="search-icon" />
