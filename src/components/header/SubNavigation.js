@@ -48,7 +48,6 @@ const SubNavigation = ({ type, url, location }) => {
   useEffect(() => {
     if (curSize > tablet) {
       const filterPathName = location.pathname.split('/');
-      const pathname = filterPathName[filterPathName.length - 1];
 
       if (ulRefs.current) {
         const links = [...ulRefs.current.children];

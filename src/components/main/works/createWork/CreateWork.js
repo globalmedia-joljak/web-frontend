@@ -235,6 +235,13 @@ const CreateWork = ({ match, history }) => {
 
     if (images) {
       makeArrFromData(images, 'images');
+    } else {
+
+      if (workState === 'edit' && worksDetail.imageInfoList) {
+        worksDetail.imageInfoList.map((img) => {
+          formdata.append('deleteImagesName', img.modifyName);
+        });
+      }
     }
 
     for (let item in requestWorks) {
@@ -287,18 +294,15 @@ const CreateWork = ({ match, history }) => {
       return false;
     }
 
+    for (let i of formdata.entries()) {
+      console.log(i);
+    }
+
     switch (workState) {
       case 'create':
         createWorks(formdata, history);
         return;
       case 'edit':
-        if (!images && worksDetail.imageInfoList) {
-          const delImages = worksDetail.imageInfoList.map(
-            (img) => img.modifyName,
-          );
-          makeArrFromData(delImages, 'deleteImagesName');
-        }
-
         if (!file && worksDetail.fileInfo) {
           formdata.append('deleteFileName', worksDetail.fileInfo.modifyName);
         }

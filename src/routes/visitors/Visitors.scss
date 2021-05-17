@@ -42,12 +42,13 @@
       margin: 0;
       @include backgroundImage;
       background-image: url('../../assets/images/joljak_poster.png');
-      background-position: left;
       width: 100%;
       height: 100vh;
     }
     .visitors__poster__contents {
       .visitors__poster__content {
+        width: 57%;
+        margin: 0 auto;
         margin-top: 30px;
         h2 {
           margin-top: 15px;
@@ -103,10 +104,15 @@
     padding: 0 3%;
     .visitors__poster {
       .visitors__poster__img {
-        height: 100%;
         height: 80vh;
       }
+      .visitors__poster__contents {
+        .visitors__poster__content {
+          width: 100%;
+        }
+      }
     }
+
   }
 }
 
