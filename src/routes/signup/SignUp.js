@@ -342,14 +342,14 @@ const SignUp = ({ history, location }) => {
                 </div>
               </div>
               <div className="sub-info">
-                <div className="info-title">인증번호</div>
+                <div className="info-title">초대코드</div>
                 <div className="info-body">
                   <div className="input-auth-num group-start">
                     <input
                       type="text"
                       name="auth_number"
                       id="auth_number"
-                      placeholder="인증번호를 입력하세요"
+                      placeholder="초대코드를 입력하세요"
                       defaultValue={userInfo.inviteCode}
                       onChange={(e) =>
                         setUserInfo({
