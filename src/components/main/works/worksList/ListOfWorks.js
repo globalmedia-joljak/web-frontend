@@ -32,6 +32,11 @@ const ListOfWorks = ({ match, history }) => {
     last: false,
     totalElements: 0,
   });
+  
+  useEffect(() => {
+    setLoading(false);
+    initWorksData();
+  }, [match.params.year]);
 
   useEffect(() => {
     const { scrollTop, scrollHeight, clientHeight } = infinite;
@@ -47,6 +52,32 @@ const ListOfWorks = ({ match, history }) => {
     setLastPage(false);
     if (!pageInfo.last) getWorksData();
   }, [lastPage, match.url]);
+
+  const initWorksData = () => {
+    setLoading(true);
+    getWorksYearList(
+      {
+        pageNum: 0,
+        year: match.params.year,
+      },
+      history,
+    )
+      .then((res) => {
+        const worksData = res.workResponseList;
+        setWorksList(worksData.content);
+        setPageInfo({
+          ...pageInfo,
+          page: worksData.pageable.pageNumber + 1,
+          last: worksData.last,
+          totalElements: worksData.totalElements,
+        });
+        setLoading(false);
+        setLastPage(worksData.last);
+      })
+      .catch((e) => {
+        setLoading(false);
+      });
+  }
 
   const getWorksData = () => {
     setLoading(true);
