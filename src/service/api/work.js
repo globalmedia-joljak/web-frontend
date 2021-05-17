@@ -14,7 +14,7 @@ const getWorksYears = async () => {
 const getWorksLists = async (pageNum, history) => {
   try {
     const { data } = await client.get('/works', {
-      params: { size: 10, page: pageNum },
+      params: { size: 8, page: pageNum },
     });
     return data;
   } catch (e) {
