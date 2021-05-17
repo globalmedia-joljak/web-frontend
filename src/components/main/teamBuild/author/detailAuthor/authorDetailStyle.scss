@@ -149,8 +149,8 @@
       justify-content: space-around;
       li {
         gap: 32px;
-        display: grid;
-        justify-items: center;
+        display: flex;
+        flex-direction: column;
         .contact-img {
           width: 48px;
           height: 48px;
@@ -259,6 +259,11 @@
       @include teamsRow2('tablet');
       h3 {
         @include teamsH3('tablet');
+      }
+      .contacts {
+        flex-direction: column;
+        row-gap: 30px;
+        justify-self: center;
       }
     }
   }

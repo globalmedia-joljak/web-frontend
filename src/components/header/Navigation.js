@@ -42,6 +42,9 @@ const NavClickEvent = (size, tablet, navEl) => {
         return classList.contains(className) ?? false;
       };
 
+      if (e.target.id === 'more-icon' || e.target.tagName === 'SPAN')
+        return false;
+
       switch (true) {
         case tagFilter('h-nav'):
           !tagFilter(ON) ? classList.add(ON) : classList.remove(ON);
@@ -50,7 +53,6 @@ const NavClickEvent = (size, tablet, navEl) => {
         // routes일 경우
         case tagFilter('header-route'):
           const SHOW = 'show';
-
           if (id === 't-build' || id === 'works') {
             return parentElement.classList.contains(SHOW)
               ? parentElement.classList.remove(SHOW)
@@ -99,7 +101,7 @@ const RouterLink = (size, tablet, signOutHandler, isLogin) => {
           <li key={id}>
             <Link to={path} className="header-route" id={id}>
               {name}
-              {(type = 'sub-nav') && size < tablet && (
+              {type === 'sub-nav' && size < tablet && (
                 <div id="more-icon">
                   <span></span>
                   <span className="rotate"></span>
