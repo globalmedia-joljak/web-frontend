@@ -12,7 +12,7 @@ import { updateUserInfo } from '../../../service/api/users.js';
 import MypageListForm from './MypageListForm';
 import { toast, ToastContainer } from 'react-toastify';
 import { useAppState } from '../../../context/appContext';
-import { useEffect } from 'react/cjs/react.development';
+import { useEffect, useRef } from 'react/cjs/react.development';
 import { checkMypagePassword } from '../../../service/api/auth';
 import HeroImageForm from '../common/HeroImageForm';
 
@@ -175,10 +175,11 @@ const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
         case 'phoneNumber':
           if (!/^\d{3}\d{3,4}\d{4}$/.test(contactVal[name])) {
             toast.error(
-              '⛔ 휴대폰 번호는 (-)없이 숫자만 가능합니다. 번호를 확인해 주세요.',
+              '⛔ 휴대폰 번호는 (-)없이 숫자만 가능합니다. 번호를 확인해 주세요.(10자 이내)',
             );
             return false;
           }
+
           updateUserInfo(
             { classOf, url: 'phonenumber', succed: '전화번호' },
             contactVal[name],
@@ -190,7 +191,10 @@ const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
             toast.error('⛔ 영문으로 표기해 주세요');
             return false;
           }
-
+          if (contactVal[name].length > 20) {
+            toast.error(`⛔ 20자 이내로 입력해 주세요.`);
+            return false;
+          }
           updateUserInfo(
             { classOf, url: 'kakaoid', succed: '카카오톡ID' },
             contactVal[name],
@@ -200,6 +204,10 @@ const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
         case 'instagramId':
           if (checkKr.test(contactVal[name])) {
             toast.error('⛔ 영문으로 표기해 주세요');
+            return false;
+          }
+          if (contactVal[name].length > 20) {
+            toast.error(`⛔ 20자 이내로 입력해 주세요.`);
             return false;
           }
           updateUserInfo(
@@ -249,6 +257,24 @@ const MyPageForm = () => {
     { settingList, setSettingList },
   );
 
+  const setInputEl = useRef();
+
+  useEffect(() => {
+    if (setInputEl.current) {
+      const inputChild = [...setInputEl.current.children];
+
+      if (!inputChild[1].classList.contains('show')) {
+        setSettingList({
+          ...settingList,
+          setPassword: settingList.setPassword.map((data) => {
+            data.btn = true;
+            return data;
+          }),
+        });
+      }
+    }
+  }, []);
+
   if (loading) return <main>로딩중...</main>;
   if (error) return <main>에러사항</main>;
   if (!data) return '';
@@ -292,7 +318,7 @@ const MyPageForm = () => {
                 </li>
               </ul>
               <div className="setting-lists">
-                <form className={`set-input-wrap`}>
+                <form className={`set-input-wrap`} ref={setInputEl}>
                   <MypageListForm
                     type="password"
                     setLists={setPassword}
