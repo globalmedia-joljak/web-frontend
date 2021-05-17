@@ -211,12 +211,12 @@ header {
                   repeat(2, min-content) repeat(2, max-content)
                   min-content;
                 grid-template-columns: 1fr;
-                gap: 16px;
                 * {
                   color: #ffffffcc;
                 }
                 > li {
                   align-self: flex-start;
+                  padding-bottom: 32px;
 
                   width: inherit;
                   @include headerRow('r2', 'sub-tablet');
@@ -224,14 +224,18 @@ header {
                   &:nth-child(1) {
                     @include sideNavStyle;
                   }
+                  &:nth-child(3) {
+                    padding-bottom: 24px;
+                  }
                   &:last-child {
                     @include sideNavStyle;
-                    padding-top: 8.5px;
+                    padding-top: 24px;
                   }
                   > a {
                     position: relative;
                     place-items: center start;
                     padding: 8px;
+                    font-size: 20px;
 
                     #more-icon {
                       right: 0;
@@ -263,13 +267,17 @@ header {
                     }
                     .nav-sub-wrap {
                       display: grid;
-                      padding: 24px 0 8px;
+                      padding-top: 32px;
                       height: fit-content;
 
                       li {
+                        padding-bottom: 16px;
                         a {
                           color: #ffffffcc;
                           transition: color 0.1s;
+                        }
+                        &:last-child {
+                          padding-bottom: 0;
                         }
                       }
                     }
@@ -282,8 +290,8 @@ header {
                     height: 0;
                     li {
                       a {
-                        padding: 4px 0 4px 13px;
                         color: transparent;
+                        padding: 10px 16px;
                         font-size: $side-nav-font-tablet;
                       }
                     }
