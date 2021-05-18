@@ -32,9 +32,11 @@ const ListOfWorks = ({ match, history }) => {
     last: false,
     totalElements: 0,
   });
+  const [initData, setInitData] = useState(false);
   
   useEffect(() => {
     setLoading(false);
+    setInitData(false);
     initWorksData();
   }, [match.params.year]);
 
@@ -73,6 +75,7 @@ const ListOfWorks = ({ match, history }) => {
         });
         setLoading(false);
         setLastPage(worksData.last);
+        setInitData(true);
       })
       .catch((e) => {
         setLoading(false);
@@ -226,7 +229,7 @@ const ListOfWorks = ({ match, history }) => {
                 />
               </div>
             </div>
-            {worksList.length === 0 ? (
+            {!initData ? (
               <ThereIsNoList type="works" />
             ) : (
               <>
