@@ -107,32 +107,31 @@
       display: grid;
       row-gap: 64px;
       .portfolio {
-        display: inherit;
-
-        grid-template-areas:
-          'p-icon p-title'
-          'p-icon p-link';
-
-        grid-template-columns: repeat(2, max-content);
-        grid-template-rows: max-content min-content;
+        display: grid;
+        grid-template-columns: max-content 1fr;
         column-gap: 32px;
         .icon-link {
           width: 72px;
           height: 72px;
           @include backgroundImage;
-          grid-area: p-icon;
           background-image: url('../../../../../assets/images/Portfolio_clip@2x.png');
         }
-        .title {
-          grid-area: p-title;
-          font-size: 20px;
-        }
-        a {
-          text-decoration: underline;
-          align-self: end;
-          height: fit-content;
-          font-size: 20px;
-          color: #6d6d6d99;
+
+        .portfolio-info {
+          display: flex;
+          flex-direction: column;
+          row-gap: 14px;
+          .title {
+            font-size: 20px;
+          }
+          a {
+            text-decoration: underline;
+            align-self: end;
+            height: fit-content;
+            font-size: 20px;
+            color: #6d6d6d99;
+            word-break: break-all;
+          }
         }
       }
     }

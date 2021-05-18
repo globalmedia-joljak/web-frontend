@@ -7,6 +7,7 @@ const PortfolioModal = ({
   pfModalShow,
   pfSetModalShow,
   data,
+  checkURL,
 }) => {
   const { title, link } = data;
 
@@ -27,7 +28,7 @@ const PortfolioModal = ({
         <input
           name="title"
           placeholder="제목을 입력하세요"
-          onChange={pfChange}
+          onInput={pfChange}
           value={title}
         />
       </li>
@@ -36,9 +37,14 @@ const PortfolioModal = ({
         <input
           name="link"
           placeholder="하이퍼링크를 입력하세요"
-          onChange={pfChange}
+          onInput={pfChange}
           value={link}
         />
+        {!checkURL && (
+          <p className="check-url">
+            http, https 와 같이 url 형식에 맞게 작성 해주세요
+          </p>
+        )}
       </li>
     </ModalTemp>
   );

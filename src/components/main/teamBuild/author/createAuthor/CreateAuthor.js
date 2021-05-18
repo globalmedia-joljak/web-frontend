@@ -170,6 +170,7 @@ const CreateAuthor = ({ history, match }) => {
   const [portfolioShow, setPortfolioShow] = useState(false);
   const [portfolioEdit, setPortfolioEdit] = useState(false);
   const [portfolioLinks, setPortfolioLinks] = useState([]);
+  const [checkURL, setCheckURL] = useState(true);
   const [portfolio, setPortfolio] = useState({
     title: '',
     link: '',
@@ -206,27 +207,17 @@ const CreateAuthor = ({ history, match }) => {
     }
   };
 
-  const portfolioToggle = () => {
-    if (!portfolioEdit) {
-      setPortfolioLinks(portfolioLinks.concat(portfolio));
-    }
+  const handleChange = (e) => {
+    if (e.target.name === 'link') {
+      const expUrl = /^http[s]?\:\/\//i;
+      if (e.target.value === '') setCheckURL(true);
 
-    if (portfolioEdit) {
-      setPortfolioLinks(
-        portfolioLinks.map((link) => {
-          if (link.id === portfolio.id) {
-            return {
-              ...portfolio,
-              title: portfolio.title,
-              link: portfolio.link,
-            };
-          }
-          return link;
-        }),
-      );
+      expUrl.test(e.target.value) ? setCheckURL(true) : setCheckURL(false);
     }
-
-    setPortfolioShow(false);
+    setPortfolio({
+      ...portfolio,
+      [e.target.name]: e.target.value,
+    });
   };
 
   useEffect(() => {
@@ -255,11 +246,32 @@ const CreateAuthor = ({ history, match }) => {
     }
   }, [profileDetail.data]);
 
-  const handleChange = (e) => {
-    setPortfolio({
-      ...portfolio,
-      [e.target.name]: e.target.value,
-    });
+  const portfolioToggle = () => {
+    if (portfolio.title === '' || portfolio.link === '') {
+      toast.error(`⛔ 제목, 링크를 입력해 주세요.`);
+      return false;
+    }
+
+    if (!portfolioEdit) {
+      setPortfolioLinks(portfolioLinks.concat(portfolio));
+    } else {
+      if (portfolioEdit) {
+        setPortfolioLinks(
+          portfolioLinks.map((link) => {
+            if (link.id === portfolio.id) {
+              return {
+                ...portfolio,
+                title: portfolio.title,
+                link: portfolio.link,
+              };
+            }
+            return link;
+          }),
+        );
+      }
+    }
+
+    checkURL ? setPortfolioShow(false) : setPortfolioShow(true);
   };
 
   const handleDelete = (id, title) => {
@@ -375,6 +387,7 @@ const CreateAuthor = ({ history, match }) => {
             pfModalShow={portfolioShow}
             pfSetModalShow={setPortfolioShow}
             data={portfolio}
+            checkURL={checkURL}
           />
         ) : (
           <div className="edit-author-wrap page-box">
@@ -495,29 +508,31 @@ const CreateAuthor = ({ history, match }) => {
                       return (
                         <li className="portfolio" key={i}>
                           <i className="porfolio-icon"></i>
-                          <div className="portfolio-title-box">
-                            <strong className="porfolio-title">
-                              {data.title}
-                            </strong>
-                            <div className="edit-delete-box">
-                              <EditDeleteButton
-                                form="setPortfolio"
-                                handleEdit={() =>
-                                  showPortfolioModal('edit', data)
-                                }
-                                handleDelete={() =>
-                                  handleDelete(data.id, data.title)
-                                }
-                              />
+                          <div className="portfolio-info">
+                            <div className="portfolio-title-box">
+                              <strong className="porfolio-title">
+                                {data.title}
+                              </strong>
+                              <div className="edit-delete-box">
+                                <EditDeleteButton
+                                  form="setPortfolio"
+                                  handleEdit={() =>
+                                    showPortfolioModal('edit', data)
+                                  }
+                                  handleDelete={() =>
+                                    handleDelete(data.id, data.title)
+                                  }
+                                />
+                              </div>
                             </div>
+                            <a
+                              href={data.link}
+                              className="porfolio-link"
+                              target="blank"
+                            >
+                              {data.link}
+                            </a>
                           </div>
-                          <a
-                            href={data.link}
-                            className="porfolio-link"
-                            target="blank"
-                          >
-                            {data.link}
-                          </a>
                         </li>
                       );
                     })}

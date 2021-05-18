@@ -156,6 +156,16 @@ body {
   }
 }
 
+.swal-modal {
+  .swal-footer {
+    .swal-button-container {
+      .swal-button--confirm {
+        background-color: #baa2ff;
+      }
+    }
+  }
+}
+
 @include response('tablet') {
   .error-page-wrap {
     min-width: 563px;
