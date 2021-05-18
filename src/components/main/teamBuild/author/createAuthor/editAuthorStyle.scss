@@ -243,39 +243,40 @@ $phone-add-portfolio-size: 24px;
       .portfolio {
         grid-template-columns: max-content auto;
         display: grid;
-        grid-template-areas:
-          'linkicon ptitle'
-          'linkicon link';
         column-gap: 16px;
         row-gap: 15px;
 
         .porfolio-icon {
           width: 48px;
           height: 48px;
-          grid-area: linkicon;
           @include backgroundImage;
           background-image: url('../../../../../assets/images/Portfolio_clip@2x.png');
         }
       }
     }
-    .portfolio-title-box {
+    .portfolio-info {
       display: flex;
-      justify-content: space-between;
-      grid-area: ptitle;
-      align-items: center;
-      .porfolio-title {
-        font-size: 20px;
+      flex-direction: column;
+
+      .portfolio-title-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .porfolio-title {
+          font-size: 20px;
+        }
+        .edit-delete-box {
+          height: fit-content;
+        }
       }
-      .edit-delete-box {
-        height: fit-content;
+      .porfolio-link {
+        text-decoration: underline;
+        color: #6d6d6d99;
+        font-size: 16px;
+        word-break: break-all;
       }
     }
-    .porfolio-link {
-      grid-area: link;
-      text-decoration: underline;
-      color: #6d6d6d99;
-      font-size: 16px;
-    }
+
     .portfolio-add-btn {
       display: flex;
       justify-self: center;
@@ -297,6 +298,14 @@ $phone-add-portfolio-size: 24px;
       font-size: 20px;
     }
   }
+}
+
+.check-url {
+  color: #ff0000;
+  opacity: 0.8;
+  font-size: 13px;
+  margin-top: -12px;
+  margin-left: 1px;
 }
 
 @include response('tablet') {

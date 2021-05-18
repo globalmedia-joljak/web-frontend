@@ -10,6 +10,8 @@ import {
 import EditDeleteButton from '../../../common/EditDeleteButton';
 import './authorDetailStyle.scss';
 import useTitle from '../../../../../hooks/useTitle';
+import swal from 'sweetalert';
+
 const phone = 426;
 
 const AuthorDetail = ({ match, history }) => {
@@ -31,11 +33,16 @@ const AuthorDetail = ({ match, history }) => {
   const { loading, data, error } = profileDetail;
 
   const handleDelete = () => {
-    const delMessage = window.confirm(
-      `${name}님을 작가목록에서 삭제 하시겠습니까?`,
-    );
-    if (delMessage) deleteAuthorProfile(classOf);
-    setTimeout(() => history.push('/team-building/author'), 1200);
+    const delMessage = `${name} 님을 작가목록에서 삭제 하시겠습니까?`;
+
+    swal(delMessage, {
+      buttons: ['아니오', '네'],
+    }).then((create) => {
+      if (create) {
+        deleteAuthorProfile(classOf);
+        setTimeout(() => history.push('/team-building/author'), 1000);
+      }
+    });
   };
 
   useEffect(() => {
@@ -118,10 +125,12 @@ const AuthorDetail = ({ match, history }) => {
             {portfolioLinks.map(({ title, link }, i) => (
               <li className="portfolio" key={i}>
                 <i className="icon-link"></i>
-                <strong className="title">{title}</strong>
-                <a href={link} target="_blank">
-                  {link}
-                </a>
+                <div className="portfolio-info">
+                  <strong className="title">{title}</strong>
+                  <a href={link} target="_blank">
+                    {link}
+                  </a>
+                </div>
               </li>
             ))}
           </ul>

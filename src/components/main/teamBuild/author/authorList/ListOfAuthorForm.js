@@ -17,6 +17,7 @@ import { useEffect } from 'react/cjs/react.development';
 import HeroImageForm from '../../../common/HeroImageForm';
 import LoadingForm from '../../../common/LoadingForm';
 import useTitle from '../../../../../hooks/useTitle';
+import swal from 'sweetalert';
 
 const ListOfAuthorForm = ({ match, history }) => {
   useTitle(`:작가`);
@@ -109,10 +110,11 @@ const ListOfAuthorForm = ({ match, history }) => {
       .then((res) => {
         const message =
           '이미 작가등록을 하셨습니다. 작가 목록 페이지로 가시겠습니까?';
-
-        if (window.confirm(message)) history.push(`${match.url}/${classOf}`);
-
-        return false;
+        swal(message, {
+          buttons: ['아니오', '네'],
+        }).then((create) => {
+          return create ? history.push(`${match.url}/${classOf}`) : false;
+        });
       })
       .catch((err) => {
         if (err.response.status === 404) {

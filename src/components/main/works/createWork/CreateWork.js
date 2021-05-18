@@ -80,6 +80,13 @@ const CreateWork = ({ match, history }) => {
   const [category, setCategory] = useState(null);
   const [worksDetail, setWorkDetail] = useState(null);
 
+  const [worksYear, setWorksYear] = useState(null);
+  const [years, setYears] = useState(null);
+  const [yearsState] = useAsync(() => getWorksYears(), []);
+
+  const [images, setImages] = useState(null);
+  const [file, setFile] = useState(null);
+
   useEffect(() => {
     if (workState === 'edit') {
       getWorkDetail(match.params.id, history).then((res) => {
@@ -108,11 +115,7 @@ const CreateWork = ({ match, history }) => {
     }
   }, [worksDetail]);
 
-  // year
-  const [worksYear, setWorksYear] = useState(null);
-  const [years, setYears] = useState(null);
-  const [yearsState] = useAsync(() => getWorksYears(), []);
-
+  // year---------------------------------------------------------
   useEffect(() => {
     const selected = document.querySelectorAll('select');
 
@@ -133,28 +136,26 @@ const CreateWork = ({ match, history }) => {
     previewImg();
   });
 
-  // updload File & images
-  const [images, setImages] = useState(null);
-  const [file, setFile] = useState(null);
+  // updload File & images----------------------------------------
   let formdata = new FormData();
-
   const makeArrFromData = useCallback((arr, queryName) => {
-    return arr.map((data, i) => {
-      formdata.append(`${queryName}[${i}]`, data);
-    });
+    return arr.map((data, i) => formdata.append(`${queryName}[${i}]`, data));
   });
 
   const deleteArrFromData = useCallback((arr, queryName) => {
-    return arr.map((data, i) => {
-      formdata.delete(`${queryName}[${i}]`, data);
-    });
+    return arr.map((data, i) => formdata.delete(`${queryName}[${i}]`, data));
   });
 
   // file upload
   const handleUploadImages = (e) => {
     const files = e.target.files;
 
-    setImages([...files]);
+    if (images) {
+      images.map((img) => formdata.append('deleteImagesName', img.modifyName));
+      deleteArrFromData(images, 'images');
+    }
+
+    setImages([]);
 
     if (files.length > 5) {
       toast.warn(`⚠ 이미지는 최대 5개 입니다.`);
@@ -171,6 +172,12 @@ const CreateWork = ({ match, history }) => {
     if (!e.target.parentElement.classList.contains('fetch-file')) return false;
 
     setFile(null);
+  };
+
+  const handleDeleteImage = () => {
+    setImages(null);
+
+    if (images) deleteArrFromData(worksDetail.imageInfoList, 'images');
   };
 
   const previewImg = () => {
@@ -212,7 +219,6 @@ const CreateWork = ({ match, history }) => {
   };
 
   const { workName, teamName, teamMember, teamVideoUrl } = worksInput;
-
   const handleWorksSubmit = (e) => {
     e.preventDefault();
 
@@ -234,27 +240,27 @@ const CreateWork = ({ match, history }) => {
     }
 
     if (images) {
-      makeArrFromData(images, 'images');
-    } else {
-
-      if (workState === 'edit' && worksDetail.imageInfoList) {
-        worksDetail.imageInfoList.map((img) => {
-          formdata.append('deleteImagesName', img.modifyName);
-        });
+      if (worksDetail.imageInfoList) {
+        deleteArrFromData(worksDetail.imageInfoList, 'images');
       }
+      makeArrFromData(images, 'images');
+      if (worksDetail.imageInfoList) {
+        deleteArrFromData(worksDetail.imageInfoList, 'images');
+      }
+    } else {
+      if (worksDetail.imageInfoList) {
+        worksDetail.imageInfoList.map((el) =>
+          formdata.append('deleteImagesName', el.modifyName),
+        );
+      }
+    }
+
+    if (!file && worksDetail.fileInfo) {
+      formdata.delete('file');
     }
 
     for (let item in requestWorks) {
       formdata.append(item, requestWorks[item]);
-
-      if (workState === 'edit' && worksDetail) {
-        if (worksDetail.fileInfo) {
-          formdata.delete('file');
-        }
-        if (worksDetail.imageInfoList) {
-          deleteArrFromData(worksDetail.imageInfoList, 'images');
-        }
-      }
 
       if (item === 'teamMember') {
         formdata.delete('teamMember');
@@ -292,10 +298,6 @@ const CreateWork = ({ match, history }) => {
     if (teamMember === '' || !teamMember) {
       toast.error(`⛔팀원을 기입해 주세요`);
       return false;
-    }
-
-    for (let i of formdata.entries()) {
-      console.log(i);
     }
 
     switch (workState) {
@@ -460,9 +462,7 @@ const CreateWork = ({ match, history }) => {
                     <button
                       className="del-img"
                       type="button"
-                      onClick={() => {
-                        setImages(null);
-                      }}
+                      onClick={() => handleDeleteImage()}
                     >
                       전체삭제
                     </button>

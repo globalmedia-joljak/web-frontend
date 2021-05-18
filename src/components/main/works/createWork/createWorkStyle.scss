@@ -236,7 +236,6 @@
           justify-self: flex-end;
           width: 22px;
           height: 22px;
-          cursor: pointer;
         }
 
         // 파일을 첨부할경우
@@ -251,6 +250,7 @@
           }
           .del-file-icon {
             background-image: url('../../../../assets/images/delete_white@2x.png');
+            cursor: pointer;
           }
         }
       }

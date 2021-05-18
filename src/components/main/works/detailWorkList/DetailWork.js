@@ -8,6 +8,7 @@ import EditDeleteButton from '../../common/EditDeleteButton';
 import './detailWorkStyle.scss';
 import { Viewer } from '@toast-ui/react-editor';
 import useTitle from '../../../../hooks/useTitle';
+import swal from 'sweetalert';
 
 const DetailWork = ({ match, history }) => {
   useTitle(`:졸업작품 - 상세보기`);
@@ -29,11 +30,15 @@ const DetailWork = ({ match, history }) => {
   const { loading, data, error } = workDetail;
 
   const handleDelete = () => {
-    const delMessage = window.confirm(`졸업 작품을 삭제 하시겠습니까?`);
-    if (delMessage) {
-      deleteWorks(detailId);
-      setTimeout(() => history.push(`/works/${currentYears}`), 1000);
-    }
+    const delMessage = `졸업 작품을 삭제 하시겠습니까?`;
+    swal(delMessage, {
+      buttons: ['아니오', '네'],
+    }).then((create) => {
+      if (create) {
+        deleteWorks(detailId);
+        setTimeout(() => history.push(`/works/${currentYears}`), 1000);
+      }
+    });
   };
 
   const slideRef = useRef();
