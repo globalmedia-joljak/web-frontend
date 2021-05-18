@@ -145,9 +145,9 @@ const SignUp = ({ history, location }) => {
       phoneNumber: userInfo.phoneNumber,
       password: passwd,
       mainProjectRole: mainProjectRole,
-      subProjectRole: subProjectRole === 'NOCHOICE' ? null : subProjectRole,
+      subProjectRole: subProjectRole === '선택안함' ? null : subProjectRole,
     };
-
+    console.log(signUpRequest);
     const successSignup = () => {
       toast.success('✅ 회원가입에 성공하셨습니다.');
       e.target.disabled = true;
