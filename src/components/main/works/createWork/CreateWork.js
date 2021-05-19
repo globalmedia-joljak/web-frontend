@@ -170,7 +170,9 @@ const CreateWork = ({ match, history }) => {
   const handleDeleteImage = () => {
     setImages(null);
 
-    if (images) deleteArrFromData(worksDetail.imageInfoList, 'images');
+    if (images && images[0].modifyName) {
+      deleteArrFromData(worksDetail.imageInfoList, 'images');
+    }
   };
 
   const previewImg = () => {
@@ -242,6 +244,12 @@ const CreateWork = ({ match, history }) => {
             formdata.append('deleteImagesName', img.modifyName),
           );
         }
+      }
+    } else {
+      if (worksDetail && worksDetail.imageInfoList) {
+        worksDetail.imageInfoList.map((img) =>
+          formdata.append('deleteImagesName', img.modifyName),
+        );
       }
     }
     if (!file && worksDetail) {
