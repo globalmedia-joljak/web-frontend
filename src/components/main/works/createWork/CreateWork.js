@@ -240,7 +240,7 @@ const CreateWork = ({ match, history }) => {
     }
 
     if (images) {
-      if (worksDetail.imageInfoList) {
+      if (worksDetail && worksDetail.imageInfoList) {
         deleteArrFromData(worksDetail.imageInfoList, 'images');
       }
       makeArrFromData(images, 'images');
@@ -248,15 +248,15 @@ const CreateWork = ({ match, history }) => {
         deleteArrFromData(worksDetail.imageInfoList, 'images');
       }
     } else {
-      if (worksDetail.imageInfoList) {
+      if (worksDetail && worksDetail.imageInfoList) {
         worksDetail.imageInfoList.map((el) =>
           formdata.append('deleteImagesName', el.modifyName),
         );
       }
     }
 
-    if (!file && worksDetail.fileInfo) {
-      formdata.delete('file');
+    if (!file && worksDetail) {
+      if (worksDetail.fileInfo) formdata.delete('file');
     }
 
     for (let item in requestWorks) {
