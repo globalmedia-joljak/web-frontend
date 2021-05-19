@@ -27,6 +27,8 @@ const getWorksLists = async (pageNum, history) => {
 
 const getWorksYearList = async ({ pageNum, year }, history) => {
   try {
+    console.log('year : ' + year);
+
     const { data } = await client.get('/works/search', {
       params: { size: 10, page: pageNum, exhibitedYear: year },
     });
