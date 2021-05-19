@@ -150,18 +150,11 @@ const CreateWork = ({ match, history }) => {
   const handleUploadImages = (e) => {
     const files = e.target.files;
 
-    if (images) {
-      images.map((img) => formdata.append('deleteImagesName', img.modifyName));
-      deleteArrFromData(images, 'images');
-    }
-
-    setImages([]);
-
     if (files.length > 5) {
       toast.warn(`⚠ 이미지는 최대 5개 입니다.`);
-      setImages([...files].slice(0, 5));
+      return setImages([...files].slice(0, 5));
     } else {
-      setImages([...files]);
+      return setImages([...files]);
     }
   };
 
@@ -240,21 +233,17 @@ const CreateWork = ({ match, history }) => {
     }
 
     if (images) {
-      if (worksDetail && worksDetail.imageInfoList) {
-        deleteArrFromData(worksDetail.imageInfoList, 'images');
-      }
-      makeArrFromData(images, 'images');
-      if (worksDetail.imageInfoList) {
-        deleteArrFromData(worksDetail.imageInfoList, 'images');
-      }
-    } else {
-      if (worksDetail && worksDetail.imageInfoList) {
-        worksDetail.imageInfoList.map((el) =>
-          formdata.append('deleteImagesName', el.modifyName),
-        );
+      if (images[0].modifyName) {
+        deleteArrFromData(images, 'images');
+      } else {
+        makeArrFromData(images, 'images');
+        if (worksDetail && worksDetail.imageInfoList) {
+          worksDetail.imageInfoList.map((img) =>
+            formdata.append('deleteImagesName', img.modifyName),
+          );
+        }
       }
     }
-
     if (!file && worksDetail) {
       if (worksDetail.fileInfo) formdata.delete('file');
     }
@@ -298,6 +287,10 @@ const CreateWork = ({ match, history }) => {
     if (teamMember === '' || !teamMember) {
       toast.error(`⛔팀원을 기입해 주세요`);
       return false;
+    }
+
+    for (let i of formdata.entries()) {
+      console.log(i);
     }
 
     switch (workState) {
