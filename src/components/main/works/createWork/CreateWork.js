@@ -244,7 +244,7 @@ const CreateWork = ({ match, history }) => {
         deleteArrFromData(worksDetail.imageInfoList, 'images');
       }
       makeArrFromData(images, 'images');
-      if (worksDetail.imageInfoList) {
+      if (worksDetail && worksDetail.imageInfoList) {
         deleteArrFromData(worksDetail.imageInfoList, 'images');
       }
     } else {
