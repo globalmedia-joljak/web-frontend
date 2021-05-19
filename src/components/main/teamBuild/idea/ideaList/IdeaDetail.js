@@ -7,6 +7,7 @@ import './IdeaDetail.scss';
 import MemberRoleSquare from '../../team/teamList/MemberRole';
 import Ideas from '..';
 import useTitle from '../../../../../hooks/useTitle';
+import swal from 'sweetalert';
 
 const IdeaDetail = ({ match, history }) => {
   useTitle(`:아이디어 - 상세보기`);
@@ -44,11 +45,17 @@ const IdeaDetail = ({ match, history }) => {
   };
 
   const handleDelete = () => {
-    if (window.confirm('정말로 삭제하시겠습니까?')) {
-      deleteIdea(id).then((response) => {
-        history.push('/team-building/idea');
-      });
-    }
+    const delMessage = `${userInfo.name} 님을 작가목록에서 삭제 하시겠습니까?`;
+
+    swal(delMessage, {
+      buttons: ['아니오', '네'],
+    }).then((create) => {
+      if (create) {
+        deleteIdea(id).then((response) => {
+          history.push('/team-building/idea');
+        });
+      }
+    });
   };
 
   const handleUpdate = () => {
