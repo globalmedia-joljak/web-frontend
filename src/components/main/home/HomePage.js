@@ -59,7 +59,7 @@ const HomePage = () => {
         <section className="home-video">
           <div className="home-video-inr">
             <iframe
-              src="https://www.youtube.com/embed/BdgGZwcUC4M"
+              src="https://www.youtube.com/embed/H4aldnhNv4k"
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
