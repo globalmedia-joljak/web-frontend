@@ -107,7 +107,7 @@ const CreateIdea = ({ history }) => {
     return arr.map((data, i) => {
       formdata.append(`${queryName}[${i}]`, data);
     });
-  }, []);
+  });
 
   return (
     <>
