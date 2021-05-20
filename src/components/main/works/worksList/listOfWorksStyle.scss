@@ -3,7 +3,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 200px;
 }
 .works-list {
   display: flex;
@@ -53,6 +52,7 @@
 
     .work-contets-wrap {
       padding: 16px 24px 31px;
+      overflow: hidden;
     }
     .project-category {
       font-size: 18px;
@@ -62,13 +62,14 @@
     }
 
     .work-name {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: block;
       margin-bottom: 16px;
       font-size: 24px;
       color: #000000;
       font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .team-name {
@@ -76,18 +77,19 @@
       color: #00000099;
       font-size: 14px;
       display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .members {
-      display: flex;
-      flex-wrap: wrap;
+      display: block;
       column-gap: 4px;
       font-size: 18px;
       font-weight: bold;
-      @include ellipsisTxt;
-
-      i {
-        color: #000000;
-      }
+      color: #000000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .tui-editor-contents {
       p {

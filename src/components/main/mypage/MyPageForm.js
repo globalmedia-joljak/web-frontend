@@ -140,14 +140,16 @@ const HandleMypage = (userInfo, state, dispatch, setPassword, setLists) => {
           toast.error('비밀번호는 영문 숫자 조합 8~20자리입니다.');
           return false;
         }
-        updateUserInfo(classOf, 'password', newPassword);
+        updateUserInfo({ classOf, url: 'password' }, checkPassword).then(
+          (res) => {
+            setPasswordVal({
+              newPassword: '',
+              checkPassword: '',
+            });
 
-        setPasswordVal({
-          newPassword: '',
-          checkPassword: '',
-        });
-
-        setSucced(true);
+            setSucced(true);
+          },
+        );
       }
     }
   };
