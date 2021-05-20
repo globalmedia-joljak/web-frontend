@@ -38,6 +38,7 @@
     font-weight: bold;
     font-size: 32px;
     margin-bottom: 40px;
+    line-break: anywhere;
   }
 
   .team-info {
@@ -46,7 +47,7 @@
     font-size: 28px;
     column-gap: 24px;
     margin-bottom: 20px;
-
+    line-break: anywhere;
     .team-member {
       display: inherit;
       column-gap: 16px;

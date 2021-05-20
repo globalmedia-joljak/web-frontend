@@ -252,9 +252,6 @@ const CreateWork = ({ match, history }) => {
         );
       }
     }
-    if (!file && worksDetail) {
-      if (worksDetail.fileInfo) formdata.delete('file');
-    }
 
     for (let item in requestWorks) {
       formdata.append(item, requestWorks[item]);
@@ -265,6 +262,11 @@ const CreateWork = ({ match, history }) => {
 
       if (!requestWorks[item]) {
         formdata.delete(item);
+      }
+
+      if (item === 'file') {
+        if (requestWorks[item] && requestWorks[item].originalName)
+          formdata.delete(item);
       }
     }
 
@@ -295,10 +297,6 @@ const CreateWork = ({ match, history }) => {
     if (teamMember === '' || !teamMember) {
       toast.error(`⛔팀원을 기입해 주세요`);
       return false;
-    }
-
-    for (let i of formdata.entries()) {
-      console.log(i);
     }
 
     switch (workState) {
