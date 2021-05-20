@@ -33,7 +33,7 @@ const ListOfWorks = ({ match, history }) => {
     totalElements: 0,
   });
   const [initData, setInitData] = useState(false);
-  
+
   useEffect(() => {
     setLoading(false);
     setInitData(false);
@@ -80,7 +80,7 @@ const ListOfWorks = ({ match, history }) => {
       .catch((e) => {
         setLoading(false);
       });
-  }
+  };
 
   const getWorksData = () => {
     setLoading(true);
@@ -170,6 +170,14 @@ const ListOfWorks = ({ match, history }) => {
 
   const listItemBackgroundImg = (imageInfoList) => {
     return imageInfoList ? `url(${imageInfoList[0].url})` : `url(${noImage})`;
+  };
+
+  const memberName = (teamMember) => {
+    let members = '';
+    teamMember.map((el) => {
+      members += ` ${el}`;
+    });
+    return members;
   };
 
   return (
@@ -267,9 +275,11 @@ const ListOfWorks = ({ match, history }) => {
                               <strong className="work-name">{workName}</strong>
                               <b className="team-name">{teamName}</b>
                               <span className="members">
-                                {teamMember.map((name, i) => (
-                                  <i key={i}>{name}</i>
-                                ))}
+                                {memberName(teamMember)}
+                                {/* {teamMember.map((name, i) => (
+                                  // <i key={i}>{name}</i>
+                                  // <key>{name}</>
+                                ))} */}
                               </span>
                             </div>
                           </Link>
