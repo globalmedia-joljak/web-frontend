@@ -12,8 +12,9 @@ const updateUserInfo = async ({ classOf, url, succed }, value) => {
     await client.patch(`users/${classOf}/${url}`, value, {
       headers: { 'Content-Type': `application/json` },
     });
-    toast.success(`✅ ${succed}가 변경 됐습니다.`);
-    return;
+    if (url !== 'password') {
+      toast.success(`✅ ${succed}가 변경 됐습니다.`);
+    }
   } catch (e) {
     console.log(e.response);
     toast.error(
