@@ -28,64 +28,6 @@ const NavStyling = (navEl, size, tablet) => {
   return { hStyle };
 };
 
-const NavClickEvent = (size, tablet, navEl) => {
-  useEffect(() => {
-    if (navEl.current === undefined || navEl.current === null) return;
-
-    const handleClick = (e) => {
-      let { classList, parentElement, id } = e.target;
-      let { style } = navEl.current.offsetParent.nextSibling;
-
-      const ON = 'on';
-
-      const tagFilter = (className) => {
-        return classList.contains(className) ?? false;
-      };
-
-      if (e.target.id === 'more-icon' || e.target.tagName === 'SPAN')
-        return false;
-
-      switch (true) {
-        case tagFilter('h-nav'):
-          !tagFilter(ON) ? classList.add(ON) : classList.remove(ON);
-          return;
-
-        // routes일 경우
-        case tagFilter('header-route'):
-          const SHOW = 'show';
-          if (id === 't-build' || id === 'works') {
-            return parentElement.classList.contains(SHOW)
-              ? parentElement.classList.remove(SHOW)
-              : parentElement.classList.add(SHOW);
-          }
-
-          navEl.current.classList.remove(ON);
-          break;
-
-        default:
-          navEl.current.classList.remove(ON);
-          style.display = 'block';
-          break;
-      }
-    };
-
-    // tablet사이즈일때 부터
-    if (size < tablet) {
-      navEl.current.addEventListener('click', handleClick);
-    } else {
-      navEl.current.classList.remove('on');
-      navEl.current.removeEventListener('click', handleClick);
-    }
-
-    return () => {
-      if (navEl.current === null) return;
-      navEl.current.removeEventListener('click', handleClick);
-    };
-  }, [size, tablet, navEl]);
-
-  return { navEl };
-};
-
 let navRoutes = [
   { id: 't-build', path: '/team-building', name: '팀 빌딩', type: 'sub-nav' },
   { id: 'works', path: '/works', name: '졸업작품', type: 'sub-nav' },
@@ -101,14 +43,14 @@ const RouterLink = (size, tablet, signOutHandler, isLogin) => {
           <li key={id}>
             <Link to={path} className="header-route" id={id}>
               {name}
-              {type === 'sub-nav' && size < tablet && (
+              {type === 'sub-nav' && size <= tablet && (
                 <div id="more-icon">
                   <span></span>
                   <span className="rotate"></span>
                 </div>
               )}
             </Link>
-            {type === 'sub-nav' && size < tablet && (
+            {type === 'sub-nav' && size <= tablet && (
               <ul className="nav-sub-wrap">
                 <SubNavigation type={id} url={path} />
               </ul>
@@ -166,8 +108,38 @@ const Navigation = ({ location: { pathname }, match }) => {
     );
   };
 
-  // roter lists
-  NavClickEvent(curSize, tablet, navEl);
+  const handleNavClick = (e) => {
+    if (curSize <= tablet) {
+      let { classList, parentElement, id } = e.target;
+      const ON = 'on';
+      const tagFilter = (className) =>
+        e.target.classList.contains(className) ?? false;
+
+      switch (true) {
+        case tagFilter('h-nav'):
+          !tagFilter(ON) ? classList.add(ON) : classList.remove(ON);
+          return;
+
+        case tagFilter('header-route'):
+          const SHOW = 'show';
+          if (id === 't-build' || id === 'works')
+            return parentElement.classList.contains(SHOW)
+              ? parentElement.classList.remove(SHOW)
+              : parentElement.classList.add(SHOW);
+
+          if (navEl.current) {
+            navEl.current.classList.remove(ON);
+          }
+
+        default:
+          if (navEl.current) {
+            navEl.current.classList.remove(ON);
+          }
+          break;
+      }
+    }
+  };
+
   const router = RouterLink(
     curSize,
     tablet,
@@ -187,7 +159,7 @@ const Navigation = ({ location: { pathname }, match }) => {
             <Link to="/" />
           </h1>
 
-          <nav className="h-nav" ref={navEl}>
+          <nav className="h-nav" ref={navEl} onClick={handleNavClick}>
             {curSize <= tablet ? (
               <div className="header-nav-tablet">
                 <div className="header-nav-tablet-inr">
