@@ -37,7 +37,7 @@ const HomePage = () => {
             쉽게 졸업작품 프로젝트를 위한 팀을 매칭시켜주고, 역대 졸업 작품들을
             관람할 수 있습니다.
           </strong>
-          <h2>🎉누적 사용자 100명 돌파(21.05.18 기준)🎉</h2>
+          <h2>🎉누적 사용자 200명 돌파(21.05.22 기준)🎉</h2>
         </section>
         <section className="guestbook-wrap">
           <strong>
